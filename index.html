@@ -85,7 +85,7 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 100px;
+  padding-bottom: 24px;
   height: 0;
 }
 
@@ -166,8 +166,8 @@ body {
    BOTTOM NAV
 ============================================= */
 .bottom-nav {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
+  flex-shrink: 0;
+  width: 100%;
   background: rgba(255,255,255,.97);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
@@ -1498,7 +1498,6 @@ window.addEventListener('load', function(){
           <img src="img/blkb-logo-claim.svg" alt="BLKB – was morgen zählt" style="height:34px;margin-bottom:12px;display:block;filter:brightness(0) invert(1);">
           <div class="hdr-title">Dein Weg bei der BLKB</div>
           <div class="hdr-sub" id="home-lifecycle-tag">Dein persönlicher Finanzbegleiter</div>
-          <div id="mode-badge" style="display:inline-block;margin-top:8px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.2);font-size:11px;font-weight:700;color:white;">Unter 18 🎮</div>
         </div>
 
         <!-- Hero image -->
@@ -1610,8 +1609,8 @@ window.addEventListener('load', function(){
         <!-- % Summe -->
         <div style="margin:8px 16px 4px;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:10px 14px">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:12px;font-weight:600;color:var(--mid)">Verteilung aller Ziele</span>
-            <span style="font-size:14px;font-weight:700" id="goals-pct-total">0%</span>
+            <span style="font-size:12px;font-weight:600;color:var(--mid)">Gesamtfortschritt</span>
+            <span style="font-size:13px;font-weight:700;color:var(--dark)" id="goals-pct-total">CHF 0</span>
           </div>
           <div style="height:5px;background:var(--border);border-radius:3px;margin-top:7px;overflow:hidden">
             <div id="goals-pct-bar" style="height:100%;border-radius:3px;background:var(--ok);transition:width .3s,background .3s;width:0%"></div>
@@ -1650,8 +1649,8 @@ window.addEventListener('load', function(){
           <label class="form-label">Name</label>
           <input class="form-input" id="goal-name-input" type="text" placeholder="z.B. Japan-Reise, E-Bike...">
 
-          <label class="form-label">Anteil am Sparkonto (%)</label>
-          <input class="form-input" id="goal-pct-input" type="number" min="1" max="100" placeholder="z.B. 30">
+          <label class="form-label">Sparziel (CHF)</label>
+          <input class="form-input" id="goal-ziel-input" type="number" min="1" placeholder="z.B. 1000">
 
           <button class="btn-primary" onclick="saveGoal()">Ziel speichern</button>
         </div>
@@ -2511,7 +2510,10 @@ function load() {
       state.age = d.age || 16;
       state.lohn = d.lohn || 3200;
       state.sparGuthaben = d.sparGuthaben || 2500;
-      state.goals = d.goals || [];
+      var loadedGoals = d.goals || [];
+      // Migration: alte pct-Ziele auf ziel-Format umstellen
+      var needsMigration = loadedGoals.length > 0 && loadedGoals.every(function(g){ return g.ziel === undefined; });
+      state.goals = needsMigration ? [] : loadedGoals;
       state.haxxDone = d.haxxDone || [];
       if (d.budgetPcts && d.budgetPcts.length === budgetCats.length) {
         d.budgetPcts.forEach(function(p, i) { budgetCats[i].pct = p; });
@@ -2665,7 +2667,7 @@ function switchYouthView(name) {
 
 function applyMode(mode) {
   var app = document.getElementById('app');
-  var badge = document.getElementById('mode-badge');
+  var badge = document.getElementById('mode-badge'); // null after removal, safe
   if (mode === 'youth') {
     app.classList.add('mode-youth');
     app.classList.remove('mode-adult');
@@ -2759,12 +2761,12 @@ function openGoalModal(idx) {
     var g = state.goals[state.editGoalIdx];
     title.textContent = 'Ziel bearbeiten';
     document.getElementById('goal-name-input').value = g.name;
-    document.getElementById('goal-pct-input').value = g.pct;
+    document.getElementById('goal-ziel-input').value = g.ziel || '';
     state.selectedEmoji = g.emoji;
   } else {
     title.textContent = 'Neues Sparziel';
     document.getElementById('goal-name-input').value = '';
-    document.getElementById('goal-pct-input').value = '';
+    document.getElementById('goal-ziel-input').value = '';
     state.selectedEmoji = '🎯';
   }
 
@@ -2794,12 +2796,12 @@ function selectEmoji(em) {
 
 function saveGoal() {
   var name = document.getElementById('goal-name-input').value.trim();
-  var pct  = Math.max(1, Math.min(100, parseInt(document.getElementById('goal-pct-input').value) || 0));
+  var ziel = Math.max(1, parseInt(document.getElementById('goal-ziel-input').value) || 0);
 
   if (!name) { showToast('Bitte einen Namen eingeben'); return; }
-  if (!pct)  { showToast('Bitte einen %-Anteil eingeben'); return; }
+  if (!ziel) { showToast('Bitte einen Betrag in CHF eingeben'); return; }
 
-  var goal = { emoji: state.selectedEmoji, name: name, pct: pct };
+  var goal = { emoji: state.selectedEmoji, name: name, ziel: ziel };
 
   if (state.editGoalIdx >= 0) {
     state.goals[state.editGoalIdx] = goal;
@@ -2836,26 +2838,27 @@ function onSparChange(val) {
 }
 
 function renderGoals() {
-  var list   = document.getElementById('goals-list');
-  var spar   = state.sparGuthaben;
-  var totalPct = state.goals.reduce(function(s,g){ return s+(g.pct||0); }, 0);
+  var list  = document.getElementById('goals-list');
+  var spar  = state.sparGuthaben;
+  var mSpar = state.monatlichesSparbudget;
+  var totalZiel = state.goals.reduce(function(s,g){ return s+(g.ziel||0); }, 0);
 
-  // % summary bar
+  // Gesamtfortschritt-Bar
   var pctBar  = document.getElementById('goals-pct-bar');
   var pctTot  = document.getElementById('goals-pct-total');
   var pctHint = document.getElementById('goals-pct-hint');
   if (pctBar) {
-    pctTot.textContent = totalPct + '%';
-    pctBar.style.width = Math.min(100, totalPct) + '%';
-    if (totalPct === 100) {
+    var gesamtPct = totalZiel > 0 ? Math.min(100, Math.round(spar / totalZiel * 100)) : 0;
+    var gespart   = Math.min(spar, totalZiel);
+    pctTot.textContent = 'CHF ' + fmtChf(gespart) + ' / ' + fmtChf(totalZiel);
+    pctBar.style.width = gesamtPct + '%';
+    if (gesamtPct >= 100) {
       pctBar.style.background = 'var(--ok)';
-      pctHint.textContent = '✓ 100% verteilt — perfekt';
-    } else if (totalPct < 100) {
-      pctBar.style.background = 'var(--amber)';
-      pctHint.textContent = '⚠ Noch ' + (100 - totalPct) + '% nicht zugewiesen';
+      pctHint.textContent = '🎉 Alle Sparziele erreicht!';
     } else {
       pctBar.style.background = 'var(--red)';
-      pctHint.textContent = '✕ ' + (totalPct - 100) + '% zu viel — bitte anpassen';
+      var fehlt = totalZiel - gespart;
+      pctHint.textContent = 'Noch CHF ' + fmtChf(fehlt) + ' bis alle Ziele erreicht';
     }
   }
 
@@ -2865,55 +2868,67 @@ function renderGoals() {
   }
 
   var html = '';
+  var cumulative = 0; // laufende Summe der Ziele vor diesem
+
   state.goals.forEach(function(g, i) {
-    var chf = Math.round(spar * (g.pct||0) / 100);
-    // pct-input für dieses Ziel
-    html += '<div class="goal-item" onclick="openGoalModal(' + i + ')">' +
-      '<div class="goal-item-header">' +
-        '<div class="goal-emoji">' + g.emoji + '</div>' +
-        '<div class="goal-info">' +
-          '<div class="goal-name">' + escHtml(g.name) + '</div>' +
-          '<div class="goal-amounts">' +
-            '<span style="font-weight:700;color:var(--dark);font-size:13px">CHF ' + fmtChf(chf) + ' gespart</span>' +
-            (function(){
-              var mSpar = state.monatlichesSparbudget;
-              var goalMon = mSpar > 0 ? Math.round(mSpar * (g.pct||0) / 100) : 0;
-              var ziel = g.ziel || 0;
-              if (ziel > 0 && goalMon > 0) {
-                var monate = Math.ceil((ziel - chf) / goalMon);
-                if (monate <= 0) return '<span style="font-size:11px;color:var(--ok)">✓ Ziel erreicht!</span>';
-                return '<span style="font-size:11px;color:var(--mid)">CHF ' + fmtChf(goalMon) + '/Mt · noch ' + monate + ' Mt.</span>';
-              }
-              return '<span style="font-size:11px;color:var(--mid)">= ' + (g.pct||0) + '% · CHF ' + fmtChf(goalMon) + '/Mt.</span>';
-            })() +
+    var target     = g.ziel || 0;
+    var available  = Math.max(0, spar - cumulative);
+    var allocated  = Math.min(available, target);
+    var pct        = target > 0 ? Math.min(100, Math.round(allocated / target * 100)) : 0;
+    var missing    = Math.max(0, target - allocated);
+    var reached    = pct >= 100;
+
+    // Zeitprognose: monatliche Sparrate für dieses Ziel
+    var timeHtml = '';
+    if (!reached && mSpar > 0 && missing > 0) {
+      var months = Math.ceil(missing / mSpar);
+      timeHtml = '<div style="font-size:11px;color:var(--mid);margin-top:2px">⏱ noch ~' + months + ' Mt. bei CHF ' + fmtChf(mSpar) + '/Mt. Sparrate</div>';
+    } else if (!reached && mSpar === 0 && missing > 0) {
+      timeHtml = '<div style="font-size:11px;color:var(--amber);margin-top:2px">💡 Sparrate im <b>Budgetrechner</b> setzen</div>';
+    }
+
+    html +=
+      '<div class="goal-item" onclick="openGoalModal(' + i + ')">' +
+        '<div class="goal-item-header">' +
+          '<div class="goal-emoji">' + g.emoji + '</div>' +
+          '<div class="goal-info">' +
+            '<div style="display:flex;align-items:center;gap:5px;margin-bottom:2px">' +
+              '<span style="font-size:9px;font-weight:700;color:var(--mid);background:var(--bg);padding:1px 7px;border-radius:10px;border:1px solid var(--border)">RANG ' + (i+1) + '</span>' +
+              '<span class="goal-name">' + escHtml(g.name) + '</span>' +
+            '</div>' +
+            '<div style="font-size:12px;font-weight:700;color:var(--dark)">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:var(--mid)">/ ' + fmtChf(target) + '</span></div>' +
+            (reached
+              ? '<div style="font-size:11px;color:var(--ok);font-weight:700;margin-top:2px">✓ Ziel erreicht!</div>'
+              : '<div style="font-size:11px;color:var(--mid);margin-top:2px">Noch CHF ' + fmtChf(missing) + ' fehlend</div>') +
+            timeHtml +
+          '</div>' +
+          '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">' +
+            (reached
+              ? '<div style="font-size:24px;line-height:1">✅</div>'
+              : '<div style="font-size:15px;font-weight:800;color:var(--red)">' + pct + '%</div>') +
+            '<button class="goal-del-btn" onclick="event.stopPropagation();deleteGoal(' + i + ')" style="font-size:14px;padding:2px">🗑</button>' +
           '</div>' +
         '</div>' +
-        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">' +
-          '<div style="display:flex;align-items:center;gap:3px">' +
-            '<input type="number" min="0" max="100" value="' + (g.pct||0) + '" data-gi="' + i + '"' +
-            ' style="width:38px;padding:2px 4px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;color:var(--dark);background:var(--bg);text-align:right;font-family:var(--font);outline:none"' +
-            ' oninput="onGoalPctChange(this)" onclick="event.stopPropagation()" onfocus="this.select()">'+
-            '<span style="font-size:12px;color:var(--mid)">%</span>' +
+        '<div class="goal-bar-wrap">' +
+          '<div class="goal-bar-bg">' +
+            '<div class="goal-bar-fill" style="width:' + pct + '%;background:' + (reached ? 'var(--ok)' : 'var(--red)') + ';transition:width .5s"></div>' +
           '</div>' +
-          '<button class="goal-del-btn" onclick="event.stopPropagation();deleteGoal(' + i + ')" style="font-size:14px;padding:2px">🗑</button>' +
         '</div>' +
-      '</div>' +
-      '<div class="goal-bar-wrap">' +
-        '<div class="goal-bar-bg">' +
-          '<div class="goal-bar-fill" style="width:' + Math.min(100,(g.pct||0)) + '%"></div>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
+      '</div>';
+
+    cumulative += target;
   });
 
-  list.innerHTML = html;
-}
+  // Hinweis wenn Sparrate fehlt
+  if (mSpar === 0 && state.goals.some(function(g){ return (g.ziel||0) > 0; })) {
+    html += '<div style="margin:4px 16px 8px;padding:12px 14px;background:var(--warn-l);border-radius:var(--r);font-size:12px;color:#92400e;line-height:1.5">' +
+      '💡 <strong>Tipp:</strong> Setze im ' +
+      '<span onclick="switchView(\'budget\',3)" style="font-weight:700;text-decoration:underline;cursor:pointer">Budgetrechner</span>' +
+      ' eine Sparquote, um zu sehen wann du deine Ziele erreichst.' +
+      '</div>';
+  }
 
-function onGoalPctChange(input) {
-  var i = parseInt(input.dataset.gi);
-  state.goals[i].pct = Math.max(0, Math.min(100, parseInt(input.value)||0));
-  renderGoals();
-  save();
+  list.innerHTML = html;
 }
 
 function escHtml(s) {
@@ -3289,12 +3304,11 @@ function updateHomeCounts() {
 ================================================ */
 // goals: { emoji, name, pct }  — pct = % des Sparkonto-Guthabens
 var defaultGoals = [
-  { emoji: '✈️', name: 'Reisefonds',      pct: 30 },
-  { emoji: '🚴', name: 'E-Bike',          pct: 25 },
-  { emoji: '🛡️', name: 'Notfallreserve',  pct: 20 },
-  { emoji: '🎓', name: 'Ausbildung',       pct: 15 },
-  { emoji: '💼', name: 'Selbstständigkeit',pct:  5 },
-  { emoji: '👨‍👩‍👧', name: 'Familienplanung', pct:  5 },
+  { emoji: '🛡️', name: 'Notfallreserve',   ziel: 1000 },
+  { emoji: '✈️', name: 'Reisefonds',        ziel: 1500 },
+  { emoji: '🚴', name: 'E-Bike',            ziel: 2500 },
+  { emoji: '🎓', name: 'Ausbildung',         ziel: 5000 },
+  { emoji: '💼', name: 'Selbstständigkeit',  ziel: 10000 },
 ];
 
 /* ================================================
