@@ -1243,7 +1243,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .fk-phase-content {
-  padding-left: 46px;
+  padding-left: 0;
 }
 
 .fk-connector {
@@ -1789,18 +1789,14 @@ window.addEventListener('load', function(){
           <div style="font-size:12px;opacity:.75;line-height:1.5">Von deinem ersten Franken bis zum Aufbau deines Vermögens — die BLKB begleitet dich in jeder Phase.</div>
         </div>
 
-        <!-- Active phase indicator -->
-        <div id="fk-phase-indicator" style="margin:10px 16px 4px;padding:10px 14px;border-radius:var(--r);font-size:12px;font-weight:600;text-align:center"></div>
-
         <!-- Timeline -->
-        <div style="padding:0 16px">
+        <div style="padding:0 12px">
 
           <!-- Phase 1: Unter 18 -->
           <div class="fk-phase-block" id="fk-phase-1">
             <div class="fk-phase-header">
-              <div class="fk-phase-dot">1</div>
               <div>
-                <div class="fk-phase-title">Unter 18 · Erste Schritte</div>
+                <div class="fk-phase-title">Jugend-Angebote</div>
                 <div class="fk-phase-sub">Geld verstehen, Alltag meistern</div>
               </div>
             </div>
@@ -1860,15 +1856,11 @@ window.addEventListener('load', function(){
             </div>
           </div>
 
-          <!-- Connector -->
-          <div class="fk-connector"></div>
-
           <!-- Phase 2: Über 18 -->
           <div class="fk-phase-block" id="fk-phase-2">
             <div class="fk-phase-header">
-              <div class="fk-phase-dot">2</div>
               <div>
-                <div class="fk-phase-title">Über 18 · Dein Leben aufbauen</div>
+                <div class="fk-phase-title">Deine Angebote</div>
                 <div class="fk-phase-sub">Finanzen meistern, Träume realisieren</div>
               </div>
             </div>
@@ -2304,10 +2296,10 @@ window.addEventListener('load', function(){
         <!-- Module 0 -->
         <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(0)">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💰</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💡</div>
             <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Umgang mit Geld</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Taschengeld clever einteilen</div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Was ist Geld?</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Von Muscheln bis Twint</div>
             </div>
             <div style="font-size:18px;color:var(--light)">→</div>
           </div>
@@ -2320,10 +2312,10 @@ window.addEventListener('load', function(){
         <!-- Module 1 -->
         <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(1)">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🏦</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌱</div>
             <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Mein erstes Konto</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Konto, IBAN &amp; Zinsen einfach erklärt</div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Dein Geld wächst</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Der Zinseszins-Effekt</div>
             </div>
             <div style="font-size:18px;color:var(--light)">→</div>
           </div>
@@ -2336,10 +2328,10 @@ window.addEventListener('load', function(){
         <!-- Module 2 -->
         <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(2)">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📱</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💰</div>
             <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Im Alltag bezahlen</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Karte, Twint &amp; QR-Code verstehen</div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Umgang mit Geld</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Die 50/30/20-Regel</div>
             </div>
             <div style="font-size:18px;color:var(--light)">→</div>
           </div>
@@ -2352,10 +2344,10 @@ window.addEventListener('load', function(){
         <!-- Module 3 -->
         <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(3)">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🛒</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🏦</div>
             <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Bedürfnis vs. Wunsch</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Brauche ich das wirklich?</div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Mein erstes Konto</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Konto, IBAN &amp; Zinsen</div>
             </div>
             <div style="font-size:18px;color:var(--light)">→</div>
           </div>
@@ -2368,10 +2360,10 @@ window.addEventListener('load', function(){
         <!-- Module 4 -->
         <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(4)">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🔐</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📱</div>
             <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Sicher online</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Phishing, Passwörter &amp; Bankdaten schützen</div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Im Alltag bezahlen</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Karte, Twint &amp; Kontaktlos</div>
             </div>
             <div style="font-size:18px;color:var(--light)">→</div>
           </div>
@@ -2384,10 +2376,10 @@ window.addEventListener('load', function(){
         <!-- Module 5 -->
         <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(5)">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💼</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🛒</div>
             <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Erster Job</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Lohnausweis und erstes Gehalt verstehen</div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Bedürfnis vs. Wunsch</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Brauche ich das wirklich?</div>
             </div>
             <div style="font-size:18px;color:var(--light)">→</div>
           </div>
@@ -2395,6 +2387,38 @@ window.addEventListener('load', function(){
             <div id="learn-mod-5-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
           </div>
           <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-5-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 6 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(6)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🔐</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Sicher online</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Phishing erkennen</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-6-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-6-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 7 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(7)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💼</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Erster Job</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Brutto, Netto &amp; Abzüge</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-7-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-7-label">Noch nicht gestartet</div>
         </div>
 
         <div style="height:20px"></div>
@@ -2568,72 +2592,536 @@ function showToast(msg) {
    LEARN DATA (Youth Mode)
 ================================================ */
 var learnData = [
-  { emoji:'💰', title:'Umgang mit Geld', steps:[
-    {q:'Was ist Geld?', a:'Geld ist ein Tauschmittel. Früher tauschten Menschen Waren direkt — heute zahlen wir mit Franken. 💡'},
-    {q:'Taschengeld einteilen', a:'Teile dein Taschengeld in 3 Töpfe: 50% Ausgeben 🛍️ · 30% Sparen 🐷 · 20% Verschenken/Spenden 🎁'},
-    {q:'Warum sparen?', a:'Wenn du CHF 10/Woche sparst, hast du in 1 Jahr CHF 520. Für dein erstes Handy oder die Ferienkasse! 🎯'},
-  ]},
-  { emoji:'🏦', title:'Mein erstes Konto', steps:[
-    {q:'Was ist ein Bankkonto?', a:'Ein sicherer Ort für dein Geld — sicherer als unter dem Kopfkissen! Die Bank verwahrt es und du kannst jederzeit drauf zugreifen. 🔒'},
-    {q:'Was ist eine IBAN?', a:'Die IBAN ist deine Kontonummer — wie eine Adresse für dein Geld. Beispiel: CH56 0785 1234 5678 9000 0 🏠'},
-    {q:'Was sind Zinsen?', a:'Die Bank zahlt dir Zinsen dafür, dass du dein Geld bei ihr lässt — also Geld fürs Nichtstun! 🎉'},
-  ]},
-  { emoji:'📱', title:'Im Alltag bezahlen', steps:[
-    {q:'Debitkarte vs. Kreditkarte', a:'Debitkarte = du zahlst sofort von deinem Konto ✅. Kreditkarte = du zahlst später (Vorsicht: Schulden!). Für den Start: Debitkarte ist perfekt.'},
-    {q:'Was ist Twint?', a:'Twint ist die Schweizer Bezahl-App — du zahlst mit dem Handy direkt vom Konto. Ideal für Kollegen, Märkte und kleine Beträge. 📱'},
-    {q:'Kontaktlos bezahlen', a:'Halte die Karte oder das Handy ans Terminal — fertig! Bis CHF 80 brauchst du keine PIN. Schnell und sicher. ⚡'},
-  ]},
-  { emoji:'🛒', title:'Bedürfnis vs. Wunsch', steps:[
-    {q:'Was ist ein Bedürfnis?', a:'Dinge die du brauchst: Essen, Kleidung, Wohnen, Schulmaterial. Das sind Bedürfnisse — die kommen zuerst! 🍎'},
-    {q:'Was ist ein Wunsch?', a:'Dinge die schön wären, aber nicht notwendig sind: neues Handy, Sneakers, Konzert. Erst sparen, dann kaufen! 👟'},
-    {q:'Der 24h-Test', a:'Willst du etwas kaufen? Warte 24 Stunden. Willst du es immer noch? Dann ist es vielleicht wirklich wichtig. 50% der Impulskäufe vergisst man nach einer Nacht. 😴'},
-  ]},
-  { emoji:'🔐', title:'Sicher online', steps:[
-    {q:'Was ist Phishing?', a:'Betrüger schicken gefälschte E-Mails die aussehen wie von der Bank. Regel: Deine Bank fragt NIEMALS per E-Mail nach Passwort oder PIN! 🚨'},
-    {q:'Sicheres Passwort', a:'Nutze für jede App ein anderes Passwort. Mindestens 12 Zeichen mit Gross-/Kleinbuchstaben, Zahlen und Sonderzeichen. Oder: 4 zufällige Wörter. 🔑'},
-    {q:'Bankdaten schützen', a:'Teile deine IBAN, Kartennummer oder PIN nie mit Freunden — auch nicht per Chat. Die Bank fragt nie danach. Wer es tut, ist ein Betrüger! 🛡️'},
-  ]},
-  { emoji:'💼', title:'Erster Job', steps:[
-    {q:'Was ist ein Lohnausweis?', a:'Der Lohnausweis zeigt deinen Bruttolohn (was vereinbart ist) und deinen Nettolohn (was du bekommst). Die Differenz sind Abzüge für AHV, Krankenkasse etc. 📄'},
-    {q:'Was sind Sozialabzüge?', a:'AHV (Altersvorsorge), IV (Invalidenversicherung), ALV (Arbeitslosigkeit): Ca. 5-6% gehen direkt vom Lohn weg — investiert in deine Zukunft! 🏛️'},
-    {q:'10%-Regel', a:'Spare direkt bei Lohneingang 10% auf ein separates Sparkonto. Du merkst es kaum, aber nach 1 Jahr Lehrzeit hast du ein schönes Polster! 💪'},
-  ]},
+  {
+    emoji:'💡', title:'Was ist Geld?', subtitle:'Von Muscheln bis Twint',
+    type:'steps',
+    steps:[
+      {icon:'🐚', q:'Früher gab es kein Geld', a:'Menschen tauschten direkt: 2 Fische gegen 1 Brot. Problem: Was wenn der andere keine Fische braucht? Das nennt man <b>Tauschhandel</b> — und er war kompliziert.'},
+      {icon:'🪙', q:'Die erste Münze (600 v. Chr.)', a:'In Lydien (heute Türkei) wurden die ersten Münzen geprägt — aus Gold und Silber. Jeder wusste: Diese Münze hat einen bestimmten Wert. Damit konnte man mit jedem handeln.'},
+      {icon:'📜', q:'Papiergeld aus China (7. Jh.)', a:'Die Chinesen erfanden das Papiergeld. Statt schwere Münzen zu tragen, hatten sie einen Zettel — ein Versprechen der Bank: "Dieser Zettel ist CHF 100 wert." Das Vertrauen in dieses Versprechen ist die Grundlage unseres Geldes.'},
+      {icon:'💳', q:'Digitales Geld heute', a:'Heute sind 90% aller Franken digital — nur Zahlen auf einem Server. Vorteile: sicher, überall verfügbar, keine schweren Münzen. Dein BLKB-Konto ist ein digitales Versprechen: "Wir haben dein Geld sicher."'},
+      {icon:'🚀', q:'Warum gibt es Geld?', a:'Geld löst das Tauschhandel-Problem. Es ist: <b>Tauschmittel</b> (du kannst alles kaufen), <b>Wertmesser</b> (1 Kaffee = CHF 4.50) und <b>Wertspeicher</b> (du kannst es aufbewahren). Ohne Geld würde die moderne Wirtschaft nicht funktionieren.'},
+    ]
+  },
+  {
+    emoji:'🌱', title:'Dein Geld wächst', subtitle:'Der Zinseszins-Effekt',
+    type:'calculator',
+    intro:'Wenn du Geld auf ein Sparkonto legst, passiert etwas Magisches. Die Bank zahlt dir Zinsen — und dann bekommst du Zinsen auf deine Zinsen. Das nennt man <b>Zinseszins</b>.',
+    facts:[
+      {icon:'🏦', text:'Die Bank leiht dein Geld an andere aus (für Kredite) und zahlt dir dafür Zinsen.'},
+      {icon:'📈', text:'Zinseszins = Zinsen auf Zinsen. Einstein nannte es das "8. Weltwunder".'},
+      {icon:'⏰', text:'Zeit ist dein bester Freund: Je früher du anfängst, desto mehr wächst dein Geld.'},
+    ]
+  },
+  {
+    emoji:'💰', title:'Umgang mit Geld', subtitle:'Die 50/30/20-Regel',
+    type:'pots',
+    evidence:'Empfehlung basiert auf: Pro Juventute, Budgetberatung Schweiz, PostFinance & internationaler Forschung (CFPB, Greenlight). Schweizer Jugendliche sparen laut Studien spontan 20–50% ihres Taschengeldes.',
+    pots:[
+      {label:'Ausgeben 🛍️', pct:50, color:'#fd000d', desc:'Für heute: Kaffee, Ausgang, Apps'},
+      {label:'Sparen 🐷',    pct:30, color:'#2c5969', desc:'Für dein Ziel: Handy, Ferien, Konzert'},
+      {label:'Teilen 🎁',    pct:20, color:'#7c8947', desc:'Geschenke, Freunde, Spenden'},
+    ]
+  },
+  {
+    emoji:'🏦', title:'Mein erstes Konto', subtitle:'Konto, IBAN & Zinsen',
+    type:'quiz',
+    questions:[
+      {
+        q:'Was ist eine IBAN?',
+        options:['Dein Passwort für E-Banking','Deine internationale Kontonummer','Eine Kreditkarte der Bank','Ein Sparbuch'],
+        correct:1,
+        explain:'Die IBAN (International Bank Account Number) ist deine eindeutige Kontonummer — wie eine Adresse für dein Geld. Beispiel: CH56 0785 1234 5678 9000 0'
+      },
+      {
+        q:'Was sind Zinsen?',
+        options:['Gebühren die du der Bank zahlst','Geld das du der Bank schuldest','Geld das die Bank dir zahlt','Ein anderes Wort für Passworte'],
+        correct:2,
+        explain:'Zinsen sind Geld, das dir die Bank zahlt — dafür, dass sie dein Geld verwenden darf. Je mehr du sparst und je länger, desto mehr Zinsen bekommst du.'
+      },
+      {
+        q:'Wie öffnest du ein Konto bei der BLKB?',
+        options:['Gar nicht möglich unter 18','Nur mit Eltern ab 7 Jahren','Online ab 18 alleine','Mit Eltern ab Geburt möglich'],
+        correct:3,
+        explain:'Bei der BLKB kannst du schon als Kind mit deinen Eltern ein Jugendkonto eröffnen. Ab 18 Jahre kannst du selbständig Konten eröffnen.'
+      },
+    ]
+  },
+  {
+    emoji:'📱', title:'Im Alltag bezahlen', subtitle:'Karte, Twint & Kontaktlos',
+    type:'twint',
+    items:[
+      {name:'☕ Kaffee',    price:4.50},
+      {name:'🍕 Pizza',    price:14.00},
+      {name:'🎬 Kino',     price:18.00},
+      {name:'🧃 Getränk',  price:3.20},
+    ]
+  },
+  {
+    emoji:'🛒', title:'Bedürfnis vs. Wunsch', subtitle:'Brauche ich das wirklich?',
+    type:'swipe',
+    cards:[
+      {item:'🍞 Brot & Lebensmittel',  type:'need', explain:'Essen ist ein Grundbedürfnis — das brauchst du jeden Tag.'},
+      {item:'👟 Neue Sneakers (3. Paar)', type:'want', explain:'Du hast bereits Schuhe. Ein 3. Paar ist ein Wunsch, kein Bedürfnis.'},
+      {item:'💊 Medikamente', type:'need', explain:'Gesundheit ist ein Grundbedürfnis — Medikamente gehören dazu.'},
+      {item:'🎮 Neues Game (hast schon 5)', type:'want', explain:'Spiele machen Spass, aber ein weiteres ist klar ein Wunsch.'},
+      {item:'🧥 Winterjacke', type:'need', explain:'Kleidung zum Schutz vor Kälte ist ein Bedürfnis.'},
+      {item:'📱 Neuestes iPhone (läuft noch)', type:'want', explain:'Dein Handy funktioniert noch — das Upgrade ist ein Wunsch.'},
+      {item:'🚌 Busabo Schule', type:'need', explain:'Transport zur Schule ist ein Bedürfnis.'},
+      {item:'☕ 5. Kaffee heute', type:'want', explain:'Du brauchst nicht jeden Tag 5 Kaffees — das ist ein Wunsch.'},
+    ]
+  },
+  {
+    emoji:'🔐', title:'Sicher online', subtitle:'Phishing erkennen',
+    type:'phishing',
+    emails:[
+      {
+        from:'support@blkb-sicherheit.com',
+        subject:'⚠️ Konto gesperrt — sofort handeln!',
+        body:'Ihr Konto wurde aus Sicherheitsgründen gesperrt. Klicken Sie JETZT auf den Link und geben Sie PIN und Passwort ein: www.blkb-login-sicher.com',
+        isFake:true,
+        explain:'Gefälscht! Die echte BLKB-Domain ist blkb.ch. Ausserdem fragt die Bank NIE per E-Mail nach PIN oder Passwort.'
+      },
+      {
+        from:'info@blkb.ch',
+        subject:'Deine Kontoübersicht März 2025',
+        body:'Hallo, deine monatliche Kontoübersicht ist bereit. Du kannst sie in deinem E-Banking unter Dokumente einsehen. Keine Aktion nötig.',
+        isFake:false,
+        explain:'Echt! Diese E-Mail kommt von blkb.ch, enthält keine verdächtigen Links und fordert keine Passwörter. Trotzdem: Im Zweifel immer direkt im Browser blkb.ch eintippen.'
+      },
+      {
+        from:'gewinn@lucky-swiss-bank.net',
+        subject:'🎉 Du hast CHF 5\'000 gewonnen!',
+        body:'Herzlichen Glückwunsch! Um deinen Gewinn zu erhalten, sende uns deine IBAN, Kontonummer und Geburtsdatum.',
+        isFake:true,
+        explain:'Gefälscht! Seriöse Banken verschicken keine Gewinnbenachrichtigungen. Und niemals sollst du IBAN + Geburtsdatum per E-Mail schicken.'
+      },
+    ]
+  },
+  {
+    emoji:'💼', title:'Erster Job', subtitle:'Brutto, Netto & Abzüge',
+    type:'lohn',
+    baseStunden:160,
+    stundenLohn:18.50,
+  },
 ];
-var learnProgress = [0,0,0,0,0,0]; // steps completed per module
+var learnProgress = [0,0,0,0,0,0,0,0];
 
 function openLearnModule(n) {
   var mod = learnData[n];
   var modal = document.getElementById('learn-modal');
-  var title = document.getElementById('learn-modal-title');
-  var body = document.getElementById('learn-modal-body');
   if (!modal || !mod) return;
-  title.textContent = mod.emoji + ' ' + mod.title;
+
+  document.getElementById('learn-modal-title').textContent = mod.emoji + ' ' + mod.title;
+  var body = document.getElementById('learn-modal-body');
   body.innerHTML = '';
-  mod.steps.forEach(function(step, i) {
-    var done = learnProgress[n] > i;
-    var el = document.createElement('div');
-    el.style.cssText = 'background:'+(done?'#f0fdf4':'white')+';border:1.5px solid '+(done?'#16a34a':'#e2e8f0')+';border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;';
-    el.innerHTML = '<div style="font-size:12px;font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</div>'
-      +'<div style="font-size:14px;font-weight:700;color:var(--dark);margin:4px 0">'+step.q+'</div>'
-      +'<div style="font-size:13px;color:var(--slate);line-height:1.5">'+step.a+'</div>'
-      +(done ? '<div style="font-size:12px;color:#16a34a;margin-top:6px;font-weight:600">✓ Erledigt</div>' : '');
-    if (!done) {
-      (function(idx) {
-        el.onclick = function() {
-          if (learnProgress[n] <= idx) learnProgress[n] = idx + 1;
-          updateLearnProgress(n);
-          openLearnModule(n);
-          updateGamification();
-        };
-      })(i);
-    }
-    body.appendChild(el);
-  });
+
+  if (mod.type === 'steps') {
+    renderLearnSteps(body, mod, n);
+  } else if (mod.type === 'calculator') {
+    renderLearnCalculator(body, mod, n);
+  } else if (mod.type === 'pots') {
+    renderLearnPots(body, mod, n);
+  } else if (mod.type === 'quiz') {
+    renderLearnQuiz(body, mod, n);
+  } else if (mod.type === 'twint') {
+    renderLearnTwint(body, mod, n);
+  } else if (mod.type === 'swipe') {
+    renderLearnSwipe(body, mod, n);
+  } else if (mod.type === 'phishing') {
+    renderLearnPhishing(body, mod, n);
+  } else if (mod.type === 'lohn') {
+    renderLearnLohn(body, mod, n);
+  }
+
   modal.style.display = 'flex';
-  // update youth nav active state
   document.querySelectorAll('#youth-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
   var yn1 = document.getElementById('ynav1');
   if (yn1) yn1.classList.add('active');
+}
+
+/* ── Steps renderer ───────────────────────────────────── */
+function renderLearnSteps(body, mod, n) {
+  mod.steps.forEach(function(step, i) {
+    var done = learnProgress[n] > i;
+    var div = document.createElement('div');
+    div.style.cssText = 'background:'+(done?'#f0fdf4':'white')+';border:1.5px solid '+(done?'#16a34a':'#e2e8f0')+';border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;';
+    div.innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">' +
+        '<span style="font-size:24px">' + (step.icon||'📖') + '</span>' +
+        '<span style="font-size:13px;font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</span>' +
+        (done ? '<span style="margin-left:auto;color:#16a34a;font-weight:700">✓</span>' : '') +
+      '</div>' +
+      '<div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px">' + step.q + '</div>' +
+      '<div style="font-size:13px;color:var(--slate);line-height:1.6">' + step.a + '</div>' +
+      (!done ? '<div style="margin-top:10px;padding:8px 14px;background:var(--red);color:white;border-radius:8px;text-align:center;font-size:13px;font-weight:700">Verstanden ✓</div>' : '');
+    if (!done) {
+      div.onclick = function() {
+        if (learnProgress[n] <= i) learnProgress[n] = i + 1;
+        updateLearnProgress(n); openLearnModule(n); updateGamification();
+      };
+    }
+    body.appendChild(div);
+  });
+}
+
+/* ── Calculator renderer (Zinseszins) ─────────────────── */
+function renderLearnCalculator(body, mod, n) {
+  body.innerHTML =
+    '<div style="font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:14px">' + mod.intro + '</div>' +
+    mod.facts.map(function(f){
+      return '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;padding:10px 12px;background:white;border-radius:10px;border:1px solid var(--border)">' +
+        '<span style="font-size:20px;flex-shrink:0">' + f.icon + '</span>' +
+        '<span style="font-size:13px;color:var(--slate);line-height:1.5">' + f.text + '</span></div>';
+    }).join('') +
+    '<div style="background:white;border-radius:12px;border:1.5px solid var(--border);padding:16px;margin-top:6px">' +
+      '<div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:12px">🧮 Zinseszins-Rechner</div>' +
+      '<label style="font-size:12px;color:var(--mid);font-weight:600">Startbetrag (CHF)</label>' +
+      '<input id="lc-betrag" type="number" value="500" min="10" max="100000" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-weight:700;margin:4px 0 12px;font-family:var(--font)">' +
+      '<label style="font-size:12px;color:var(--mid);font-weight:600">Monatlich sparen (CHF)</label>' +
+      '<input id="lc-monat" type="number" value="50" min="0" max="10000" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-weight:700;margin:4px 0 12px;font-family:var(--font)">' +
+      '<label style="font-size:12px;color:var(--mid);font-weight:600">Jahre: <span id="lc-jahre-label">10</span></label>' +
+      '<input id="lc-jahre" type="range" min="1" max="40" value="10" style="width:100%;accent-color:var(--red);margin:4px 0 14px" oninput="calcZinseszins()">' +
+      '<div id="lc-result" style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"></div>' +
+    '</div>' +
+    '<button onclick="markLearnDone(' + n + ')" style="width:100%;margin-top:14px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Verstanden — weiter ✓</button>';
+  setTimeout(calcZinseszins, 50);
+}
+
+function calcZinseszins() {
+  var b   = parseFloat(document.getElementById('lc-betrag').value)||0;
+  var m   = parseFloat(document.getElementById('lc-monat').value)||0;
+  var j   = parseInt(document.getElementById('lc-jahre').value)||1;
+  var r   = document.getElementById('lc-result');
+  var jl  = document.getElementById('lc-jahre-label');
+  if (!r) return;
+  if (jl) jl.textContent = j;
+  var rate = 0.015 / 12; // 1.5% Jahresrendite (realistisch Sparkonto CH)
+  var months = j * 12;
+  var endwert = b * Math.pow(1 + rate, months) + m * ((Math.pow(1 + rate, months) - 1) / rate);
+  var einbezahlt = b + m * months;
+  var zinsen = endwert - einbezahlt;
+  r.innerHTML =
+    '<div style="font-size:11px;color:var(--mid);margin-bottom:8px">Nach <b>' + j + ' Jahren</b> bei 1.5% Zinsen p.a.</div>' +
+    '<div style="display:flex;justify-content:space-around;margin-bottom:10px">' +
+      '<div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--ok)">CHF ' + Math.round(endwert).toLocaleString('de-CH') + '</div><div style="font-size:10px;color:var(--mid)">Endwert</div></div>' +
+      '<div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--petrol)">CHF ' + Math.round(zinsen).toLocaleString('de-CH') + '</div><div style="font-size:10px;color:var(--mid)">Zinsen 🎁</div></div>' +
+    '</div>' +
+    '<div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden">' +
+      '<div style="height:100%;background:linear-gradient(90deg,var(--petrol),var(--ok));border-radius:5px;width:' + Math.min(100,Math.round(zinsen/Math.max(endwert,1)*100)*3) + '%"></div>' +
+    '</div>' +
+    '<div style="font-size:11px;color:var(--mid);margin-top:5px">Davon ' + Math.round(zinsen/Math.max(endwert,1)*100) + '% Zinsen — gratis!</div>';
+}
+
+/* ── Pots renderer (Taschengeld) ──────────────────────── */
+function renderLearnPots(body, mod, n) {
+  body.innerHTML =
+    '<div style="font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:12px">Gib dein <b>Taschengeld</b> ein und sieh wie es sich auf die 3 Töpfe verteilt:</div>' +
+    '<input id="lp-betrag" type="number" value="100" min="1" max="10000" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:18px;font-weight:700;margin-bottom:14px;font-family:var(--font);text-align:center" oninput="renderPots()">' +
+    '<div id="lp-pots"></div>' +
+    '<div style="margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--mid);line-height:1.5">' +
+      '📚 Quelle: Pro Juventute, Budgetberatung Schweiz, PostFinance & CFPB-Forschung. Schweizer Jugendliche sparen spontan 20–50% ihres Taschengeldes.' +
+    '</div>' +
+    '<button onclick="markLearnDone(' + n + ')" style="width:100%;margin-top:14px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Verstanden — weiter ✓</button>';
+  window._potsData = mod.pots;
+  setTimeout(renderPots, 50);
+}
+
+function renderPots() {
+  var betrag = parseFloat(document.getElementById('lp-betrag').value)||0;
+  var container = document.getElementById('lp-pots');
+  if (!container || !window._potsData) return;
+  container.innerHTML = window._potsData.map(function(p){
+    var chf = Math.round(betrag * p.pct / 100 * 10) / 10;
+    return '<div style="margin-bottom:10px;padding:12px 14px;background:white;border-radius:10px;border:1.5px solid '+ p.color +';box-shadow:0 2px 8px rgba(0,0,0,.06)">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+        '<span style="font-size:14px;font-weight:700;color:var(--dark)">' + p.label + '</span>' +
+        '<span style="font-size:16px;font-weight:800;color:' + p.color + '">CHF ' + chf.toLocaleString('de-CH') + '</span>' +
+      '</div>' +
+      '<div style="height:12px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:5px">' +
+        '<div style="height:100%;background:' + p.color + ';border-radius:6px;width:' + p.pct + '%;transition:width .5s"></div>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between">' +
+        '<span style="font-size:11px;color:var(--mid)">' + p.desc + '</span>' +
+        '<span style="font-size:11px;font-weight:700;color:' + p.color + '">' + p.pct + '%</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ── Quiz renderer ────────────────────────────────────── */
+function renderLearnQuiz(body, mod, n) {
+  var state_quiz = { current:0, score:0, answered:[] };
+  window._quizState = state_quiz;
+  window._quizMod = mod;
+  window._quizN = n;
+  renderQuizQuestion(body, 0);
+}
+
+function renderQuizQuestion(body, qi) {
+  var mod = window._quizMod;
+  var q = mod.questions[qi];
+  var total = mod.questions.length;
+  body.innerHTML =
+    '<div style="font-size:11px;font-weight:700;color:var(--mid);margin-bottom:12px">Frage ' + (qi+1) + ' von ' + total + '</div>' +
+    '<div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;line-height:1.4">' + q.q + '</div>' +
+    q.options.map(function(opt, i){
+      return '<button onclick="answerQuiz(' + i + ')" style="width:100%;padding:12px 14px;margin-bottom:8px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--dark);text-align:left;cursor:pointer;font-family:var(--font)">' +
+        ['A','B','C','D'][i] + ') ' + opt + '</button>';
+    }).join('');
+}
+
+function answerQuiz(chosen) {
+  var mod = window._quizMod;
+  var qi  = window._quizState.current;
+  var q   = mod.questions[qi];
+  var body = document.getElementById('learn-modal-body');
+  var correct = chosen === q.correct;
+  if (correct) window._quizState.score++;
+  body.innerHTML =
+    '<div style="padding:14px;background:' + (correct?'#f0fdf4':'#fff0f0') + ';border-radius:12px;margin-bottom:12px;border:1.5px solid ' + (correct?'#16a34a':'var(--red)') + '">' +
+      '<div style="font-size:20px;margin-bottom:6px">' + (correct?'✅':'❌') + ' ' + (correct?'Richtig!':'Leider falsch.') + '</div>' +
+      '<div style="font-size:13px;color:var(--slate);line-height:1.5">' + q.explain + '</div>' +
+    '</div>' +
+    '<button onclick="nextQuizQuestion()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">' +
+      (qi+1 < mod.questions.length ? 'Nächste Frage →' : 'Ergebnis sehen →') +
+    '</button>';
+}
+
+function nextQuizQuestion() {
+  var mod  = window._quizMod;
+  var body = document.getElementById('learn-modal-body');
+  window._quizState.current++;
+  if (window._quizState.current < mod.questions.length) {
+    renderQuizQuestion(body, window._quizState.current);
+  } else {
+    var score = window._quizState.score;
+    var total = mod.questions.length;
+    var perfect = score === total;
+    body.innerHTML =
+      '<div style="text-align:center;padding:20px 10px">' +
+        '<div style="font-size:48px;margin-bottom:10px">' + (perfect?'🏆':(score>=1?'⭐':'💪')) + '</div>' +
+        '<div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:6px">' + score + ' / ' + total + ' richtig</div>' +
+        '<div style="font-size:13px;color:var(--mid);margin-bottom:16px">' + (perfect?'Perfekt! Du hast alles verstanden.':'Gut versucht! Schau dir die Erklärungen nochmal an.') + '</div>' +
+      '</div>' +
+      '<button onclick="markLearnDone(' + window._quizN + ')" style="width:100%;padding:12px;background:var(--ok);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Modul abschliessen ✓</button>';
+  }
+}
+
+/* ── Twint renderer ───────────────────────────────────── */
+function renderLearnTwint(body, mod, n) {
+  window._twintBalance = 80;
+  window._twintN = n;
+  renderTwintScreen(body);
+}
+
+function renderTwintScreen(body) {
+  if (!body) body = document.getElementById('learn-modal-body');
+  var mod = learnData[window._twintN];
+  body.innerHTML =
+    '<div style="background:linear-gradient(135deg,#00a0e4,#0070b0);border-radius:14px;padding:16px;color:white;margin-bottom:14px;text-align:center">' +
+      '<div style="font-size:12px;opacity:.8;margin-bottom:4px">Twint-Guthaben</div>' +
+      '<div style="font-size:32px;font-weight:800">CHF ' + window._twintBalance.toFixed(2) + '</div>' +
+    '</div>' +
+    '<div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:10px">Tippe auf einen Artikel zum Bezahlen:</div>' +
+    mod.items.map(function(item, i){
+      return '<button onclick="twintPay(' + i + ')" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;margin-bottom:8px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--dark)">' +
+        '<span>' + item.name + '</span><span style="color:var(--red)">CHF ' + item.price.toFixed(2) + ' zahlen</span></button>';
+    }).join('') +
+    '<button onclick="markLearnDone(' + window._twintN + ')" style="width:100%;margin-top:6px;padding:10px;background:var(--bg);color:var(--mid);border:1px solid var(--border);border-radius:10px;font-size:13px;cursor:pointer;font-family:var(--font)">Modul abschliessen ✓</button>';
+}
+
+function twintPay(i) {
+  var mod = learnData[window._twintN];
+  var item = mod.items[i];
+  var body = document.getElementById('learn-modal-body');
+  if (window._twintBalance < item.price) {
+    body.innerHTML = '<div style="text-align:center;padding:20px"><div style="font-size:40px">😬</div><div style="font-size:16px;font-weight:700;color:var(--red);margin:10px 0">Nicht genug Guthaben!</div><div style="font-size:13px;color:var(--mid)">So fühlt es sich an, wenn das Konto leer ist. Darum ist sparen wichtig!</div></div>' +
+      '<button onclick="renderTwintScreen()" style="width:100%;margin-top:12px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Zurück ←</button>';
+    return;
+  }
+  window._twintBalance -= item.price;
+  body.innerHTML =
+    '<div style="text-align:center;padding:20px">' +
+      '<div style="font-size:48px;margin-bottom:10px">✅</div>' +
+      '<div style="font-size:16px;font-weight:700;color:var(--ok);margin-bottom:6px">Zahlung erfolgreich!</div>' +
+      '<div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px">' + item.name + '</div>' +
+      '<div style="font-size:14px;color:var(--red);margin-bottom:10px">- CHF ' + item.price.toFixed(2) + '</div>' +
+      '<div style="font-size:13px;color:var(--mid)">Restguthaben: CHF ' + window._twintBalance.toFixed(2) + '</div>' +
+    '</div>' +
+    '<button onclick="renderTwintScreen()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Weiter zahlen →</button>';
+}
+
+/* ── Swipe renderer (Bedürfnis vs Wunsch) ─────────────── */
+function renderLearnSwipe(body, mod, n) {
+  window._swipeIdx   = 0;
+  window._swipeScore = { need:0, want:0, wrong:0 };
+  window._swipeN     = n;
+  window._swipeMod   = mod;
+  renderSwipeCard(body);
+}
+
+function renderSwipeCard(body) {
+  if (!body) body = document.getElementById('learn-modal-body');
+  var mod  = window._swipeMod;
+  var idx  = window._swipeIdx;
+  if (idx >= mod.cards.length) { renderSwipeResult(body); return; }
+  var card = mod.cards[idx];
+  body.innerHTML =
+    '<div style="font-size:11px;font-weight:700;color:var(--mid);text-align:center;margin-bottom:10px">' + (idx+1) + ' / ' + mod.cards.length + '</div>' +
+    '<div style="background:white;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.12);padding:30px 20px;text-align:center;margin-bottom:16px;min-height:120px;display:flex;align-items:center;justify-content:center">' +
+      '<div style="font-size:20px;font-weight:700;color:var(--dark)">' + card.item + '</div>' +
+    '</div>' +
+    '<div style="display:flex;gap:10px">' +
+      '<button onclick="swipeAnswer(\'want\')" style="flex:1;padding:14px;background:#fff0f0;border:2px solid var(--red);border-radius:12px;font-size:14px;font-weight:700;color:var(--red);cursor:pointer;font-family:var(--font)">❌ Wunsch</button>' +
+      '<button onclick="swipeAnswer(\'need\')" style="flex:1;padding:14px;background:#f0fdf4;border:2px solid #16a34a;border-radius:12px;font-size:14px;font-weight:700;color:#16a34a;cursor:pointer;font-family:var(--font)">✅ Bedürfnis</button>' +
+    '</div>';
+}
+
+function swipeAnswer(answer) {
+  var mod  = window._swipeMod;
+  var idx  = window._swipeIdx;
+  var card = mod.cards[idx];
+  var correct = answer === card.type;
+  if (correct) window._swipeScore[card.type]++;
+  else window._swipeScore.wrong++;
+  var body = document.getElementById('learn-modal-body');
+  body.innerHTML =
+    '<div style="background:' + (correct?'#f0fdf4':'#fff0f0') + ';border-radius:12px;padding:16px;margin-bottom:12px;border:1.5px solid ' + (correct?'#16a34a':'var(--red)') + '">' +
+      '<div style="font-size:20px;margin-bottom:6px">' + (correct?'✅ Richtig!':'❌ Falsch') + '</div>' +
+      '<div style="font-size:13px;color:var(--slate);line-height:1.5">' + card.explain + '</div>' +
+    '</div>' +
+    '<button onclick="swipeNext()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Weiter →</button>';
+}
+
+function swipeNext() {
+  window._swipeIdx++;
+  renderSwipeCard(document.getElementById('learn-modal-body'));
+}
+
+function renderSwipeResult(body) {
+  var total = window._swipeMod.cards.length;
+  var correct = total - window._swipeScore.wrong;
+  body.innerHTML =
+    '<div style="text-align:center;padding:16px">' +
+      '<div style="font-size:48px">' + (correct===total?'🏆':(correct>=total*0.7?'⭐':'💪')) + '</div>' +
+      '<div style="font-size:20px;font-weight:800;color:var(--dark);margin:10px 0">' + correct + ' / ' + total + ' richtig</div>' +
+      '<div style="font-size:13px;color:var(--mid)">Du erkennst Bedürfnisse und Wünsche!</div>' +
+    '</div>' +
+    '<button onclick="markLearnDone(' + window._swipeN + ')" style="width:100%;margin-top:10px;padding:12px;background:var(--ok);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Abschliessen ✓</button>';
+}
+
+/* ── Phishing renderer ────────────────────────────────── */
+function renderLearnPhishing(body, mod, n) {
+  window._phishN   = n;
+  window._phishMod = mod;
+  window._phishIdx = 0;
+  window._phishScore = 0;
+  renderPhishingEmail(body);
+}
+
+function renderPhishingEmail(body) {
+  if (!body) body = document.getElementById('learn-modal-body');
+  var mod  = window._phishMod;
+  var idx  = window._phishIdx;
+  if (idx >= mod.emails.length) { renderPhishingResult(body); return; }
+  var email = mod.emails[idx];
+  body.innerHTML =
+    '<div style="font-size:11px;font-weight:700;color:var(--mid);margin-bottom:10px">E-Mail ' + (idx+1) + ' von ' + mod.emails.length + ' — Echt oder Fake?</div>' +
+    '<div style="background:white;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px">' +
+      '<div style="padding:10px 12px;background:var(--bg);border-bottom:1px solid var(--border)">' +
+        '<div style="font-size:11px;color:var(--mid)">Von: <b>' + email.from + '</b></div>' +
+        '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-top:2px">' + email.subject + '</div>' +
+      '</div>' +
+      '<div style="padding:12px;font-size:13px;color:var(--slate);line-height:1.6">' + email.body + '</div>' +
+    '</div>' +
+    '<div style="display:flex;gap:10px">' +
+      '<button onclick="phishingAnswer(true)" style="flex:1;padding:14px;background:#fff0f0;border:2px solid var(--red);border-radius:12px;font-size:14px;font-weight:700;color:var(--red);cursor:pointer;font-family:var(--font)">⚠️ Fake!</button>' +
+      '<button onclick="phishingAnswer(false)" style="flex:1;padding:14px;background:#f0fdf4;border:2px solid #16a34a;border-radius:12px;font-size:14px;font-weight:700;color:#16a34a;cursor:pointer;font-family:var(--font)">✅ Echt</button>' +
+    '</div>';
+}
+
+function phishingAnswer(guessedFake) {
+  var email = window._phishMod.emails[window._phishIdx];
+  var correct = guessedFake === email.isFake;
+  if (correct) window._phishScore++;
+  var body = document.getElementById('learn-modal-body');
+  body.innerHTML =
+    '<div style="background:' + (correct?'#f0fdf4':'#fff0f0') + ';border-radius:12px;padding:16px;margin-bottom:12px;border:1.5px solid ' + (correct?'#16a34a':'var(--red)') + '">' +
+      '<div style="font-size:20px;margin-bottom:6px">' + (correct?'✅ Richtig!':'❌ Vorsicht!') + ' Diese E-Mail ist <b>' + (email.isFake?'GEFÄLSCHT':'ECHT') + '</b>.</div>' +
+      '<div style="font-size:13px;color:var(--slate);line-height:1.5">' + email.explain + '</div>' +
+    '</div>' +
+    '<button onclick="phishingNext()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Weiter →</button>';
+}
+
+function phishingNext() {
+  window._phishIdx++;
+  renderPhishingEmail(document.getElementById('learn-modal-body'));
+}
+
+function renderPhishingResult(body) {
+  var total = window._phishMod.emails.length;
+  body.innerHTML =
+    '<div style="text-align:center;padding:16px">' +
+      '<div style="font-size:48px">' + (window._phishScore===total?'🕵️':'🔍') + '</div>' +
+      '<div style="font-size:20px;font-weight:800;color:var(--dark);margin:10px 0">' + window._phishScore + ' / ' + total + ' erkannt</div>' +
+      '<div style="font-size:13px;color:var(--mid)">Du bist jetzt ein Phishing-Detektor!</div>' +
+    '</div>' +
+    '<button onclick="markLearnDone(' + window._phishN + ')" style="width:100%;margin-top:10px;padding:12px;background:var(--ok);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Abschliessen ✓</button>';
+}
+
+/* ── Lohn renderer ────────────────────────────────────── */
+function renderLearnLohn(body, mod, n) {
+  window._lohnN = n;
+  body.innerHTML =
+    '<div style="font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:12px">Stell dir vor du arbeitest als Lehrling. Passe die Stunden an und sieh was auf deinem Konto landet:</div>' +
+    '<div style="background:white;border-radius:12px;border:1.5px solid var(--border);padding:16px">' +
+      '<label style="font-size:12px;color:var(--mid);font-weight:600">Stundenlohn: CHF ' + mod.stundenLohn.toFixed(2) + '</label>' +
+      '<br><label style="font-size:12px;color:var(--mid);font-weight:600;margin-top:10px;display:block">Stunden/Monat: <span id="ll-stunden-label">160</span></label>' +
+      '<input id="ll-stunden" type="range" min="20" max="200" value="160" style="width:100%;accent-color:var(--red);margin:4px 0 14px" oninput="calcLohn(' + n + ')">' +
+      '<div id="ll-result"></div>' +
+    '</div>' +
+    '<button onclick="markLearnDone(' + n + ')" style="width:100%;margin-top:14px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Verstanden — weiter ✓</button>';
+  setTimeout(function(){ calcLohn(n); }, 50);
+}
+
+function calcLohn(n) {
+  var mod     = learnData[n];
+  var stunden = parseInt(document.getElementById('ll-stunden').value)||160;
+  var lbl     = document.getElementById('ll-stunden-label');
+  if (lbl) lbl.textContent = stunden;
+  var brutto  = stunden * mod.stundenLohn;
+  var ahv     = brutto * 0.053;  // AHV/IV/EO ~5.3%
+  var alv     = brutto * 0.011;  // ALV 1.1%
+  var netto   = brutto - ahv - alv;
+  var r = document.getElementById('ll-result');
+  if (!r) return;
+  r.innerHTML =
+    '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">' +
+      '<span style="font-size:13px;color:var(--mid)">Bruttolohn</span>' +
+      '<span style="font-size:14px;font-weight:700;color:var(--dark)">CHF ' + Math.round(brutto).toLocaleString('de-CH') + '</span>' +
+    '</div>' +
+    '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">' +
+      '<span style="font-size:13px;color:var(--mid)">- AHV/IV/EO (5.3%)</span>' +
+      '<span style="font-size:13px;color:var(--red)">- CHF ' + Math.round(ahv).toLocaleString('de-CH') + '</span>' +
+    '</div>' +
+    '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">' +
+      '<span style="font-size:13px;color:var(--mid)">- ALV (1.1%)</span>' +
+      '<span style="font-size:13px;color:var(--red)">- CHF ' + Math.round(alv).toLocaleString('de-CH') + '</span>' +
+    '</div>' +
+    '<div style="display:flex;justify-content:space-between;padding:10px 0 0">' +
+      '<span style="font-size:14px;font-weight:700;color:var(--dark)">💰 Nettolohn</span>' +
+      '<span style="font-size:16px;font-weight:800;color:var(--ok)">CHF ' + Math.round(netto).toLocaleString('de-CH') + '</span>' +
+    '</div>';
+}
+
+/* ── Shared: mark module done ─────────────────────────── */
+function markLearnDone(n) {
+  learnProgress[n] = learnData[n].steps ? learnData[n].steps.length : 1;
+  updateLearnProgress(n);
+  closeLearnModal();
+  updateGamification();
+  showToast('Modul abgeschlossen! 🎉');
 }
 
 function closeLearnModal() {
@@ -2642,14 +3130,16 @@ function closeLearnModal() {
 }
 
 function updateLearnProgress(n) {
-  var bar = document.getElementById('learn-mod-'+n+'-bar');
+  var bar   = document.getElementById('learn-mod-'+n+'-bar');
   var label = document.getElementById('learn-mod-'+n+'-label');
   if (!bar || !label) return;
-  var pct = (learnProgress[n] / learnData[n].steps.length) * 100;
+  var total = learnData[n].steps ? learnData[n].steps.length : 1;
+  var done  = Math.min(learnProgress[n], total);
+  var pct   = Math.round(done / total * 100);
   bar.style.width = pct + '%';
-  if (learnProgress[n] === 0) label.textContent = 'Noch nicht gestartet';
-  else if (learnProgress[n] >= learnData[n].steps.length) { label.textContent = '✓ Abgeschlossen 🎉'; bar.style.background = '#16a34a'; }
-  else label.textContent = learnProgress[n] + ' / ' + learnData[n].steps.length + ' Schritte';
+  if (done === 0)    { label.textContent = 'Noch nicht gestartet'; bar.style.background = 'var(--red)'; }
+  else if (pct >= 100){ label.textContent = '✓ Abgeschlossen 🎉'; bar.style.background = '#16a34a'; }
+  else               { label.textContent = done + ' / ' + total + ' Schritte'; }
 }
 
 function switchYouthView(name) {
@@ -3265,27 +3755,14 @@ function updateFkPhase() {
   var age = state.age;
   var phase1 = document.getElementById('fk-phase-1');
   var phase2 = document.getElementById('fk-phase-2');
-  var indicator = document.getElementById('fk-phase-indicator');
   if (!phase1) return;
 
   if (age < 18) {
-    phase1.classList.add('active');
-    phase2.classList.remove('active');
-    if (indicator) {
-      indicator.style.background = 'var(--red-l)';
-      indicator.style.color = 'var(--red)';
-      indicator.style.border = '1.5px solid rgba(253,0,13,.15)';
-      indicator.textContent = '📍 Du bist in Phase 1 — Unter 18';
-    }
+    phase1.style.display = '';
+    if (phase2) phase2.style.display = 'none';
   } else {
-    phase2.classList.add('active');
-    phase1.classList.remove('active');
-    if (indicator) {
-      indicator.style.background = 'var(--ok-l)';
-      indicator.style.color = 'var(--ok)';
-      indicator.style.border = '1.5px solid rgba(22,163,74,.15)';
-      indicator.textContent = '📍 Du bist in Phase 2 — Über 18';
-    }
+    phase1.style.display = 'none';
+    if (phase2) phase2.style.display = '';
   }
 }
 
