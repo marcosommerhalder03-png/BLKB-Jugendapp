@@ -51,6 +51,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font);
+  /* Prevent pull-to-refresh from reloading the PWA and hiding the nav */
+  overscroll-behavior: none;
 }
 
 
@@ -64,6 +66,9 @@ body {
   position: fixed;
   top: 0; left: 0;
   overflow: hidden;
+  /* Block any overscroll/pull-to-refresh on the fixed container */
+  overscroll-behavior: none;
+  touch-action: pan-x pan-y;
 }
 
 .screen {
@@ -87,6 +92,8 @@ body {
   -webkit-overflow-scrolling: touch;
   padding-bottom: 24px;
   height: 0;
+  /* Contain overscroll within the scroll area — do not bubble to page */
+  overscroll-behavior-y: contain;
 }
 
 .scroll-area::-webkit-scrollbar { display: none; }
@@ -1433,11 +1440,11 @@ input[type="range"]::-webkit-slider-thumb {
 /* =============================================
    MODE SWITCHING
 ============================================= */
-/* Default: adult mode */
-#app .youth-only { display: none !important; }
-#app .adult-only { display: flex; }
+/* Default (before JS runs): youth-nav visible so there is always a nav — no flash of empty nav */
+#app .youth-only { display: flex !important; }
+#app .adult-only { display: none !important; }
 
-/* Youth mode */
+/* Youth mode — explicit (mirrors default) */
 #app.mode-youth .youth-only { display: flex !important; }
 #app.mode-youth .adult-only { display: none !important; }
 
@@ -2063,9 +2070,9 @@ window.addEventListener('load', function(){
             </div>
             <div style="flex:1">
               <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Bis Alter</div>
-              <input type="number" id="inv-age-to" min="13" max="67" value="30"
+              <input type="number" id="inv-age-to" min="13" max="65" value="30"
                 class="form-input" style="margin:0;padding:8px 12px;font-size:18px;font-weight:700"
-                oninput="calcInvest()">
+                onchange="calcInvest()" onblur="calcInvest()">
             </div>
           </div>
 
@@ -3212,6 +3219,15 @@ function setAge(age) {
 
   var ageFromEl = document.getElementById('inv-age-from');
   if (ageFromEl) ageFromEl.textContent = age;
+
+  // Säule 3a: nur ab 18 anzeigen
+  var btn3a = document.getElementById('inv-btn-3a');
+  if (btn3a) {
+    btn3a.style.display = age < 18 ? 'none' : '';
+    // Wenn unter 18 und aktuell auf 3a, zu 'frei' wechseln
+    if (age < 18 && invState.type === '3a') setInvType('frei');
+  }
+
   calcInvest();
   updateFkPhase();
   save();
@@ -3850,12 +3866,13 @@ function setInvGender(gender) {
   invState.gender = gender;
   document.getElementById('inv-btn-male').classList.toggle('active', gender === 'm');
   document.getElementById('inv-btn-female').classList.toggle('active', gender === 'f');
-  // Bei Säule 3a: Rentenalter automatisch anpassen
-  if (invState.type === '3a') {
-    var retAge = gender === 'f' ? 64 : 65;
-    document.getElementById('inv-age-to').value = retAge;
-    calcInvest();
-  }
+  var maxAge = gender === 'f' ? 64 : 65;
+  // Update the field max attribute immediately
+  var ageToEl = document.getElementById('inv-age-to');
+  ageToEl.max = maxAge;
+  // If current value exceeds new max, clamp it
+  if (parseInt(ageToEl.value) > maxAge) ageToEl.value = maxAge;
+  calcInvest();
 }
 
 function setInvRate(rate) {
@@ -3880,13 +3897,16 @@ function onRateManual(val) {
 
 function calcInvest() {
   state.investUsed = true;
-  var ageFrom = parseInt(document.getElementById('inv-age-from').textContent) || state.age;
-  var ageTo   = parseInt(document.getElementById('inv-age-to').value) || 30;
-  var amount  = parseFloat(document.getElementById('inv-amount').value) || 0;
+  var ageFrom  = parseInt(document.getElementById('inv-age-from').textContent) || state.age;
+  var ageTo    = parseInt(document.getElementById('inv-age-to').value) || 30;
+  var amount   = parseFloat(document.getElementById('inv-amount').value) || 0;
+  var maxAgeTo = invState.gender === 'f' ? 64 : 65;
 
-  // Clamp ageTo
+  // Clamp ageTo: must be > ageFrom and ≤ retirement age
   if (ageTo <= ageFrom) ageTo = ageFrom + 1;
+  if (ageTo > maxAgeTo) ageTo = maxAgeTo;
   document.getElementById('inv-age-to').value = ageTo;
+  document.getElementById('inv-age-to').max    = maxAgeTo;
 
   invState.amount = amount;
   invState.ageTo  = ageTo;
@@ -4804,44 +4824,59 @@ function render3aInvest(balance, hasAccount) {
 function init() {
   load();
 
-  // Daten von ACP/Avaloq-Schnittstellen laden (Stubs im Mock-Modus)
-  apiInit();
+  // ── STEP 1: Apply mode IMMEDIATELY — nav is always visible, even if the rest fails ──
+  applyMode(state.age < 18 ? 'youth' : 'adult');
 
-  // Default goals if first time
-  if (state.goals.length === 0) {
-    state.goals = defaultGoals.slice();
+  try {
+    // Daten von ACP/Avaloq-Schnittstellen laden (Stubs im Mock-Modus)
+    apiInit();
+
+    // Default goals if first time
+    if (state.goals.length === 0) {
+      state.goals = defaultGoals.slice();
+    }
+
+    // Set age slider
+    var slider = document.getElementById('age-slider');
+    if (slider) slider.value = state.age;
+
+    // Init spar input
+    var sparIn = document.getElementById('goals-spar-input');
+    var sparDsp = document.getElementById('goals-spar-display');
+    if (sparIn) sparIn.value = state.sparGuthaben;
+    if (sparDsp) sparDsp.textContent = state.sparGuthaben.toLocaleString('de-CH');
+
+    // Init budget slider/input — null-checked so a missing element never aborts init
+    var budSlider = document.getElementById('bud-slider');
+    var budInput  = document.getElementById('bud-lohn-input');
+    var budDisp   = document.getElementById('bud-lohn-display');
+    if (budSlider) budSlider.value = state.lohn;
+    if (budInput)  budInput.value  = state.lohn;
+    if (budDisp)   budDisp.textContent = state.lohn.toLocaleString('de-CH');
+
+    // Render all
+    setAge(state.age);
+    renderGoals();
+    renderHaxx();
+    calcBudget();
+    renderFinlit();
+    updateHomeCounts();
+
+    // Invest-Screen init
+    var ageFromEl = document.getElementById('inv-age-from');
+    if (ageFromEl) ageFromEl.textContent = state.age;
+
+    // 3a-Box initial immer verstecken (nur bei Säule 3a sichtbar)
+    var saldoBox = document.getElementById('inv-3a-saldo-box');
+    if (saldoBox) saldoBox.style.display = 'none';
+
+    calcInvest();
+    updateGamification();
+  } catch (e) {
+    console.warn('init() partial error (nav already applied):', e);
   }
 
-  // Set age slider
-  var slider = document.getElementById('age-slider');
-  if (slider) slider.value = state.age;
-
-  // Init spar input
-  if (document.getElementById('goals-spar-input')) {
-    document.getElementById('goals-spar-input').value = state.sparGuthaben;
-    document.getElementById('goals-spar-display').textContent = state.sparGuthaben.toLocaleString('de-CH');
-  }
-
-  // Init slider/input
-  document.getElementById('bud-slider').value = state.lohn;
-  document.getElementById('bud-lohn-input').value = state.lohn;
-  document.getElementById('bud-lohn-display').textContent = state.lohn.toLocaleString('de-CH');
-
-  // Render all
-  setAge(state.age);
-  renderGoals();
-  renderHaxx();
-  calcBudget();
-  renderFinlit();
-  updateHomeCounts();
-  // Invest-Screen init
-  var ageFromEl = document.getElementById('inv-age-from');
-  if (ageFromEl) ageFromEl.textContent = state.age;
-  // 3a-Box initial immer verstecken (nur bei Säule 3a sichtbar)
-  var saldoBox = document.getElementById('inv-3a-saldo-box');
-  if (saldoBox) saldoBox.style.display = 'none';
-  calcInvest();
-  updateGamification();
+  // ── STEP 2: Re-apply mode at end so any render side-effects are corrected ──
   applyMode(state.age < 18 ? 'youth' : 'adult');
 }
 
