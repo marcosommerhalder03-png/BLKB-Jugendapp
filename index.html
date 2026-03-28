@@ -489,6 +489,26 @@ body {
 
 .goal-del-btn:hover { opacity: .8; }
 
+/* Drag handle */
+.goal-drag-handle {
+  background: none;
+  border: none;
+  padding: 2px 8px 2px 4px;
+  color: var(--light);
+  font-size: 18px;
+  line-height: 1;
+  cursor: grab;
+  flex-shrink: 0;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  align-items: center;
+}
+.goal-drag-handle:active { cursor: grabbing; color: var(--mid); }
+.goal-item.goal-dragging { opacity: .3; transition: none; }
+.goal-item { transition: transform .15s; }
+
 .add-goal-btn {
   display: flex;
   align-items: center;
@@ -3363,7 +3383,7 @@ function renderGoals() {
       pctHint.textContent = '🎉 Alle Sparziele erreicht!';
     } else {
       pctBar.style.background = 'var(--red)';
-      var fehlt = totalZiel - gespart;
+      var fehlt = totalZiel - Math.min(spar, totalZiel);
       pctHint.textContent = 'Noch CHF ' + fmtChf(fehlt) + ' bis alle Ziele erreicht';
     }
   }
@@ -3374,32 +3394,56 @@ function renderGoals() {
   }
 
   var html = '';
-  var cumulative = 0; // laufende Summe der Ziele vor diesem
+  var cumulative = 0; // laufende Summe der Zielbeträge aller vorangehenden Ziele
 
   state.goals.forEach(function(g, i) {
-    var target     = g.ziel || 0;
-    var available  = Math.max(0, spar - cumulative);
-    var allocated  = Math.min(available, target);
-    var pct        = target > 0 ? Math.min(100, Math.round(allocated / target * 100)) : 0;
-    var missing    = Math.max(0, target - allocated);
-    var reached    = pct >= 100;
+    var target    = g.ziel || 0;
+    var cumulSum  = cumulative + target; // kumulierter Zielbetrag bis und mit diesem Ziel
 
-    // Zeitprognose: monatliche Sparrate für dieses Ziel
+    // Zugeteiltes Guthaben: wie viel des heutigen Sparkontos dieses Ziel abdeckt
+    var available = Math.max(0, spar - cumulative);
+    var allocated = Math.min(available, target);
+    var pct       = target > 0 ? Math.min(100, Math.round(allocated / target * 100)) : 0;
+    var missing   = Math.max(0, target - allocated);
+    var reached   = pct >= 100;
+
+    // ── Kumulative Zeitprognose ──────────────────────────────────────────
+    // Ziel i ist erreicht, wenn die kumulierten Ersparnisse >= cumulSum sind.
+    // Monate von heute = ceil((cumulSum - spar) / mSpar)
     var timeHtml = '';
-    if (!reached && mSpar > 0 && missing > 0) {
-      var months = Math.ceil(missing / mSpar);
-      timeHtml = '<div style="font-size:11px;color:var(--mid);margin-top:2px">⏱ noch ~' + months + ' Mt. bei CHF ' + fmtChf(mSpar) + '/Mt. Sparrate</div>';
+    if (!reached && mSpar > 0) {
+      var monthsTotal = Math.ceil((cumulSum - spar) / mSpar);
+      var timeLabel;
+      if (monthsTotal <= 1) {
+        timeLabel = '< 1 Mt.';
+      } else if (monthsTotal < 12) {
+        timeLabel = '~' + monthsTotal + ' Mt.';
+      } else {
+        var yrs  = Math.floor(monthsTotal / 12);
+        var mths = monthsTotal % 12;
+        timeLabel = '~' + yrs + ' J.' + (mths > 0 ? ' ' + mths + ' Mt.' : '');
+      }
+      timeHtml = '<div style="font-size:11px;color:var(--mid);margin-top:3px">⏱ in ' + timeLabel + ' erreicht <span style="color:var(--light)">(bei CHF ' + fmtChf(mSpar) + '/Mt.)</span></div>';
     } else if (!reached && mSpar === 0 && missing > 0) {
-      timeHtml = '<div style="font-size:11px;color:var(--amber);margin-top:2px">💡 Sparrate im <b>Budgetrechner</b> setzen</div>';
+      timeHtml = '<div style="font-size:11px;color:var(--amber);margin-top:3px">💡 Sparrate im <b>Budgetrechner</b> setzen</div>';
     }
 
+    // Prioritäts-Badge — Farbe nach Rang
+    var badgeColors = ['#fd000d','#e38121','#7c8947','#2c5969','#6b7280'];
+    var badgeColor  = badgeColors[Math.min(i, badgeColors.length - 1)];
+
     html +=
-      '<div class="goal-item" onclick="openGoalModal(' + i + ')">' +
+      '<div class="goal-item" data-goal-idx="' + i + '" onclick="openGoalModal(' + i + ')">' +
         '<div class="goal-item-header">' +
+          // Drag handle (links)
+          '<button class="goal-drag-handle" ' +
+            'ontouchstart="goalDragStart(event,' + i + ')" ' +
+            'onclick="event.stopPropagation()" ' +
+            'title="Priorität verschieben">⠿</button>' +
           '<div class="goal-emoji">' + g.emoji + '</div>' +
           '<div class="goal-info">' +
-            '<div style="display:flex;align-items:center;gap:5px;margin-bottom:2px">' +
-              '<span style="font-size:9px;font-weight:700;color:var(--mid);background:var(--bg);padding:1px 7px;border-radius:10px;border:1px solid var(--border)">RANG ' + (i+1) + '</span>' +
+            '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">' +
+              '<span style="font-size:9px;font-weight:700;color:white;background:' + badgeColor + ';padding:2px 7px;border-radius:10px">P' + (i+1) + '</span>' +
               '<span class="goal-name">' + escHtml(g.name) + '</span>' +
             '</div>' +
             '<div style="font-size:12px;font-weight:700;color:var(--dark)">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:var(--mid)">/ ' + fmtChf(target) + '</span></div>' +
@@ -3417,12 +3461,12 @@ function renderGoals() {
         '</div>' +
         '<div class="goal-bar-wrap">' +
           '<div class="goal-bar-bg">' +
-            '<div class="goal-bar-fill" style="width:' + pct + '%;background:' + (reached ? 'var(--ok)' : 'var(--red)') + ';transition:width .5s"></div>' +
+            '<div class="goal-bar-fill" style="width:' + pct + '%;background:' + (reached ? 'var(--ok)' : badgeColor) + ';transition:width .5s"></div>' +
           '</div>' +
         '</div>' +
       '</div>';
 
-    cumulative += target;
+    cumulative = cumulSum;
   });
 
   // Hinweis wenn Sparrate fehlt
@@ -3440,6 +3484,126 @@ function renderGoals() {
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+/* ================================================
+   GOAL DRAG & DROP — Touch-basiertes Umordnen
+   Finger auf ⠿-Handle → ziehen → loslassen
+================================================ */
+var _gd = {
+  active:       false,
+  fromIdx:      -1,
+  toIdx:        -1,
+  ghost:        null,
+  ghostTopBase: 0,
+  startY:       0
+};
+
+function goalDragStart(e, idx) {
+  // Nur per Touch, kein Klick-Propagation auf die Karte
+  e.stopPropagation();
+  if (!e.touches || !e.touches[0]) return;
+
+  var touch = e.touches[0];
+  var cards = document.querySelectorAll('#goals-list .goal-item');
+  var card  = cards[idx];
+  if (!card) return;
+  var rect  = card.getBoundingClientRect();
+
+  _gd.active       = true;
+  _gd.fromIdx      = idx;
+  _gd.toIdx        = idx;
+  _gd.startY       = touch.clientY;
+  _gd.ghostTopBase = rect.top;
+
+  // Ghost-Kopie
+  var ghost = card.cloneNode(true);
+  ghost.style.cssText =
+    'position:fixed;left:' + rect.left + 'px;top:' + rect.top + 'px;' +
+    'width:' + rect.width + 'px;z-index:9999;pointer-events:none;' +
+    'opacity:.93;box-shadow:0 16px 48px rgba(0,0,0,.22);' +
+    'border-radius:10px;background:white;transition:none;' +
+    'transform:scale(1.03);';
+  document.body.appendChild(ghost);
+  _gd.ghost = ghost;
+
+  // Original abdunkeln
+  card.classList.add('goal-dragging');
+}
+
+function _goalDragMove(e) {
+  if (!_gd.active) return;
+  e.preventDefault(); // Scroll verhindern
+
+  var touch = e.touches[0];
+  var dy    = touch.clientY - _gd.startY;
+
+  // Ghost bewegen
+  _gd.ghost.style.top = (_gd.ghostTopBase + dy) + 'px';
+
+  // Ziel-Index bestimmen (welcher Slot wird überfahren?)
+  var cards    = document.querySelectorAll('#goals-list .goal-item');
+  var ghostMid = touch.clientY;
+  var newIdx   = _gd.fromIdx;
+
+  for (var i = 0; i < cards.length; i++) {
+    if (i === _gd.fromIdx) continue;
+    var r   = cards[i].getBoundingClientRect();
+    var mid = r.top + r.height / 2;
+    if (i < _gd.fromIdx && ghostMid < mid) { newIdx = i; break; }
+    if (i > _gd.fromIdx && ghostMid > mid) { newIdx = i; }
+  }
+
+  if (newIdx !== _gd.toIdx) {
+    _gd.toIdx = newIdx;
+    // Cards visuell verschieben um Platz zu zeigen
+    var fromCard = cards[_gd.fromIdx];
+    var h = (fromCard ? fromCard.offsetHeight + 10 : 60) + 'px';
+    for (var j = 0; j < cards.length; j++) {
+      if (j === _gd.fromIdx) continue;
+      var shift = '';
+      if (_gd.fromIdx < _gd.toIdx) {
+        if (j > _gd.fromIdx && j <= _gd.toIdx) shift = 'translateY(-' + h + ')';
+      } else {
+        if (j >= _gd.toIdx && j < _gd.fromIdx) shift = 'translateY(' + h + ')';
+      }
+      cards[j].style.transform = shift;
+    }
+  }
+}
+
+function _goalDragEnd() {
+  if (!_gd.active) return;
+  _gd.active = false;
+
+  // Ghost entfernen
+  if (_gd.ghost) { _gd.ghost.remove(); _gd.ghost = null; }
+
+  // Transforms & Stile zurücksetzen
+  document.querySelectorAll('#goals-list .goal-item').forEach(function(c) {
+    c.style.transform = '';
+    c.classList.remove('goal-dragging');
+  });
+
+  // Reihenfolge anpassen
+  if (_gd.fromIdx !== _gd.toIdx) {
+    var moved = state.goals.splice(_gd.fromIdx, 1)[0];
+    state.goals.splice(_gd.toIdx, 0, moved);
+    save();
+    showToast('✅ Priorität ' + (_gd.toIdx + 1) + ' gesetzt');
+    renderGoals();
+  }
+
+  _gd.fromIdx = -1;
+  _gd.toIdx   = -1;
+}
+
+// Document-level Listener — muss non-passive sein für preventDefault()
+document.addEventListener('touchmove', function(e) {
+  if (_gd.active) _goalDragMove(e);
+}, { passive: false });
+
+document.addEventListener('touchend',    function(e) { if (_gd.active) _goalDragEnd(e); }, { passive: true });
+document.addEventListener('touchcancel', function(e) { if (_gd.active) _goalDragEnd(e); }, { passive: true });
 
 /* ================================================
    HAXX
