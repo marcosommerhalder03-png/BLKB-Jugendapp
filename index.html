@@ -46,105 +46,28 @@
 }
 
 body {
-  background: #111;
+  background: var(--bg);
   min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 24px 16px;
-  gap: 24px;
-  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
   font-family: var(--font);
 }
 
-/* =============================================
-   SIDEBAR (Desktop Preview)
-============================================= */
-.sidebar {
-  width: 200px;
-  flex-shrink: 0;
-  padding-top: 40px;
-}
-
-.sidebar h3 {
-  color: rgba(255,255,255,.4);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  margin-bottom: 8px;
-}
-
-.sb-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 12px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 8px;
-  color: rgba(255,255,255,.5);
-  font-size: 13px;
-  cursor: pointer;
-  text-align: left;
-  margin-bottom: 4px;
-  transition: all .15s;
-  font-family: var(--font);
-}
-
-.sb-btn:hover {
-  background: rgba(255,255,255,.1);
-  color: rgba(255,255,255,.85);
-}
-
-.sb-btn.active {
-  background: rgba(253,0,13,.2);
-  border-color: rgba(253,0,13,.4);
-  color: #ff8080;
-  font-weight: 600;
-}
 
 /* =============================================
-   PHONE FRAME
+   APP FULLSCREEN
 ============================================= */
 .phone {
-  width: 390px;
-  height: 844px;
-  background: #1c1c1e;
-  border-radius: 54px;
-  padding: 14px;
-  box-shadow: 0 50px 100px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.08);
-  position: relative;
-  flex-shrink: 0;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
   overflow: hidden;
-}
-
-.phone::before {
-  content: '';
-  position: absolute;
-  top: 14px; left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 34px;
-  background: #1c1c1e;
-  border-radius: 0 0 22px 22px;
-  z-index: 100;
-}
-
-.phone::after {
-  content: '';
-  position: absolute;
-  top: 24px; left: 50%;
-  transform: translateX(-50%);
-  width: 10px; height: 10px;
-  background: #2a2a2c;
-  border-radius: 50%;
-  z-index: 101;
 }
 
 .screen {
   width: 100%;
   height: 100%;
-  border-radius: 42px;
   background: var(--bg);
   overflow: hidden;
   position: relative;
@@ -1544,17 +1467,6 @@ window.addEventListener('load', function(){
 });
 </script>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <h3>Navigation</h3>
-  <button class="sb-btn active" id="sb0" onclick="switchView('home',0)">🏠 Dashboard</button>
-  <button class="sb-btn" id="sb1" onclick="switchView('goals',1)"><i class="ti ti-target"></i> Sparziele</button>
-  <button class="sb-btn" id="sb2" onclick="switchView('haxx',2)"><i class="ti ti-bolt"></i> MoneyHaxx</button>
-  <button class="sb-btn" id="sb3" onclick="switchView('budget',3)"><i class="ti ti-chart-pie"></i> Budget</button>
-  <button class="sb-btn" id="sb4" onclick="switchView('finlit',4)"><i class="ti ti-building-bank"></i> BLKB Angebote</button>
-  <button class="sb-btn" id="sb5" onclick="switchView('invest',5)"><i class="ti ti-trending-up"></i> Geld vermehren</button>
-  <button class="sb-btn" id="sb6" onclick="switchView('fun',6)"><i class="ti ti-device-gamepad-2"></i> Fun & Games</button>
-</div>
 
 <!-- PHONE -->
 <div class="phone">
@@ -2458,9 +2370,6 @@ function switchView(name, idx) {
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
   document.getElementById('nav' + idx).classList.add('active');
 
-  // Sidebar buttons
-  document.querySelectorAll('.sb-btn').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById('sb' + idx).classList.add('active');
 
   currentView = name;
 
