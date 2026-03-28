@@ -1429,6 +1429,21 @@ input[type="range"]::-webkit-slider-thumb {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* =============================================
+   MODE SWITCHING
+============================================= */
+/* Default: adult mode */
+#app .youth-only { display: none !important; }
+#app .adult-only { display: flex; }
+
+/* Youth mode */
+#app.mode-youth .youth-only { display: flex !important; }
+#app.mode-youth .adult-only { display: none !important; }
+
+/* Adult mode */
+#app.mode-adult .youth-only { display: none !important; }
+#app.mode-adult .adult-only { display: flex !important; }
 </style>
 </head>
 <body>
@@ -1483,6 +1498,7 @@ window.addEventListener('load', function(){
           <img src="img/blkb-logo-claim.svg" alt="BLKB – was morgen zählt" style="height:34px;margin-bottom:12px;display:block;filter:brightness(0) invert(1);">
           <div class="hdr-title">Dein Weg bei der BLKB</div>
           <div class="hdr-sub" id="home-lifecycle-tag">Dein persönlicher Finanzbegleiter</div>
+          <div id="mode-badge" style="display:inline-block;margin-top:8px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.2);font-size:11px;font-weight:700;color:white;">Unter 18 🎮</div>
         </div>
 
         <!-- Hero image -->
@@ -2273,8 +2289,156 @@ window.addEventListener('load', function(){
       </div>
     </div>
 
+    <!-- ================================
+         LEARN (Youth)
+    ================================= -->
+    <div class="view" id="view-learn">
+      <div class="scroll-area">
+        <div class="hdr red-bg">
+          <img src="img/blkb-logo-claim.svg" style="height:28px;margin-bottom:8px;display:block;filter:brightness(0) invert(1);">
+          <div class="hdr-title">Finanz-Schule 🎓</div>
+          <div class="hdr-sub">Lerne spielend mit Geld umzugehen</div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <!-- Module 0 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(0)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💰</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Umgang mit Geld</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Taschengeld clever einteilen</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-0-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-0-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 1 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(1)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🏦</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Mein erstes Konto</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Konto, IBAN &amp; Zinsen einfach erklärt</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-1-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-1-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 2 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(2)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📱</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Im Alltag bezahlen</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Karte, Twint &amp; QR-Code verstehen</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-2-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-2-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 3 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(3)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🛒</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Bedürfnis vs. Wunsch</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Brauche ich das wirklich?</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-3-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-3-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 4 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(4)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🔐</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Sicher online</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Phishing, Passwörter &amp; Bankdaten schützen</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-4-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-4-label">Noch nicht gestartet</div>
+        </div>
+
+        <!-- Module 5 -->
+        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(5)">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💼</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:var(--dark)">Erster Job</div>
+              <div style="font-size:12px;color:var(--mid);margin-top:2px">Lohnausweis und erstes Gehalt verstehen</div>
+            </div>
+            <div style="font-size:18px;color:var(--light)">→</div>
+          </div>
+          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div id="learn-mod-5-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-5-label">Noch nicht gestartet</div>
+        </div>
+
+        <div style="height:20px"></div>
+      </div>
+    </div>
+
+    <!-- LEARN MODAL -->
+    <div id="learn-modal" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:flex-end;">
+      <div style="background:var(--bg);border-radius:20px 20px 0 0;width:100%;max-height:85%;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--border);flex-shrink:0;">
+          <div id="learn-modal-title" style="font-size:16px;font-weight:700;color:var(--dark)"></div>
+          <button onclick="closeLearnModal()" style="background:none;border:none;font-size:22px;color:var(--mid);cursor:pointer;padding:0;line-height:1;">×</button>
+        </div>
+        <div id="learn-modal-body" style="overflow-y:auto;padding:16px;padding-bottom:32px;"></div>
+      </div>
+    </div>
+
+    <!-- Youth Bottom Nav -->
+    <nav class="bottom-nav youth-only" id="youth-nav">
+      <button class="nav-btn active" id="ynav0" onclick="switchView('home',0)">
+        <span class="nav-icon"><i class="ti ti-home"></i></span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-btn" id="ynav1" onclick="switchYouthView('learn')">
+        <span class="nav-icon"><i class="ti ti-school"></i></span>
+        <span class="nav-label">Lernen</span>
+      </button>
+      <button class="nav-btn" id="ynav2" onclick="switchView('goals',1)">
+        <span class="nav-icon"><i class="ti ti-target"></i></span>
+        <span class="nav-label">Ziele</span>
+      </button>
+      <button class="nav-btn" id="ynav3" onclick="switchView('fun',6)">
+        <span class="nav-icon"><i class="ti ti-trophy"></i></span>
+        <span class="nav-label">Badges</span>
+      </button>
+      <button class="nav-btn" id="ynav4" onclick="switchView('haxx',2)">
+        <span class="nav-icon"><i class="ti ti-bolt"></i></span>
+        <span class="nav-label">Tipps</span>
+      </button>
+    </nav>
+
     <!-- Bottom Nav -->
-    <nav class="bottom-nav">
+    <nav class="bottom-nav adult-only" id="adult-nav">
       <button class="nav-btn active" id="nav0" onclick="switchView('home',0)">
         <span class="nav-icon"><i class="ti ti-home"></i></span>
         <span class="nav-label">Home</span>
@@ -2325,6 +2489,7 @@ var state = {
   haxxDone: [],
   editGoalIdx: -1,
   selectedEmoji: '🎯',
+  mode: null,
 };
 
 // Persist to localStorage
@@ -2369,6 +2534,13 @@ function switchView(name, idx) {
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
   document.getElementById('nav' + idx).classList.add('active');
 
+  // Youth nav sync
+  document.querySelectorAll('#youth-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  var ynavMap = {home:0, goals:2, fun:3, haxx:4};
+  if (ynavMap[name] !== undefined) {
+    var yb = document.getElementById('ynav'+ynavMap[name]);
+    if (yb) yb.classList.add('active');
+  }
 
   currentView = name;
 
@@ -2388,6 +2560,127 @@ function showToast(msg) {
   t.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+/* ================================================
+   LEARN DATA (Youth Mode)
+================================================ */
+var learnData = [
+  { emoji:'💰', title:'Umgang mit Geld', steps:[
+    {q:'Was ist Geld?', a:'Geld ist ein Tauschmittel. Früher tauschten Menschen Waren direkt — heute zahlen wir mit Franken. 💡'},
+    {q:'Taschengeld einteilen', a:'Teile dein Taschengeld in 3 Töpfe: 50% Ausgeben 🛍️ · 30% Sparen 🐷 · 20% Verschenken/Spenden 🎁'},
+    {q:'Warum sparen?', a:'Wenn du CHF 10/Woche sparst, hast du in 1 Jahr CHF 520. Für dein erstes Handy oder die Ferienkasse! 🎯'},
+  ]},
+  { emoji:'🏦', title:'Mein erstes Konto', steps:[
+    {q:'Was ist ein Bankkonto?', a:'Ein sicherer Ort für dein Geld — sicherer als unter dem Kopfkissen! Die Bank verwahrt es und du kannst jederzeit drauf zugreifen. 🔒'},
+    {q:'Was ist eine IBAN?', a:'Die IBAN ist deine Kontonummer — wie eine Adresse für dein Geld. Beispiel: CH56 0785 1234 5678 9000 0 🏠'},
+    {q:'Was sind Zinsen?', a:'Die Bank zahlt dir Zinsen dafür, dass du dein Geld bei ihr lässt — also Geld fürs Nichtstun! 🎉'},
+  ]},
+  { emoji:'📱', title:'Im Alltag bezahlen', steps:[
+    {q:'Debitkarte vs. Kreditkarte', a:'Debitkarte = du zahlst sofort von deinem Konto ✅. Kreditkarte = du zahlst später (Vorsicht: Schulden!). Für den Start: Debitkarte ist perfekt.'},
+    {q:'Was ist Twint?', a:'Twint ist die Schweizer Bezahl-App — du zahlst mit dem Handy direkt vom Konto. Ideal für Kollegen, Märkte und kleine Beträge. 📱'},
+    {q:'Kontaktlos bezahlen', a:'Halte die Karte oder das Handy ans Terminal — fertig! Bis CHF 80 brauchst du keine PIN. Schnell und sicher. ⚡'},
+  ]},
+  { emoji:'🛒', title:'Bedürfnis vs. Wunsch', steps:[
+    {q:'Was ist ein Bedürfnis?', a:'Dinge die du brauchst: Essen, Kleidung, Wohnen, Schulmaterial. Das sind Bedürfnisse — die kommen zuerst! 🍎'},
+    {q:'Was ist ein Wunsch?', a:'Dinge die schön wären, aber nicht notwendig sind: neues Handy, Sneakers, Konzert. Erst sparen, dann kaufen! 👟'},
+    {q:'Der 24h-Test', a:'Willst du etwas kaufen? Warte 24 Stunden. Willst du es immer noch? Dann ist es vielleicht wirklich wichtig. 50% der Impulskäufe vergisst man nach einer Nacht. 😴'},
+  ]},
+  { emoji:'🔐', title:'Sicher online', steps:[
+    {q:'Was ist Phishing?', a:'Betrüger schicken gefälschte E-Mails die aussehen wie von der Bank. Regel: Deine Bank fragt NIEMALS per E-Mail nach Passwort oder PIN! 🚨'},
+    {q:'Sicheres Passwort', a:'Nutze für jede App ein anderes Passwort. Mindestens 12 Zeichen mit Gross-/Kleinbuchstaben, Zahlen und Sonderzeichen. Oder: 4 zufällige Wörter. 🔑'},
+    {q:'Bankdaten schützen', a:'Teile deine IBAN, Kartennummer oder PIN nie mit Freunden — auch nicht per Chat. Die Bank fragt nie danach. Wer es tut, ist ein Betrüger! 🛡️'},
+  ]},
+  { emoji:'💼', title:'Erster Job', steps:[
+    {q:'Was ist ein Lohnausweis?', a:'Der Lohnausweis zeigt deinen Bruttolohn (was vereinbart ist) und deinen Nettolohn (was du bekommst). Die Differenz sind Abzüge für AHV, Krankenkasse etc. 📄'},
+    {q:'Was sind Sozialabzüge?', a:'AHV (Altersvorsorge), IV (Invalidenversicherung), ALV (Arbeitslosigkeit): Ca. 5-6% gehen direkt vom Lohn weg — investiert in deine Zukunft! 🏛️'},
+    {q:'10%-Regel', a:'Spare direkt bei Lohneingang 10% auf ein separates Sparkonto. Du merkst es kaum, aber nach 1 Jahr Lehrzeit hast du ein schönes Polster! 💪'},
+  ]},
+];
+var learnProgress = [0,0,0,0,0,0]; // steps completed per module
+
+function openLearnModule(n) {
+  var mod = learnData[n];
+  var modal = document.getElementById('learn-modal');
+  var title = document.getElementById('learn-modal-title');
+  var body = document.getElementById('learn-modal-body');
+  if (!modal || !mod) return;
+  title.textContent = mod.emoji + ' ' + mod.title;
+  body.innerHTML = '';
+  mod.steps.forEach(function(step, i) {
+    var done = learnProgress[n] > i;
+    var el = document.createElement('div');
+    el.style.cssText = 'background:'+(done?'#f0fdf4':'white')+';border:1.5px solid '+(done?'#16a34a':'#e2e8f0')+';border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;';
+    el.innerHTML = '<div style="font-size:12px;font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</div>'
+      +'<div style="font-size:14px;font-weight:700;color:var(--dark);margin:4px 0">'+step.q+'</div>'
+      +'<div style="font-size:13px;color:var(--slate);line-height:1.5">'+step.a+'</div>'
+      +(done ? '<div style="font-size:12px;color:#16a34a;margin-top:6px;font-weight:600">✓ Erledigt</div>' : '');
+    if (!done) {
+      (function(idx) {
+        el.onclick = function() {
+          if (learnProgress[n] <= idx) learnProgress[n] = idx + 1;
+          updateLearnProgress(n);
+          openLearnModule(n);
+          updateGamification();
+        };
+      })(i);
+    }
+    body.appendChild(el);
+  });
+  modal.style.display = 'flex';
+  // update youth nav active state
+  document.querySelectorAll('#youth-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  var yn1 = document.getElementById('ynav1');
+  if (yn1) yn1.classList.add('active');
+}
+
+function closeLearnModal() {
+  var modal = document.getElementById('learn-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function updateLearnProgress(n) {
+  var bar = document.getElementById('learn-mod-'+n+'-bar');
+  var label = document.getElementById('learn-mod-'+n+'-label');
+  if (!bar || !label) return;
+  var pct = (learnProgress[n] / learnData[n].steps.length) * 100;
+  bar.style.width = pct + '%';
+  if (learnProgress[n] === 0) label.textContent = 'Noch nicht gestartet';
+  else if (learnProgress[n] >= learnData[n].steps.length) { label.textContent = '✓ Abgeschlossen 🎉'; bar.style.background = '#16a34a'; }
+  else label.textContent = learnProgress[n] + ' / ' + learnData[n].steps.length + ' Schritte';
+}
+
+function switchYouthView(name) {
+  // show learn view
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  var v = document.getElementById('view-' + name);
+  if (v) v.classList.add('active');
+  document.querySelectorAll('#youth-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  var yn1 = document.getElementById('ynav1');
+  if (yn1) yn1.classList.add('active');
+  currentView = name;
+  var sa = document.querySelector('#view-learn .scroll-area');
+  if (sa) sa.scrollTop = 0;
+}
+
+function applyMode(mode) {
+  var app = document.getElementById('app');
+  var badge = document.getElementById('mode-badge');
+  if (mode === 'youth') {
+    app.classList.add('mode-youth');
+    app.classList.remove('mode-adult');
+    if (badge) badge.textContent = 'Unter 18 🎮';
+    // If currently on an adult-only view, go home
+    var adultOnlyViews = ['haxx','budget','finlit','invest'];
+    if (adultOnlyViews.indexOf(currentView) > -1) switchView('home', 0);
+  } else {
+    app.classList.add('mode-adult');
+    app.classList.remove('mode-youth');
+    if (badge) badge.textContent = '18+ 💼';
+    if (currentView === 'learn') switchView('home', 0);
+  }
+  state.mode = mode;
+  save();
 }
 
 /* ================================================
@@ -2430,6 +2723,12 @@ function setAge(age) {
   calcInvest();
   updateFkPhase();
   save();
+  var newMode = (age < 18) ? 'youth' : 'adult';
+  if (!state.mode || state.mode !== newMode) {
+    applyMode(newMode);
+    if (newMode === 'youth') showToast('🎮 Jugend-Modus aktiviert!');
+    else showToast('💼 Erwachsenen-Modus aktiviert!');
+  }
 }
 
 /* ================================================
@@ -4052,6 +4351,7 @@ function init() {
   if (saldoBox) saldoBox.style.display = 'none';
   calcInvest();
   updateGamification();
+  applyMode(state.age < 18 ? 'youth' : 'adult');
 }
 
 init();
