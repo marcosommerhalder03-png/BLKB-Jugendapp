@@ -1,4 +1,4 @@
-const CACHE = 'blkb-jugend-v1';
+const CACHE = 'blkb-jugend-v2';
 const FILES = [
   './',
   './index.html',

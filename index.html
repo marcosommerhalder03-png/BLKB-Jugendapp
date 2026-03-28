@@ -2979,10 +2979,10 @@ function updateFkPhase() {
    HOME COUNTS
 ================================================ */
 function updateHomeCounts() {
-  document.getElementById('home-goals-count').textContent = state.goals.length;
-  document.getElementById('home-haxx-count').textContent = state.haxxDone.length + '/6';
-  
-  
+  var gc = document.getElementById('home-goals-count');
+  var hc = document.getElementById('home-haxx-count');
+  if (gc) gc.textContent = state.goals.length;
+  if (hc) hc.textContent = state.haxxDone.length + '/6';
 }
 
 /* ================================================
@@ -4056,26 +4056,32 @@ function init() {
 
 init();
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js');
-}
-
 /* ================================================
    SWIPE NAVIGATION
 ================================================ */
 var viewOrder = ['home','goals','haxx','budget','finlit','invest','fun'];
 var swipeStartX = 0;
 var swipeStartY = 0;
+var swipeLocked = false;
 
-document.getElementById('app').addEventListener('touchstart', function(e) {
+document.addEventListener('touchstart', function(e) {
   swipeStartX = e.touches[0].clientX;
   swipeStartY = e.touches[0].clientY;
+  swipeLocked = false;
 }, { passive: true });
 
-document.getElementById('app').addEventListener('touchend', function(e) {
+document.addEventListener('touchmove', function(e) {
+  if (swipeLocked) return;
+  var dx = Math.abs(e.touches[0].clientX - swipeStartX);
+  var dy = Math.abs(e.touches[0].clientY - swipeStartY);
+  if (dy > dx) swipeLocked = true;
+}, { passive: true });
+
+document.addEventListener('touchend', function(e) {
+  if (swipeLocked) return;
   var dx = e.changedTouches[0].clientX - swipeStartX;
   var dy = e.changedTouches[0].clientY - swipeStartY;
-  if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+  if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
   var idx = viewOrder.indexOf(currentView);
   if (dx < 0 && idx < viewOrder.length - 1) {
     switchView(viewOrder[idx + 1], idx + 1);
@@ -4083,6 +4089,10 @@ document.getElementById('app').addEventListener('touchend', function(e) {
     switchView(viewOrder[idx - 1], idx - 1);
   }
 }, { passive: true });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
 </script>
 </body>
 </html>
