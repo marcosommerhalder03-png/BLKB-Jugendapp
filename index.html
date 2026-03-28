@@ -60,6 +60,7 @@ body {
 .phone {
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   position: fixed;
   top: 0; left: 0;
   overflow: hidden;
@@ -84,8 +85,8 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 84px;
-  height: 0; /* same trick: let flex compute real height */
+  padding-bottom: 100px;
+  height: 0;
 }
 
 .scroll-area::-webkit-scrollbar { display: none; }
@@ -167,16 +168,15 @@ body {
 .bottom-nav {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 76px;
-  background: rgba(255,255,255,.95);
+  background: rgba(255,255,255,.97);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
   padding-top: 10px;
+  padding-bottom: max(env(safe-area-inset-bottom), 8px);
   z-index: 200;
-  border-radius: 0 0 42px 42px;
 }
 
 .nav-btn {
@@ -1479,10 +1479,10 @@ window.addEventListener('load', function(){
       <div class="scroll-area">
 
         <!-- Header with lifecycle phase -->
-        <div class="hdr" style="background:#fff;border-bottom:1px solid var(--border);padding:20px 18px 16px;">
-          <img src="img/blkb-logo-claim.svg" alt="BLKB – was morgen zählt" style="height:38px;margin-bottom:14px;display:block;">
-          <div style="font-size:22px;font-weight:800;color:var(--dark);line-height:1.15;">Dein Weg<br>bei der BLKB</div>
-          <div style="font-size:13px;color:var(--mid);margin-top:4px;" id="home-lifecycle-tag">Dein persönlicher Finanzbegleiter</div>
+        <div class="hdr red-bg">
+          <img src="img/blkb-logo-claim.svg" alt="BLKB – was morgen zählt" style="height:34px;margin-bottom:12px;display:block;filter:brightness(0) invert(1);">
+          <div class="hdr-title">Dein Weg bei der BLKB</div>
+          <div class="hdr-sub" id="home-lifecycle-tag">Dein persönlicher Finanzbegleiter</div>
         </div>
 
         <!-- Hero image -->
@@ -4059,6 +4059,30 @@ init();
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
+
+/* ================================================
+   SWIPE NAVIGATION
+================================================ */
+var viewOrder = ['home','goals','haxx','budget','finlit','invest','fun'];
+var swipeStartX = 0;
+var swipeStartY = 0;
+
+document.getElementById('app').addEventListener('touchstart', function(e) {
+  swipeStartX = e.touches[0].clientX;
+  swipeStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.getElementById('app').addEventListener('touchend', function(e) {
+  var dx = e.changedTouches[0].clientX - swipeStartX;
+  var dy = e.changedTouches[0].clientY - swipeStartY;
+  if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+  var idx = viewOrder.indexOf(currentView);
+  if (dx < 0 && idx < viewOrder.length - 1) {
+    switchView(viewOrder[idx + 1], idx + 1);
+  } else if (dx > 0 && idx > 0) {
+    switchView(viewOrder[idx - 1], idx - 1);
+  }
+}, { passive: true });
 </script>
 </body>
 </html>
