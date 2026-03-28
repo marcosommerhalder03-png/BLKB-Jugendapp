@@ -1,0 +1,4146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>BLKB Jugend – Was morgen zählt</title>
+<style>
+/* =============================================
+   BLKB CI VARIABLES
+============================================= */
+:root {
+  --red:    #fd000d;
+  --red-h:  #b80009;
+  --red-l:  #fff0f0;
+  --dark:   #1e2328;
+  --dark2:  #2a373f;
+  --slate:  #4a5568;
+  --mid:    #6b7280;
+  --light:  #9ca3af;
+  --border: #e2e8f0;
+  --bg:     #f7f8fa;
+  --white:  #ffffff;
+  --petrol: #2c5969;
+  --olive:  #7c8947;
+  --amber:  #e38121;
+  --ok:     #16a34a;
+  --ok-l:   #f0fdf4;
+  --warn-l: #fffbeb;
+
+  --r: 10px;
+  --shadow: 0 2px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+  --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #111;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-family: var(--font);
+}
+
+/* =============================================
+   SIDEBAR (Desktop Preview)
+============================================= */
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  padding-top: 40px;
+}
+
+.sidebar h3 {
+  color: rgba(255,255,255,.4);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-bottom: 8px;
+}
+
+.sb-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px;
+  color: rgba(255,255,255,.5);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: 4px;
+  transition: all .15s;
+  font-family: var(--font);
+}
+
+.sb-btn:hover {
+  background: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.85);
+}
+
+.sb-btn.active {
+  background: rgba(253,0,13,.2);
+  border-color: rgba(253,0,13,.4);
+  color: #ff8080;
+  font-weight: 600;
+}
+
+/* =============================================
+   PHONE FRAME
+============================================= */
+.phone {
+  width: 390px;
+  height: 844px;
+  background: #1c1c1e;
+  border-radius: 54px;
+  padding: 14px;
+  box-shadow: 0 50px 100px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.08);
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 34px;
+  background: #1c1c1e;
+  border-radius: 0 0 22px 22px;
+  z-index: 100;
+}
+
+.phone::after {
+  content: '';
+  position: absolute;
+  top: 24px; left: 50%;
+  transform: translateX(-50%);
+  width: 10px; height: 10px;
+  background: #2a2a2c;
+  border-radius: 50%;
+  z-index: 101;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 42px;
+  background: var(--bg);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* =============================================
+   SCROLLABLE CONTENT AREA
+============================================= */
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 84px;
+  height: 0; /* same trick: let flex compute real height */
+}
+
+.scroll-area::-webkit-scrollbar { display: none; }
+
+/* =============================================
+   SCREENS (show/hide)
+============================================= */
+.view {
+  display: none;
+}
+
+.view.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 0; /* key: forces flex child to be bounded by parent */
+  overflow: hidden;
+}
+
+/* =============================================
+   HEADER
+============================================= */
+.hdr {
+  padding: 52px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+  z-index: 10;
+  position: relative;
+  width: 100%;
+}
+
+.hdr.red-bg {
+  background: linear-gradient(160deg, var(--red) 0%, #a80009 100%);
+}
+
+.hdr.dark-bg {
+  background: linear-gradient(160deg, var(--dark) 0%, #2a373f 100%);
+}
+
+.hdr.petrol-bg {
+  background: linear-gradient(160deg, var(--petrol) 0%, #1a3540 100%);
+}
+
+.hdr.olive-bg {
+  background: linear-gradient(160deg, var(--olive) 0%, #4f5c2a 100%);
+}
+
+.hdr.amber-bg {
+  background: linear-gradient(160deg, var(--amber) 0%, #b5640d 100%);
+}
+
+.hdr-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  opacity: .7;
+  color: #fff;
+}
+
+.hdr-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.hdr-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+  margin-top: 2px;
+}
+
+/* =============================================
+   BOTTOM NAV
+============================================= */
+.bottom-nav {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 76px;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-top: 10px;
+  z-index: 200;
+  border-radius: 0 0 42px 42px;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font);
+  transition: transform .1s;
+  flex: 1;
+}
+
+.nav-btn:active { transform: scale(.92); }
+
+.nav-icon {
+  font-size: 22px;
+  line-height: 1;
+  filter: grayscale(1);
+  opacity: .35;
+  transition: all .15s;
+}
+
+.nav-label {
+  display: none;
+}
+
+.nav-btn.active .nav-icon {
+  filter: none;
+  opacity: 1;
+}
+
+.nav-btn.active .nav-label {
+  color: var(--red);
+}
+
+/* =============================================
+   CARDS
+============================================= */
+.card {
+  background: var(--white);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  margin: 0 16px 12px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--mid);
+  padding: 16px 16px 6px;
+}
+
+/* =============================================
+   HOME SCREEN
+============================================= */
+.balance-card {
+  background: linear-gradient(135deg, var(--dark) 0%, #2a373f 100%);
+  margin: -1px 0 0;
+  padding: 20px;
+  color: white;
+}
+
+.bal-label { font-size: 12px; opacity: .6; margin-bottom: 4px; }
+.bal-amount { font-size: 38px; font-weight: 700; letter-spacing: -.5px; }
+.bal-account { font-size: 12px; opacity: .55; margin-top: 4px; }
+
+.bal-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.bal-stat {
+  flex: 1;
+  background: rgba(255,255,255,.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.bal-stat-val {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.bal-stat-lbl {
+  font-size: 10px;
+  color: rgba(255,255,255,.5);
+  margin-top: 1px;
+}
+
+/* Age Lifecycle */
+.lifecycle-bar {
+  padding: 14px 16px 4px;
+}
+
+.lifecycle-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  position: relative;
+  overflow: visible;
+}
+
+.lifecycle-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--amber));
+  border-radius: 3px;
+  transition: width .4s;
+}
+
+.lifecycle-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--light);
+}
+
+.lifecycle-age {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.age-tag {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--red-l);
+  color: var(--red);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.age-btns {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 8px 16px 0;
+}
+
+.age-btn {
+  padding: 4px 8px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: var(--font);
+  flex-shrink: 0;
+}
+
+.age-btn.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+/* Quick Actions */
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px;
+  margin-bottom: 12px;
+}
+
+.quick-card {
+  background: white;
+  border-radius: var(--r);
+  padding: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform .1s;
+  border: 1.5px solid transparent;
+}
+
+.quick-card:active { transform: scale(.97); }
+
+.quick-card.red { border-color: var(--red-l); }
+.quick-card.petrol { border-color: #e0eef2; }
+
+.quick-icon { font-size: 22px; margin-bottom: 6px; }
+.quick-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+.quick-sub { font-size: 11px; color: var(--light); margin-top: 1px; }
+
+/* Tip card */
+.tip-card {
+  margin: 0 16px 16px;
+  background: var(--red-l);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  border-left: 3px solid var(--red);
+}
+
+.tip-label { font-size: 10px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: .5px; }
+.tip-text { font-size: 13px; color: var(--dark); margin-top: 4px; line-height: 1.5; }
+
+/* =============================================
+   GOALS SCREEN
+============================================= */
+.goals-summary {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px 4px;
+}
+
+.goal-sum-box {
+  flex: 1;
+  background: white;
+  border-radius: var(--r);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.goal-sum-val { font-size: 17px; font-weight: 700; color: var(--dark); }
+.goal-sum-lbl { font-size: 10px; color: var(--mid); margin-top: 2px; }
+
+.goal-item {
+  background: white;
+  border-radius: var(--r);
+  margin: 0 16px 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .1s;
+}
+
+.goal-item:active { transform: scale(.99); }
+
+.goal-item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 10px;
+}
+
+.goal-emoji { font-size: 26px; flex-shrink: 0; }
+
+.goal-info { flex: 1; }
+.goal-name { font-size: 14px; font-weight: 700; color: var(--dark); }
+.goal-amounts {
+  font-size: 12px;
+  color: var(--mid);
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.goal-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.goal-bar-wrap {
+  padding: 0 14px 12px;
+}
+
+.goal-bar-bg {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.goal-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--red), var(--amber));
+  transition: width .5s;
+}
+
+.goal-del-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  opacity: .4;
+  transition: opacity .15s;
+  flex-shrink: 0;
+}
+
+.goal-del-btn:hover { opacity: .8; }
+
+.add-goal-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 16px 16px;
+  padding: 14px;
+  background: white;
+  border: 2px dashed var(--border);
+  border-radius: var(--r);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mid);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: var(--font);
+}
+
+.add-goal-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-l);
+}
+
+/* Goal Modal */
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+  border-radius: 42px;
+  overflow: hidden;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-sheet {
+  width: 100%;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 16px 20px 40px;
+  transform: translateY(100%);
+  transition: transform .3s;
+}
+
+.modal-backdrop.open .modal-sheet {
+  transform: translateY(0);
+}
+
+.modal-handle {
+  width: 36px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+.form-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--mid);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: var(--font);
+  color: var(--dark);
+  background: var(--bg);
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color .15s;
+}
+
+.form-input:focus { border-color: var(--red); background: white; }
+
+.emoji-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.emoji-opt {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all .15s;
+  background: var(--bg);
+}
+
+.emoji-opt.sel {
+  border-color: var(--red);
+  background: var(--red-l);
+}
+
+.goal-preset-btn {
+  padding: 5px 10px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+}
+.goal-preset-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-l);
+}
+.goal-preset-btn.sel {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background .15s;
+}
+
+.btn-primary:active { background: var(--red-h); }
+
+/* =============================================
+   HAXX SCREEN
+============================================= */
+.haxx-progress-wrap {
+  padding: 14px 16px 8px;
+}
+
+.haxx-progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.haxx-progress-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.haxx-progress-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.haxx-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.haxx-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--amber));
+  border-radius: 3px;
+  transition: width .5s;
+}
+
+.haxx-item {
+  background: white;
+  border-radius: var(--r);
+  margin: 0 16px 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.haxx-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.haxx-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--red-l);
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all .2s;
+}
+
+.haxx-item.done .haxx-num {
+  background: var(--ok-l);
+  color: var(--ok);
+}
+
+.haxx-header-text { flex: 1; }
+.haxx-h-title { font-size: 14px; font-weight: 700; color: var(--dark); }
+.haxx-h-sub { font-size: 12px; color: var(--mid); margin-top: 1px; }
+
+.haxx-chevron {
+  font-size: 12px;
+  color: var(--light);
+  transition: transform .2s;
+}
+
+.haxx-item.open .haxx-chevron { transform: rotate(180deg); }
+
+.haxx-body {
+  display: none;
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.haxx-item.open .haxx-body { display: block; }
+
+.haxx-body-text {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.65;
+  margin-top: 12px;
+}
+
+.haxx-body-steps {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.haxx-body-steps li {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.5;
+  padding: 5px 0 5px 20px;
+  position: relative;
+}
+
+.haxx-body-steps li::before {
+  content: attr(data-n);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--red);
+  font-size: 12px;
+}
+
+.haxx-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.haxx-video-btn {
+  flex: 1;
+  padding: 10px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-family: var(--font);
+  transition: all .15s;
+}
+
+.haxx-video-btn:hover {
+  border-color: var(--petrol);
+  color: var(--petrol);
+  background: #e8f2f5;
+}
+
+.haxx-check-btn {
+  flex: 1;
+  padding: 10px;
+  background: var(--red-l);
+  border: 1.5px solid rgba(253,0,13,.15);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+  cursor: pointer;
+  text-align: center;
+  font-family: var(--font);
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.haxx-check-btn.done {
+  background: var(--ok-l);
+  border-color: rgba(22,163,74,.2);
+  color: var(--ok);
+}
+
+/* =============================================
+   BUDGET SCREEN
+============================================= */
+.budget-input-wrap {
+  padding: 14px 16px;
+  background: white;
+  margin: 0 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.budget-lohn-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.budget-lohn-label {
+  font-size: 12px;
+  color: var(--mid);
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.budget-lohn-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  min-width: 90px;
+}
+
+input[type="range"] {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--red);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(253,0,13,.3);
+}
+
+/* Investment calculator */
+.invest-box {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+  margin: 0 16px 12px;
+  border-radius: var(--r);
+  padding: 16px;
+  color: white;
+}
+
+.invest-title {
+  font-size: 12px;
+  opacity: .6;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+
+.invest-amount {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+
+.invest-sub {
+  font-size: 12px;
+  opacity: .55;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.invest-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.invest-stat {
+  flex: 1;
+  background: rgba(255,255,255,.08);
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+}
+
+.invest-stat-val { font-size: 14px; font-weight: 700; }
+.invest-stat-lbl { font-size: 10px; opacity: .5; margin-top: 2px; }
+
+/* Budget categories */
+.budget-cat {
+  background: white;
+  border-radius: var(--r);
+  margin: 0 16px 8px;
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+}
+
+.budget-cat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.budget-cat-icon { font-size: 18px; flex-shrink: 0; }
+
+.budget-cat-info { flex: 1; }
+.budget-cat-name { font-size: 13px; font-weight: 600; color: var(--dark); }
+.budget-cat-hint { font-size: 11px; color: var(--light); }
+
+.budget-cat-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.budget-cat-chf { font-size: 13px; font-weight: 700; color: var(--dark); }
+
+/* editable pct input */
+.budget-pct-wrap {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.budget-pct-input {
+  width: 38px;
+  padding: 2px 4px;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  background: var(--bg);
+  text-align: right;
+  font-family: var(--font);
+  outline: none;
+  transition: border-color .15s;
+}
+
+.budget-pct-input:focus {
+  border-color: var(--red);
+  background: white;
+}
+
+.budget-pct-symbol {
+  font-size: 12px;
+  color: var(--mid);
+}
+
+.budget-cat-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.budget-cat-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width .4s;
+}
+
+.fill-red   { background: var(--red); }
+.fill-petrol { background: var(--petrol); }
+.fill-ok    { background: var(--ok); }
+.fill-amber { background: var(--amber); }
+.fill-olive { background: var(--olive); }
+.fill-slate { background: var(--slate); }
+
+/* Budget sum bar */
+.budget-sum-bar {
+  margin: 4px 16px 12px;
+  background: white;
+  border-radius: var(--r);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+
+.budget-sum-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.budget-sum-label { font-size: 12px; font-weight: 600; color: var(--mid); }
+
+.budget-sum-total {
+  font-size: 16px;
+  font-weight: 700;
+  transition: color .2s;
+}
+
+.budget-sum-ok   { color: var(--ok); }
+.budget-sum-warn { color: var(--red); }
+
+.budget-sum-hint {
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+.budget-sum-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.budget-sum-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .3s, background .3s;
+}
+
+.budget-reset-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+}
+
+.budget-reset-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-l);
+}
+
+.moneyhaxx-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 16px 12px;
+  padding: 10px 14px;
+  background: var(--warn-l);
+  border-radius: var(--r);
+  border-left: 3px solid var(--amber);
+}
+
+.moneyhaxx-badge-text {
+  font-size: 11px;
+  color: #92400e;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* =============================================
+   FINANZKOMPETENZ SCREEN
+============================================= */
+.fk-item {
+  background: white;
+  border-radius: var(--r);
+  margin: 0 16px 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.fk-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fk-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.fk-icon.red-bg   { background: var(--red-l); }
+.fk-icon.petrol-bg { background: #e0eef2; }
+.fk-icon.ok-bg    { background: var(--ok-l); }
+.fk-icon.amber-bg { background: var(--warn-l); }
+.fk-icon.olive-bg { background: #f0f3e8; }
+
+.fk-title { font-size: 14px; font-weight: 700; color: var(--dark); }
+.fk-sub   { font-size: 12px; color: var(--mid); margin-top: 1px; }
+
+.fk-chevron {
+  font-size: 12px;
+  color: var(--light);
+  transition: transform .2s;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.fk-item.open .fk-chevron { transform: rotate(180deg); }
+
+.fk-body {
+  display: none;
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.fk-item.open .fk-body { display: block; }
+
+.fk-body-text {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.65;
+  margin-top: 12px;
+}
+
+.fk-cta {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 9px 16px;
+  background: var(--red);
+  color: white;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .15s;
+  font-family: var(--font);
+}
+
+.fk-cta:hover { background: var(--red-h); }
+
+/* Intro banner */
+.fk-intro {
+  margin: 0 16px 16px;
+  background: linear-gradient(135deg, var(--petrol) 0%, #1a3540 100%);
+  border-radius: var(--r);
+  padding: 16px;
+  color: white;
+}
+
+.fk-intro-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.fk-intro-text {
+  font-size: 12px;
+  opacity: .75;
+  line-height: 1.6;
+}
+
+
+
+/* =============================================
+   FK TIMELINE
+============================================= */
+.fk-phase-block {
+  margin-bottom: 4px;
+}
+
+.fk-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0 8px;
+}
+
+.fk-phase-dot {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--mid);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .3s;
+}
+
+.fk-phase-block.active .fk-phase-dot {
+  background: var(--red);
+  color: white;
+  box-shadow: 0 4px 12px rgba(253,0,13,.3);
+}
+
+.fk-phase-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark);
+  transition: color .3s;
+}
+
+.fk-phase-block.active .fk-phase-title {
+  color: var(--red);
+}
+
+.fk-phase-sub {
+  font-size: 11px;
+  color: var(--mid);
+  margin-top: 1px;
+}
+
+.fk-phase-content {
+  padding-left: 46px;
+}
+
+.fk-connector {
+  width: 2px;
+  height: 16px;
+  background: var(--border);
+  margin-left: 16px;
+  margin-bottom: 4px;
+  border-radius: 1px;
+}
+
+.fk-topic-card {
+  background: white;
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  margin-bottom: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: border-color .15s;
+}
+
+.fk-topic-card.open {
+  border-color: var(--border);
+}
+
+.fk-topic-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+}
+
+.fk-topic-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.fk-topic-text { flex: 1; }
+.fk-topic-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+.fk-topic-sub   { font-size: 11px; color: var(--mid); margin-top: 1px; }
+
+.fk-topic-chev {
+  font-size: 11px;
+  color: var(--light);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+
+.fk-topic-card.open .fk-topic-chev { transform: rotate(180deg); }
+
+.fk-topic-body {
+  display: none;
+  padding: 0 12px 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.fk-topic-card.open .fk-topic-body { display: block; }
+
+.fk-topic-body p {
+  font-size: 12px;
+  color: var(--slate);
+  line-height: 1.6;
+}
+
+.fk-product-tag {
+  display: inline-block;
+  margin-top: 8px;
+  margin-right: 6px;
+  padding: 4px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--slate);
+}
+/* =============================================
+   INVEST SCREEN
+============================================= */
+.inv-type-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+  text-align: center;
+}
+.inv-type-btn.active {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: white;
+}
+.inv-rhythm-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 7px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+}
+.inv-rhythm-btn.active {
+  background: var(--petrol);
+  border-color: var(--petrol);
+  color: white;
+}
+.dpad-btn {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark);
+  cursor: pointer;
+  font-family: var(--font);
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  transition: all .1s;
+  display: flex; align-items: center; justify-content: center;
+}
+.dpad-btn:active {
+  background: var(--dark);
+  color: white;
+  transform: scale(.92);
+}
+
+.inv-rate-btn {
+  flex: 1;
+  padding: 7px 4px;
+  border-radius: 7px;
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--slate);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+  text-align: center;
+}
+.inv-rate-btn.active {
+  background: var(--olive);
+  border-color: var(--olive);
+  color: white;
+}
+/* =============================================
+   TOAST
+============================================= */
+.toast {
+  position: absolute;
+  bottom: 86px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--dark);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all .2s;
+  pointer-events: none;
+  z-index: 400;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- GREETING TOAST -->
+<div id="greeting-toast" style="
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(30,30,30,0.88);
+  color:#fff;
+  padding:10px 22px;
+  border-radius:24px;
+  font-size:14px;
+  font-weight:500;
+  z-index:9999;
+  opacity:1;
+  transition:opacity 0.6s ease;
+  pointer-events:none;
+  white-space:nowrap;
+  box-shadow:0 4px 16px rgba(0,0,0,0.25);
+"></div>
+
+<script>
+window.addEventListener('load', function(){
+  var h = new Date().getHours();
+  var greet = h < 12 ? '☀️ Guten Morgen!' : h < 18 ? '🌤 Guten Mittag!' : '🌙 Guten Abend!';
+  var toast = document.getElementById('greeting-toast');
+  toast.textContent = greet;
+  toast.style.opacity = '1';
+  setTimeout(function(){
+    toast.style.opacity = '0';
+    setTimeout(function(){ toast.style.display = 'none'; }, 700);
+  }, 3500);
+});
+</script>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>Navigation</h3>
+  <button class="sb-btn active" id="sb0" onclick="switchView('home',0)">🏠 Dashboard</button>
+  <button class="sb-btn" id="sb1" onclick="switchView('goals',1)"><i class="ti ti-target"></i> Sparziele</button>
+  <button class="sb-btn" id="sb2" onclick="switchView('haxx',2)"><i class="ti ti-bolt"></i> MoneyHaxx</button>
+  <button class="sb-btn" id="sb3" onclick="switchView('budget',3)"><i class="ti ti-chart-pie"></i> Budget</button>
+  <button class="sb-btn" id="sb4" onclick="switchView('finlit',4)"><i class="ti ti-building-bank"></i> BLKB Angebote</button>
+  <button class="sb-btn" id="sb5" onclick="switchView('invest',5)"><i class="ti ti-trending-up"></i> Geld vermehren</button>
+  <button class="sb-btn" id="sb6" onclick="switchView('fun',6)"><i class="ti ti-device-gamepad-2"></i> Fun & Games</button>
+</div>
+
+<!-- PHONE -->
+<div class="phone">
+  <div class="screen" id="app">
+
+    <!-- ================================
+         HOME
+    ================================= -->
+    <div class="view active" id="view-home">
+      <div class="scroll-area">
+
+        <!-- Header with lifecycle phase -->
+        <div class="hdr red-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">BLKB Jugend</div>
+          <div class="hdr-title">Was morgen zählt</div>
+          <div class="hdr-sub" id="home-lifecycle-tag">Dein persönlicher Finanzbegleiter</div>
+        </div>
+
+        <!-- Hero image -->
+        <div style="width:100%;height:140px;overflow:hidden;flex-shrink:0">
+          <img src="img/hero.jpg" alt="BLKB Jugend" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        </div>
+
+        <!-- BP Konten -->
+        <div style="background:white;margin:0 0 0;box-shadow:var(--shadow)">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px 8px;border-bottom:1px solid var(--border)">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)">Meine Konten · BLKB</div>
+            <span id="dash-mock-badge" style="font-size:9px;background:var(--warn-l);color:#92400e;padding:2px 8px;border-radius:10px;font-weight:700">DEMO</span>
+          </div>
+          <div id="dash-accounts">
+            <!-- wird via apiInit() befüllt -->
+            <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)">
+              <div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px">🏦</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Jugendkonto</div><div style="font-size:10px;color:var(--light)">CH56 0785 1234 5678 9000 0</div></div>
+              <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--petrol)">CHF 1'247.50</div><div style="font-size:10px;color:var(--light)">Jugendkonto</div></div>
+            </div>
+            <div style="padding:12px 14px;display:flex;align-items:center;gap:10px">
+              <div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px">💰</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Sparkonto Jugend</div><div style="font-size:10px;color:var(--light)">CH56 0785 1234 5678 9001 0</div></div>
+              <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--petrol)">CHF 2'500.00</div><div style="font-size:10px;color:var(--light)">Sparkonto</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lifecycle + Age selector (compact) -->
+        <div style="padding:14px 16px 6px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+            <span style="font-size:12px;font-weight:700;color:var(--dark)">Dein Weg · Alter <span id="home-age-label">16</span></span>
+            <span style="font-size:10px;color:var(--light)">12 bis 30</span>
+          </div>
+          <div class="lifecycle-track">
+            <div class="lifecycle-fill" id="home-lifecycle-fill" style="width:22%"></div>
+          </div>
+          <div style="margin-top:10px">
+            <input type="range" id="age-slider" min="12" max="30" step="1" value="16"
+              oninput="setAge(parseInt(this.value))"
+              style="width:100%;accent-color:var(--red)">
+            <div style="display:flex;justify-content:space-between;margin-top:3px">
+              <span style="font-size:10px;color:var(--light)">12</span>
+              <span style="font-size:10px;color:var(--light)">18</span>
+              <span style="font-size:10px;color:var(--light)">24</span>
+              <span style="font-size:10px;color:var(--light)">30</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level-Bar (Budget-Profi) -->
+        <div style="margin:0 16px 8px;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:12px 14px;cursor:pointer" onclick="switchView('fun',6)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span id="home-level-badge" style="font-size:20px">🌱</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--dark)" id="home-level-title">Finanz-Einsteiger</div>
+                <div style="font-size:10px;color:var(--mid)" id="home-level-sub">Level 1 · 0 Abzeichen</div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:var(--light)">🎮 Fun →</div>
+          </div>
+          <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden">
+            <div id="home-level-bar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;transition:width .5s;width:0%"></div>
+          </div>
+          <!-- Earned badges row -->
+          <div style="font-size:10px;color:var(--light);margin-top:6px;line-height:1.4">
+            Nutze die App und sammle Abzeichen — für jedes Sparziel, jeden Hack und jede Funktion die du entdeckst.
+          </div>
+          <div id="home-badges-row" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"></div>
+        </div>
+
+        <!-- Contextual tip -->
+        <div class="tip-card">
+          <div class="tip-label">💡 Tipp für deine Lebensphase</div>
+          <div class="tip-text" id="home-tip-text">Spare zuerst, gib dann aus. Richte einen Dauerauftrag ein, der am Zahltag automatisch 10% deines Lohns aufs Sparkonto überweist.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================================
+         GOALS
+    ================================= -->
+    <div class="view" id="view-goals">
+      <div class="scroll-area">
+        <div class="hdr olive-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">Meine Finanzen</div>
+          <div class="hdr-title">Sparziele</div>
+          <div class="hdr-sub">Definiere was du dir wünschst</div>
+        </div>
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
+          <img src="img/jugend5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        </div>
+
+        <!-- Sparkonto-Guthaben -->
+        <div style="margin:14px 16px 4px;background:linear-gradient(135deg,var(--olive) 0%,#4f5c2a 100%);border-radius:var(--r);padding:14px 16px;color:white">
+          <div style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Sparkonto-Guthaben · BLKB</div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:26px;font-weight:700;flex:1">CHF <span id="goals-spar-display">2'500</span></div>
+            <input type="number" id="goals-spar-input" value="2500" min="0" max="999999"
+              style="width:100px;padding:6px 10px;border:none;border-radius:6px;font-size:14px;font-weight:700;color:var(--dark);background:rgba(255,255,255,.9);font-family:var(--font);text-align:right"
+              oninput="onSparChange(this.value)">
+          </div>
+          <div style="font-size:11px;opacity:.6;margin-top:4px">Simulierter Kontostand (ohne API-Anbindung)</div>
+        </div>
+
+        <!-- % Summe -->
+        <div style="margin:8px 16px 4px;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:10px 14px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:600;color:var(--mid)">Verteilung aller Ziele</span>
+            <span style="font-size:14px;font-weight:700" id="goals-pct-total">0%</span>
+          </div>
+          <div style="height:5px;background:var(--border);border-radius:3px;margin-top:7px;overflow:hidden">
+            <div id="goals-pct-bar" style="height:100%;border-radius:3px;background:var(--ok);transition:width .3s,background .3s;width:0%"></div>
+          </div>
+          <div style="font-size:11px;color:var(--mid);margin-top:5px" id="goals-pct-hint">Weise jedem Ziel einen %-Anteil zu</div>
+        </div>
+
+        <div id="goals-list"></div>
+
+        <button class="add-goal-btn" onclick="openGoalModal()">
+          <span style="font-size:18px">＋</span> Neues Sparziel
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal-backdrop" id="goal-modal" onclick="closeGoalModal(event)">
+        <div class="modal-sheet">
+          <div class="modal-handle"></div>
+          <div class="modal-title" id="modal-title">Neues Sparziel</div>
+
+          <label class="form-label">Emoji</label>
+          <div class="emoji-picker" id="emoji-picker"></div>
+
+          <label class="form-label">Schnellauswahl</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px" id="goal-presets">
+            <button class="goal-preset-btn" onclick="applyGoalPreset('✈️','Reisefonds')">✈️ Reise</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('🚴','E-Bike')">🚴 E-Bike</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('🛡️','Notfallreserve')">🛡️ Reserve</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('🎓','Ausbildung')">🎓 Ausbildung</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('💼','Selbstständigkeit')">💼 Business</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('👨‍👩‍👧','Familienplanung')">👨‍👩‍👧 Familie</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('🏠','Wohnung')">🏠 Wohnen</button>
+            <button class="goal-preset-btn" onclick="applyGoalPreset('💻','Laptop')">💻 Gerät</button>
+          </div>
+
+          <label class="form-label">Name</label>
+          <input class="form-input" id="goal-name-input" type="text" placeholder="z.B. Japan-Reise, E-Bike...">
+
+          <label class="form-label">Anteil am Sparkonto (%)</label>
+          <input class="form-input" id="goal-pct-input" type="number" min="1" max="100" placeholder="z.B. 30">
+
+          <button class="btn-primary" onclick="saveGoal()">Ziel speichern</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================
+         HAXX
+    ================================= -->
+    <div class="view" id="view-haxx">
+      <div class="scroll-area">
+        <div class="hdr dark-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">In Partnerschaft mit MoneyHaxx × BLKB</div>
+          <div class="hdr-title">Money Haxx ⚡</div>
+          <div class="hdr-sub">6 Hacks für ein Leben ohne Geldstress</div>
+        </div>
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0;position:relative">
+          <img src="img/jugend2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(30,35,40,.35),rgba(30,35,40,.0))"></div>
+        </div>
+
+        <!-- Progress -->
+        <div class="haxx-progress-wrap">
+          <div class="haxx-progress-label">
+            <span class="haxx-progress-text">Dein Fortschritt</span>
+            <span class="haxx-progress-count" id="haxx-count-label">0 von 6 verstanden</span>
+          </div>
+          <div class="haxx-track">
+            <div class="haxx-fill" id="haxx-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Hack items -->
+        <div id="haxx-list"></div>
+
+        <div style="padding:0 16px 16px">
+          <a href="https://www.moneyhaxx.ch" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:10px;background:white;border-radius:var(--r);box-shadow:var(--shadow)">
+            Mehr auf moneyhaxx.ch →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================
+         BUDGET
+    ================================= -->
+    <div class="view" id="view-budget">
+      <div class="scroll-area">
+        <div class="hdr petrol-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">MoneyHaxx × BLKB</div>
+          <div class="hdr-title">Budgetrechner</div>
+          <div class="hdr-sub">Wie soll dein Geld für dich arbeiten?</div>
+        </div>
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
+          <img src="img/jugend4.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 25%">
+        </div>
+
+        <!-- Lohn Input -->
+        <div class="budget-input-wrap">
+          <div style="margin-bottom:8px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:4px">Monatslohn (netto)</div>
+            <div class="budget-lohn-row">
+              <div class="budget-lohn-val">CHF <span id="bud-lohn-display">3'200</span></div>
+              <input type="range" id="bud-slider" min="500" max="8000" step="100" value="3200" oninput="onLohnChange(this.value)">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <input type="number" id="bud-lohn-input" class="form-input" style="margin:0;flex:1;font-size:14px;padding:8px 10px" placeholder="Betrag eingeben" oninput="onLohnInputChange(this.value)">
+            <div style="font-size:10px;color:var(--mid);padding-top:6px;flex-shrink:0">CHF/Mt</div>
+          </div>
+        </div>
+
+        <!-- Investment box -->
+        <div class="invest-box">
+          <div class="invest-title">💰 Easy-10 Hack — Dein Sparkonto wächst</div>
+          <div class="invest-amount">CHF <span id="invest-total">0</span></div>
+          <div class="invest-sub" id="invest-sub">Bei 10% gespart und 5% Jahresrendite in 10 Jahren</div>
+          <div class="invest-row">
+            <div class="invest-stat">
+              <div class="invest-stat-val">CHF <span id="invest-einbezahlt">0</span></div>
+              <div class="invest-stat-lbl">Einbezahlt</div>
+            </div>
+            <div class="invest-stat">
+              <div class="invest-stat-val">CHF <span id="invest-rendite">0</span></div>
+              <div class="invest-stat-lbl">Rendite (5% p.a.)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="moneyhaxx-badge">
+          <span style="font-size:20px">💡</span>
+          <div class="moneyhaxx-badge-text">Die Zahlen basieren auf Schweizer Durchschnittswerten (Bundesstatistik + VSKB). Für eine persönliche Budgetplanung: <strong>blkb.ch</strong></div>
+        </div>
+
+        <div class="section-title">Budget-Aufteilung</div>
+
+        <!-- Sum bar -->
+        <div class="budget-sum-bar">
+          <div class="budget-sum-row">
+            <span class="budget-sum-label">Total aller Kategorien</span>
+            <span class="budget-sum-total budget-sum-ok" id="bud-sum-total">100%</span>
+          </div>
+          <div class="budget-sum-track">
+            <div class="budget-sum-fill" id="bud-sum-fill" style="width:100%;background:var(--ok)"></div>
+          </div>
+          <div class="budget-sum-hint" id="bud-sum-hint">✓ Perfekt — alle 100% sind verteilt</div>
+          <button class="budget-reset-btn" onclick="resetBudgetDefaults()">↺ Standardwerte wiederherstellen</button>
+        </div>
+
+        <div id="bud-cats"></div>
+
+        <div style="height:20px"></div>
+      </div>
+    </div>
+
+    <!-- ================================
+         FINANZKOMPETENZ
+    ================================= -->
+    <div class="view" id="view-finlit">
+      <div class="scroll-area">
+        <div class="hdr amber-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">BLKB</div>
+          <div class="hdr-title">BLKB Angebote</div>
+          <div class="hdr-sub">Deine Produkte &amp; Vorteile</div>
+        </div>
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
+          <img src="img/jugend3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 50%">
+        </div>
+
+        <!-- Intro -->
+        <div style="margin:14px 16px 0;background:linear-gradient(135deg,var(--petrol) 0%,#1a3540 100%);border-radius:var(--r);padding:14px 16px;color:white">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">🏦 Deine Reise mit der BLKB</div>
+          <div style="font-size:12px;opacity:.75;line-height:1.5">Von deinem ersten Franken bis zum Aufbau deines Vermögens — die BLKB begleitet dich in jeder Phase.</div>
+        </div>
+
+        <!-- Active phase indicator -->
+        <div id="fk-phase-indicator" style="margin:10px 16px 4px;padding:10px 14px;border-radius:var(--r);font-size:12px;font-weight:600;text-align:center"></div>
+
+        <!-- Timeline -->
+        <div style="padding:0 16px">
+
+          <!-- Phase 1: Unter 18 -->
+          <div class="fk-phase-block" id="fk-phase-1">
+            <div class="fk-phase-header">
+              <div class="fk-phase-dot">1</div>
+              <div>
+                <div class="fk-phase-title">Unter 18 · Erste Schritte</div>
+                <div class="fk-phase-sub">Geld verstehen, Alltag meistern</div>
+              </div>
+            </div>
+            <div class="fk-phase-content">
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#fff0f0">🐷</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Umgang mit Geld</div>
+                    <div class="fk-topic-sub">Taschengeld sinnvoll einteilen</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Geld einteilen will gelernt sein: Sparen, Ausgeben, Verschenken. Wer früh lernt mit Geld umzugehen, hat es später viel einfacher.</p>
+                  <div class="fk-product-tag">💰 Sparkonto Jugend · 0.5% Vorzugszins</div>
+                  <div class="fk-product-tag">🃏 ProfitCard · Gratis Freizeitvorteile</div>
+                  <button onclick="switchView('goals',1)" style="margin-top:10px;width:100%;padding:9px;background:var(--red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Sparziel erstellen →</button>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#e0eef2">🏦</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Erstes Konto</div>
+                    <div class="fk-topic-sub">Mein eigenes Konto bei der BLKB</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Mit einem Jugendkonto hast du dein erstes echtes Bankkonto — mit E-Banking, Kontostand prüfen und Überweisungen. Eröffnung mit den Eltern.</p>
+                  <div class="fk-product-tag">🏦 Jugendkonto · kostenlos</div>
+                  <div class="fk-product-tag">📲 BLKB E-Banking & Mobile Banking</div>
+                  <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank" style="display:block;margin-top:10px;width:100%;padding:9px;background:var(--dark);color:white;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;text-align:center">Jugendkonto eröffnen →</a>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#f0fdf4">📲</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Im Alltag bezahlen</div>
+                    <div class="fk-topic-sub">Karte, TWINT, kontaktlos</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Ob im Laden, online oder beim Schulkiosk — mit BLKB TWINT und der Debitkarte zahlst du überall sicher und einfach.</p>
+                  <div class="fk-product-tag">📲 BLKB TWINT · ab 12 Jahren</div>
+                  <div class="fk-product-tag">💳 Debitkarte · kontaktlos weltweit</div>
+                  <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank" style="display:block;margin-top:10px;width:100%;padding:9px;background:var(--dark);color:white;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;text-align:center">TWINT & Karte aktivieren →</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Connector -->
+          <div class="fk-connector"></div>
+
+          <!-- Phase 2: Über 18 -->
+          <div class="fk-phase-block" id="fk-phase-2">
+            <div class="fk-phase-header">
+              <div class="fk-phase-dot">2</div>
+              <div>
+                <div class="fk-phase-title">Über 18 · Dein Leben aufbauen</div>
+                <div class="fk-phase-sub">Finanzen meistern, Träume realisieren</div>
+              </div>
+            </div>
+            <div class="fk-phase-content">
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#fffbeb">📊</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Budget & Kontostruktur</div>
+                    <div class="fk-topic-sub">Digitales Finanzverhalten aufbauen</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Mit dem ersten Lohn kommt Verantwortung: Miete, Krankenkasse, Steuern. Ein klares Budget und getrennte Konten helfen den Überblick zu behalten.</p>
+                  <p style="margin-top:6px">→ Tipp: MoneyHaxx Budgetrechner nutzen!</p>
+                  <div class="fk-product-tag">🏦 Privatkonto · kostenlos bis 30</div>
+                  <div class="fk-product-tag">💳 Visa Debit Stu · gratis bis 25/30 J.</div>
+                  <button onclick="switchView('budget',3)" style="margin-top:10px;width:100%;padding:9px;background:var(--red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Budgetrechner öffnen →</button>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#fff0f0">📋</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Steuern verstehen</div>
+                    <div class="fk-topic-sub">Null-Schulden Hack in der Praxis</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Ab 18 bist du steuerpflichtig. Viele werden von der ersten Steuerrechnung überrascht. Wer monatlich zurücklegt, hat im Dezember zwei volle Monatslöhne.</p>
+                  <p style="margin-top:6px">Steuerrechner deiner Gemeinde googeln → Betrag ÷ 12 → Dauerauftrag einrichten.</p>
+                  <div class="fk-product-tag">📲 BLKB E-Banking · Dauerauftrag</div>
+                  <button onclick="switchView('haxx',2)" style="margin-top:10px;width:100%;padding:9px;background:var(--red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Null-Schulden Hack ansehen →</button>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#f0fdf4">🛡️</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Vorsorgesystem Schweiz</div>
+                    <div class="fk-topic-sub">3 Säulen einfach erklärt</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p><strong>1. Säule (AHV):</strong> Staatliche Grundrente — obligatorisch, wird vom Lohn abgezogen.<br>
+                  <strong>2. Säule (PK):</strong> Pensionskasse — mit Arbeitgeber zusammen einbezahlt.<br>
+                  <strong>3. Säule:</strong> Freiwillig, steuerlich abzugsfähig, max. CHF 7'258/Jahr (2026).</p>
+                  <div class="fk-product-tag">🛡️ Säule 3a · steuerlich optimieren</div>
+                  <div class="fk-product-tag">📈 BLKB Fondssparplan</div>
+<button onclick="switchView('invest',5)" style="margin-top:10px;width:100%;padding:9px;background:var(--red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">3a Simulation starten →</button>
+                  <a href="https://www.blkb.ch/kontakt" target="_blank" style="display:block;margin-top:6px;width:100%;padding:9px;background:white;color:var(--dark);border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-weight:600;text-decoration:none;text-align:center">💬 Erzähl uns von deinen Plänen →</a>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#fff0f0">✈️</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Erste Träume erfüllen</div>
+                    <div class="fk-topic-sub">Sparziele mit System erreichen</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Reise, E-Bike, eigene Wohnung — mit einem klaren Sparziel und einem Dauerauftrag erreichst du es schneller als du denkst. Easy-10 Hack anwenden!</p>
+                  <div class="fk-product-tag">💰 Sparkonto Jugend · Vorzugszins</div>
+                  <div class="fk-product-tag">📈 BLKB Fondssparplan · ab kleinen Beträgen</div>
+                  <button onclick="switchView('goals',1)" style="margin-top:10px;width:100%;padding:9px;background:var(--red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Mein Sparziel erstellen →</button>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#e0eef2">🎓</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Ausbildung</div>
+                    <div class="fk-topic-sub">Studium, Weiterbildung, Kurs</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Investiere in dich selbst — das ist der Ego-Hack. Kurse, Studium oder Weiterbildung erhöhen dein Einkommen langfristig. Die BLKB unterstützt Studierende mit speziellen Konditionen.</p>
+                  <div class="fk-product-tag">💳 Visa Debit Stu · gratis für Studierende</div>
+                  <div class="fk-product-tag">🖨️ Gratis Druckservice für Studienarbeiten</div>
+                  <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank" style="display:block;margin-top:10px;width:100%;padding:9px;background:var(--dark);color:white;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;text-align:center">Visa Debit Stu beantragen →</a>
+                  <a href="https://www.blkb.ch/kontakt" target="_blank" style="display:block;margin-top:6px;width:100%;padding:9px;background:white;color:var(--dark);border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-weight:600;text-decoration:none;text-align:center">💬 Erzähl uns von deinen Plänen →</a>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#fffbeb">💼</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Selbstständigkeit planen</div>
+                    <div class="fk-topic-sub">Eigenes Business starten</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Als Selbstständiger bist du für alles selbst verantwortlich: Steuern, AHV, Pensionskasse. Gute Vorbereitung und eine starke Bankpartnerin sind entscheidend.</p>
+                  <div class="fk-product-tag">🏦 BLKB Geschäftskonto</div>
+                  <div class="fk-product-tag">👥 Persönliche BLKB-Beratung</div>
+                  <a href="https://www.blkb.ch/kontakt" target="_blank" style="display:block;margin-top:10px;width:100%;padding:9px;background:var(--dark);color:white;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;text-align:center">💬 Erzähl uns von deinen Plänen →</a>
+                </div>
+              </div>
+
+              <div class="fk-topic-card" onclick="this.classList.toggle('open')">
+                <div class="fk-topic-row">
+                  <span class="fk-topic-icon" style="background:#f0fdf4">👨‍👩‍👧</span>
+                  <div class="fk-topic-text">
+                    <div class="fk-topic-title">Familienplanung</div>
+                    <div class="fk-topic-sub">Finanziell vorbereitet sein</div>
+                  </div>
+                  <span class="fk-topic-chev">▼</span>
+                </div>
+                <div class="fk-topic-body">
+                  <p>Familie bedeutet neue Ausgaben: Kinderbetreuung, grössere Wohnung, Ausfall eines Einkommens. Wer früh Reserven bildet und vorsorgt, meistert diese Phase entspannter.</p>
+                  <div class="fk-product-tag">💰 Sparkonto für Kinder · Geschenksparkonto</div>
+                  <div class="fk-product-tag">🏡 BLKB Hypothekenberatung</div>
+                  <div class="fk-product-tag">🛡️ Säule 3a ausbauen</div>
+                  <button onclick="switchView('invest',5)" style="margin-top:10px;width:100%;padding:9px;background:var(--red);color:white;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Geld vermehren & 3a planen →</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div style="padding:14px 16px 20px">
+          <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank"
+            style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:10px;background:white;border-radius:var(--r);box-shadow:var(--shadow)">
+            Alle Angebote auf blkb.ch →
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ================================
+         INVEST
+    ================================= -->
+    <div class="view" id="view-invest">
+      <div class="scroll-area">
+        <div class="hdr dark-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">BLKB Fondssparplan</div>
+          <div class="hdr-title">Geld vermehren</div>
+          <div class="hdr-sub">So wächst dein Geld während du schläfst</div>
+        </div>
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
+          <img src="img/jugend6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
+        </div>
+
+        <!-- Anlage-Typ Toggle -->
+        <div style="padding:14px 16px 4px">
+          <div style="display:flex;gap:8px">
+            <button id="inv-btn-frei" class="inv-type-btn active" onclick="setInvType('frei')">
+              💼 Freies Vermögen
+            </button>
+            <button id="inv-btn-3a" class="inv-type-btn" onclick="setInvType('3a')">
+              🛡️ Säule 3a
+            </button>
+          </div>
+        </div>
+
+        <!-- 3a Info Box (nur bei 3a sichtbar) -->
+        <div id="inv-3a-info" style="display:none;margin:8px 16px 0;background:var(--warn-l);border-radius:var(--r);padding:12px 14px;border-left:3px solid var(--amber)">
+          <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Säule 3a · Max. 2026</div>
+          <div style="font-size:15px;font-weight:700;color:var(--dark)">CHF 7'258 / Jahr</div>
+          <div style="font-size:11px;color:#92400e;margin-top:3px">= CHF 604.83 / Monat für Angestellte mit Pensionskasse<br>Steuerlich abzugsfähig · Gebundene Vorsorge bis Rentenalter</div>
+        </div>
+
+        <!-- Aktuelles 3a Guthaben aus ACP (wird via render3aInvest befüllt) -->
+        <div id="inv-3a-saldo-box" style="display:none;margin:8px 16px 0;background:var(--warn-l);border-radius:var(--r);padding:12px 14px;border-left:3px solid var(--amber)"></div>
+
+        <!-- Eingaben -->
+        <div style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:14px">
+
+          <!-- Geschlecht → Rentenalter -->
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Geschlecht <span style="font-size:10px;font-weight:500;color:var(--light)">(beeinflusst Rentenalter)</span></div>
+            <div style="display:flex;gap:6px">
+              <button id="inv-btn-male"   class="inv-rhythm-btn active" onclick="setInvGender('m')">👨 Mann (Rente 65)</button>
+              <button id="inv-btn-female" class="inv-rhythm-btn"        onclick="setInvGender('f')">👩 Frau (Rente 64)</button>
+            </div>
+          </div>
+
+          <!-- Alter von/bis -->
+          <div style="display:flex;gap:10px;margin-bottom:12px">
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Von Alter</div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);background:var(--bg);border-radius:6px;padding:8px 12px" id="inv-age-from">16</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Bis Alter</div>
+              <input type="number" id="inv-age-to" min="13" max="67" value="30"
+                class="form-input" style="margin:0;padding:8px 12px;font-size:18px;font-weight:700"
+                oninput="calcInvest()">
+            </div>
+          </div>
+
+          <!-- Rhythmus -->
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Einzahlungs-Rhythmus</div>
+            <div style="display:flex;gap:6px">
+              <button id="inv-btn-monthly" class="inv-rhythm-btn active" onclick="setInvRhythm('monthly')">Monatlich</button>
+              <button id="inv-btn-yearly"  class="inv-rhythm-btn"        onclick="setInvRhythm('yearly')">Jährlich</button>
+            </div>
+          </div>
+
+          <!-- Betrag -->
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Betrag <span id="inv-amount-label">(CHF/Monat)</span></div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:15px;font-weight:600;color:var(--mid)">CHF</span>
+              <input type="number" id="inv-amount" min="10" value="200"
+                class="form-input" style="margin:0;flex:1;font-size:18px;font-weight:700"
+                oninput="calcInvest()">
+            </div>
+            <div id="inv-3a-maxhint" style="display:none;font-size:11px;color:var(--amber);margin-top:4px;font-weight:600"></div>
+          </div>
+
+          <!-- Rendite -->
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Erwartete Rendite p.a.</div>
+            <div style="display:flex;gap:6px;margin-bottom:8px">
+              <button class="inv-rate-btn" data-rate="3" onclick="setInvRate(3)">3% konservativ</button>
+              <button class="inv-rate-btn active" data-rate="5" onclick="setInvRate(5)">5% ausgewogen</button>
+              <button class="inv-rate-btn" data-rate="7" onclick="setInvRate(7)">7% wachstum</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:12px;color:var(--mid);flex-shrink:0">Oder manuell:</span>
+              <input type="number" id="inv-rate-manual" min="0.1" max="30" step="0.1" value="5"
+                class="form-input" style="margin:0;flex:1;font-size:15px;font-weight:700;padding:7px 10px"
+                oninput="onRateManual(this.value)" onfocus="this.select()">
+              <span style="font-size:13px;font-weight:600;color:var(--mid);flex-shrink:0">% p.a.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ergebnis-Box -->
+        <div style="margin:10px 16px 0;background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);border-radius:var(--r);padding:16px;color:white">
+          <div style="font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px" id="inv-result-label">Endwert nach 14 Jahren</div>
+          <div style="font-size:32px;font-weight:700;letter-spacing:-.5px">CHF <span id="inv-endwert">0</span></div>
+          <div style="height:1px;background:rgba(255,255,255,.1);margin:12px 0"></div>
+          <div style="display:flex;gap:10px">
+            <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-size:15px;font-weight:700">CHF <span id="inv-einbezahlt">0</span></div>
+              <div style="font-size:10px;opacity:.5;margin-top:2px">Einbezahlt</div>
+            </div>
+            <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-size:15px;font-weight:700;color:#6ee7b7">CHF <span id="inv-rendite">0</span></div>
+              <div style="font-size:10px;opacity:.5;margin-top:2px">Rendite</div>
+            </div>
+          </div>
+          <!-- Balken: Einbezahlt vs Rendite -->
+          <div style="margin-top:12px">
+            <div style="height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;display:flex">
+              <div id="inv-bar-invested" style="height:100%;background:rgba(255,255,255,.4);transition:width .5s"></div>
+              <div id="inv-bar-return"   style="height:100%;background:#6ee7b7;transition:width .5s"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px">
+              <span style="font-size:10px;opacity:.5">Kapital</span>
+              <span style="font-size:10px;color:#6ee7b7" id="inv-rendite-pct">Rendite 0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vergleich Sparkonto -->
+        <div id="inv-compare-box" style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:14px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:10px">⚖️ Vergleich: BLKB Sparkonto Jugend (0.5% p.a.)</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <div style="flex:1;background:var(--bg);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-size:13px;font-weight:700;color:var(--mid)">CHF <span id="inv-spar-endwert">0</span></div>
+              <div style="font-size:10px;color:var(--light);margin-top:2px">Sparkonto</div>
+            </div>
+            <div style="display:flex;align-items:center;font-size:18px;color:var(--light)">vs</div>
+            <div style="flex:1;background:var(--ok-l);border-radius:8px;padding:10px;text-align:center;border:1.5px solid rgba(22,163,74,.15)">
+              <div style="font-size:13px;font-weight:700;color:var(--ok)">CHF <span id="inv-invest-vs">0</span></div>
+              <div style="font-size:10px;color:var(--ok);margin-top:2px" id="inv-invest-vs-label">Investiert</div>
+            </div>
+          </div>
+          <div style="background:var(--ok-l);border-radius:8px;padding:10px;border-left:3px solid var(--ok)">
+            <div style="font-size:12px;font-weight:700;color:var(--ok)">+ CHF <span id="inv-mehrertrag">0</span> mehr</div>
+            <div style="font-size:11px;color:#166534;margin-top:2px" id="inv-mehrertrag-label">durch Investieren statt Sparen</div>
+          </div>
+          <div style="font-size:10px;color:var(--light);margin-top:8px;text-align:center">BLKB Sparkonto Jugend: 0.5% p.a. (Stand 2026, bis CHF 20'000)</div>
+        </div>
+
+        <!-- Jahres-Tabelle -->
+        <div style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden">
+          <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--dark)">📅 Entwicklung Jahr für Jahr</div>
+          <div id="inv-table" style="max-height:240px;overflow-y:auto"></div>
+        </div>
+
+        <div style="padding:10px 16px 20px">
+          <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank"
+            style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:10px;background:white;border-radius:var(--r);box-shadow:var(--shadow)">
+            BLKB Fondssparplan starten →
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ================================
+         FUN & GAMES
+    ================================= -->
+    <div class="view" id="view-fun">
+      <div class="scroll-area">
+        <div class="hdr dark-bg">
+          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
+          <div class="hdr-label">BLKB Jugend</div>
+          <div class="hdr-title">Fun &amp; Games 🎮</div>
+          <div class="hdr-sub">Lerne spielend mit Geld umgehen</div>
+        </div>
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0;position:relative">
+          <img src="img/fun-games2.jpg" alt="Fun & Games" style="width:100%;height:100%;object-fit:cover;object-position:center 50%">
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(30,35,40,.4),rgba(30,35,40,.1))"></div>
+        </div>
+
+        <!-- Level & Badges -->
+        <div style="margin:14px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:14px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span id="fun-level-badge" style="font-size:36px">🌱</span>
+            <div style="flex:1">
+              <div style="font-size:16px;font-weight:700;color:var(--dark)" id="fun-level-title">Finanz-Einsteiger</div>
+              <div style="font-size:12px;color:var(--mid)" id="fun-level-sub">Level 1 · 0 Punkte</div>
+              <div style="height:6px;background:var(--border);border-radius:3px;margin-top:6px;overflow:hidden">
+                <div id="fun-level-bar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;transition:width .5s;width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Badges Grid -->
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:8px">Abzeichen</div>
+          <div id="fun-badges-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+        </div>
+
+        <!-- Games -->
+        <div style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden">
+          <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--dark)">🕹️ Spiele</div>
+
+          <!-- Game picker -->
+          <div style="display:flex;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border)">
+            <button class="inv-rhythm-btn active" id="game-btn-coin" onclick="selectGame('coin')">🪙 Coin Tap</button>
+            <button class="inv-rhythm-btn" id="game-btn-snake" onclick="selectGame('snake')">🐍 Snake</button>
+            <button class="inv-rhythm-btn" id="game-btn-pac" onclick="selectGame('pac')">🟡 Pac-Man</button>
+          </div>
+
+          <!-- Coin Tap Game -->
+          <div id="game-coin" style="padding:14px;text-align:center">
+            <div style="font-size:12px;color:var(--mid);margin-bottom:8px">Tippe so schnell wie möglich auf die Münzen!</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px">Score: <span id="coin-score">0</span> · Zeit: <span id="coin-timer">10</span>s</div>
+            <div id="coin-area" onclick="if(!coinGame.active)startCoinGame()" style="height:200px;background:var(--bg);border-radius:10px;position:relative;overflow:hidden;border:2px solid var(--border);cursor:pointer">
+              <div id="coin-start-msg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                <img src="img/logo.svg" style="width:36px;height:36px;object-fit:contain">
+                <span style="font-size:13px;font-weight:600;color:var(--mid)">Tippe zum Starten!</span>
+              </div>
+            </div>
+            <div id="coin-result" style="display:none;margin-top:8px;padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok)"></div>
+          </div>
+
+          <!-- Snake Game -->
+          <div id="game-snake" style="display:none;padding:14px;text-align:center">
+            <div style="font-size:12px;color:var(--mid);margin-bottom:8px">Sammle Münzen ohne die Wand zu berühren!</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px">Score: <span id="snake-score">0</span></div>
+            <canvas id="snake-canvas" width="320" height="240" style="border-radius:10px;border:2px solid var(--border);background:#1e2328;max-width:100%"></canvas>
+            <div style="display:inline-grid;grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px 44px;gap:4px;margin-top:10px">
+              <div></div>
+              <button class="dpad-btn" onclick="snakeDir(0,-1)">▲</button>
+              <div></div>
+              <button class="dpad-btn" onclick="snakeDir(-1,0)">◀</button>
+              <div style="background:var(--bg);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px">🐍</div>
+              <button class="dpad-btn" onclick="snakeDir(1,0)">▶</button>
+              <div></div>
+              <button class="dpad-btn" onclick="snakeDir(0,1)">▼</button>
+              <div></div>
+            </div>
+            <div style="font-size:10px;color:var(--light);margin-top:4px">Wischen auf dem Spielfeld möglich</div>
+            <button class="btn-primary" style="margin-top:10px;padding:10px" onclick="initSnake()">▶ Neues Spiel</button>
+          </div>
+        <!-- Pac-Man Game -->
+          <div id="game-pac" style="display:none;padding:14px;text-align:center">
+            <div style="font-size:12px;color:var(--mid);margin-bottom:6px">Friss alle CHF-Münzen! Meide die Ausgaben-Geister!</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:6px">
+              Score: <span id="pac-score">0</span> &nbsp;|&nbsp; Leben: <span id="pac-lives">3</span>
+            </div>
+            <canvas id="pac-canvas" width="315" height="225" style="border-radius:10px;border:2px solid var(--border);background:#1e2328;max-width:100%"></canvas>
+
+            <div style="display:inline-grid;grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px 44px;gap:4px;margin-top:10px">
+              <div></div>
+              <button class="dpad-btn" onclick="pacDir(0,-1)">▲</button>
+              <div></div>
+              <button class="dpad-btn" onclick="pacDir(-1,0)">◀</button>
+              <div style="background:var(--red-l);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center"><img src="img/logo.svg" style="width:22px;height:22px;object-fit:contain"></div>
+              <button class="dpad-btn" onclick="pacDir(1,0)">▶</button>
+              <div></div>
+              <button class="dpad-btn" onclick="pacDir(0,1)">▼</button>
+              <div></div>
+            </div>
+            <div style="font-size:10px;color:var(--light);margin-top:4px">Wischen auf dem Spielfeld möglich</div>
+            <button class="btn-primary" style="margin-top:10px;padding:10px" onclick="initPac()">▶ Neues Spiel</button>
+          </div>
+
+        </div>
+
+        <div style="height:20px"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" id="nav0" onclick="switchView('home',0)">
+        <span class="nav-icon"><i class="ti ti-home"></i></span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-btn" id="nav1" onclick="switchView('goals',1)">
+        <span class="nav-icon"><i class="ti ti-target"></i></span>
+        <span class="nav-label">Ziele</span>
+      </button>
+      <button class="nav-btn" id="nav2" onclick="switchView('haxx',2)">
+        <span class="nav-icon"><i class="ti ti-bolt"></i></span>
+        <span class="nav-label">Haxx</span>
+      </button>
+      <button class="nav-btn" id="nav3" onclick="switchView('budget',3)">
+        <span class="nav-icon"><i class="ti ti-chart-pie"></i></span>
+        <span class="nav-label">Budget</span>
+      </button>
+      <button class="nav-btn" id="nav4" onclick="switchView('finlit',4)">
+        <span class="nav-icon"><i class="ti ti-building-bank"></i></span>
+        <span class="nav-label">Angebote</span>
+      </button>
+      <button class="nav-btn" id="nav5" onclick="switchView('invest',5)">
+        <span class="nav-icon"><i class="ti ti-trending-up"></i></span>
+        <span class="nav-label">Vermehren</span>
+      </button>
+      <button class="nav-btn" id="nav6" onclick="switchView('fun',6)">
+        <span class="nav-icon"><i class="ti ti-device-gamepad-2"></i></span>
+        <span class="nav-label">Fun</span>
+      </button>
+    </nav>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+  </div><!-- /screen -->
+</div><!-- /phone -->
+
+<script>
+/* ================================================
+   STATE
+================================================ */
+var state = {
+  age: 16,
+  lohn: 3200,
+  sparGuthaben: 2500,
+  saldo3a: 0,
+  monatlichesSparbudget: 320, // 10% von 3200
+  goals: [],
+  haxxDone: [],
+  editGoalIdx: -1,
+  selectedEmoji: '🎯',
+};
+
+// Persist to localStorage
+function save() {
+  localStorage.setItem('blkb_v3', JSON.stringify({
+    age: state.age,
+    lohn: state.lohn,
+    sparGuthaben: state.sparGuthaben,
+    goals: state.goals,
+    haxxDone: state.haxxDone,
+    budgetPcts: budgetCats.map(function(c) { return c.pct; }),
+  }));
+}
+
+function load() {
+  try {
+    var d = JSON.parse(localStorage.getItem('blkb_v3') || 'null');
+    if (d) {
+      state.age = d.age || 16;
+      state.lohn = d.lohn || 3200;
+      state.sparGuthaben = d.sparGuthaben || 2500;
+      state.goals = d.goals || [];
+      state.haxxDone = d.haxxDone || [];
+      if (d.budgetPcts && d.budgetPcts.length === budgetCats.length) {
+        d.budgetPcts.forEach(function(p, i) { budgetCats[i].pct = p; });
+      }
+    }
+  } catch(e) {}
+}
+
+/* ================================================
+   NAVIGATION
+================================================ */
+var currentView = 'home';
+
+function switchView(name, idx) {
+  // Views
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  document.getElementById('view-' + name).classList.add('active');
+
+  // Nav buttons
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('nav' + idx).classList.add('active');
+
+  // Sidebar buttons
+  document.querySelectorAll('.sb-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('sb' + idx).classList.add('active');
+
+  currentView = name;
+
+  // Scroll to top
+  var sa = document.querySelector('#view-' + name + ' .scroll-area');
+  if (sa) sa.scrollTop = 0;
+}
+
+/* ================================================
+   TOAST
+================================================ */
+var toastTimer = null;
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+/* ================================================
+   AGE / LIFECYCLE
+================================================ */
+var lifecycleStages = [
+  { min: 12, max: 15, tag: 'Schüler / Kind', tip: 'Lerne Geld zu zählen: Taschengeld sinnvoll einteilen — Sparen, Ausgeben, Verschenken.' },
+  { min: 16, max: 19, tag: 'Lehrling / Schüler', tip: 'Lehrlingslohn clever aufteilen: 10% direkt aufs Sparkonto. Du merkst es kaum — dein Konto schon.' },
+  { min: 20, max: 23, tag: 'Berufseinsteiger', tip: 'Erster richtiger Lohn? Jetzt Dauerauftrag einrichten und Steuern nicht vergessen.' },
+  { min: 24, max: 27, tag: 'Berufstätig', tip: 'Miete max. 25% des Nettolohns. Und: Lohnerhöhung = 50% sparen, 50% geniessen.' },
+  { min: 28, max: 30, tag: 'Karriere / Aufbau', tip: 'Fondssparplan starten. Regelmässig investieren, Zinseszins arbeiten lassen.' },
+];
+
+function getStage(age) {
+  for (var i = 0; i < lifecycleStages.length; i++) {
+    var s = lifecycleStages[i];
+    if (age >= s.min && age <= s.max) return s;
+  }
+  return lifecycleStages[lifecycleStages.length - 1];
+}
+
+function setAge(age) {
+  state.age = age;
+
+  // Sync slider
+  var slider = document.getElementById('age-slider');
+  if (slider && parseInt(slider.value) !== age) slider.value = age;
+
+  var pct = ((age - 12) / (30 - 12)) * 100;
+  document.getElementById('home-lifecycle-fill').style.width = pct + '%';
+
+  var stage = getStage(age);
+  document.getElementById('home-age-label').textContent = age;
+  document.getElementById('home-lifecycle-tag').textContent = stage.tag;
+  
+  document.getElementById('home-tip-text').textContent = stage.tip;
+
+  var ageFromEl = document.getElementById('inv-age-from');
+  if (ageFromEl) ageFromEl.textContent = age;
+  calcInvest();
+  updateFkPhase();
+  save();
+}
+
+/* ================================================
+   GOALS
+================================================ */
+var defaultGoalEmojis = ['🎯','✈️','🚴','🚗','💻','🎸','📱','🏠','💰','🎓','🌍','🛴'];
+
+function applyGoalPreset(emoji, name) {
+  state.selectedEmoji = emoji;
+  document.getElementById('goal-name-input').value = name;
+  renderEmojiPicker();
+  // Preset-Button highlighten
+  document.querySelectorAll('.goal-preset-btn').forEach(function(b) {
+    b.classList.toggle('sel', b.textContent.trim().startsWith(emoji));
+  });
+}
+
+function openGoalModal(idx) {
+  state.editGoalIdx = (idx !== undefined) ? idx : -1;
+
+  var modal = document.getElementById('goal-modal');
+  var title = document.getElementById('modal-title');
+
+  // Preset-Buttons zurücksetzen
+  document.querySelectorAll('.goal-preset-btn').forEach(function(b){ b.classList.remove('sel'); });
+
+  if (state.editGoalIdx >= 0) {
+    var g = state.goals[state.editGoalIdx];
+    title.textContent = 'Ziel bearbeiten';
+    document.getElementById('goal-name-input').value = g.name;
+    document.getElementById('goal-pct-input').value = g.pct;
+    state.selectedEmoji = g.emoji;
+  } else {
+    title.textContent = 'Neues Sparziel';
+    document.getElementById('goal-name-input').value = '';
+    document.getElementById('goal-pct-input').value = '';
+    state.selectedEmoji = '🎯';
+  }
+
+  renderEmojiPicker();
+  modal.classList.add('open');
+}
+
+function closeGoalModal(e) {
+  if (!e || e.target === document.getElementById('goal-modal')) {
+    document.getElementById('goal-modal').classList.remove('open');
+  }
+}
+
+function renderEmojiPicker() {
+  var html = '';
+  defaultGoalEmojis.forEach(function(em) {
+    html += '<div class="emoji-opt' + (state.selectedEmoji === em ? ' sel' : '') +
+            '" onclick="selectEmoji(\'' + em + '\')">' + em + '</div>';
+  });
+  document.getElementById('emoji-picker').innerHTML = html;
+}
+
+function selectEmoji(em) {
+  state.selectedEmoji = em;
+  renderEmojiPicker();
+}
+
+function saveGoal() {
+  var name = document.getElementById('goal-name-input').value.trim();
+  var pct  = Math.max(1, Math.min(100, parseInt(document.getElementById('goal-pct-input').value) || 0));
+
+  if (!name) { showToast('Bitte einen Namen eingeben'); return; }
+  if (!pct)  { showToast('Bitte einen %-Anteil eingeben'); return; }
+
+  var goal = { emoji: state.selectedEmoji, name: name, pct: pct };
+
+  if (state.editGoalIdx >= 0) {
+    state.goals[state.editGoalIdx] = goal;
+    showToast('Ziel aktualisiert ✓');
+  } else {
+    state.goals.push(goal);
+    showToast('Ziel gespeichert! 🎯');
+  }
+
+  document.getElementById('goal-modal').classList.remove('open');
+  save();
+  renderGoals();
+  updateHomeCounts();
+}
+
+function deleteGoal(idx) {
+  state.goals.splice(idx, 1);
+  save();
+  renderGoals();
+  updateHomeCounts();
+  showToast('Ziel gelöscht');
+}
+
+function fmtChf(n) {
+  return Math.round(n).toLocaleString('de-CH');
+}
+
+function onSparChange(val) {
+  var n = Math.max(0, parseInt(val) || 0);
+  state.sparGuthaben = n;
+  document.getElementById('goals-spar-display').textContent = n.toLocaleString('de-CH');
+  renderGoals();
+  save();
+}
+
+function renderGoals() {
+  var list   = document.getElementById('goals-list');
+  var spar   = state.sparGuthaben;
+  var totalPct = state.goals.reduce(function(s,g){ return s+(g.pct||0); }, 0);
+
+  // % summary bar
+  var pctBar  = document.getElementById('goals-pct-bar');
+  var pctTot  = document.getElementById('goals-pct-total');
+  var pctHint = document.getElementById('goals-pct-hint');
+  if (pctBar) {
+    pctTot.textContent = totalPct + '%';
+    pctBar.style.width = Math.min(100, totalPct) + '%';
+    if (totalPct === 100) {
+      pctBar.style.background = 'var(--ok)';
+      pctHint.textContent = '✓ 100% verteilt — perfekt';
+    } else if (totalPct < 100) {
+      pctBar.style.background = 'var(--amber)';
+      pctHint.textContent = '⚠ Noch ' + (100 - totalPct) + '% nicht zugewiesen';
+    } else {
+      pctBar.style.background = 'var(--red)';
+      pctHint.textContent = '✕ ' + (totalPct - 100) + '% zu viel — bitte anpassen';
+    }
+  }
+
+  if (state.goals.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:var(--light);font-size:13px">Noch keine Sparziele. Füge dein erstes Ziel hinzu! 🎯</div>';
+    return;
+  }
+
+  var html = '';
+  state.goals.forEach(function(g, i) {
+    var chf = Math.round(spar * (g.pct||0) / 100);
+    // pct-input für dieses Ziel
+    html += '<div class="goal-item" onclick="openGoalModal(' + i + ')">' +
+      '<div class="goal-item-header">' +
+        '<div class="goal-emoji">' + g.emoji + '</div>' +
+        '<div class="goal-info">' +
+          '<div class="goal-name">' + escHtml(g.name) + '</div>' +
+          '<div class="goal-amounts">' +
+            '<span style="font-weight:700;color:var(--dark);font-size:13px">CHF ' + fmtChf(chf) + ' gespart</span>' +
+            (function(){
+              var mSpar = state.monatlichesSparbudget;
+              var goalMon = mSpar > 0 ? Math.round(mSpar * (g.pct||0) / 100) : 0;
+              var ziel = g.ziel || 0;
+              if (ziel > 0 && goalMon > 0) {
+                var monate = Math.ceil((ziel - chf) / goalMon);
+                if (monate <= 0) return '<span style="font-size:11px;color:var(--ok)">✓ Ziel erreicht!</span>';
+                return '<span style="font-size:11px;color:var(--mid)">CHF ' + fmtChf(goalMon) + '/Mt · noch ' + monate + ' Mt.</span>';
+              }
+              return '<span style="font-size:11px;color:var(--mid)">= ' + (g.pct||0) + '% · CHF ' + fmtChf(goalMon) + '/Mt.</span>';
+            })() +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">' +
+          '<div style="display:flex;align-items:center;gap:3px">' +
+            '<input type="number" min="0" max="100" value="' + (g.pct||0) + '" data-gi="' + i + '"' +
+            ' style="width:38px;padding:2px 4px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;color:var(--dark);background:var(--bg);text-align:right;font-family:var(--font);outline:none"' +
+            ' oninput="onGoalPctChange(this)" onclick="event.stopPropagation()" onfocus="this.select()">'+
+            '<span style="font-size:12px;color:var(--mid)">%</span>' +
+          '</div>' +
+          '<button class="goal-del-btn" onclick="event.stopPropagation();deleteGoal(' + i + ')" style="font-size:14px;padding:2px">🗑</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="goal-bar-wrap">' +
+        '<div class="goal-bar-bg">' +
+          '<div class="goal-bar-fill" style="width:' + Math.min(100,(g.pct||0)) + '%"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  list.innerHTML = html;
+}
+
+function onGoalPctChange(input) {
+  var i = parseInt(input.dataset.gi);
+  state.goals[i].pct = Math.max(0, Math.min(100, parseInt(input.value)||0));
+  renderGoals();
+  save();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ================================================
+   HAXX
+================================================ */
+var haxxData = [
+  {
+    slug: 'easy-10',
+    num: '1',
+    title: 'Easy-10 Hack',
+    sub: 'Zahle dich zuerst — jeden Monat',
+    text: 'Spare zuerst und gib dann aus, was übrig bleibt. Die meisten Leute sparen, was am Schluss vom Monat übrig bleibt. Unser Hack macht genau das Gegenteil.\n\nEs kommt nicht auf den Betrag an, den du monatlich sparst — wichtiger ist die Einstellung und die neue Gewohnheit. Gehe jetzt in dein E-Banking und richte einen Dauerauftrag mit 5–20% deines Monatslohns auf dein Sparkonto ein, am Tag, an dem dein Lohn reinkommt. Du zahlst dich somit selber zuerst.',
+    steps: null,
+    url: 'https://www.moneyhaxx.ch/hacks/easy-10',
+  },
+  {
+    slug: 'null-schulden',
+    num: '2',
+    title: 'Null-Schulden Hack',
+    sub: 'Keine Steuerüberraschungen mehr',
+    text: 'Viele Menschen in der Schweiz haben Steuerschulden. Unser Hack hilft dir, nie wieder in diese Falle zu tappen.',
+    steps: [
+      'Öffne Google und suche den Steuerrechner deiner Gemeinde.',
+      'Rechne deine Steuern aus, damit du weisst, wie viel das im Jahr ist.',
+      'Teile diesen Betrag durch 12 — so weisst du, was du monatlich zurücklegen musst.',
+      'Rufe deine Gemeinde an und bestelle einen Einzahlungsschein für deine Steuern.',
+      'Richte im E-Banking einen monatlichen Dauerauftrag ein und zahle Steuern im Voraus.',
+      'Das Schönste: Du hast deinen 13. Monatslohn voll für dich — geilstes Gefühl ever! 🎉',
+    ],
+    url: 'https://www.moneyhaxx.ch/hacks/null-schulden',
+  },
+  {
+    slug: 'dini-mieti',
+    num: '3',
+    title: 'Dini-Mieti Hack',
+    sub: 'Miete max. 25% des Nettolohns',
+    text: 'Die Miete ist die grösste Ausgabe in unserem Budget. Je tiefer die Miete, umso mehr Geld bleibt für dein Leben, zum Sparen und Investieren.\n\nCheck gleich: Beträgt deine Miete weniger als 25% deines Nettolohns? Falls nicht, überlege dir:',
+    steps: [
+      'Eine neue, günstigere Wohnung suchen.',
+      'Mit jemandem zusammenziehen und die Miete teilen.',
+      'Wege finden, um mehr zu verdienen.',
+    ],
+    url: 'https://www.moneyhaxx.ch/hacks/dini-mieti',
+  },
+  {
+    slug: 'fifty-fifty',
+    num: '4',
+    title: 'Fifty-Fifty Hack',
+    sub: 'Lohnerhöhung clever aufteilen',
+    text: 'Die meisten Menschen geben aus, was sie verdienen. Bei einer Lohnerhöhung oder einem Bonus geht dieses Geld direkt in Konsum — Ferien, Auto, Kleider.\n\nMit dem Fifty-Fifty Hack kannst du mehr konsumieren und gleichzeitig sparen. Beispiel: +200 CHF Lohn → 100 CHF aufs Sparkonto, 100 CHF für dich. Und: Passe deinen Dauerauftrag sofort an wenn du mehr verdienst.',
+    steps: null,
+    url: 'https://www.moneyhaxx.ch/hacks/fifty-fifty',
+  },
+  {
+    slug: 'ego',
+    num: '5',
+    title: 'Ego-Hack',
+    sub: 'Investiere in dich selbst',
+    text: 'Investiere in dich selber — das bringt am meisten Rendite. Vorteile:\n\nDu bist attraktiver auf dem Arbeitsmarkt · Du lernst neue Fähigkeiten · Mehr Selbstvertrauen · Spannendere Aufgaben · Neue Leute kennenlernen · Mehr Lohn!\n\nWelche Stärken und Talente hast du? Wie kannst du diese weiter stärken? Wer sich weiterentwickelt, erhöht die Chancen auf eine Lohnerhöhung. Mehr Lohn = mehr sparen = mehr investieren = weniger Stress.',
+    steps: null,
+    url: 'https://www.moneyhaxx.ch/hacks/ego',
+  },
+  {
+    slug: 'get-rich',
+    num: '6',
+    title: 'Get-Rich Hack',
+    sub: 'So wächst dein Geld während du schläfst',
+    text: 'Investieren schreckt viele ab. Häufige Fragen: Wie geht das? Ist das riskant? Wo soll ich anfangen?\n\nWichtig: Erst investieren, wenn du mindestens 1–3 Monatslöhne als Notfalltopf gespart hast. Geld das du investierst, soll langfristig für dich arbeiten — so reduziert sich automatisch das Risiko. Auf und Ab gibt es immer. Am einfachsten: Regelmässig einen fixen Betrag investieren (z.B. BLKB Fondssparplan).',
+    steps: null,
+    url: 'https://www.moneyhaxx.ch/hacks/get-rich',
+  },
+];
+
+function renderHaxx() {
+  var list = document.getElementById('haxx-list');
+  var doneCount = state.haxxDone.length;
+  var pct = (doneCount / 6) * 100;
+
+  document.getElementById('haxx-count-label').textContent = doneCount + ' von 6 verstanden';
+  document.getElementById('haxx-fill').style.width = pct + '%';
+
+  var html = '';
+  haxxData.forEach(function(h, i) {
+    var done = state.haxxDone.indexOf(h.slug) >= 0;
+    var bodyHtml = '<p class="haxx-body-text">' + escHtml(h.text).replace(/\n/g, '<br>') + '</p>';
+
+    if (h.steps) {
+      bodyHtml += '<ul class="haxx-body-steps">';
+      h.steps.forEach(function(s, si) {
+        bodyHtml += '<li data-n="' + (si+1) + '.">' + escHtml(s) + '</li>';
+      });
+      bodyHtml += '</ul>';
+    }
+
+    html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
+      '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
+        '<div class="haxx-num">' + (done ? '✓' : h.num) + '</div>' +
+        '<div class="haxx-header-text">' +
+          '<div class="haxx-h-title">' + escHtml(h.title) + '</div>' +
+          '<div class="haxx-h-sub">' + escHtml(h.sub) + '</div>' +
+        '</div>' +
+        '<div class="haxx-chevron">▼</div>' +
+      '</div>' +
+      '<div class="haxx-body">' +
+        bodyHtml +
+        '<div class="haxx-footer">' +
+          '<a href="' + h.url + '" target="_blank" class="haxx-video-btn">▶ Zum Video</a>' +
+          '<button class="haxx-check-btn' + (done ? ' done' : '') + '" onclick="toggleHaxxDone(' + i + ')">' +
+            (done ? '✓ Verstanden!' : '☐ Kapiert!') +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  list.innerHTML = html;
+}
+
+function toggleHaxx(i) {
+  var el = document.getElementById('haxx-' + i);
+  el.classList.toggle('open');
+}
+
+function toggleHaxxDone(i) {
+  var slug = haxxData[i].slug;
+  var idx = state.haxxDone.indexOf(slug);
+  if (idx >= 0) {
+    state.haxxDone.splice(idx, 1);
+    showToast('Hack als offen markiert');
+  } else {
+    state.haxxDone.push(slug);
+    showToast('Super! Hack ' + haxxData[i].num + ' verstanden ⚡');
+  }
+  save();
+  renderHaxx();
+  updateHomeCounts();
+}
+
+/* ================================================
+   BUDGET
+================================================ */
+var BUDGET_VERSION = '3';
+var budgetDefaults = [
+  // ── MoneyHaxx Standard ──────────────────────────────────────────
+  { icon: '<i class="ti ti-piggy-bank"></i>', name: 'Sparen (Easy-10)',    hint: 'Zuerst sparen! Mindestens 10% vom Lohn', pct: 10, color: 'fill-ok'     },
+  { icon: '<i class="ti ti-home"></i>',       name: 'Wohnen',              hint: 'Max. 25% (Dini-Mieti Hack)',             pct: 25, color: 'fill-red'    },
+  { icon: '<i class="ti ti-shopping-cart"></i>', name: 'Essen & Haushalt', hint: 'Lebensmittel, Restaurants',              pct: 15, color: 'fill-petrol' },
+  { icon: '<i class="ti ti-bus"></i>',        name: 'Mobilität',           hint: 'ÖV, Auto, Velo',                        pct: 10, color: 'fill-amber'  },
+  { icon: '<i class="ti ti-device-mobile"></i>', name: 'Kommunikation',    hint: 'Handy, Internet, Abo',                   pct:  5, color: 'fill-slate'  },
+  { icon: '<i class="ti ti-confetti"></i>',   name: 'Freizeit & Fun',      hint: 'Ausgang, Sport, Hobby',                  pct: 13, color: 'fill-olive'  },
+  { icon: '<i class="ti ti-heart-rate-monitor"></i>', name: 'Krankenkasse',hint: 'Prämie + Franchise',                     pct: 10, color: 'fill-red'    },
+  { icon: '<i class="ti ti-package"></i>',    name: 'Diverses/Reserve',    hint: 'Kleider, Unvorhergesehenes',             pct: 12, color: 'fill-slate'  },
+  // ── Optional · Deine Lebenssituation ────────────────────────────
+  { icon: '<i class="ti ti-school"></i>',     name: 'Bildung / Ausbildung',hint: 'Kurse, Studium, Weiterbildung · Ego-Hack', pct: 0, color: 'fill-petrol', optional: true },
+  { icon: '<i class="ti ti-briefcase"></i>',  name: 'Selbstständigkeit',   hint: 'Rücklagen für eigenes Business',         pct:  0, color: 'fill-amber',  optional: true },
+  { icon: '<i class="ti ti-users"></i>',      name: 'Familienplanung',     hint: 'Reserve für Familie & Zukunft',          pct:  0, color: 'fill-olive',  optional: true },
+];
+
+// working copy (user-editable pcts)
+var budgetCats = budgetDefaults.map(function(c) { return Object.assign({}, c); });
+
+function onLohnChange(val) {
+  state.lohn = parseInt(val);
+  document.getElementById('bud-lohn-input').value = val;
+  document.getElementById('bud-lohn-display').textContent = parseInt(val).toLocaleString('de-CH');
+  calcBudget();
+  save();
+}
+
+function onLohnInputChange(val) {
+  var n = parseInt(val) || 0;
+  if (n < 500) n = 500;
+  if (n > 8000) n = 8000;
+  state.lohn = n;
+  document.getElementById('bud-slider').value = n;
+  document.getElementById('bud-lohn-display').textContent = n.toLocaleString('de-CH');
+  calcBudget();
+  save();
+}
+
+function calcBudget() {
+  var lohn = state.lohn;
+
+  // Investment box: 10% monthly, 5% annual return, 10 years
+  var monthly = lohn * 0.1;
+  var months = 120;
+  var rate = 0.05 / 12;
+  var fv = monthly * ((Math.pow(1 + rate, months) - 1) / rate);
+  var einbezahlt = monthly * months;
+  var rendite = fv - einbezahlt;
+
+  document.getElementById('invest-total').textContent = fmtChf(fv);
+  document.getElementById('invest-einbezahlt').textContent = fmtChf(einbezahlt);
+  document.getElementById('invest-rendite').textContent = fmtChf(rendite);
+
+  // Sparanteil aus Budget → Sparziele
+  var sparCat = budgetCats.find(function(cat){ return cat.name.indexOf('Sparen') >= 0; });
+  if (sparCat) {
+    var monatSpar = Math.round(lohn * (sparCat.pct || 0) / 100);
+    state.monatlichesSparbudget = monatSpar;
+    // Anzeige im Sparziele-Screen aktualisieren
+    var msEl = document.getElementById('goals-monthly-budget');
+    if (msEl) msEl.textContent = fmtChf(monatSpar);
+  }
+
+  // Sum check
+  var total = budgetCats.reduce(function(s, c) { return s + (c.pct || 0); }, 0);
+  var sumEl    = document.getElementById('bud-sum-total');
+  var hintEl   = document.getElementById('bud-sum-hint');
+  var fillEl   = document.getElementById('bud-sum-fill');
+
+  sumEl.textContent = total + '%';
+  var fillW = Math.min(100, total);
+  fillEl.style.width = fillW + '%';
+
+  if (total === 100) {
+    sumEl.className = 'budget-sum-total budget-sum-ok';
+    fillEl.style.background = 'var(--ok)';
+    hintEl.innerHTML = '✓ Perfekt — alle 100% sind verteilt &nbsp;<button onclick="switchView(\'goals\',1)" style="font-size:10px;font-weight:700;color:var(--ok);background:transparent;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font)">Sparziele ansehen →</button>';
+  } else if (total < 100) {
+    sumEl.className = 'budget-sum-total budget-sum-warn';
+    fillEl.style.background = 'var(--amber)';
+    hintEl.textContent = '⚠ Noch ' + (100 - total) + '% zu verteilen';
+  } else {
+    sumEl.className = 'budget-sum-total budget-sum-warn';
+    fillEl.style.background = 'var(--red)';
+    hintEl.textContent = '✕ ' + (total - 100) + '% zu viel — bitte reduzieren';
+  }
+
+  // Budget category rows
+  var html = '';
+  budgetCats.forEach(function(c, i) {
+    var chf = Math.round(lohn * (c.pct || 0) / 100);
+    var barW = Math.min(100, (c.pct || 0) * 2);
+    html += '<div class="budget-cat">' +
+      '<div class="budget-cat-row">' +
+        '<div class="budget-cat-icon">' + c.icon + '</div>' +
+        '<div class="budget-cat-info">' +
+          '<div class="budget-cat-name">' + c.name + '</div>' +
+          '<div class="budget-cat-hint">' + c.hint + '</div>' +
+        '</div>' +
+        '<div class="budget-cat-right">' +
+          '<div class="budget-cat-chf">CHF ' + fmtChf(chf) + '</div>' +
+          '<div class="budget-pct-wrap">' +
+            '<input class="budget-pct-input" type="number" min="0" max="100" value="' + (c.pct || 0) + '"' +
+            ' data-idx="' + i + '"' +
+            ' oninput="onPctChange(this)"' +
+            ' onfocus="this.select()">' +
+            '<span class="budget-pct-symbol">%</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="budget-cat-bar">' +
+        '<div class="budget-cat-fill ' + c.color + '" style="width:' + barW + '%"></div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  document.getElementById('bud-cats').innerHTML = html;
+  save();
+}
+
+function onPctChange(input) {
+  var i = parseInt(input.dataset.idx);
+  var val = Math.max(0, Math.min(100, parseInt(input.value) || 0));
+  budgetCats[i].pct = val;
+  calcBudget();
+}
+
+function resetBudgetDefaults() {
+  budgetCats = budgetDefaults.map(function(c) { return Object.assign({}, c); });
+  calcBudget();
+  showToast('Standardwerte wiederhergestellt ↺');
+}
+
+/* ================================================
+   FINANZKOMPETENZ
+================================================ */
+var fkData = [
+  {
+    icon: '🃏', iconClass: 'red-bg',
+    title: 'ProfitCard',
+    sub: 'Kostenlose Vergünstigungen',
+    text: 'Kostenlos in den Basler Zolli oder mit der Luftseilbahn auf die Wasserfallen? Mit der ProfitCard erhalten Kinder und Jugendliche viele Vorteile: Gratiseintritte, vergünstigte Theater- und Freizeitangebote und vieles mehr.',
+    cta: { label: 'Mehr erfahren', url: 'https://www.blkb.ch/privatpersonen/konten/jugend.html' },
+  },
+  {
+    icon: '🏦', iconClass: 'petrol-bg',
+    title: 'Jugendkonten',
+    sub: 'TWINT, E-Banking, Vorzugszins',
+    text: 'BLKB Jugendkonten eröffnen jungen Menschen den Weg zu TWINT, E-Banking und Mobile Banking — mit zahlreichen Vorteilen und attraktiven Vergünstigungen. Das Sparkonto Jugend mit Vorzugszins ist ideal, um kurz- und mittelfristige Sparziele clever zu erreichen.',
+    cta: { label: 'Konto eröffnen', url: 'https://www.blkb.ch/privatpersonen/konten/jugend.html' },
+  },
+  {
+    icon: '💳', iconClass: 'ok-bg',
+    title: 'Visa Debit Stu',
+    sub: 'Gratis bis 30 — weltweit',
+    text: 'Für Jugendliche, junge Erwachsene und Studierende: keine Jahresgebühr (bis 25 bzw. 30 Jahre) und weltweit kontaktlos bezahlen, Bargeld beziehen und online einkaufen. Mit der Stu App zusätzlich von Cashback und Partnervergünstigungen profitieren.',
+    cta: { label: 'Mehr zur Karte', url: 'https://www.blkb.ch/privatpersonen/konten/jugend.html' },
+  },
+  {
+    icon: '📲', iconClass: 'amber-bg',
+    title: 'BLKB TWINT',
+    sub: 'Die sichere Bezahl-App',
+    text: 'BLKB TWINT bietet in einer App alles, was man braucht, um sich durch den Tag zu bewegen. Digitales Bezahlen wird nahezu überall möglich — einrichten und los geht\'s.',
+    cta: { label: 'TWINT aktivieren', url: 'https://www.blkb.ch/privatpersonen/konten/jugend.html' },
+  },
+  {
+    icon: '<i class="ti ti-trending-up"></i>', iconClass: 'olive-bg',
+    title: 'Fondssparplan',
+    sub: 'Vermögen aufbauen ab kleinen Beträgen',
+    text: 'Mit dem BLKB Fondssparplan lässt sich Schritt für Schritt Vermögen aufbauen — auch mit kleinen Beträgen. Regelmässig investieren, keine Kontoführungsgebühren, und das angelegte Kapital bleibt jederzeit flexibel verfügbar.\n\nPerfekt in Kombination mit dem Get-Rich Hack von MoneyHaxx! Für unter 18-Jährige erfolgt die Eröffnung durch die Eltern.',
+    cta: { label: 'Fondssparplan starten', url: 'https://www.blkb.ch/privatpersonen/konten/jugend.html' },
+  },
+  {
+    icon: '<i class="ti ti-school"></i>', iconClass: 'petrol-bg',
+    title: 'Finanzkompetenz',
+    sub: 'Wissen für ein starkes Fundament',
+    text: 'Wer sich in Finanzdingen gut auskennt, geht erfolgreicher durchs Leben und gerät weniger schnell in eine finanzielle Schieflage. Budgetieren, Ausgaben priorisieren und Sparen müssen aber zuerst gelernt sein.\n\nDie BLKB bietet Jugendlichen Unterstützung — in der Filiale, online, und mit Partnern wie MoneyHaxx.',
+    cta: { label: 'Zu blkb.ch', url: 'https://www.blkb.ch/privatpersonen/konten/jugend.html' },
+  },
+];
+
+function renderFinlit() {
+  // Lebensphase basierend auf Alter hervorheben
+  updateFkPhase();
+}
+
+function updateFkPhase() {
+  var age = state.age;
+  var phase1 = document.getElementById('fk-phase-1');
+  var phase2 = document.getElementById('fk-phase-2');
+  var indicator = document.getElementById('fk-phase-indicator');
+  if (!phase1) return;
+
+  if (age < 18) {
+    phase1.classList.add('active');
+    phase2.classList.remove('active');
+    if (indicator) {
+      indicator.style.background = 'var(--red-l)';
+      indicator.style.color = 'var(--red)';
+      indicator.style.border = '1.5px solid rgba(253,0,13,.15)';
+      indicator.textContent = '📍 Du bist in Phase 1 — Unter 18';
+    }
+  } else {
+    phase2.classList.add('active');
+    phase1.classList.remove('active');
+    if (indicator) {
+      indicator.style.background = 'var(--ok-l)';
+      indicator.style.color = 'var(--ok)';
+      indicator.style.border = '1.5px solid rgba(22,163,74,.15)';
+      indicator.textContent = '📍 Du bist in Phase 2 — Über 18';
+    }
+  }
+}
+
+/* ================================================
+   HOME COUNTS
+================================================ */
+function updateHomeCounts() {
+  document.getElementById('home-goals-count').textContent = state.goals.length;
+  document.getElementById('home-haxx-count').textContent = state.haxxDone.length + '/6';
+  
+  
+}
+
+/* ================================================
+   DEFAULT GOALS (first time)
+================================================ */
+// goals: { emoji, name, pct }  — pct = % des Sparkonto-Guthabens
+var defaultGoals = [
+  { emoji: '✈️', name: 'Reisefonds',      pct: 30 },
+  { emoji: '🚴', name: 'E-Bike',          pct: 25 },
+  { emoji: '🛡️', name: 'Notfallreserve',  pct: 20 },
+  { emoji: '🎓', name: 'Ausbildung',       pct: 15 },
+  { emoji: '💼', name: 'Selbstständigkeit',pct:  5 },
+  { emoji: '👨‍👩‍👧', name: 'Familienplanung', pct:  5 },
+];
+
+/* ================================================
+   INIT
+================================================ */
+
+
+/* ================================================
+   INVEST SIMULATION
+   ------------------------------------------------
+   API-Stub: api_getFondssparplan() (siehe API-Layer)
+   Live: GET /investments/me/savingsplan
+   ================================================ */
+
+var invState = {
+  type:    'frei',     // 'frei' | '3a'
+  rhythm:  'monthly',  // 'monthly' | 'yearly'
+  amount:  200,
+  rate:    5,
+  ageTo:   30,
+  gender:  'm',        // 'm' | 'f'
+};
+
+var MAX_3A_YEAR_2026  = 7258;   // CHF — Angestellte mit PK, 2026
+var MAX_3A_MONTH_2026 = Math.round(MAX_3A_YEAR_2026 / 12 * 100) / 100; // 604.83
+
+function setInvType(type) {
+  invState.type = type;
+  document.getElementById('inv-btn-frei').classList.toggle('active', type === 'frei');
+  document.getElementById('inv-btn-3a').classList.toggle('active', type === '3a');
+  document.getElementById('inv-3a-info').style.display = type === '3a' ? 'block' : 'none';
+  // 3a: Betrag auf Max kappen
+  // 3a-Saldo-Box: nur bei Säule 3a einblenden
+  var saldoBox = document.getElementById('inv-3a-saldo-box');
+  if (saldoBox) {
+    if (type === '3a') {
+      render3aInvest(state.saldo3a, state.saldo3a > 0);
+    } else {
+      saldoBox.style.display = 'none';
+    }
+  }
+
+  if (type === '3a') {
+    var maxAmt = invState.rhythm === 'monthly' ? MAX_3A_MONTH_2026 : MAX_3A_YEAR_2026;
+    if (invState.amount > maxAmt) {
+      invState.amount = maxAmt;
+      document.getElementById('inv-amount').value = maxAmt;
+    }
+  }
+  calcInvest();
+}
+
+function setInvRhythm(rhythm) {
+  invState.rhythm = rhythm;
+  document.getElementById('inv-btn-monthly').classList.toggle('active', rhythm === 'monthly');
+  document.getElementById('inv-btn-yearly').classList.toggle('active', rhythm === 'yearly');
+  document.getElementById('inv-amount-label').textContent = rhythm === 'monthly' ? '(CHF/Monat)' : '(CHF/Jahr)';
+  calcInvest();
+}
+
+function setInvGender(gender) {
+  invState.gender = gender;
+  document.getElementById('inv-btn-male').classList.toggle('active', gender === 'm');
+  document.getElementById('inv-btn-female').classList.toggle('active', gender === 'f');
+  // Bei Säule 3a: Rentenalter automatisch anpassen
+  if (invState.type === '3a') {
+    var retAge = gender === 'f' ? 64 : 65;
+    document.getElementById('inv-age-to').value = retAge;
+    calcInvest();
+  }
+}
+
+function setInvRate(rate) {
+  invState.rate = rate;
+  document.querySelectorAll('.inv-rate-btn').forEach(function(b) {
+    b.classList.toggle('active', parseInt(b.dataset.rate) === rate);
+  });
+  var manual = document.getElementById('inv-rate-manual');
+  if (manual && parseFloat(manual.value) !== rate) manual.value = rate;
+  calcInvest();
+}
+
+function onRateManual(val) {
+  var r = Math.max(0.1, Math.min(30, parseFloat(val) || 0));
+  invState.rate = r;
+  // Deselect preset buttons unless exact match
+  document.querySelectorAll('.inv-rate-btn').forEach(function(b) {
+    b.classList.toggle('active', parseInt(b.dataset.rate) === r);
+  });
+  calcInvest();
+}
+
+function calcInvest() {
+  state.investUsed = true;
+  var ageFrom = parseInt(document.getElementById('inv-age-from').textContent) || state.age;
+  var ageTo   = parseInt(document.getElementById('inv-age-to').value) || 30;
+  var amount  = parseFloat(document.getElementById('inv-amount').value) || 0;
+
+  // Clamp ageTo
+  if (ageTo <= ageFrom) ageTo = ageFrom + 1;
+  document.getElementById('inv-age-to').value = ageTo;
+
+  invState.amount = amount;
+  invState.ageTo  = ageTo;
+
+  // 3a: Max prüfen und warnen
+  var hint3a = document.getElementById('inv-3a-maxhint');
+  if (invState.type === '3a') {
+    var maxAmt = invState.rhythm === 'monthly' ? MAX_3A_MONTH_2026 : MAX_3A_YEAR_2026;
+    if (amount > maxAmt) {
+      hint3a.style.display = 'block';
+      hint3a.textContent = '⚠ Max. ' + (invState.rhythm === 'monthly' ? 'CHF 604.83/Mt.' : 'CHF 7\u2019258/Jahr') + ' (2026)';
+      amount = maxAmt;
+    } else {
+      hint3a.style.display = 'none';
+    }
+  } else {
+    hint3a.style.display = 'none';
+  }
+
+  var years       = ageTo - ageFrom;
+  var rate        = invState.rate / 100;
+  var monthlyAmt  = invState.rhythm === 'monthly' ? amount : amount / 12;
+  var months      = years * 12;
+  var monthRate   = rate / 12;
+
+  // Future value of regular payments (annuity)
+  // Startkapital: bei 3a = aktuelles Guthaben aus ACP
+  var startKapital = (invState.type === '3a' && state.saldo3a > 0) ? state.saldo3a : 0;
+
+  var fv, einbezahlt;
+  if (monthRate === 0) {
+    fv = startKapital + monthlyAmt * months;
+  } else {
+    // FV der laufenden Einzahlungen + Zinseszins auf Startkapital
+    fv = startKapital * Math.pow(1 + monthRate, months) +
+         monthlyAmt * ((Math.pow(1 + monthRate, months) - 1) / monthRate);
+  }
+  einbezahlt = startKapital + monthlyAmt * months;
+  var rendite = fv - einbezahlt;
+
+  // Render result
+  document.getElementById('inv-result-label').textContent = 'Endwert nach ' + years + ' Jahren (Alter ' + ageTo + ')';
+  document.getElementById('inv-endwert').textContent = fmtChf(fv);
+  document.getElementById('inv-einbezahlt').textContent = fmtChf(einbezahlt);
+  document.getElementById('inv-rendite').textContent = fmtChf(rendite);
+
+  var investPct = fv > 0 ? Math.round((einbezahlt / fv) * 100) : 100;
+  var returnPct = 100 - investPct;
+  document.getElementById('inv-bar-invested').style.width = investPct + '%';
+  document.getElementById('inv-bar-return').style.width   = returnPct + '%';
+  document.getElementById('inv-rendite-pct').textContent  = 'Rendite ' + returnPct + '%';
+
+  // Jahrestabelle
+  var tableHtml = '';
+  var balance = 0;
+  for (var y = 1; y <= years; y++) {
+    var yMonths  = 12;
+    var yDeposit = monthlyAmt * yMonths;
+    // FV for this year's balance
+    var prevBal  = balance;
+    balance = prevBal * Math.pow(1 + monthRate, yMonths) +
+              monthlyAmt * ((Math.pow(1 + monthRate, yMonths) - 1) / (monthRate || 1));
+    var yRendite = balance - (einbezahlt * (y / years));
+    var rowAge   = ageFrom + y;
+    var isLast   = y === years;
+    tableHtml += '<div style="display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);' +
+      (isLast ? 'background:var(--ok-l);font-weight:700' : '') + '">' +
+      '<div style="width:36px;font-size:11px;color:var(--mid)">Ø ' + rowAge + '</div>' +
+      '<div style="flex:1;font-size:12px;color:var(--dark)">+CHF ' + fmtChf(yDeposit) + '</div>' +
+      '<div style="font-size:13px;font-weight:700;color:' + (isLast ? 'var(--ok)' : 'var(--dark)') + '">CHF ' + fmtChf(balance) + '</div>' +
+    '</div>';
+  }
+  if (!years || years < 1) {
+    tableHtml = '<div style="padding:16px;text-align:center;color:var(--light);font-size:12px">Ziel-Alter muss grösser sein als aktuelles Alter</div>';
+  }
+  document.getElementById('inv-table').innerHTML = tableHtml;
+
+  // ── Vergleich Sparkonto 0.5% p.a. ──────────────────────────────────────
+  var SPAR_RATE   = 0.005; // BLKB Sparkonto Jugend, Stand 2026
+  var sparBalance = 0;
+  var sparMonthRate = SPAR_RATE / 12;
+  if (sparMonthRate === 0) {
+    sparBalance = monthlyAmt * months;
+  } else {
+    sparBalance = monthlyAmt * ((Math.pow(1 + sparMonthRate, months) - 1) / sparMonthRate);
+  }
+  var mehrertrag = fv - sparBalance;
+
+  document.getElementById('inv-spar-endwert').textContent  = fmtChf(sparBalance);
+  document.getElementById('inv-invest-vs').textContent     = fmtChf(fv);
+  document.getElementById('inv-invest-vs-label').textContent = invState.rate + '% Rendite';
+  document.getElementById('inv-mehrertrag').textContent    = fmtChf(Math.max(0, mehrertrag));
+  document.getElementById('inv-mehrertrag-label').textContent =
+    'durch ' + invState.rate + '% Rendite statt 0.5% Sparkonto über ' + years + ' Jahre';
+}
+
+
+/* ================================================================
+   GAMIFICATION — Badges, Level, Challenges, Games
+   ================================================================ */
+
+// ── Badge-Definitionen ───────────────────────────────────────────
+var BADGES = [
+  { id: 'first_goal',    icon: '🎯', title: 'Erster Sparschritt',   desc: 'Erstes Sparziel erstellt',          check: function(){ return state.goals.length >= 1; } },
+  { id: 'haxx_master',   icon: '⚡', title: 'MoneyHaxx Master',     desc: 'Alle 6 Hacks verstanden',            check: function(){ return state.haxxDone.length >= 6; } },
+  { id: 'budget_pro',    icon: '📊', title: 'Budget-Profi',         desc: 'Budget vollständig ausgefüllt',       check: function(){ var t=budgetCats.reduce(function(s,c){return s+c.pct;},0); return t===100; } },
+  { id: 'goal_reached',  icon: '🏆', title: 'Ziel erreicht!',       desc: 'Ein Sparziel auf 100%',               check: function(){ return state.goals.some(function(g){ return (g.pct||0)>=100; }); } },
+  { id: 'lifecycle',     icon: '🌟', title: 'Lebensphase erkundet', desc: 'Alter-Schieber bewegt',               check: function(){ return state.age !== 16; } },
+  { id: 'invest_start',  icon: '📈', title: 'Investor',             desc: 'Geld-vermehren-Simulation gestartet', check: function(){ return state.investUsed || false; } },
+  { id: 'three_goals',   icon: '🎪', title: 'Visionär',             desc: 'Drei Sparziele erstellt',             check: function(){ return state.goals.length >= 3; } },
+];
+
+// ── Level-Definitionen ───────────────────────────────────────────
+var LEVELS = [
+  { min: 0,  max: 1,  badge: '🌱', title: 'Finanz-Einsteiger' },
+  { min: 2,  max: 3,  badge: '🌿', title: 'Sparanfänger'      },
+  { min: 4,  max: 5,  badge: '🌳', title: 'Budget-Profi'      },
+  { min: 6,  max: 6,  badge: '💎', title: 'MoneyHaxx-Experte' },
+  { min: 7,  max: 99, badge: '🏆', title: 'Finanz-Champion'   },
+];
+
+// ── Challenges ───────────────────────────────────────────────────
+var CHALLENGES = [
+  { id: 'ch_spar30',    icon: '<i class="ti ti-piggy-bank"></i>', title: '30-Tage Spar-Challenge',
+    desc: 'Lege 30 Tage lang täglich einen kleinen Betrag zur Seite.',
+    action: 'Jetzt starten', progress: 0, total: 30 },
+  { id: 'ch_nullschulden', icon: '<i class="ti ti-file-text"></i>', title: 'Null-Schulden Challenge',
+    desc: 'Richte einen monatlichen Dauerauftrag für Steuern ein.',
+    action: 'Hack ansehen', progress: 0, total: 1 },
+  { id: 'ch_budget',    icon: '📊', title: 'Budget ausgefüllt',
+    desc: 'Verteile deinen Lohn vollständig im Budgetrechner.',
+    action: 'Zum Budget', progress: 0, total: 1 },
+];
+
+function getEarnedBadges() {
+  return BADGES.filter(function(b){ return b.check(); });
+}
+
+function getLevel(earnedCount) {
+  for (var i = LEVELS.length - 1; i >= 0; i--) {
+    if (earnedCount >= LEVELS[i].min) return LEVELS[i];
+  }
+  return LEVELS[0];
+}
+
+function updateGamification() {
+  var earned  = getEarnedBadges();
+  var count   = earned.length;
+  var level   = getLevel(count);
+  var nextLvl = LEVELS.find(function(l){ return l.min > count; });
+  var pct     = nextLvl ? Math.round((count - getLevel(count).min) / (nextLvl.min - getLevel(count).min) * 100) : 100;
+
+  // Dashboard Level-Bar
+  var lblEl = document.getElementById('home-level-title');
+  var subEl = document.getElementById('home-level-sub');
+  var barEl = document.getElementById('home-level-bar');
+  var bdgEl = document.getElementById('home-level-badge');
+  if (lblEl) lblEl.textContent = level.title;
+  if (subEl) subEl.textContent = 'Level ' + (LEVELS.indexOf(level)+1) + ' · ' + count + ' Abzeichen';
+  if (barEl) barEl.style.width = pct + '%';
+  if (bdgEl) bdgEl.textContent = level.badge;
+
+  // Dashboard Badges-Row
+  var rowEl = document.getElementById('home-badges-row');
+  if (rowEl) {
+    if (earned.length === 0) {
+      rowEl.innerHTML = '<span style="font-size:11px;color:var(--light)">Noch keine Abzeichen — leg los! 🚀</span>';
+    } else {
+      rowEl.innerHTML = earned.map(function(b){
+        return '<span title="' + b.title + '" style="font-size:20px;cursor:default">' + b.icon + '</span>';
+      }).join('');
+    }
+  }
+
+  // Fun-Screen Level
+  var fLbl = document.getElementById('fun-level-title');
+  var fSub = document.getElementById('fun-level-sub');
+  var fBar = document.getElementById('fun-level-bar');
+  var fBdg = document.getElementById('fun-level-badge');
+  if (fLbl) fLbl.textContent = level.title;
+  if (fSub) fSub.textContent = 'Level ' + (LEVELS.indexOf(level)+1) + ' · ' + count + ' von ' + BADGES.length + ' Abzeichen';
+  if (fBar) fBar.style.width = pct + '%';
+  if (fBdg) fBdg.textContent = level.badge;
+
+  // Fun-Screen Badges Grid
+  var grid = document.getElementById('fun-badges-grid');
+  if (grid) {
+    var html = '';
+    BADGES.forEach(function(b) {
+      var has = b.check();
+      html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;background:' + (has?'var(--ok-l)':'var(--bg)') + ';border-radius:8px;border:1px solid ' + (has?'rgba(22,163,74,.2)':'var(--border)') + '">' +
+        '<span style="font-size:22px;' + (has?'':'filter:grayscale(1);opacity:.35') + '">' + b.icon + '</span>' +
+        '<div><div style="font-size:11px;font-weight:700;color:' + (has?'var(--ok)':'var(--mid)') + '">' + b.title + '</div>' +
+        '<div style="font-size:10px;color:var(--light)">' + b.desc + '</div></div>' +
+      '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  // Toast bei neuem Badge
+  if (!state._lastBadgeCount) state._lastBadgeCount = 0;
+  if (count > state._lastBadgeCount) {
+    var newBadge = earned[count-1];
+    showToast(newBadge.icon + ' Abzeichen verdient: ' + newBadge.title + '!');
+    state._lastBadgeCount = count;
+  }
+}
+
+function challengeAction(i) {
+  if (i === 0) {
+    var cur = parseInt(localStorage.getItem('ch_spar30') || '0');
+    localStorage.setItem('ch_spar30', Math.min(30, cur + 1));
+    CHALLENGES[0].progress = Math.min(30, cur + 1);
+    showToast('Tag ' + CHALLENGES[0].progress + ' von 30 ✓');
+    updateGamification();
+  } else if (i === 1) {
+    switchView('haxx', 2);
+  } else if (i === 2) {
+    switchView('budget', 3);
+  }
+}
+
+/* ── Game: Coin Tap ─────────────────────────────────────────────── */
+var coinGame = { active: false, score: 0, timer: 10, interval: null, spawnInterval: null };
+
+function selectGame(name) {
+  document.getElementById('game-coin').style.display  = name === 'coin'  ? 'block' : 'none';
+  document.getElementById('game-snake').style.display = name === 'snake' ? 'block' : 'none';
+  document.getElementById('game-pac').style.display   = name === 'pac'   ? 'block' : 'none';
+  document.getElementById('game-btn-coin').classList.toggle('active',  name === 'coin');
+  document.getElementById('game-btn-snake').classList.toggle('active', name === 'snake');
+  var pacBtn = document.getElementById('game-btn-pac');
+  if (pacBtn) pacBtn.classList.toggle('active', name === 'pac');
+  if (name === 'snake') initSnake();
+  if (name === 'pac') initPac();
+}
+
+function startCoinGame() {
+  coinGame.score = 0; coinGame.timer = 10; coinGame.active = true;
+  document.getElementById('coin-result').style.display = 'none';
+  document.getElementById('coin-start-msg').style.display = 'none';
+  document.getElementById('coin-score').textContent = 0;
+  document.getElementById('coin-timer').textContent = 10;
+
+  coinGame.spawnInterval = setInterval(spawnCoin, 700);
+  coinGame.interval = setInterval(function() {
+    coinGame.timer--;
+    document.getElementById('coin-timer').textContent = coinGame.timer;
+    if (coinGame.timer <= 0) endCoinGame();
+  }, 1000);
+}
+
+function spawnCoin() {
+  var area = document.getElementById('coin-area');
+  if (!area || !coinGame.active) return;
+  var coin = document.createElement('div');
+  var x = Math.random() * 260 + 20;
+  var y = Math.random() * 140 + 20;
+  coin.innerHTML = '<img src="img/logo.svg" style="width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(253,0,13,.4))">';
+  coin.style.cssText = 'position:absolute;cursor:pointer;left:' + x + 'px;top:' + y + 'px;transition:transform .1s;user-select:none;-webkit-user-select:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--red-l);border-radius:50%;border:2px solid rgba(253,0,13,.2)';
+  coin.addEventListener('click', function() {
+    if (!coinGame.active) return;
+    coinGame.score++;
+    document.getElementById('coin-score').textContent = coinGame.score;
+    coin.remove();
+    // add points effect
+    var pt = document.createElement('div');
+    pt.textContent = '+1';
+    pt.style.cssText = 'position:absolute;left:' + x + 'px;top:' + (y-10) + 'px;font-size:13px;font-weight:700;color:var(--ok);pointer-events:none;animation:none;opacity:1';
+    area.appendChild(pt);
+    setTimeout(function(){ pt.remove(); }, 500);
+  });
+  area.appendChild(coin);
+  setTimeout(function(){ if(coin.parentNode) coin.remove(); }, 2000);
+}
+
+function endCoinGame() {
+  coinGame.active = false;
+  clearInterval(coinGame.interval);
+  clearInterval(coinGame.spawnInterval);
+  document.getElementById('coin-area').innerHTML = '<div id="coin-start-msg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--mid)" onclick="startCoinGame()">Nochmal tippen!</div>';
+  var res = document.getElementById('coin-result');
+  var msg = coinGame.score < 5 ? 'Nicht schlecht! 💪' : coinGame.score < 15 ? 'Stark! 🔥' : 'Wahnsinn! 🏆';
+  res.textContent = msg + ' Score: ' + coinGame.score;
+  res.style.display = 'block';
+  // Punkte für Gamification
+  if (!state.investUsed) state.investUsed = false;
+  updateGamification();
+}
+
+// coin-area onclick direkt im HTML
+
+/* ── Game: Snake ─────────────────────────────────────────────────── */
+var snake = { cells:[], dir:{x:1,y:0}, food:{x:10,y:5}, score:0, running:false, loop:null };
+var CELL = 20;
+
+// Swipe-Gesten für Snake + Pac-Man
+(function() {
+  function addSwipe(canvasId, dirFn) {
+    var sx, sy;
+    document.addEventListener('DOMContentLoaded', function() {
+      var cv = document.getElementById(canvasId);
+      if (!cv) return;
+      cv.addEventListener('touchstart', function(e) {
+        sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      }, {passive:true});
+      cv.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - sx;
+        var dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return; // tap = kein swipe
+        if (Math.abs(dx) > Math.abs(dy)) { dirFn(dx > 0 ? 1 : -1, 0); }
+        else { dirFn(0, dy > 0 ? 1 : -1); }
+      }, {passive:true});
+    });
+  }
+  addSwipe('snake-canvas', function(dx,dy){ snakeDir(dx,dy); });
+  addSwipe('pac-canvas',   function(dx,dy){ pacDir(dx,dy); });
+})();
+
+function initSnake() {
+  var canvas = document.getElementById('snake-canvas');
+  if (!canvas) return;
+  snake.cells = [{x:5,y:6},{x:4,y:6},{x:3,y:6}];
+  snake.dir   = {x:1, y:0};
+  snake.score = 0;
+  snake.running = true;
+  placeSnakeFood();
+  document.getElementById('snake-score').textContent = 0;
+  clearInterval(snake.loop);
+  snake.loop = setInterval(tickSnake, 150);
+}
+
+function placeSnakeFood() {
+  var cols = 16, rows = 12;
+  do {
+    snake.food = { x: Math.floor(Math.random()*cols), y: Math.floor(Math.random()*rows) };
+  } while (snake.cells.some(function(c){ return c.x===snake.food.x && c.y===snake.food.y; }));
+}
+
+function snakeDir(dx, dy) {
+  if (dx !== 0 && snake.dir.x !== 0) return;
+  if (dy !== 0 && snake.dir.y !== 0) return;
+  snake.dir = {x:dx, y:dy};
+  if (!snake.running) initSnake();
+}
+
+function tickSnake() {
+  var canvas = document.getElementById('snake-canvas');
+  if (!canvas || !snake.running) return;
+  var ctx = canvas.getContext('2d');
+  var cols = 16, rows = 12;
+
+  var head = { x: snake.cells[0].x + snake.dir.x, y: snake.cells[0].y + snake.dir.y };
+
+  // Wall collision
+  if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) { endSnake(ctx,cols,rows); return; }
+  // Self collision
+  if (snake.cells.some(function(c){ return c.x===head.x && c.y===head.y; })) { endSnake(ctx,cols,rows); return; }
+
+  snake.cells.unshift(head);
+
+  if (head.x === snake.food.x && head.y === snake.food.y) {
+    snake.score++;
+    document.getElementById('snake-score').textContent = snake.score;
+    placeSnakeFood();
+  } else {
+    snake.cells.pop();
+  }
+
+  // Draw
+  ctx.fillStyle = '#1e2328';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // Grid dots
+  ctx.fillStyle = 'rgba(255,255,255,.04)';
+  for (var gx=0;gx<cols;gx++) for(var gy=0;gy<rows;gy++) ctx.fillRect(gx*CELL+9,gy*CELL+9,2,2);
+
+  // Food
+  ctx.font = CELL + 'px serif';
+  ctx.fillText('🪙', snake.food.x*CELL+1, snake.food.y*CELL+CELL-2);
+
+  // Snake
+  snake.cells.forEach(function(c, i) {
+    ctx.fillStyle = i===0 ? '#fd000d' : (i%2===0 ? '#2c5969' : '#7c8947');
+    ctx.beginPath();
+    ctx.roundRect(c.x*CELL+1, c.y*CELL+1, CELL-2, CELL-2, 4);
+    ctx.fill();
+  });
+}
+
+
+// Hintergrundbild vorgeladen
+var pacBgImg = new Image();
+pacBgImg.src = 'img/liestal-toerli2.jpg';
+
+/* ── Game: Pac-Man BLKB Edition ────────────────────────────────── */
+var PAC_CELL = 15;
+var PAC_COLS = 21;
+var PAC_ROWS = 15;
+
+// Maze: 0=wall, 1=coin, 2=empty, 3=powerpellet
+var PAC_MAZE_TPL = [
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
+  [0,3,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,0],
+  [0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0],
+  [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+  [0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,0,1,0],
+  [0,1,1,1,1,0,1,1,1,0,2,0,1,1,1,0,1,1,1,1,0],
+  [0,0,0,0,1,0,0,2,2,2,2,2,2,2,0,0,1,0,0,0,0],
+  [0,0,0,0,1,0,1,2,0,0,2,0,0,2,1,0,1,0,0,0,0],
+  [1,1,1,1,1,1,1,2,0,2,2,2,0,2,1,1,1,1,1,1,1],
+  [0,0,0,0,1,0,1,2,0,0,0,0,0,2,1,0,1,0,0,0,0],
+  [0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,0,0,0],
+  [0,1,1,1,1,1,1,1,1,0,2,0,1,1,1,1,1,1,1,1,0],
+  [0,3,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,3,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+];
+
+var pac = {
+  x:10, y:9, dx:1, dy:0, nextDx:1, nextDy:0,
+  mouth:0, mouthDir:1, score:0, lives:3,
+  running:false, loop:null, maze:[], powerMode:0,
+  ghosts:[]
+};
+
+var GHOST_COLORS = ['#fd000d','#2c5969','#7c8947','#e38121'];
+var GHOST_LABELS = ['Miete','Abo','Impulse','Steuern'];
+
+function initPac() {
+  var canvas = document.getElementById('pac-canvas');
+  if (!canvas) return;
+  pac.maze = PAC_MAZE_TPL.map(function(r){ return r.slice(); });
+  pac.x=10; pac.y=9; pac.dx=1; pac.dy=0; pac.nextDx=1; pac.nextDy=0;
+  pac.score=0; pac.lives=3; pac.powerMode=0; pac.running=true;
+  pac.mouth=0; pac.mouthDir=1;
+  pac.ghosts = [
+    {x:9,  y:7, dx:1, dy:0, color:GHOST_COLORS[0], lbl:GHOST_LABELS[0], scared:false},
+    {x:11, y:7, dx:-1,dy:0, color:GHOST_COLORS[1], lbl:GHOST_LABELS[1], scared:false},
+    {x:9,  y:6, dx:0, dy:1, color:GHOST_COLORS[2], lbl:GHOST_LABELS[2], scared:false},
+    {x:11, y:6, dx:0, dy:-1,color:GHOST_COLORS[3], lbl:GHOST_LABELS[3], scared:false},
+  ];
+  document.getElementById('pac-score').textContent = 0;
+  document.getElementById('pac-lives').textContent = 3;
+  clearInterval(pac.loop);
+  pac.loop = setInterval(tickPac, 180);
+}
+
+function pacDir(dx, dy) {
+  pac.nextDx = dx; pac.nextDy = dy;
+  if (!pac.running) initPac();
+}
+
+function canMove(maze, x, y) {
+  if (y < 0 || y >= PAC_ROWS) return false;
+  var nx = (x + PAC_COLS) % PAC_COLS;
+  return maze[y][nx] !== 0;
+}
+
+function tickPac() {
+  var canvas = document.getElementById('pac-canvas');
+  if (!canvas || !pac.running) return;
+  var ctx = canvas.getContext('2d');
+
+  // Try next direction first
+  if (canMove(pac.maze, pac.x + pac.nextDx, pac.y + pac.nextDy)) {
+    pac.dx = pac.nextDx; pac.dy = pac.nextDy;
+  }
+  // Move pac
+  if (canMove(pac.maze, pac.x + pac.dx, pac.y + pac.dy)) {
+    pac.x = ((pac.x + pac.dx) + PAC_COLS) % PAC_COLS;
+    pac.y = ((pac.y + pac.dy) + PAC_ROWS) % PAC_ROWS;
+  }
+
+  // Eat
+  var cell = pac.maze[pac.y][pac.x];
+  if (cell === 1) { pac.maze[pac.y][pac.x]=2; pac.score+=10; }
+  else if (cell === 3) { pac.maze[pac.y][pac.x]=2; pac.score+=50; pac.powerMode=20; pac.ghosts.forEach(function(g){g.scared=true;}); }
+  document.getElementById('pac-score').textContent = pac.score;
+
+  // Power mode countdown
+  if (pac.powerMode > 0) { pac.powerMode--; if(pac.powerMode===0) pac.ghosts.forEach(function(g){g.scared=false;}); }
+
+  // Move ghosts
+  pac.ghosts.forEach(function(g) {
+    var dirs = [{dx:1,dy:0},{dx:-1,dy:0},{dx:0,dy:1},{dx:0,dy:-1}];
+    // Remove reverse
+    var fwd = dirs.filter(function(d){ return !(d.dx===-g.dx && d.dy===-g.dy); });
+    var valid = fwd.filter(function(d){ return canMove(pac.maze, g.x+d.dx, g.y+d.dy); });
+    if (valid.length === 0) valid = dirs.filter(function(d){ return canMove(pac.maze, g.x+d.dx, g.y+d.dy); });
+    if (valid.length > 0) {
+      var chosen = valid[Math.floor(Math.random()*valid.length)];
+      g.dx=chosen.dx; g.dy=chosen.dy;
+      g.x=((g.x+g.dx)+PAC_COLS)%PAC_COLS;
+      g.y=((g.y+g.dy)+PAC_ROWS)%PAC_ROWS;
+    }
+    // Collision
+    if (g.x===pac.x && g.y===pac.y) {
+      if (g.scared) { g.x=9; g.y=7; g.scared=false; pac.score+=200; }
+      else { pac.lives--; document.getElementById('pac-lives').textContent=pac.lives; pac.x=10;pac.y=9;pac.dx=1;pac.dy=0; if(pac.lives<=0) endPac(ctx); }
+    }
+  });
+
+  // Check win
+  var dotsLeft = pac.maze.reduce(function(s,r){ return s+r.filter(function(c){return c===1||c===3;}).length; }, 0);
+  if (dotsLeft === 0) { endPac(ctx, true); return; }
+
+  // Mouth animation
+  pac.mouth += pac.mouthDir * 15;
+  if (pac.mouth >= 45 || pac.mouth <= 0) pac.mouthDir *= -1;
+
+  drawPac(ctx);
+}
+
+function drawPac(ctx) {
+  var C = PAC_CELL;
+  // Background — Törli Liestal
+  ctx.fillStyle = '#1e2328';
+  ctx.fillRect(0,0,PAC_COLS*C,PAC_ROWS*C);
+  if (pacBgImg && pacBgImg.complete && pacBgImg.naturalWidth > 0) {
+    ctx.save();
+    ctx.globalAlpha = 0.22;
+    ctx.drawImage(pacBgImg, 0, 0, PAC_COLS*C, PAC_ROWS*C);
+    ctx.restore();
+    ctx.fillStyle = 'rgba(20,28,35,0.72)';
+    ctx.fillRect(0,0,PAC_COLS*C,PAC_ROWS*C);
+  }
+
+  // Maze
+  pac.maze.forEach(function(row, ry) {
+    row.forEach(function(cell, rx) {
+      var px = rx*C, py = ry*C;
+      if (cell === 0) {
+        // Wall — BLKB gradient feel
+        ctx.fillStyle = '#2c5969';
+        ctx.fillRect(px, py, C, C);
+        ctx.fillStyle = '#1a3540';
+        ctx.fillRect(px+1, py+1, C-2, C-2);
+      } else if (cell === 1) {
+        ctx.fillStyle = '#e38121';
+        ctx.beginPath();
+        ctx.arc(px+C/2, py+C/2, 2.5, 0, Math.PI*2);
+        ctx.fill();
+        // CHF label on every 5th
+        if ((rx+ry)%7===0) {
+          ctx.font = '7px sans-serif';
+          ctx.fillStyle = 'rgba(255,255,255,.4)';
+          ctx.fillText('¢', px+3, py+11);
+        }
+      } else if (cell === 3) {
+        // Power pellet — BLKB red pulsing
+        ctx.fillStyle = '#fd000d';
+        ctx.beginPath();
+        ctx.arc(px+C/2, py+C/2, 5, 0, Math.PI*2);
+        ctx.fill();
+      }
+    });
+  });
+
+  // Ghosts
+  pac.ghosts.forEach(function(g) {
+    var px = g.x*C, py = g.y*C;
+    ctx.fillStyle = g.scared ? '#4a5568' : g.color;
+    // Body
+    ctx.beginPath();
+    ctx.arc(px+C/2, py+C/2-1, C/2-1, Math.PI, 0, false);
+    ctx.lineTo(px+C-1, py+C-1);
+    ctx.lineTo(px+C-3, py+C-4);
+    ctx.lineTo(px+C-5, py+C-1);
+    ctx.lineTo(px+C-7, py+C-4);
+    ctx.lineTo(px+2, py+C-4);
+    ctx.lineTo(px+1, py+C-1);
+    ctx.closePath();
+    ctx.fill();
+    // Eyes
+    ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(px+5,py+6,2.5,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(px+10,py+6,2.5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1e2328'; ctx.beginPath(); ctx.arc(px+5+(g.scared?0:g.dx),py+6+(g.scared?0:g.dy),1.2,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(px+10+(g.scared?0:g.dx),py+6+(g.scared?0:g.dy),1.2,0,Math.PI*2); ctx.fill();
+  });
+
+  // Pac-Man
+  var px = pac.x*C, py = pac.y*C;
+  var angle = pac.mouth * Math.PI / 180;
+  var rot = pac.dx===1?0 : pac.dx===-1?Math.PI : pac.dy===1?Math.PI/2 : -Math.PI/2;
+  ctx.save();
+  ctx.translate(px+C/2, py+C/2);
+  ctx.rotate(rot);
+  ctx.fillStyle = '#fd000d';
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.arc(0,0,C/2-1, angle, Math.PI*2-angle, false);
+  ctx.closePath();
+  ctx.fill();
+  // Eye
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  ctx.arc(2,-4,2,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // Power mode indicator
+  if (pac.powerMode > 0) {
+    ctx.fillStyle = 'rgba(253,0,13,.15)';
+    ctx.fillRect(0,0,PAC_COLS*C,PAC_ROWS*C);
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillStyle = '#fd000d';
+    ctx.textAlign = 'center';
+    ctx.fillText('POWER MODE!', PAC_COLS*C/2, 12);
+    ctx.textAlign = 'left';
+  }
+}
+
+function endPac(ctx, win) {
+  pac.running = false;
+  clearInterval(pac.loop);
+  var cols = PAC_COLS, rows = PAC_ROWS, C = PAC_CELL;
+  ctx.fillStyle = 'rgba(0,0,0,.75)';
+  ctx.fillRect(0,0,cols*C,rows*C);
+  ctx.textAlign = 'center';
+  if (win) {
+    ctx.fillStyle = '#e38121';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText('GEWONNEN! 🏆', cols*C/2, rows*C/2 - 12);
+    ctx.fillStyle = '#6ee7b7';
+    ctx.font = '12px sans-serif';
+    ctx.fillText('CHF ' + pac.score + ' gespart!', cols*C/2, rows*C/2 + 8);
+  } else {
+    ctx.fillStyle = '#fd000d';
+    ctx.font = 'bold 15px sans-serif';
+    ctx.fillText('Game Over!', cols*C/2, rows*C/2 - 12);
+    ctx.fillStyle = 'rgba(255,255,255,.6)';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('Score: ' + pac.score + ' · Neues Spiel unten', cols*C/2, rows*C/2 + 8);
+    // MoneyHaxx Tipp
+    var tips = ['Easy-10: Spare zuerst!','Dini-Mieti: Max. 25%','Null-Schulden: Steuern früh zahlen'];
+    ctx.fillStyle = '#e38121';
+    ctx.font = 'italic 10px sans-serif';
+    ctx.fillText('💡 ' + tips[Math.floor(Math.random()*tips.length)], cols*C/2, rows*C/2 + 26);
+  }
+  ctx.textAlign = 'left';
+  updateGamification();
+}
+
+function endSnake(ctx, cols, rows) {
+  snake.running = false;
+  clearInterval(snake.loop);
+  ctx.fillStyle = 'rgba(0,0,0,.7)';
+  ctx.fillRect(0,0,cols*CELL,rows*CELL);
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 16px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Game Over! Score: ' + snake.score, cols*CELL/2, rows*CELL/2 - 10);
+  ctx.font = '12px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,.6)';
+  ctx.fillText('Neues Spiel → Button unten', cols*CELL/2, rows*CELL/2 + 14);
+}
+
+/* ================================================================
+   API ABSTRACTION LAYER — BLKB Avaloq / ACP Integration
+   ----------------------------------------------------------------
+   Alle Datenpunkte die später über REST/ACP bezogen werden sind
+   hier zentralisiert. Jede Funktion ist ein Stub:
+     • Im MOCK-Modus: gibt lokale Testdaten zurück (Promise)
+     • Im LIVE-Modus: ersetzt durch echten fetch()-Aufruf
+   
+   Konfiguration:
+     API_CONFIG.mock = true   → Stubdaten (aktuell aktiv)
+     API_CONFIG.mock = false  → Echte Avaloq-Endpunkte
+     API_CONFIG.baseUrl       → ACP Gateway URL
+     API_CONFIG.token         → Bearer Token (z.B. OAuth2)
+   ================================================================ */
+
+var API_CONFIG = {
+  mock:    true,
+  baseUrl: 'https://api.blkb.ch/acp/v1',   // TODO: produktiver ACP-Endpunkt
+  token:   null,                             // TODO: OAuth2 Bearer Token
+};
+
+// DEMO-Badge ausblenden wenn live
+if (!API_CONFIG.mock) {
+  document.addEventListener('DOMContentLoaded', function() {
+    var badge = document.getElementById('dash-mock-badge');
+    if (badge) badge.style.display = 'none';
+  });
+}
+
+/* ----------------------------------------------------------------
+   INTERN: HTTP-Helfer
+   ---------------------------------------------------------------- */
+function apiGet(path) {
+  if (API_CONFIG.mock) {
+    return Promise.reject(new Error('MOCK_MODE'));
+  }
+  return fetch(API_CONFIG.baseUrl + path, {
+    headers: {
+      'Authorization': 'Bearer ' + API_CONFIG.token,
+      'Content-Type':  'application/json',
+    }
+  }).then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  });
+}
+
+/* ----------------------------------------------------------------
+   1. ALLE BP-KONTEN (Business Partner / Avaloq)
+   ----------------------------------------------------------------
+   Avaloq-Endpoint (Beispiel):
+     GET /customers/me/accounts
+   Response:
+     [{ "accountId": "...", "iban": "CH56...", "name": "...",
+        "balance": 1247.50, "currency": "CHF",
+        "type": "PRIVATE|SAVINGS|SAVINGS_3A|YOUTH" }]
+   Logik:
+     • Alle Konten → Dashboard
+     • SAVINGS + YOUTH → Summe = Sparkonto-Guthaben (Sparziele)
+     • SAVINGS_3A → Säule 3a Saldo (Geld vermehren)
+   ---------------------------------------------------------------- */
+function api_getBPAccounts() {
+  return apiGet('/customers/me/accounts').catch(function() {
+    // MOCK — typisches Jugend-BP-Portfolio
+    return [
+      { accountId: 'PRV-001', iban: 'CH56 0785 1234 5678 9000 0',
+        name: 'Jugendkonto',      type: 'YOUTH',      balance: 1247.50, currency: 'CHF' },
+      { accountId: 'SAV-001', iban: 'CH56 0785 1234 5678 9001 0',
+        name: 'Sparkonto Jugend', type: 'SAVINGS',     balance: 2500.00, currency: 'CHF' },
+      // 3a auskommentiert = kein 3a-Konto vorhanden (Saldo = 0)
+      // { accountId: '3A-001', iban: '',
+      //   name: 'Säule 3a BLKB', type: 'SAVINGS_3A', balance: 4800.00, currency: 'CHF' },
+    ];
+  });
+}
+
+// Legacy-Stubs bleiben für Rückwärtskompatibilität
+function api_getKontostand() {
+  return api_getBPAccounts().then(function(accs) {
+    var a = accs.find(function(x){ return x.type==='YOUTH'||x.type==='PRIVATE'; });
+    return a || { iban: '—', balance: 0, currency: 'CHF' };
+  });
+}
+
+function api_getSparkonten() {
+  return api_getBPAccounts().then(function(accs) {
+    return accs.filter(function(x){ return x.type==='SAVINGS'; });
+  });
+}
+
+/* ----------------------------------------------------------------
+   3. TRANSAKTIONEN (letzte N Buchungen)
+   ----------------------------------------------------------------
+   Avaloq-Endpoint (Beispiel):
+     GET /accounts/{accountId}/transactions?limit=10
+   Response:
+     [{ "date": "2026-03-24", "amount": -45.20, "text": "Coop",
+        "category": "FOOD", "balance": 1247.50 }]
+   ---------------------------------------------------------------- */
+function api_getTransaktionen(limit) {
+  return apiGet('/accounts/me/transactions?limit=' + (limit || 5)).catch(function() {
+    // MOCK — fiktive Buchungen
+    return [
+      { date: '2026-03-24', amount: -45.20,  text: 'Coop Pratteln',    category: 'FOOD'      },
+      { date: '2026-03-23', amount: -12.50,  text: 'SBB Ticket',       category: 'TRANSPORT' },
+      { date: '2026-03-22', amount: +3200.00, text: 'Lohn März 2026',   category: 'INCOME'    },
+      { date: '2026-03-20', amount: -320.00, text: 'Krankenkasse',      category: 'INSURANCE' },
+      { date: '2026-03-18', amount: -89.90,  text: 'Zalando',           category: 'SHOPPING'  },
+    ];
+  });
+}
+
+/* ----------------------------------------------------------------
+   4. KUNDENPROFIL (Name, Alter, Produktstatus)
+   ----------------------------------------------------------------
+   Avaloq-Endpoint (Beispiel):
+     GET /customers/me/profile
+   Response:
+     { "firstName": "Lara", "lastName": "Muster", "birthDate": "2008-04-12",
+       "products": ["JUGENDKONTO", "PROFITCARD", "TWINT"],
+       "segment": "JUGEND" }
+   ---------------------------------------------------------------- */
+function api_getKundenprofil() {
+  return apiGet('/customers/me/profile').catch(function() {
+    // MOCK — fiktives Profil
+    return { firstName: 'Lara', lastName: 'Muster',
+             birthDate: '2008-04-12', age: 17, gender: 'f',
+             products: ['JUGENDKONTO', 'PROFITCARD', 'TWINT'],
+             segment: 'JUGEND' };
+  });
+}
+
+/* ----------------------------------------------------------------
+   5. FONDSSPARPLAN (Get-Rich Hack)
+   ----------------------------------------------------------------
+   Avaloq-Endpoint (Beispiel):
+     GET /investments/{customerId}/savingsplan
+   Response:
+     { "active": false, "monthlyAmount": 0, "fund": null,
+       "performance": null }
+   ---------------------------------------------------------------- */
+function api_getFondssparplan() {
+  return apiGet('/investments/me/savingsplan').catch(function() {
+    // MOCK — kein Fondssparplan aktiv
+    return { active: false, monthlyAmount: 0, fund: null };
+  });
+}
+
+/* ================================================================
+   API-INIT — Daten beim Start laden und in State schreiben
+   Wird von init() aufgerufen. Bei Fehler: Stubwerte bleiben.
+   ================================================================ */
+function apiInit() {
+  // Alle BP-Konten zentral laden
+  api_getBPAccounts().then(function(accounts) {
+    renderDashboardAccounts(accounts);
+
+    // Sparkonten summieren → nur SAVINGS (kein Jugendkonto/YOUTH)
+    var sparAccounts = accounts.filter(function(a){
+      return a.type === 'SAVINGS';
+    });
+    var sparTotal = sparAccounts.reduce(function(s,a){ return s + a.balance; }, 0);
+    state.sparGuthaben = sparTotal;
+    var dispEl = document.getElementById('goals-spar-display');
+    var inpEl  = document.getElementById('goals-spar-input');
+    if (dispEl) dispEl.textContent = Math.round(sparTotal).toLocaleString('de-CH');
+    if (inpEl)  inpEl.value = Math.round(sparTotal);
+    renderGoals();
+
+    // Säule 3a → Geld vermehren
+    var acc3a = accounts.find(function(a){ return a.type === 'SAVINGS_3A'; });
+    var bal3a = acc3a ? acc3a.balance : 0;
+    state.saldo3a = bal3a;
+    render3aInvest(bal3a, !!acc3a);
+  });
+
+  // Kundenprofil → Alter setzen
+  api_getKundenprofil().then(function(data) {
+    if (data.age && data.age >= 12 && data.age <= 30) {
+      state.age = data.age;
+      setAge(data.age);
+    }
+    if (data.gender === 'f' || data.gender === 'm') {
+      invState.gender = data.gender;
+      var maleBtn   = document.getElementById('inv-btn-male');
+      var femaleBtn = document.getElementById('inv-btn-female');
+      if (maleBtn)   maleBtn.classList.toggle('active',   data.gender === 'm');
+      if (femaleBtn) femaleBtn.classList.toggle('active', data.gender === 'f');
+    }
+  });
+}
+
+/* ----------------------------------------------------------------
+   Dashboard: alle Konten des BP rendern
+   ---------------------------------------------------------------- */
+function renderDashboardAccounts(accounts) {
+  var container = document.getElementById('dash-accounts');
+  if (!container) return;
+
+  var typeLabel = { YOUTH: 'Jugendkonto', PRIVATE: 'Privatkonto',
+                    SAVINGS: 'Sparkonto', SAVINGS_3A: 'Säule 3a' };
+  var typeColor = { YOUTH: 'var(--petrol)', PRIVATE: 'var(--petrol)',
+                    SAVINGS: 'var(--petrol)', SAVINGS_3A: 'var(--petrol)' };
+  var typeIcon  = { YOUTH: '🏦', PRIVATE: '🏦', SAVINGS: '💰', SAVINGS_3A: '🛡️' };
+
+  var html = '';
+  accounts.forEach(function(acc) {
+    var lbl   = typeLabel[acc.type]  || acc.name;
+    var color = typeColor[acc.type]  || 'var(--slate)';
+    var icon  = typeIcon[acc.type]   || '💳';
+    var bal   = acc.balance.toLocaleString('de-CH', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+    html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border)">' +
+      '<div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">' + icon + '</div>' +
+      '<div style="flex:1">' +
+        '<div style="font-size:13px;font-weight:600;color:var(--dark)">' + (acc.name || lbl) + '</div>' +
+        '<div style="font-size:10px;color:var(--light);margin-top:1px">' + (acc.iban || lbl) + '</div>' +
+      '</div>' +
+      '<div style="text-align:right">' +
+        '<div style="font-size:14px;font-weight:700;color:' + color + '">CHF ' + bal + '</div>' +
+        '<div style="font-size:10px;color:var(--light);margin-top:1px">' + lbl + '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  if (!html) html = '<div style="padding:16px;text-align:center;color:var(--light);font-size:12px">Keine Konten gefunden</div>';
+  container.innerHTML = html;
+}
+
+/* ----------------------------------------------------------------
+   Säule 3a in Geld-vermehren Screen integrieren
+   ---------------------------------------------------------------- */
+function render3aInvest(balance, hasAccount) {
+  var box = document.getElementById('inv-3a-saldo-box');
+  if (!box) return;
+
+  var bal = balance.toLocaleString('de-CH', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+  if (hasAccount) {
+    box.innerHTML =
+      '<div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Dein bisheriges Säule 3a Guthaben · BLKB</div>' +
+      '<div style="font-size:22px;font-weight:700;color:var(--dark)">CHF ' + bal + '</div>' +
+      '<div style="font-size:11px;color:#92400e;margin-top:3px">Dieses Guthaben wächst mit deinen weiteren Einzahlungen</div>';
+    box.style.display = 'block';
+  } else {
+    box.innerHTML =
+      '<div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Dein bisheriges Säule 3a Guthaben</div>' +
+      '<div style="font-size:22px;font-weight:700;color:var(--light)">CHF 0.00</div>' +
+      '<div style="font-size:11px;color:var(--mid);margin-top:3px">Du hast noch keine Säule 3a — jetzt starten und Steuern sparen!</div>';
+    box.style.display = 'block';
+  }
+
+  // aktuelles Guthaben in Simulation einrechnen wenn 3a aktiv
+  state.saldo3a = balance;
+}
+
+function init() {
+  load();
+
+  // Daten von ACP/Avaloq-Schnittstellen laden (Stubs im Mock-Modus)
+  apiInit();
+
+  // Default goals if first time
+  if (state.goals.length === 0) {
+    state.goals = defaultGoals.slice();
+  }
+
+  // Set age slider
+  var slider = document.getElementById('age-slider');
+  if (slider) slider.value = state.age;
+
+  // Init spar input
+  if (document.getElementById('goals-spar-input')) {
+    document.getElementById('goals-spar-input').value = state.sparGuthaben;
+    document.getElementById('goals-spar-display').textContent = state.sparGuthaben.toLocaleString('de-CH');
+  }
+
+  // Init slider/input
+  document.getElementById('bud-slider').value = state.lohn;
+  document.getElementById('bud-lohn-input').value = state.lohn;
+  document.getElementById('bud-lohn-display').textContent = state.lohn.toLocaleString('de-CH');
+
+  // Render all
+  setAge(state.age);
+  renderGoals();
+  renderHaxx();
+  calcBudget();
+  renderFinlit();
+  updateHomeCounts();
+  // Invest-Screen init
+  var ageFromEl = document.getElementById('inv-age-from');
+  if (ageFromEl) ageFromEl.textContent = state.age;
+  // 3a-Box initial immer verstecken (nur bei Säule 3a sichtbar)
+  var saldoBox = document.getElementById('inv-3a-saldo-box');
+  if (saldoBox) saldoBox.style.display = 'none';
+  calcInvest();
+  updateGamification();
+}
+
+init();
+</script>
+</body>
+</html>
