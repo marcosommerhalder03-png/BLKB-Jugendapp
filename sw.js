@@ -1,4 +1,4 @@
-const CACHE = 'blkb-jugend-v9';
+const CACHE = 'blkb-jugend-v10';
 const FILES = [
   './',
   './index.html',
@@ -6,6 +6,8 @@ const FILES = [
   './img/logo.svg',
   './img/logo-white.svg',
   './img/hero.jpg',
+  './img/icon-192.png',
+  './img/icon-512.png',
   './img/icon-512.svg',
   './img/jugend1.jpg',
   './img/jugend2.jpg',
