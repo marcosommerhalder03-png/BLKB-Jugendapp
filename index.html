@@ -489,6 +489,182 @@ body {
 
 .goal-del-btn:hover { opacity: .8; }
 
+/* =============================================
+   GAMIFICATION — Money Hero / Money IQ
+============================================= */
+#app .gam-youth { display: none; }
+#app.mode-youth .gam-youth { display: block; }
+#app .gam-adult { display: none; }
+#app.mode-adult .gam-adult { display: block; }
+
+.gam-hdr {
+  padding: 20px 16px 16px;
+  color: white;
+  border-radius: 0;
+}
+.gam-hdr-youth {
+  background: linear-gradient(135deg, #1e2328 0%, #b80009 60%, #fd000d 100%);
+}
+.gam-hdr-adult {
+  background: linear-gradient(135deg, #1e2328 0%, #2a373f 60%, #2c5969 100%);
+}
+.gam-card {
+  margin: 12px 16px 0;
+  background: white;
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+.gam-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--mid);
+  margin-bottom: 8px;
+}
+.xp-bar-wrap {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--amber));
+  border-radius: 4px;
+  transition: width .5s;
+}
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--warn-l);
+  border: 1px solid var(--amber);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--amber);
+}
+.daily-challenge-card {
+  border-left: 4px solid var(--red);
+}
+.quiz-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 13px;
+  color: var(--dark);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.quiz-opt:hover { background: var(--red-l); border-color: var(--red); }
+.quiz-opt.correct { background: var(--ok-l); border-color: var(--ok); color: var(--ok); }
+.quiz-opt.wrong   { background: #fff0f0; border-color: var(--red); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; opacity: .6; }
+.health-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.health-score-num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+}
+.pillar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.pillar-row:last-child { border-bottom: none; }
+.pillar-check { font-size: 16px; }
+.habit-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.habit-row:last-child { border-bottom: none; }
+.habit-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s, border-color .15s;
+  font-size: 13px;
+}
+.habit-check.checked {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: white;
+}
+.habit-label { font-size: 13px; color: var(--dark); flex: 1; }
+.habit-row.done .habit-label { color: var(--mid); text-decoration: line-through; }
+.scenario-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.scenario-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ok);
+}
+.bench-bar-wrap {
+  height: 12px;
+  background: var(--border);
+  border-radius: 6px;
+  overflow: visible;
+  position: relative;
+  margin: 8px 0 16px;
+}
+.bench-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width .5s;
+}
+.bench-bar-marker {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 20px;
+  background: var(--dark);
+  border-radius: 1px;
+}
+.bench-bar-label {
+  position: absolute;
+  top: 18px;
+  font-size: 10px;
+  color: var(--mid);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
 /* Drag handle */
 .goal-drag-handle {
   background: none;
@@ -1471,6 +1647,7 @@ input[type="range"]::-webkit-slider-thumb {
 /* Adult mode */
 #app.mode-adult .youth-only { display: none !important; }
 #app.mode-adult .adult-only { display: flex !important; }
+
 </style>
 </head>
 <body>
@@ -2206,104 +2383,178 @@ window.addEventListener('load', function(){
     ================================= -->
     <div class="view" id="view-fun">
       <div class="scroll-area">
-        <div class="hdr dark-bg">
-          <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
-          <div class="hdr-label">BLKB Jugend</div>
-          <div class="hdr-title">Fun &amp; Games 🎮</div>
-          <div class="hdr-sub">Lerne spielend mit Geld umgehen</div>
-        </div>
-        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0;position:relative">
-          <img src="img/fun-games2.jpg" alt="Fun & Games" style="width:100%;height:100%;object-fit:cover;object-position:center 50%">
-          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(30,35,40,.4),rgba(30,35,40,.1))"></div>
-        </div>
 
-        <!-- Level & Badges -->
-        <div style="margin:14px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:14px">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-            <span id="fun-level-badge" style="font-size:36px">🌱</span>
-            <div style="flex:1">
-              <div style="font-size:16px;font-weight:700;color:var(--dark)" id="fun-level-title">Finanz-Einsteiger</div>
-              <div style="font-size:12px;color:var(--mid)" id="fun-level-sub">Level 1 · 0 Punkte</div>
-              <div style="height:6px;background:var(--border);border-radius:3px;margin-top:6px;overflow:hidden">
-                <div id="fun-level-bar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;transition:width .5s;width:0%"></div>
+        <!-- ═══════════════════════════════════════════════════
+             YOUTH SECTION — Money Hero 🎮
+        ════════════════════════════════════════════════════ -->
+        <div class="gam-youth">
+
+          <!-- Header -->
+          <div class="gam-hdr gam-hdr-youth">
+            <img src="img/blkb-logo-claim.svg" style="height:24px;margin-bottom:10px;display:block;filter:brightness(0) invert(1);">
+            <div style="font-size:20px;font-weight:800;letter-spacing:-.3px">Money Hero 🎮</div>
+            <div style="font-size:13px;font-weight:600;opacity:.85;margin-top:2px">Dein Finanz-Abenteuer</div>
+            <div style="font-size:12px;opacity:.7;margin-top:4px">Sammle XP, hake Challenges ab, werde zur BLKB-Legende</div>
+          </div>
+
+          <!-- Streak + XP Card -->
+          <div class="gam-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <div>
+                <div class="gam-section-label">Dein Fortschritt</div>
+                <span id="youth-streak-badge" class="streak-badge">🔥 0 Tage in Folge</span>
+                <div style="font-size:11px;color:var(--mid);margin-top:4px">Öffne die App täglich, um deinen Streak zu halten!</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span id="fun-level-badge" style="font-size:36px">🌱</span>
+              <div style="flex:1">
+                <div style="font-size:15px;font-weight:700;color:var(--dark)" id="fun-level-title">Geld-Neuling</div>
+                <div style="font-size:12px;color:var(--mid)" id="fun-level-sub">0 XP · Level 1</div>
+                <div class="xp-bar-wrap">
+                  <div id="fun-level-bar" class="xp-bar-fill" style="width:0%"></div>
+                </div>
+                <div style="font-size:10px;color:var(--light);margin-top:3px" id="youth-xp-next">50 XP bis zum nächsten Level</div>
               </div>
             </div>
           </div>
 
-          <!-- Badges Grid -->
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:8px">Abzeichen</div>
-          <div id="fun-badges-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
-        </div>
-
-        <!-- Games -->
-        <div style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden">
-          <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--dark)">🕹️ Spiele</div>
-
-          <!-- Game picker -->
-          <div style="display:flex;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border)">
-            <button class="inv-rhythm-btn active" id="game-btn-coin" onclick="selectGame('coin')">🪙 Coin Tap</button>
-            <button class="inv-rhythm-btn" id="game-btn-snake" onclick="selectGame('snake')">🐍 Snake</button>
-            <button class="inv-rhythm-btn" id="game-btn-pac" onclick="selectGame('pac')">🟡 Pac-Man</button>
+          <!-- Heutige Challenge Card -->
+          <div class="gam-card daily-challenge-card">
+            <div class="gam-section-label">Heutige Challenge</div>
+            <div id="youth-challenge-content">
+              <!-- Rendered by JS -->
+            </div>
           </div>
 
-          <!-- Coin Tap Game -->
-          <div id="game-coin" style="padding:14px;text-align:center">
-            <div style="font-size:12px;color:var(--mid);margin-bottom:8px">Tippe so schnell wie möglich auf die Münzen!</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px">Score: <span id="coin-score">0</span> · Zeit: <span id="coin-timer">10</span>s</div>
-            <div id="coin-area" onclick="if(!coinGame.active)startCoinGame()" style="height:200px;background:var(--bg);border-radius:10px;position:relative;overflow:hidden;border:2px solid var(--border);cursor:pointer">
-              <div id="coin-start-msg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
-                <img src="img/logo.svg" style="width:36px;height:36px;object-fit:contain">
-                <span style="font-size:13px;font-weight:600;color:var(--mid)">Tippe zum Starten!</span>
+          <!-- Frage des Tages -->
+          <div class="gam-card">
+            <div class="gam-section-label">Frage des Tages</div>
+            <div id="youth-quiz-content">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Finanz-Score -->
+          <div class="gam-card">
+            <div class="gam-section-label">Finanz-Score</div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="health-ring-wrap">
+                <div id="youth-score-num" class="health-score-num" style="color:var(--amber)">0</div>
+                <div style="font-size:11px;color:var(--mid)">von 100</div>
+              </div>
+              <div style="flex:1">
+                <div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden;margin-bottom:6px">
+                  <div id="youth-score-bar" style="height:100%;border-radius:5px;transition:width .5s;background:var(--amber);width:0%"></div>
+                </div>
+                <div id="youth-score-desc" style="font-size:12px;color:var(--mid)">Setze ein Sparziel, um Punkte zu sammeln!</div>
               </div>
             </div>
-            <div id="coin-result" style="display:none;margin-top:8px;padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok)"></div>
           </div>
 
-          <!-- Snake Game -->
-          <div id="game-snake" style="display:none;padding:14px;text-align:center">
-            <div style="font-size:12px;color:var(--mid);margin-bottom:8px">Sammle Münzen ohne die Wand zu berühren!</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:8px">Score: <span id="snake-score">0</span></div>
-            <canvas id="snake-canvas" width="320" height="240" style="border-radius:10px;border:2px solid var(--border);background:#1e2328;max-width:100%"></canvas>
-            <div style="display:inline-grid;grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px 44px;gap:4px;margin-top:10px">
-              <div></div>
-              <button class="dpad-btn" onclick="snakeDir(0,-1)">▲</button>
-              <div></div>
-              <button class="dpad-btn" onclick="snakeDir(-1,0)">◀</button>
-              <div style="background:var(--bg);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px">🐍</div>
-              <button class="dpad-btn" onclick="snakeDir(1,0)">▶</button>
-              <div></div>
-              <button class="dpad-btn" onclick="snakeDir(0,1)">▼</button>
-              <div></div>
-            </div>
-            <div style="font-size:10px;color:var(--light);margin-top:4px">Wischen auf dem Spielfeld möglich</div>
-            <button class="btn-primary" style="margin-top:10px;padding:10px" onclick="initSnake()">▶ Neues Spiel</button>
-          </div>
-        <!-- Pac-Man Game -->
-          <div id="game-pac" style="display:none;padding:14px;text-align:center">
-            <div style="font-size:12px;color:var(--mid);margin-bottom:6px">Friss alle CHF-Münzen! Meide die Ausgaben-Geister!</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:6px">
-              Score: <span id="pac-score">0</span> &nbsp;|&nbsp; Leben: <span id="pac-lives">3</span>
-            </div>
-            <canvas id="pac-canvas" width="315" height="225" style="border-radius:10px;border:2px solid var(--border);background:#1e2328;max-width:100%"></canvas>
-
-            <div style="display:inline-grid;grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px 44px;gap:4px;margin-top:10px">
-              <div></div>
-              <button class="dpad-btn" onclick="pacDir(0,-1)">▲</button>
-              <div></div>
-              <button class="dpad-btn" onclick="pacDir(-1,0)">◀</button>
-              <div style="background:var(--red-l);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center"><img src="img/logo.svg" style="width:22px;height:22px;object-fit:contain"></div>
-              <button class="dpad-btn" onclick="pacDir(1,0)">▶</button>
-              <div></div>
-              <button class="dpad-btn" onclick="pacDir(0,1)">▼</button>
-              <div></div>
-            </div>
-            <div style="font-size:10px;color:var(--light);margin-top:4px">Wischen auf dem Spielfeld möglich</div>
-            <button class="btn-primary" style="margin-top:10px;padding:10px" onclick="initPac()">▶ Neues Spiel</button>
+          <!-- Achievement Badges -->
+          <div class="gam-card">
+            <div class="gam-section-label">Abzeichen</div>
+            <div id="fun-badges-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
           </div>
 
-        </div>
+          <!-- Entscheide richtig! — tägliches Story-Szenario -->
+          <div class="gam-card daily-challenge-card" style="border-left-color:var(--amber)">
+            <div class="gam-section-label">🎲 Entscheide richtig!</div>
+            <div id="youth-story-content"><!-- Rendered by JS --></div>
+          </div>
 
-        <div style="height:20px"></div>
+          <!-- Deine Ziele im Fokus -->
+          <div class="gam-card">
+            <div class="gam-section-label">🎯 Deine Ziele im Fokus</div>
+            <div id="youth-goals-focus"><!-- Rendered by JS --></div>
+          </div>
+
+          <div style="height:24px"></div>
+        </div><!-- /gam-youth -->
+
+        <!-- ═══════════════════════════════════════════════════
+             ADULT SECTION — Money IQ 💼
+        ════════════════════════════════════════════════════ -->
+        <div class="gam-adult">
+
+          <!-- Header -->
+          <div class="gam-hdr gam-hdr-adult">
+            <img src="img/blkb-logo-claim.svg" style="height:24px;margin-bottom:10px;display:block;filter:brightness(0) invert(1);">
+            <div style="font-size:20px;font-weight:800;letter-spacing:-.3px">Money IQ 💼</div>
+            <div style="font-size:13px;font-weight:600;opacity:.85;margin-top:2px">Dein Finanz-Dashboard</div>
+            <div style="font-size:12px;opacity:.7;margin-top:4px">Tracke deine Gewohnheiten, optimiere deine Finanzen</div>
+          </div>
+
+          <!-- Finanz-Gesundheits-Score -->
+          <div class="gam-card">
+            <div class="gam-section-label">Finanz-Gesundheitsscore</div>
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+              <div class="health-ring-wrap">
+                <div id="adult-health-num" class="health-score-num" style="color:var(--amber)">0</div>
+                <div style="font-size:10px;color:var(--mid)">/ 100</div>
+                <div id="adult-health-badge" style="margin-top:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;background:var(--warn-l);color:var(--amber)">Ausbaufähig</div>
+              </div>
+              <div style="flex:1">
+                <div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden">
+                  <div id="adult-health-bar" style="height:100%;border-radius:5px;background:var(--amber);transition:width .5s;width:0%"></div>
+                </div>
+                <div style="font-size:11px;color:var(--mid);margin-top:6px">Basierend auf 5 Finanz-Säulen · je 20 Punkte</div>
+              </div>
+            </div>
+            <div id="adult-pillars-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Wöchentlicher Habit Tracker -->
+          <div class="gam-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <div class="gam-section-label" style="margin-bottom:0">Diese Woche ✓</div>
+              <div id="adult-habit-progress-label" style="font-size:12px;font-weight:700;color:var(--petrol)">0/5</div>
+            </div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px">
+              <div id="adult-habit-bar" style="height:100%;background:linear-gradient(90deg,var(--petrol),var(--ok));border-radius:3px;transition:width .4s;width:0%"></div>
+            </div>
+            <div id="adult-habits-list">
+              <!-- Rendered by JS -->
+            </div>
+            <div id="adult-habit-done-msg" style="display:none;margin-top:10px;padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok);text-align:center">🎉 Perfekte Woche! Weiter so!</div>
+          </div>
+
+          <!-- Monatliche Challenge -->
+          <div class="gam-card daily-challenge-card" style="border-left-color:var(--petrol)">
+            <div class="gam-section-label">Monatliche Challenge</div>
+            <div id="adult-monthly-challenge-content">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Was wäre wenn? Szenarien -->
+          <div class="gam-card">
+            <div class="gam-section-label">«Was wäre wenn?» Szenarien</div>
+            <div style="display:flex;flex-direction:column;gap:10px" id="adult-scenarios-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Deine Ziele im Fokus -->
+          <div class="gam-card">
+            <div class="gam-section-label">🎯 Deine Ziele im Fokus</div>
+            <div id="adult-goals-focus"><!-- Rendered by JS --></div>
+          </div>
+
+          <!-- CH-Benchmark -->
+          <div class="gam-card">
+            <div class="gam-section-label">CH-Benchmark: Sparquote</div>
+            <div id="adult-benchmark-content">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <div style="height:24px"></div>
+        </div><!-- /gam-adult -->
+
       </div>
     </div>
 
@@ -2540,6 +2791,21 @@ var state = {
   editGoalIdx: -1,
   selectedEmoji: '🎯',
   mode: null,
+  // Gamification fields
+  xp: 0,
+  streak: 0,
+  lastStreakDate: '',
+  dailyChallengeDate: '',
+  dailyChallengeXpClaimed: false,
+  quizDate: '',
+  quizCorrect: false,
+  habitDone: [false, false, false, false, false],
+  monthlyHabitDone: [false, false, false, false, false],
+  monthlyHabitWeek: '',
+  monthlyChallengeDone: false,
+  monthlyChallengeMonth: '',
+  storyDate: '',
+  storyChoice: -1,
 };
 
 // Persist to localStorage
@@ -2551,6 +2817,21 @@ function save() {
     goals: state.goals,
     haxxDone: state.haxxDone,
     budgetPcts: budgetCats.map(function(c) { return c.pct; }),
+    // Gamification
+    xp: state.xp,
+    streak: state.streak,
+    lastStreakDate: state.lastStreakDate,
+    dailyChallengeDate: state.dailyChallengeDate,
+    dailyChallengeXpClaimed: state.dailyChallengeXpClaimed,
+    quizDate: state.quizDate,
+    quizCorrect: state.quizCorrect,
+    habitDone: state.habitDone,
+    monthlyHabitDone: state.monthlyHabitDone,
+    monthlyHabitWeek: state.monthlyHabitWeek,
+    monthlyChallengeDone: state.monthlyChallengeDone,
+    monthlyChallengeMonth: state.monthlyChallengeMonth,
+    storyDate: state.storyDate,
+    storyChoice: state.storyChoice,
   }));
 }
 
@@ -2569,6 +2850,21 @@ function load() {
       if (d.budgetPcts && d.budgetPcts.length === budgetCats.length) {
         d.budgetPcts.forEach(function(p, i) { budgetCats[i].pct = p; });
       }
+      // Gamification
+      state.xp = d.xp || 0;
+      state.streak = d.streak || 0;
+      state.lastStreakDate = d.lastStreakDate || '';
+      state.dailyChallengeDate = d.dailyChallengeDate || '';
+      state.dailyChallengeXpClaimed = d.dailyChallengeXpClaimed || false;
+      state.quizDate = d.quizDate || '';
+      state.quizCorrect = d.quizCorrect || false;
+      state.habitDone = d.habitDone || [false, false, false, false, false];
+      state.monthlyHabitDone = d.monthlyHabitDone || [false, false, false, false, false];
+      state.monthlyHabitWeek = d.monthlyHabitWeek || '';
+      state.monthlyChallengeDone = d.monthlyChallengeDone || false;
+      state.monthlyChallengeMonth = d.monthlyChallengeMonth || '';
+      state.storyDate = d.storyDate || '';
+      state.storyChoice = d.storyChoice !== undefined ? d.storyChoice : -1;
     }
   } catch(e) {}
 }
@@ -4174,13 +4470,14 @@ function calcInvest() {
 
 // ── Badge-Definitionen ───────────────────────────────────────────
 var BADGES = [
-  { id: 'first_goal',    icon: '🎯', title: 'Erster Sparschritt',   desc: 'Erstes Sparziel erstellt',          check: function(){ return state.goals.length >= 1; } },
-  { id: 'haxx_master',   icon: '⚡', title: 'MoneyHaxx Master',     desc: 'Alle 6 Hacks verstanden',            check: function(){ return state.haxxDone.length >= 6; } },
+  { id: 'first_goal',    icon: '🎯', title: 'Erster Sparschritt',   desc: 'Erstes Sparziel erstellt',            check: function(){ return state.goals.length >= 1; } },
+  { id: 'goal_reached',  icon: '🏆', title: 'Ziel erreicht!',       desc: 'Ein Sparziel vollständig erfüllt',    check: function(){ var cum=0; return state.goals.some(function(g){ var alloc=Math.min(Math.max(0,state.sparGuthaben-cum),(g.ziel||0)); cum+=(g.ziel||0); return (g.ziel||0)>0 && alloc>=(g.ziel||0); }); } },
+  { id: 'three_goals',   icon: '💫', title: 'Visionär',             desc: 'Drei Sparziele gleichzeitig aktiv',   check: function(){ return state.goals.length >= 3; } },
+  { id: 'big_dream',     icon: '🚀', title: 'Gross-Denker',         desc: 'Ziel über CHF 1\'000 angelegt',       check: function(){ return state.goals.some(function(g){ return (g.ziel||0) >= 1000; }); } },
+  { id: 'haxx_master',   icon: '⚡', title: 'MoneyHaxx Master',     desc: 'Alle 6 Hacks verstanden',             check: function(){ return state.haxxDone.length >= 6; } },
   { id: 'budget_pro',    icon: '📊', title: 'Budget-Profi',         desc: 'Budget vollständig ausgefüllt',       check: function(){ var t=budgetCats.reduce(function(s,c){return s+c.pct;},0); return t===100; } },
-  { id: 'goal_reached',  icon: '🏆', title: 'Ziel erreicht!',       desc: 'Ein Sparziel auf 100%',               check: function(){ return state.goals.some(function(g){ return (g.pct||0)>=100; }); } },
-  { id: 'lifecycle',     icon: '🌟', title: 'Lebensphase erkundet', desc: 'Alter-Schieber bewegt',               check: function(){ return state.age !== 16; } },
   { id: 'invest_start',  icon: '📈', title: 'Investor',             desc: 'Geld-vermehren-Simulation gestartet', check: function(){ return state.investUsed || false; } },
-  { id: 'three_goals',   icon: '🎪', title: 'Visionär',             desc: 'Drei Sparziele erstellt',             check: function(){ return state.goals.length >= 3; } },
+  { id: 'story_hero',    icon: '🎲', title: 'Entscheider',          desc: 'Erste tägliche Entscheidung getroffen',check: function(){ return !!state.storyDate; } },
 ];
 
 // ── Level-Definitionen ───────────────────────────────────────────
@@ -4216,22 +4513,363 @@ function getLevel(earnedCount) {
   return LEVELS[0];
 }
 
-function updateGamification() {
-  var earned  = getEarnedBadges();
-  var count   = earned.length;
-  var level   = getLevel(count);
-  var nextLvl = LEVELS.find(function(l){ return l.min > count; });
-  var pct     = nextLvl ? Math.round((count - getLevel(count).min) / (nextLvl.min - getLevel(count).min) * 100) : 100;
+/* ─── XP Youth Levels ───────────────────────────────────────── */
+var YOUTH_LEVELS = [
+  { min: 0,   max: 49,   badge: '🌱', title: 'Geld-Neuling',   next: 50   },
+  { min: 50,  max: 149,  badge: '⭐', title: 'Spar-Starter',   next: 150  },
+  { min: 150, max: 299,  badge: '🔥', title: 'Money-Macher',   next: 300  },
+  { min: 300, max: 599,  badge: '💎', title: 'Finanz-Profi',   next: 600  },
+  { min: 600, max: 999,  badge: '🏆', title: 'Money Hero',     next: 1000 },
+  { min: 1000,max: 9999, badge: '👑', title: 'BLKB Legend',    next: null },
+];
 
-  // Dashboard Level-Bar
+var DAILY_CHALLENGES = [
+  { icon: '💰', title: 'Ausgaben notieren',       desc: 'Notiere heute alle deine Ausgaben.',       xp: 10 },
+  { icon: '🐷', title: 'Ziel-Check',              desc: 'Überprüfe deinen Fortschritt bei einem Sparziel.', xp: 10 },
+  { icon: '📚', title: 'Modul abschliessen',      desc: 'Schliesse ein Lernmodul in der Finanz-Schule ab.', xp: 20 },
+  { icon: '⚡', title: 'Hack lesen',              desc: 'Lies einen MoneyHaxx-Tipp durch.',          xp: 10 },
+  { icon: '🎯', title: 'Sparziel setzen',          desc: 'Setze dir heute ein neues Sparziel.',       xp: 15 },
+  { icon: '💡', title: 'Frage beantworten',        desc: 'Beantworte die Frage des Tages richtig.',   xp: 15 },
+  { icon: '📊', title: 'Budget prüfen',            desc: 'Schau dir dein Budget an und passe es an.', xp: 10 },
+];
+
+/* ─── Tägliche Story-Szenarien (Youth) ─────────────────────── */
+var YOUTH_STORIES = [
+  {
+    situation: function(g) {
+      var fehlend = g ? Math.max(0, (g.ziel||0) - state.sparGuthaben) : 0;
+      return 'Du bekommst CHF 100 Geburtstagsgeld.' +
+        (g ? ' Für dein Ziel «' + g.name + '» fehlen noch CHF ' + fehlend + '.' : '');
+    },
+    question: 'Was machst du mit dem Geld?',
+    choices: [
+      { text: '🎉 Alles für den Ausgang ausgeben', result: 'Spass gehabt! Aber dein Ziel verzögert sich um Wochen.', xp: 5 },
+      { text: '⚖️ CHF 50 sparen, CHF 50 geniessen', result: 'Guter Kompromiss! Ziel bleibt auf Kurs.', xp: 15, best: true },
+      { text: '🐷 Alles direkt zum Sparziel legen', result: 'Top! Dein Ziel rückt deutlich näher.', xp: 20 },
+    ]
+  },
+  {
+    situation: function(g) {
+      return 'Freunde wollen ins Restaurant — Kosten CHF 35.' +
+        (g ? ' Dein Ziel «' + g.name + '» ist fast in Reichweite.' : '');
+    },
+    question: 'Was entscheidest du?',
+    choices: [
+      { text: '🍽️ Mitgehen und CHF 35 ausgeben', result: 'Schöner Abend! Ziel etwas weiter weg.', xp: 5 },
+      { text: '🥗 Mitgehen, aber günstiger essen (CHF 12)', result: 'Clever! Spass UND gespart.', xp: 20, best: true },
+      { text: '🏠 Absagen, CHF 35 sparen', result: 'Diszipliniert — aber Balance ist auch wichtig.', xp: 10 },
+    ]
+  },
+  {
+    situation: function(g) {
+      var fehlend = g ? Math.max(0, (g.ziel||0) - state.sparGuthaben) : 0;
+      return 'Dein Ferienjob bringt CHF 650.' +
+        (g ? ' Noch CHF ' + fehlend + ' bis zum Ziel «' + g.name + '».' : '');
+    },
+    question: 'Wie verwaltest du deinen ersten Lohn?',
+    choices: [
+      { text: '🛍️ Alles auf der Stelle ausgeben', result: 'Gönnen ist ok — aber in 2 Wochen ist alles weg.', xp: 5 },
+      { text: '💡 Easy-10: CHF 65 sparen, Rest geniessen', result: 'Easy-10 Hack aktiv! Automatisch reicher werden.', xp: 15, best: true },
+      { text: '⚖️ Hälfte sparen, Hälfte geniessen', result: 'Fifty-Fifty Hack! Starke Balance.', xp: 20 },
+    ]
+  },
+  {
+    situation: function(g) {
+      return 'Du hast 3 Abos: Streaming, Musik, Gaming. Zusammen CHF 48/Mt.' +
+        (g ? ' Das sind CHF 576/Jahr — fast dein ganzes Ziel «' + g.name + '».' : '');
+    },
+    question: 'Was machst du mit den Abonnements?',
+    choices: [
+      { text: '📺 Alle behalten', result: 'CHF 576/Jahr für Abos. Nutzt du wirklich alle?', xp: 5 },
+      { text: '✂️ Eines kündigen (–CHF 16/Mt.)', result: 'Gespart: CHF 192/Jahr! Kleiner Schritt, grosse Wirkung.', xp: 15, best: true },
+      { text: '✂️✂️ Zwei kündigen (–CHF 32/Mt.)', result: 'Gespart: CHF 384/Jahr! Direkter Zielboost.', xp: 20 },
+    ]
+  },
+  {
+    situation: function(g) {
+      return 'Dein Freund hat das neue iPhone (CHF 1\'200). Dein Handy funktioniert noch gut.' +
+        (g ? ' Du sparst gerade für «' + g.name + '».' : '');
+    },
+    question: 'Was tust du?',
+    choices: [
+      { text: '📱 Sofort kaufen — auf Kredit', result: 'Achtung: Kredite kosten extra. Nie eine gute Idee!', xp: 5 },
+      { text: '⏳ Warten und monatlich sparen', result: 'In wenigen Monaten kannst du es dir leisten — ohne Schulden!', xp: 15, best: true },
+      { text: '🔧 Altes Handy reparieren lassen (CHF 40)', result: 'Super smart! CHF 1\'160 gespart für wichtigere Ziele.', xp: 20 },
+    ]
+  },
+];
+
+var DAILY_QUIZ = [
+  {
+    q: 'Was ist Zinseszins?',
+    opts: ['Zinsen auf Zinsen', 'Ein Kredit-Typ', 'Eine Steuerart', 'Eine Sparform'],
+    correct: 0
+  },
+  {
+    q: 'Was ist eine IBAN?',
+    opts: ['Eine Kreditkarte', 'Internationale Bankkontonummer', 'Ein Finanzamt', 'Eine Versicherung'],
+    correct: 1
+  },
+  {
+    q: 'Was sind Zinsen?',
+    opts: ['Gebühren für Kontoführung', 'Kosten für Bargeld', 'Entgelt für geliehenes Geld', 'Steuern auf Ersparnisse'],
+    correct: 2
+  },
+  {
+    q: 'Was ist Inflation?',
+    opts: ['Steigende Löhne', 'Allgemeiner Preisanstieg', 'Sinkende Zinsen', 'Höhere Steuern'],
+    correct: 1
+  },
+  {
+    q: 'Was ist die Säule 3a?',
+    opts: ['Eine Krankenversicherung', 'Obligatorische AHV', 'Gebundene Altersvorsorge', 'Ein Bankprodukt für Jugendliche'],
+    correct: 2
+  },
+];
+
+var ADULT_HABITS = [
+  '✅ Budget gecheckt',
+  '💸 Unnötige Ausgaben vermieden',
+  '🎯 Sparziele überprüft',
+  '📲 E-Banking gecheckt',
+  '💰 Gespart wie geplant',
+];
+
+var ADULT_MONTHLY_CHALLENGES = [
+  { text: '«Spare CHF 100 extra diesen Monat»',           cta: 'Zum Sparrechner',  view: 'goals' },
+  { text: '«Kein Impulskauf für 2 Wochen»',              cta: 'Budget öffnen',    view: 'budget' },
+  { text: '«Richte einen neuen Dauerauftrag ein»',       cta: 'Zur Übersicht',    view: 'home' },
+  { text: '«Prüfe und aktualisiere dein Budget»',        cta: 'Budget öffnen',    view: 'budget' },
+];
+
+/* ─── Date helpers ──────────────────────────────────────────── */
+function todayStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+function thisWeekStr() {
+  var d = new Date();
+  // ISO week number
+  var jan1 = new Date(d.getFullYear(), 0, 1);
+  var week = Math.ceil(((d - jan1) / 86400000 + jan1.getDay() + 1) / 7);
+  return d.getFullYear() + '-W' + week;
+}
+function thisMonthStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1);
+}
+function dayOfYear() {
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff = now - start;
+  return Math.floor(diff / 86400000);
+}
+
+/* ─── XP & Streak ───────────────────────────────────────────── */
+function addXP(amount) {
+  state.xp = (state.xp || 0) + amount;
+  save();
+  updateGamification();
+  showToast('+' + amount + ' XP! ⭐');
+}
+
+function getYouthLevel(xp) {
+  for (var i = YOUTH_LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= YOUTH_LEVELS[i].min) return YOUTH_LEVELS[i];
+  }
+  return YOUTH_LEVELS[0];
+}
+
+function checkStreak() {
+  var today = todayStr();
+  if (!state.lastStreakDate) {
+    state.lastStreakDate = today;
+    state.streak = 1;
+    save();
+    return;
+  }
+  if (state.lastStreakDate === today) return; // already counted today
+  // Check if yesterday
+  var last = new Date(state.lastStreakDate);
+  var now = new Date(today);
+  var diff = Math.round((now - last) / 86400000);
+  if (diff === 1) {
+    state.streak = (state.streak || 0) + 1;
+  } else if (diff > 1) {
+    state.streak = 1; // reset
+  }
+  state.lastStreakDate = today;
+  save();
+}
+
+/* ─── Daily Challenge ───────────────────────────────────────── */
+function claimDailyChallenge() {
+  var today = todayStr();
+  if (state.dailyChallengeDate === today && state.dailyChallengeXpClaimed) return;
+  var idx = dayOfYear() % DAILY_CHALLENGES.length;
+  var ch = DAILY_CHALLENGES[idx];
+  state.dailyChallengeDate = today;
+  state.dailyChallengeXpClaimed = true;
+  state.xp = (state.xp || 0) + ch.xp;
+  save();
+  updateGamification();
+  showToast('+' + ch.xp + ' XP! Challenge abgehakt ✓');
+}
+
+/* ─── Daily Quiz ────────────────────────────────────────────── */
+function answerDailyQuiz(optIdx) {
+  var today = todayStr();
+  if (state.quizDate === today) return; // already answered
+  var idx = dayOfYear() % DAILY_QUIZ.length;
+  var q = DAILY_QUIZ[idx];
+  var correct = optIdx === q.correct;
+  state.quizDate = today;
+  state.quizCorrect = correct;
+  if (correct) {
+    state.xp = (state.xp || 0) + 15;
+  }
+  save();
+  renderYouthGamification();
+  if (correct) {
+    showToast('+15 XP! Richtig! 🎉');
+  } else {
+    showToast('Leider falsch. Morgen nächste Chance!');
+  }
+}
+
+/* ─── Adult Habit Tracker ───────────────────────────────────── */
+function toggleHabit(i) {
+  // Check if week reset needed
+  var week = thisWeekStr();
+  if (state.monthlyHabitWeek !== week) {
+    state.monthlyHabitDone = [false, false, false, false, false];
+    state.monthlyHabitWeek = week;
+  }
+  state.monthlyHabitDone[i] = !state.monthlyHabitDone[i];
+  save();
+  renderAdultGamification();
+}
+
+/* ─── Adult Monthly Challenge ───────────────────────────────── */
+function acceptMonthlyChallenge() {
+  var month = thisMonthStr();
+  state.monthlyChallengeDone = true;
+  state.monthlyChallengeMonth = month;
+  save();
+  renderAdultGamification();
+  showToast('Challenge angenommen! 💪');
+}
+
+/* ─── Youth Score ───────────────────────────────────────────── */
+function calcYouthScore() {
+  var score = 0;
+  var tips = [];
+  // +25 Sparziel gesetzt
+  if (state.goals && state.goals.length > 0) {
+    score += 25;
+  } else {
+    tips.push('Setze ein Sparziel (+25 Pkt.)');
+  }
+  // +25 Lektion abgeschlossen (check learnProgress)
+  var learnDone = false;
+  if (typeof learnProgress !== 'undefined') {
+    for (var k in learnProgress) {
+      if (learnProgress[k] > 0) { learnDone = true; break; }
+    }
+  }
+  if (learnDone) {
+    score += 25;
+  } else {
+    tips.push('Schliesse eine Lektion ab (+25 Pkt.)');
+  }
+  // +25 Budget ausgefüllt
+  if (typeof budgetCats !== 'undefined') {
+    var total = budgetCats.reduce(function(s, c) { return s + (c.pct || 0); }, 0);
+    if (total === 100) {
+      score += 25;
+    } else {
+      tips.push('Fülle dein Budget aus (+25 Pkt.)');
+    }
+  }
+  // +25 App-Streak >= 3
+  if ((state.streak || 0) >= 3) {
+    score += 25;
+  } else {
+    tips.push('Halte 3 Tage Streak (+25 Pkt.)');
+  }
+  return { score: score, tips: tips };
+}
+
+/* ─── Adult Health Score ─────────────────────────────────────── */
+function calcAdultHealthScore() {
+  var pillars = [];
+
+  // 1. Sparquote >= 10%
+  var sparRate = state.lohn > 0 ? (state.monatlichesSparbudget / state.lohn) * 100 : 0;
+  var p1 = sparRate >= 10;
+  pillars.push({ label: 'Sparquote ≥ 10%', ok: p1, hint: p1 ? 'Sparquote: ' + Math.round(sparRate) + '%' : 'Aktuell: ' + Math.round(sparRate) + '%' });
+
+  // 2. Notfallreserve gesetzt (ziel >= 1000)
+  var hasReserve = state.goals && state.goals.some(function(g){ return (g.ziel || 0) >= 1000; });
+  pillars.push({ label: 'Notfallreserve gesetzt', ok: hasReserve, hint: hasReserve ? 'Sparziel ≥ CHF 1\'000 vorhanden' : 'Kein Ziel ≥ CHF 1\'000' });
+
+  // 3. Budget vollständig (budgetCats sum = 100)
+  var budgetFull = false;
+  if (typeof budgetCats !== 'undefined') {
+    var bSum = budgetCats.reduce(function(s,c){return s+(c.pct||0);},0);
+    budgetFull = bSum === 100;
+  }
+  pillars.push({ label: 'Budget vollständig', ok: budgetFull, hint: budgetFull ? 'Budget zu 100% verteilt' : 'Budget noch nicht vollständig' });
+
+  // 4. Mind. 1 Sparziel aktiv
+  var hasGoal = state.goals && state.goals.length > 0;
+  pillars.push({ label: 'Mind. 1 Sparziel aktiv', ok: hasGoal, hint: hasGoal ? state.goals.length + ' Ziel(e) aktiv' : 'Noch kein Sparziel' });
+
+  // 5. Invest/3a Simulation gestartet
+  var investUsed = state.investUsed || false;
+  pillars.push({ label: 'Invest/3a Simulation gestartet', ok: investUsed, hint: investUsed ? 'Simulation genutzt' : 'Simulation noch nicht genutzt' });
+
+  var score = pillars.filter(function(p){ return p.ok; }).length * 20;
+  return { score: score, pillars: pillars };
+}
+
+/* ─── Render: Youth ─────────────────────────────────────────── */
+function renderYouthGamification() {
+  var xp = state.xp || 0;
+  var lvl = getYouthLevel(xp);
+  var nextXp = lvl.next;
+  var pct = nextXp ? Math.round(((xp - lvl.min) / (nextXp - lvl.min)) * 100) : 100;
+
+  // Streak badge
+  var sBadge = document.getElementById('youth-streak-badge');
+  if (sBadge) sBadge.textContent = '🔥 ' + (state.streak || 0) + ' Tag' + ((state.streak || 0) === 1 ? '' : 'e') + ' in Folge';
+
+  // Level / XP bar
+  var fBdg = document.getElementById('fun-level-badge');
+  var fLbl = document.getElementById('fun-level-title');
+  var fSub = document.getElementById('fun-level-sub');
+  var fBar = document.getElementById('fun-level-bar');
+  var fNext = document.getElementById('youth-xp-next');
+  if (fBdg) fBdg.textContent = lvl.badge;
+  if (fLbl) fLbl.textContent = lvl.title;
+  if (fSub) fSub.textContent = xp + ' XP · Level ' + (YOUTH_LEVELS.indexOf(lvl) + 1);
+  if (fBar) fBar.style.width = pct + '%';
+  if (fNext) fNext.textContent = nextXp ? (nextXp - xp) + ' XP bis zum nächsten Level' : '🏆 Maximales Level erreicht!';
+
+  // Home screen badges/level (keep backward compat with badge-based system too)
+  var earned = getEarnedBadges();
+  var count = earned.length;
+  var level = getLevel(count);
+  var nextLvl = LEVELS.find(function(l){ return l.min > count; });
+  var hPct = nextLvl ? Math.round((count - getLevel(count).min) / (nextLvl.min - getLevel(count).min) * 100) : 100;
   var lblEl = document.getElementById('home-level-title');
   var subEl = document.getElementById('home-level-sub');
   var barEl = document.getElementById('home-level-bar');
   var bdgEl = document.getElementById('home-level-badge');
-  if (lblEl) lblEl.textContent = level.title;
-  if (subEl) subEl.textContent = 'Level ' + (LEVELS.indexOf(level)+1) + ' · ' + count + ' Abzeichen';
+  if (lblEl) lblEl.textContent = lvl.title;
+  if (subEl) subEl.textContent = xp + ' XP · ' + count + ' Abzeichen';
   if (barEl) barEl.style.width = pct + '%';
-  if (bdgEl) bdgEl.textContent = level.badge;
+  if (bdgEl) bdgEl.textContent = lvl.badge;
 
   // Dashboard Badges-Row
   var rowEl = document.getElementById('home-badges-row');
@@ -4245,17 +4883,70 @@ function updateGamification() {
     }
   }
 
-  // Fun-Screen Level
-  var fLbl = document.getElementById('fun-level-title');
-  var fSub = document.getElementById('fun-level-sub');
-  var fBar = document.getElementById('fun-level-bar');
-  var fBdg = document.getElementById('fun-level-badge');
-  if (fLbl) fLbl.textContent = level.title;
-  if (fSub) fSub.textContent = 'Level ' + (LEVELS.indexOf(level)+1) + ' · ' + count + ' von ' + BADGES.length + ' Abzeichen';
-  if (fBar) fBar.style.width = pct + '%';
-  if (fBdg) fBdg.textContent = level.badge;
+  // Daily Challenge
+  var chEl = document.getElementById('youth-challenge-content');
+  if (chEl) {
+    var today = todayStr();
+    var idx = dayOfYear() % DAILY_CHALLENGES.length;
+    var ch = DAILY_CHALLENGES[idx];
+    var done = (state.dailyChallengeDate === today && state.dailyChallengeXpClaimed);
+    if (done) {
+      chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--ok-l);border-radius:8px">' +
+        '<span style="font-size:28px">' + ch.icon + '</span>' +
+        '<div><div style="font-size:14px;font-weight:700;color:var(--ok)">✓ ' + ch.title + '</div>' +
+        '<div style="font-size:12px;color:var(--mid)">Heute abgehakt · +' + ch.xp + ' XP erhalten</div></div></div>';
+    } else {
+      chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<span style="font-size:28px">' + ch.icon + '</span>' +
+        '<div><div style="font-size:14px;font-weight:700;color:var(--dark)">' + ch.title + '</div>' +
+        '<div style="font-size:12px;color:var(--mid)">' + ch.desc + '</div></div></div>' +
+        '<button onclick="claimDailyChallenge()" style="width:100%;padding:11px;background:var(--red);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">+' + ch.xp + ' XP verdienen</button>';
+    }
+  }
 
-  // Fun-Screen Badges Grid
+  // Daily Quiz
+  var quizEl = document.getElementById('youth-quiz-content');
+  if (quizEl) {
+    var today2 = todayStr();
+    var qIdx = dayOfYear() % DAILY_QUIZ.length;
+    var quiz = DAILY_QUIZ[qIdx];
+    var answered = (state.quizDate === today2);
+    if (answered) {
+      var feedback = state.quizCorrect
+        ? '<div style="padding:10px;background:var(--ok-l);border-radius:8px;color:var(--ok);font-size:13px;font-weight:700">✓ Richtig! +15 XP erhalten</div>'
+        : '<div style="padding:10px;background:#fff0f0;border-radius:8px;color:var(--red);font-size:13px;font-weight:700">✗ Leider falsch. Richtig wäre: «' + quiz.opts[quiz.correct] + '»</div>';
+      quizEl.innerHTML = '<div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:10px">' + quiz.q + '</div>' + feedback +
+        '<div style="font-size:11px;color:var(--light);margin-top:8px;text-align:center">Nächste Frage morgen!</div>';
+    } else {
+      var optsHtml = quiz.opts.map(function(opt, oi) {
+        return '<button class="quiz-opt" onclick="answerDailyQuiz(' + oi + ')">' + opt + '</button>';
+      }).join('');
+      quizEl.innerHTML = '<div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:10px">' + quiz.q + '</div>' + optsHtml +
+        '<div style="font-size:11px;color:var(--light);margin-top:4px">Richtige Antwort = +15 XP</div>';
+    }
+  }
+
+  // Youth Finanz-Score
+  var sc = calcYouthScore();
+  var scoreEl = document.getElementById('youth-score-num');
+  var scoreBar = document.getElementById('youth-score-bar');
+  var scoreDesc = document.getElementById('youth-score-desc');
+  if (scoreEl) scoreEl.textContent = sc.score;
+  if (scoreBar) {
+    var col = sc.score >= 75 ? 'var(--ok)' : sc.score >= 50 ? 'var(--petrol)' : sc.score >= 25 ? 'var(--amber)' : 'var(--red)';
+    scoreBar.style.width = sc.score + '%';
+    scoreBar.style.background = col;
+    scoreEl.style.color = col;
+  }
+  if (scoreDesc) {
+    if (sc.tips.length === 0) {
+      scoreDesc.textContent = '🏆 Perfekt! Alle Finanz-Ziele erfüllt!';
+    } else {
+      scoreDesc.textContent = sc.tips[0];
+    }
+  }
+
+  // Badges Grid
   var grid = document.getElementById('fun-badges-grid');
   if (grid) {
     var html = '';
@@ -4277,457 +4968,316 @@ function updateGamification() {
     showToast(newBadge.icon + ' Abzeichen verdient: ' + newBadge.title + '!');
     state._lastBadgeCount = count;
   }
+
+  // Story-Szenario
+  var stEl = document.getElementById('youth-story-content');
+  if (stEl) renderYouthStoryScenario(stEl);
+
+  // Ziele im Fokus (Youth)
+  renderGoalsFocus('youth-goals-focus', false);
 }
 
-function challengeAction(i) {
-  if (i === 0) {
-    var cur = parseInt(localStorage.getItem('ch_spar30') || '0');
-    localStorage.setItem('ch_spar30', Math.min(30, cur + 1));
-    CHALLENGES[0].progress = Math.min(30, cur + 1);
-    showToast('Tag ' + CHALLENGES[0].progress + ' von 30 ✓');
-    updateGamification();
-  } else if (i === 1) {
-    switchView('haxx', 2);
-  } else if (i === 2) {
-    switchView('budget', 3);
-  }
-}
+/* ─── Render: Adult ─────────────────────────────────────────── */
+function renderAdultGamification() {
+  // Health Score + Pillars
+  var hs = calcAdultHealthScore();
+  var numEl = document.getElementById('adult-health-num');
+  var barEl = document.getElementById('adult-health-bar');
+  var bdgEl = document.getElementById('adult-health-badge');
+  var pillarsEl = document.getElementById('adult-pillars-list');
 
-/* ── Game: Coin Tap ─────────────────────────────────────────────── */
-var coinGame = { active: false, score: 0, timer: 10, interval: null, spawnInterval: null };
+  var scoreColor = hs.score >= 90 ? 'var(--ok)' : hs.score >= 70 ? 'var(--petrol)' : hs.score >= 40 ? 'var(--amber)' : 'var(--red)';
+  var scoreBg    = hs.score >= 90 ? 'var(--ok-l)' : hs.score >= 70 ? '#e8f4f8' : hs.score >= 40 ? 'var(--warn-l)' : '#fff0f0';
+  var scoreLabel = hs.score >= 90 ? 'Ausgezeichnet' : hs.score >= 70 ? 'Gut' : hs.score >= 40 ? 'Ausbaufähig' : 'Handlungsbedarf';
 
-function selectGame(name) {
-  document.getElementById('game-coin').style.display  = name === 'coin'  ? 'block' : 'none';
-  document.getElementById('game-snake').style.display = name === 'snake' ? 'block' : 'none';
-  document.getElementById('game-pac').style.display   = name === 'pac'   ? 'block' : 'none';
-  document.getElementById('game-btn-coin').classList.toggle('active',  name === 'coin');
-  document.getElementById('game-btn-snake').classList.toggle('active', name === 'snake');
-  var pacBtn = document.getElementById('game-btn-pac');
-  if (pacBtn) pacBtn.classList.toggle('active', name === 'pac');
-  if (name === 'snake') initSnake();
-  if (name === 'pac') initPac();
-}
-
-function startCoinGame() {
-  coinGame.score = 0; coinGame.timer = 10; coinGame.active = true;
-  document.getElementById('coin-result').style.display = 'none';
-  document.getElementById('coin-start-msg').style.display = 'none';
-  document.getElementById('coin-score').textContent = 0;
-  document.getElementById('coin-timer').textContent = 10;
-
-  coinGame.spawnInterval = setInterval(spawnCoin, 700);
-  coinGame.interval = setInterval(function() {
-    coinGame.timer--;
-    document.getElementById('coin-timer').textContent = coinGame.timer;
-    if (coinGame.timer <= 0) endCoinGame();
-  }, 1000);
-}
-
-function spawnCoin() {
-  var area = document.getElementById('coin-area');
-  if (!area || !coinGame.active) return;
-  var coin = document.createElement('div');
-  var x = Math.random() * 260 + 20;
-  var y = Math.random() * 140 + 20;
-  coin.innerHTML = '<img src="img/logo.svg" style="width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(253,0,13,.4))">';
-  coin.style.cssText = 'position:absolute;cursor:pointer;left:' + x + 'px;top:' + y + 'px;transition:transform .1s;user-select:none;-webkit-user-select:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--red-l);border-radius:50%;border:2px solid rgba(253,0,13,.2)';
-  coin.addEventListener('click', function() {
-    if (!coinGame.active) return;
-    coinGame.score++;
-    document.getElementById('coin-score').textContent = coinGame.score;
-    coin.remove();
-    // add points effect
-    var pt = document.createElement('div');
-    pt.textContent = '+1';
-    pt.style.cssText = 'position:absolute;left:' + x + 'px;top:' + (y-10) + 'px;font-size:13px;font-weight:700;color:var(--ok);pointer-events:none;animation:none;opacity:1';
-    area.appendChild(pt);
-    setTimeout(function(){ pt.remove(); }, 500);
-  });
-  area.appendChild(coin);
-  setTimeout(function(){ if(coin.parentNode) coin.remove(); }, 2000);
-}
-
-function endCoinGame() {
-  coinGame.active = false;
-  clearInterval(coinGame.interval);
-  clearInterval(coinGame.spawnInterval);
-  document.getElementById('coin-area').innerHTML = '<div id="coin-start-msg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--mid)" onclick="startCoinGame()">Nochmal tippen!</div>';
-  var res = document.getElementById('coin-result');
-  var msg = coinGame.score < 5 ? 'Nicht schlecht! 💪' : coinGame.score < 15 ? 'Stark! 🔥' : 'Wahnsinn! 🏆';
-  res.textContent = msg + ' Score: ' + coinGame.score;
-  res.style.display = 'block';
-  // Punkte für Gamification
-  if (!state.investUsed) state.investUsed = false;
-  updateGamification();
-}
-
-// coin-area onclick direkt im HTML
-
-/* ── Game: Snake ─────────────────────────────────────────────────── */
-var snake = { cells:[], dir:{x:1,y:0}, food:{x:10,y:5}, score:0, running:false, loop:null };
-var CELL = 20;
-
-// Swipe-Gesten für Snake + Pac-Man
-(function() {
-  function addSwipe(canvasId, dirFn) {
-    var sx, sy;
-    document.addEventListener('DOMContentLoaded', function() {
-      var cv = document.getElementById(canvasId);
-      if (!cv) return;
-      cv.addEventListener('touchstart', function(e) {
-        sx = e.touches[0].clientX; sy = e.touches[0].clientY;
-      }, {passive:true});
-      cv.addEventListener('touchend', function(e) {
-        var dx = e.changedTouches[0].clientX - sx;
-        var dy = e.changedTouches[0].clientY - sy;
-        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return; // tap = kein swipe
-        if (Math.abs(dx) > Math.abs(dy)) { dirFn(dx > 0 ? 1 : -1, 0); }
-        else { dirFn(0, dy > 0 ? 1 : -1); }
-      }, {passive:true});
-    });
-  }
-  addSwipe('snake-canvas', function(dx,dy){ snakeDir(dx,dy); });
-  addSwipe('pac-canvas',   function(dx,dy){ pacDir(dx,dy); });
-})();
-
-function initSnake() {
-  var canvas = document.getElementById('snake-canvas');
-  if (!canvas) return;
-  snake.cells = [{x:5,y:6},{x:4,y:6},{x:3,y:6}];
-  snake.dir   = {x:1, y:0};
-  snake.score = 0;
-  snake.running = true;
-  placeSnakeFood();
-  document.getElementById('snake-score').textContent = 0;
-  clearInterval(snake.loop);
-  snake.loop = setInterval(tickSnake, 150);
-}
-
-function placeSnakeFood() {
-  var cols = 16, rows = 12;
-  do {
-    snake.food = { x: Math.floor(Math.random()*cols), y: Math.floor(Math.random()*rows) };
-  } while (snake.cells.some(function(c){ return c.x===snake.food.x && c.y===snake.food.y; }));
-}
-
-function snakeDir(dx, dy) {
-  if (dx !== 0 && snake.dir.x !== 0) return;
-  if (dy !== 0 && snake.dir.y !== 0) return;
-  snake.dir = {x:dx, y:dy};
-  if (!snake.running) initSnake();
-}
-
-function tickSnake() {
-  var canvas = document.getElementById('snake-canvas');
-  if (!canvas || !snake.running) return;
-  var ctx = canvas.getContext('2d');
-  var cols = 16, rows = 12;
-
-  var head = { x: snake.cells[0].x + snake.dir.x, y: snake.cells[0].y + snake.dir.y };
-
-  // Wall collision
-  if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) { endSnake(ctx,cols,rows); return; }
-  // Self collision
-  if (snake.cells.some(function(c){ return c.x===head.x && c.y===head.y; })) { endSnake(ctx,cols,rows); return; }
-
-  snake.cells.unshift(head);
-
-  if (head.x === snake.food.x && head.y === snake.food.y) {
-    snake.score++;
-    document.getElementById('snake-score').textContent = snake.score;
-    placeSnakeFood();
-  } else {
-    snake.cells.pop();
+  if (numEl) { numEl.textContent = hs.score; numEl.style.color = scoreColor; }
+  if (barEl) { barEl.style.width = hs.score + '%'; barEl.style.background = scoreColor; }
+  if (bdgEl) { bdgEl.textContent = scoreLabel; bdgEl.style.color = scoreColor; bdgEl.style.background = scoreBg; }
+  if (pillarsEl) {
+    pillarsEl.innerHTML = hs.pillars.map(function(p) {
+      return '<div class="pillar-row">' +
+        '<div><div style="font-size:13px;font-weight:600;color:var(--dark)">' + p.label + '</div>' +
+        '<div style="font-size:11px;color:var(--mid)">' + p.hint + '</div></div>' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+        '<span class="pillar-check">' + (p.ok ? '✅' : '❌') + '</span>' +
+        '<span style="font-size:12px;font-weight:700;color:' + (p.ok?'var(--ok)':'var(--light)') + '">' + (p.ok?'+20':'0') + ' Pkt.</span>' +
+        '</div></div>';
+    }).join('');
   }
 
-  // Draw
-  ctx.fillStyle = '#1e2328';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  // Grid dots
-  ctx.fillStyle = 'rgba(255,255,255,.04)';
-  for (var gx=0;gx<cols;gx++) for(var gy=0;gy<rows;gy++) ctx.fillRect(gx*CELL+9,gy*CELL+9,2,2);
-
-  // Food
-  ctx.font = CELL + 'px serif';
-  ctx.fillText('🪙', snake.food.x*CELL+1, snake.food.y*CELL+CELL-2);
-
-  // Snake
-  snake.cells.forEach(function(c, i) {
-    ctx.fillStyle = i===0 ? '#fd000d' : (i%2===0 ? '#2c5969' : '#7c8947');
-    ctx.beginPath();
-    ctx.roundRect(c.x*CELL+1, c.y*CELL+1, CELL-2, CELL-2, 4);
-    ctx.fill();
-  });
-}
-
-
-// Hintergrundbild vorgeladen
-var pacBgImg = new Image();
-pacBgImg.src = 'img/liestal-toerli2.jpg';
-
-/* ── Game: Pac-Man BLKB Edition ────────────────────────────────── */
-var PAC_CELL = 15;
-var PAC_COLS = 21;
-var PAC_ROWS = 15;
-
-// Maze: 0=wall, 1=coin, 2=empty, 3=powerpellet
-var PAC_MAZE_TPL = [
-  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0],
-  [0,3,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,3,0],
-  [0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0],
-  [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-  [0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,0,1,0],
-  [0,1,1,1,1,0,1,1,1,0,2,0,1,1,1,0,1,1,1,1,0],
-  [0,0,0,0,1,0,0,2,2,2,2,2,2,2,0,0,1,0,0,0,0],
-  [0,0,0,0,1,0,1,2,0,0,2,0,0,2,1,0,1,0,0,0,0],
-  [1,1,1,1,1,1,1,2,0,2,2,2,0,2,1,1,1,1,1,1,1],
-  [0,0,0,0,1,0,1,2,0,0,0,0,0,2,1,0,1,0,0,0,0],
-  [0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,0,1,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,0,2,0,1,1,1,1,1,1,1,1,0],
-  [0,3,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,0,3,0],
-  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-];
-
-var pac = {
-  x:10, y:9, dx:1, dy:0, nextDx:1, nextDy:0,
-  mouth:0, mouthDir:1, score:0, lives:3,
-  running:false, loop:null, maze:[], powerMode:0,
-  ghosts:[]
-};
-
-var GHOST_COLORS = ['#fd000d','#2c5969','#7c8947','#e38121'];
-var GHOST_LABELS = ['Miete','Abo','Impulse','Steuern'];
-
-function initPac() {
-  var canvas = document.getElementById('pac-canvas');
-  if (!canvas) return;
-  pac.maze = PAC_MAZE_TPL.map(function(r){ return r.slice(); });
-  pac.x=10; pac.y=9; pac.dx=1; pac.dy=0; pac.nextDx=1; pac.nextDy=0;
-  pac.score=0; pac.lives=3; pac.powerMode=0; pac.running=true;
-  pac.mouth=0; pac.mouthDir=1;
-  pac.ghosts = [
-    {x:9,  y:7, dx:1, dy:0, color:GHOST_COLORS[0], lbl:GHOST_LABELS[0], scared:false},
-    {x:11, y:7, dx:-1,dy:0, color:GHOST_COLORS[1], lbl:GHOST_LABELS[1], scared:false},
-    {x:9,  y:6, dx:0, dy:1, color:GHOST_COLORS[2], lbl:GHOST_LABELS[2], scared:false},
-    {x:11, y:6, dx:0, dy:-1,color:GHOST_COLORS[3], lbl:GHOST_LABELS[3], scared:false},
-  ];
-  document.getElementById('pac-score').textContent = 0;
-  document.getElementById('pac-lives').textContent = 3;
-  clearInterval(pac.loop);
-  pac.loop = setInterval(tickPac, 180);
-}
-
-function pacDir(dx, dy) {
-  pac.nextDx = dx; pac.nextDy = dy;
-  if (!pac.running) initPac();
-}
-
-function canMove(maze, x, y) {
-  if (y < 0 || y >= PAC_ROWS) return false;
-  var nx = (x + PAC_COLS) % PAC_COLS;
-  return maze[y][nx] !== 0;
-}
-
-function tickPac() {
-  var canvas = document.getElementById('pac-canvas');
-  if (!canvas || !pac.running) return;
-  var ctx = canvas.getContext('2d');
-
-  // Try next direction first
-  if (canMove(pac.maze, pac.x + pac.nextDx, pac.y + pac.nextDy)) {
-    pac.dx = pac.nextDx; pac.dy = pac.nextDy;
+  // Habit Tracker — check week reset
+  var week = thisWeekStr();
+  if (state.monthlyHabitWeek !== week) {
+    state.monthlyHabitDone = [false, false, false, false, false];
+    state.monthlyHabitWeek = week;
+    save();
   }
-  // Move pac
-  if (canMove(pac.maze, pac.x + pac.dx, pac.y + pac.dy)) {
-    pac.x = ((pac.x + pac.dx) + PAC_COLS) % PAC_COLS;
-    pac.y = ((pac.y + pac.dy) + PAC_ROWS) % PAC_ROWS;
+  var habitsEl = document.getElementById('adult-habits-list');
+  var habitBar = document.getElementById('adult-habit-bar');
+  var habitLabel = document.getElementById('adult-habit-progress-label');
+  var habitDoneMsg = document.getElementById('adult-habit-done-msg');
+  var doneCnt = state.monthlyHabitDone.filter(Boolean).length;
+  if (habitsEl) {
+    habitsEl.innerHTML = ADULT_HABITS.map(function(h, i) {
+      var checked = state.monthlyHabitDone[i];
+      return '<div class="habit-row' + (checked?' done':'') + '" onclick="toggleHabit(' + i + ')">' +
+        '<div class="habit-check' + (checked?' checked':'') + '">' + (checked?'✓':'') + '</div>' +
+        '<div class="habit-label">' + h + '</div></div>';
+    }).join('');
   }
+  if (habitBar) habitBar.style.width = (doneCnt / 5 * 100) + '%';
+  if (habitLabel) habitLabel.textContent = doneCnt + '/5';
+  if (habitDoneMsg) habitDoneMsg.style.display = doneCnt === 5 ? 'block' : 'none';
 
-  // Eat
-  var cell = pac.maze[pac.y][pac.x];
-  if (cell === 1) { pac.maze[pac.y][pac.x]=2; pac.score+=10; }
-  else if (cell === 3) { pac.maze[pac.y][pac.x]=2; pac.score+=50; pac.powerMode=20; pac.ghosts.forEach(function(g){g.scared=true;}); }
-  document.getElementById('pac-score').textContent = pac.score;
-
-  // Power mode countdown
-  if (pac.powerMode > 0) { pac.powerMode--; if(pac.powerMode===0) pac.ghosts.forEach(function(g){g.scared=false;}); }
-
-  // Move ghosts
-  pac.ghosts.forEach(function(g) {
-    var dirs = [{dx:1,dy:0},{dx:-1,dy:0},{dx:0,dy:1},{dx:0,dy:-1}];
-    // Remove reverse
-    var fwd = dirs.filter(function(d){ return !(d.dx===-g.dx && d.dy===-g.dy); });
-    var valid = fwd.filter(function(d){ return canMove(pac.maze, g.x+d.dx, g.y+d.dy); });
-    if (valid.length === 0) valid = dirs.filter(function(d){ return canMove(pac.maze, g.x+d.dx, g.y+d.dy); });
-    if (valid.length > 0) {
-      var chosen = valid[Math.floor(Math.random()*valid.length)];
-      g.dx=chosen.dx; g.dy=chosen.dy;
-      g.x=((g.x+g.dx)+PAC_COLS)%PAC_COLS;
-      g.y=((g.y+g.dy)+PAC_ROWS)%PAC_ROWS;
+  // Monthly Challenge
+  var monthCh = ADULT_MONTHLY_CHALLENGES[new Date().getMonth() % ADULT_MONTHLY_CHALLENGES.length];
+  var curMonth = thisMonthStr();
+  var chDone = state.monthlyChallengeDone && state.monthlyChallengeMonth === curMonth;
+  var mchEl = document.getElementById('adult-monthly-challenge-content');
+  if (mchEl) {
+    if (chDone) {
+      mchEl.innerHTML = '<div style="padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok)">✓ Challenge angenommen! Viel Erfolg diesen Monat!</div>';
+    } else {
+      mchEl.innerHTML = '<div style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:10px">' + monthCh.text + '</div>' +
+        '<div style="display:flex;gap:8px">' +
+        '<button onclick="acceptMonthlyChallenge()" style="flex:1;padding:10px;background:var(--petrol);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Angenommen!</button>' +
+        '<button onclick="switchView(\'' + monthCh.view + '\',0)" style="flex:1;padding:10px;background:var(--bg);color:var(--petrol);border:1px solid var(--petrol);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">' + monthCh.cta + '</button>' +
+        '</div>';
     }
-    // Collision
-    if (g.x===pac.x && g.y===pac.y) {
-      if (g.scared) { g.x=9; g.y=7; g.scared=false; pac.score+=200; }
-      else { pac.lives--; document.getElementById('pac-lives').textContent=pac.lives; pac.x=10;pac.y=9;pac.dx=1;pac.dy=0; if(pac.lives<=0) endPac(ctx); }
+  }
+
+  // Scenarios — dynamisch mit echten Nutzerdaten
+  var scenEl = document.getElementById('adult-scenarios-list');
+  if (scenEl) {
+    var uLohn = state.lohn || 0;
+    var uMSpar = state.monatlichesSparbudget || 0;
+    var uAge   = state.age || 25;
+    var topGoal = state.goals && state.goals.length > 0 ? state.goals[0] : null;
+
+    // Szenario 1: +CHF 50/Mt. — Compound über 10 Jahre @ 5%
+    var extra = 50;
+    var val50 = Math.round(extra * 12 * (Math.pow(1.05, 10) - 1) / 0.05 * Math.pow(1.05, 0));
+    // vereinfacht: FV annuity = PMT * ((1+r)^n - 1)/r, monatlich approximiert als jahresbetrag
+    val50 = Math.round(extra * ((Math.pow(1 + 0.05/12, 120) - 1) / (0.05/12)));
+    var goalImpact = '';
+    if (topGoal && state.sparGuthaben < (topGoal.ziel||0)) {
+      var f0 = Math.max(0, (topGoal.ziel||0) - state.sparGuthaben);
+      var mn = uMSpar > 0 ? Math.ceil(f0 / uMSpar) : 0;
+      var mp = (uMSpar + extra) > 0 ? Math.ceil(f0 / (uMSpar + extra)) : 0;
+      if (mn - mp > 0) goalImpact = ' · «' + (topGoal.name||'Ziel') + '» ' + (mn-mp) + ' Mt. früher';
     }
-  });
 
-  // Check win
-  var dotsLeft = pac.maze.reduce(function(s,r){ return s+r.filter(function(c){return c===1||c===3;}).length; }, 0);
-  if (dotsLeft === 0) { endPac(ctx, true); return; }
+    // Szenario 2: 1 Kaffee/Tag weniger
+    var coffeeYear = 5 * 365;
+    var coffeePct = uLohn > 0 ? Math.round(coffeeYear / (uLohn * 12) * 100) : 0;
 
-  // Mouth animation
-  pac.mouth += pac.mouthDir * 15;
-  if (pac.mouth >= 45 || pac.mouth <= 0) pac.mouthDir *= -1;
+    // Szenario 3: Säule 3a — bis Rentenalter @ 4%
+    var retAge = 65;
+    var yearsLeft = Math.max(1, retAge - uAge);
+    var m3a = 200;
+    var val3a = Math.round(m3a * ((Math.pow(1 + 0.04/12, yearsLeft*12) - 1) / (0.04/12)));
 
-  drawPac(ctx);
-}
-
-function drawPac(ctx) {
-  var C = PAC_CELL;
-  // Background — Törli Liestal
-  ctx.fillStyle = '#1e2328';
-  ctx.fillRect(0,0,PAC_COLS*C,PAC_ROWS*C);
-  if (pacBgImg && pacBgImg.complete && pacBgImg.naturalWidth > 0) {
-    ctx.save();
-    ctx.globalAlpha = 0.22;
-    ctx.drawImage(pacBgImg, 0, 0, PAC_COLS*C, PAC_ROWS*C);
-    ctx.restore();
-    ctx.fillStyle = 'rgba(20,28,35,0.72)';
-    ctx.fillRect(0,0,PAC_COLS*C,PAC_ROWS*C);
+    var scenarios = [
+      {
+        icon: '💰',
+        title: '+CHF ' + extra + '/Mt. mehr sparen',
+        desc: 'In 10 Jahren bei 5% Rendite' + goalImpact + ':',
+        value: 'CHF ' + val50.toLocaleString('de-CH'),
+        cta: 'Investrechner', action: "switchView('invest',0)"
+      },
+      {
+        icon: '☕',
+        title: '1 Kaffee/Tag weniger',
+        desc: 'CHF 5/Tag = CHF ' + coffeeYear.toLocaleString('de-CH') + '/Jahr' + (coffeePct > 0 ? ' (' + coffeePct + '% deines Jahreseinkommens)' : '') + ':',
+        value: 'CHF ' + coffeeYear.toLocaleString('de-CH') + '/Jahr gespart',
+        cta: 'Budget prüfen', action: "switchView('budget',0)"
+      },
+      {
+        icon: '🏛️',
+        title: 'Säule 3a CHF ' + m3a + '/Mt.',
+        desc: yearsLeft + ' Jahre bis Rente (Ø 4% Rendite):',
+        value: 'CHF ' + val3a.toLocaleString('de-CH'),
+        cta: '3a-Simulation', action: "switchView('invest',0)"
+      },
+    ];
+    scenEl.innerHTML = scenarios.map(function(s) {
+      return '<div class="scenario-card">' +
+        '<div style="display:flex;align-items:center;gap:8px">' +
+        '<span style="font-size:24px">' + s.icon + '</span>' +
+        '<div style="font-size:13px;font-weight:700;color:var(--dark)">' + s.title + '</div></div>' +
+        '<div style="font-size:12px;color:var(--mid)">' + s.desc + '</div>' +
+        '<div class="scenario-value">' + s.value + '</div>' +
+        '<button onclick="' + s.action + '" style="padding:8px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-start">' + s.cta + '</button>' +
+        '</div>';
+    }).join('');
   }
 
-  // Maze
-  pac.maze.forEach(function(row, ry) {
-    row.forEach(function(cell, rx) {
-      var px = rx*C, py = ry*C;
-      if (cell === 0) {
-        // Wall — BLKB gradient feel
-        ctx.fillStyle = '#2c5969';
-        ctx.fillRect(px, py, C, C);
-        ctx.fillStyle = '#1a3540';
-        ctx.fillRect(px+1, py+1, C-2, C-2);
-      } else if (cell === 1) {
-        ctx.fillStyle = '#e38121';
-        ctx.beginPath();
-        ctx.arc(px+C/2, py+C/2, 2.5, 0, Math.PI*2);
-        ctx.fill();
-        // CHF label on every 5th
-        if ((rx+ry)%7===0) {
-          ctx.font = '7px sans-serif';
-          ctx.fillStyle = 'rgba(255,255,255,.4)';
-          ctx.fillText('¢', px+3, py+11);
-        }
-      } else if (cell === 3) {
-        // Power pellet — BLKB red pulsing
-        ctx.fillStyle = '#fd000d';
-        ctx.beginPath();
-        ctx.arc(px+C/2, py+C/2, 5, 0, Math.PI*2);
-        ctx.fill();
-      }
-    });
-  });
+  // Ziele im Fokus (Adult)
+  renderGoalsFocus('adult-goals-focus', true);
 
-  // Ghosts
-  pac.ghosts.forEach(function(g) {
-    var px = g.x*C, py = g.y*C;
-    ctx.fillStyle = g.scared ? '#4a5568' : g.color;
-    // Body
-    ctx.beginPath();
-    ctx.arc(px+C/2, py+C/2-1, C/2-1, Math.PI, 0, false);
-    ctx.lineTo(px+C-1, py+C-1);
-    ctx.lineTo(px+C-3, py+C-4);
-    ctx.lineTo(px+C-5, py+C-1);
-    ctx.lineTo(px+C-7, py+C-4);
-    ctx.lineTo(px+2, py+C-4);
-    ctx.lineTo(px+1, py+C-1);
-    ctx.closePath();
-    ctx.fill();
-    // Eyes
-    ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(px+5,py+6,2.5,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(px+10,py+6,2.5,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#1e2328'; ctx.beginPath(); ctx.arc(px+5+(g.scared?0:g.dx),py+6+(g.scared?0:g.dy),1.2,0,Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(px+10+(g.scared?0:g.dx),py+6+(g.scared?0:g.dy),1.2,0,Math.PI*2); ctx.fill();
-  });
+  // CH-Benchmark
+  var benchEl = document.getElementById('adult-benchmark-content');
+  if (benchEl) {
+    var userRate = state.lohn > 0 ? Math.round((state.monatlichesSparbudget / state.lohn) * 100) : 0;
+    var chAvg = 12.4;
+    var maxRate = Math.max(userRate, chAvg, 20);
+    var userPct = Math.min(100, Math.round(userRate / maxRate * 100));
+    var chPct   = Math.min(100, Math.round(chAvg / maxRate * 100));
+    var isAbove = userRate >= chAvg;
+    var msg = isAbove
+      ? '🎉 Deine Sparquote liegt über dem Schweizer Durchschnitt!'
+      : '💡 Der CH-Durchschnitt liegt bei 12.4%. Mit kleinen Anpassungen kannst du mehr sparen.';
 
-  // Pac-Man
-  var px = pac.x*C, py = pac.y*C;
-  var angle = pac.mouth * Math.PI / 180;
-  var rot = pac.dx===1?0 : pac.dx===-1?Math.PI : pac.dy===1?Math.PI/2 : -Math.PI/2;
-  ctx.save();
-  ctx.translate(px+C/2, py+C/2);
-  ctx.rotate(rot);
-  ctx.fillStyle = '#fd000d';
-  ctx.beginPath();
-  ctx.moveTo(0,0);
-  ctx.arc(0,0,C/2-1, angle, Math.PI*2-angle, false);
-  ctx.closePath();
-  ctx.fill();
-  // Eye
-  ctx.fillStyle = 'white';
-  ctx.beginPath();
-  ctx.arc(2,-4,2,0,Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-
-  // Power mode indicator
-  if (pac.powerMode > 0) {
-    ctx.fillStyle = 'rgba(253,0,13,.15)';
-    ctx.fillRect(0,0,PAC_COLS*C,PAC_ROWS*C);
-    ctx.font = 'bold 10px sans-serif';
-    ctx.fillStyle = '#fd000d';
-    ctx.textAlign = 'center';
-    ctx.fillText('POWER MODE!', PAC_COLS*C/2, 12);
-    ctx.textAlign = 'left';
+    benchEl.innerHTML = '<div style="margin-bottom:8px">' +
+      '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mid);margin-bottom:4px">' +
+      '<span>Du: <strong style="color:var(--dark)">' + userRate + '%</strong></span>' +
+      '<span>CH-Durchschnitt: <strong style="color:var(--dark)">' + chAvg + '%</strong> <span style="font-size:10px">(BFS 2023)</span></span>' +
+      '</div>' +
+      '<div style="position:relative;height:12px;background:var(--border);border-radius:6px;overflow:visible">' +
+      '<div style="position:absolute;left:0;top:0;height:100%;width:' + userPct + '%;background:' + (isAbove?'var(--ok)':'var(--amber)') + ';border-radius:6px;transition:width .5s"></div>' +
+      '<div style="position:absolute;left:' + chPct + '%;top:-4px;width:2px;height:20px;background:var(--dark);border-radius:1px"></div>' +
+      '<div style="position:absolute;left:' + chPct + '%;top:18px;font-size:10px;color:var(--mid);transform:translateX(-50%);white-space:nowrap">Ø CH 12.4%</div>' +
+      '</div>' +
+      '</div>' +
+      '<div style="font-size:12px;color:var(--mid);margin-top:28px">' + msg + '</div>';
   }
 }
 
-function endPac(ctx, win) {
-  pac.running = false;
-  clearInterval(pac.loop);
-  var cols = PAC_COLS, rows = PAC_ROWS, C = PAC_CELL;
-  ctx.fillStyle = 'rgba(0,0,0,.75)';
-  ctx.fillRect(0,0,cols*C,rows*C);
-  ctx.textAlign = 'center';
-  if (win) {
-    ctx.fillStyle = '#e38121';
-    ctx.font = 'bold 16px sans-serif';
-    ctx.fillText('GEWONNEN! 🏆', cols*C/2, rows*C/2 - 12);
-    ctx.fillStyle = '#6ee7b7';
-    ctx.font = '12px sans-serif';
-    ctx.fillText('CHF ' + pac.score + ' gespart!', cols*C/2, rows*C/2 + 8);
+/* ─── Main updateGamification (replaces old function) ───────── */
+function updateGamification() {
+  checkStreak();
+  renderYouthGamification();
+  renderAdultGamification();
+}
+
+/* ── Story-Szenario (Youth) ─────────────────────────────────────── */
+function answerStoryScenario(choiceIdx) {
+  var today = todayStr();
+  if (state.storyDate === today) return;
+  var sIdx = dayOfYear() % YOUTH_STORIES.length;
+  var choice = YOUTH_STORIES[sIdx].choices[choiceIdx];
+  state.storyDate = today;
+  state.storyChoice = choiceIdx;
+  state.xp = (state.xp || 0) + choice.xp;
+  save();
+  renderYouthGamification();
+  showToast('+' + choice.xp + ' XP! ' + (choice.best ? '🏆 Beste Entscheidung!' : ''));
+}
+
+function renderYouthStoryScenario(el) {
+  var today = todayStr();
+  var sIdx = dayOfYear() % YOUTH_STORIES.length;
+  var story = YOUTH_STORIES[sIdx];
+  var g = state.goals && state.goals.length > 0 ? state.goals[0] : null;
+  var answered = state.storyDate === today;
+  if (answered) {
+    var ch = story.choices[state.storyChoice];
+    el.innerHTML =
+      '<div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">' + story.situation(g) + '</div>' +
+      '<div style="font-size:12px;color:var(--mid);margin-bottom:8px">' + story.question + '</div>' +
+      '<div style="padding:10px;background:' + (ch.best ? 'var(--ok-l)' : 'var(--warn-l)') + ';border-radius:8px;margin-bottom:6px">' +
+        '<div style="font-size:13px;font-weight:700;color:' + (ch.best ? 'var(--ok)' : 'var(--amber)') + '">' + ch.text + '</div>' +
+        '<div style="font-size:12px;color:var(--mid);margin-top:4px">' + ch.result + '</div>' +
+        '<div style="font-size:11px;font-weight:700;color:' + (ch.best ? 'var(--ok)' : 'var(--amber)') + ';margin-top:4px">+' + ch.xp + ' XP erhalten</div>' +
+      '</div>' +
+      '<div style="font-size:11px;color:var(--light);text-align:center">Nächste Entscheidung morgen!</div>';
   } else {
-    ctx.fillStyle = '#fd000d';
-    ctx.font = 'bold 15px sans-serif';
-    ctx.fillText('Game Over!', cols*C/2, rows*C/2 - 12);
-    ctx.fillStyle = 'rgba(255,255,255,.6)';
-    ctx.font = '11px sans-serif';
-    ctx.fillText('Score: ' + pac.score + ' · Neues Spiel unten', cols*C/2, rows*C/2 + 8);
-    // MoneyHaxx Tipp
-    var tips = ['Easy-10: Spare zuerst!','Dini-Mieti: Max. 25%','Null-Schulden: Steuern früh zahlen'];
-    ctx.fillStyle = '#e38121';
-    ctx.font = 'italic 10px sans-serif';
-    ctx.fillText('💡 ' + tips[Math.floor(Math.random()*tips.length)], cols*C/2, rows*C/2 + 26);
+    var choicesHtml = story.choices.map(function(c, i) {
+      return '<button onclick="answerStoryScenario(' + i + ')" style="display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border-radius:8px;border:1px solid var(--border);background:var(--bg);font-size:13px;color:var(--dark);cursor:pointer;-webkit-tap-highlight-color:transparent">' + c.text + '</button>';
+    }).join('');
+    el.innerHTML =
+      '<div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">' + story.situation(g) + '</div>' +
+      '<div style="font-size:12px;color:var(--mid);margin-bottom:10px">' + story.question + '</div>' +
+      choicesHtml +
+      '<div style="font-size:11px;color:var(--light);margin-top:2px">Jede Entscheidung bringt XP — beste Wahl = 20 XP!</div>';
   }
-  ctx.textAlign = 'left';
-  updateGamification();
 }
 
-function endSnake(ctx, cols, rows) {
-  snake.running = false;
-  clearInterval(snake.loop);
-  ctx.fillStyle = 'rgba(0,0,0,.7)';
-  ctx.fillRect(0,0,cols*CELL,rows*CELL);
-  ctx.fillStyle = '#fff';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('Game Over! Score: ' + snake.score, cols*CELL/2, rows*CELL/2 - 10);
-  ctx.font = '12px sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,.6)';
-  ctx.fillText('Neues Spiel → Button unten', cols*CELL/2, rows*CELL/2 + 14);
+/* ── Ziele im Fokus (Youth + Adult) ─────────────────────────────── */
+function renderGoalsFocus(elId, isAdult) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  var goals = state.goals || [];
+  var mSpar = state.monatlichesSparbudget || 0;
+
+  if (goals.length === 0) {
+    el.innerHTML =
+      '<div style="text-align:center;padding:16px 0;color:var(--mid)">' +
+      '<div style="font-size:28px;margin-bottom:8px">🎯</div>' +
+      '<div style="font-size:13px">Noch keine Sparziele gesetzt.</div>' +
+      '<button onclick="switchView(\'goals\',0)" style="margin-top:10px;padding:8px 16px;background:' + (isAdult?'var(--petrol)':'var(--red)') + ';color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Erstes Ziel anlegen →</button>' +
+      '</div>';
+    return;
+  }
+
+  var colors = ['var(--red)', 'var(--amber)', 'var(--petrol)'];
+  var html = '';
+  var cumulative = 0;
+  goals.slice(0, 3).forEach(function(g, i) {
+    var target    = g.ziel || 0;
+    var cumulSum  = cumulative + target;
+    var available = Math.max(0, state.sparGuthaben - cumulative);
+    var allocated = Math.min(available, target);
+    var fehlend   = Math.max(0, cumulSum - state.sparGuthaben);
+    var pct       = target > 0 ? Math.min(100, Math.round(allocated / target * 100)) : 0;
+    var done      = pct >= 100 && target > 0;
+    var months    = fehlend > 0 && mSpar > 0 ? Math.ceil(fehlend / mSpar) : 0;
+    var timeStr   = done ? '✅ Erreicht!' : months === 0 ? '—' :
+      months < 12 ? '~' + months + ' Mt.' :
+      '~' + Math.floor(months/12) + ' J.' + (months%12 > 0 ? ' ' + months%12 + ' Mt.' : '');
+    var col = colors[i] || 'var(--mid)';
+    html +=
+      '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">' +
+      '<div style="width:26px;height:26px;border-radius:50%;background:' + col + ';color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">P' + (i+1) + '</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-size:12px;font-weight:700;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (g.emoji||'🎯') + ' ' + (g.name||'Ziel') + '</div>' +
+        '<div style="height:4px;background:var(--border);border-radius:2px;margin:3px 0;overflow:hidden">' +
+          '<div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:2px;transition:width .4s"></div>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--light)">CHF ' + allocated.toLocaleString('de-CH') + ' / ' + target.toLocaleString('de-CH') + '</div>' +
+      '</div>' +
+      '<div style="text-align:right;flex-shrink:0">' +
+        '<div style="font-size:12px;font-weight:700;color:' + col + '">' + timeStr + '</div>' +
+        (!done && fehlend > 0 ? '<div style="font-size:10px;color:var(--light)">CHF ' + fehlend.toLocaleString('de-CH') + ' fehlen</div>' : '') +
+      '</div>' +
+      '</div>';
+    cumulative += target;
+  });
+
+  // «+CHF 50 Effekt» auf P1-Ziel
+  if (mSpar > 0 && goals[0] && state.sparGuthaben < (goals[0].ziel||0)) {
+    var g0 = goals[0];
+    var f0 = Math.max(0, (g0.ziel||0) - state.sparGuthaben);
+    var mnow  = Math.ceil(f0 / mSpar);
+    var mplus = Math.ceil(f0 / (mSpar + 50));
+    var saved = mnow - mplus;
+    if (saved > 0) {
+      html += '<div style="margin-top:10px;padding:10px;background:var(--ok-l);border-radius:8px;border:1px solid rgba(22,163,74,.15)">' +
+        '<div style="font-size:12px;font-weight:700;color:var(--ok)">💡 Wenn du CHF 50/Mt. mehr sparst:</div>' +
+        '<div style="font-size:12px;color:var(--ok);margin-top:2px">«' + (g0.name||'Ziel') + '» ' + saved + ' ' + (saved === 1 ? 'Monat' : 'Monate') + ' früher erreicht!</div>' +
+        '</div>';
+    }
+  }
+
+  // Adult: CHF-100k-Milestone
+  if (isAdult && mSpar > 0) {
+    var m100k = Math.ceil(100000 / mSpar);
+    var y100k = Math.floor(m100k / 12);
+    var r100k = m100k % 12;
+    var p100k = y100k > 0 ? y100k + ' J.' + (r100k > 0 ? ' ' + r100k + ' Mt.' : '') : r100k + ' Mt.';
+    html += '<div style="margin-top:10px;padding:10px;background:#e8f4f8;border-radius:8px">' +
+      '<div style="font-size:12px;font-weight:700;color:var(--petrol)">🏦 Dein Weg zu CHF 100\'000</div>' +
+      '<div style="font-size:13px;font-weight:800;color:var(--dark);margin-top:2px">Bei CHF ' + mSpar.toLocaleString('de-CH') + '/Mt.: ' + p100k + '</div>' +
+      '<div style="font-size:11px;color:var(--mid);margin-top:2px">Mit ~5% Rendite im Investrechner deutlich schneller.</div>' +
+      '<button onclick="switchView(\'invest\',0)" style="margin-top:8px;padding:7px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">Simulation öffnen →</button>' +
+      '</div>';
+  }
+
+  var btnColor = isAdult ? 'var(--petrol)' : 'var(--red)';
+  html += '<button onclick="switchView(\'goals\',0)" style="width:100%;margin-top:10px;padding:9px;background:transparent;color:' + btnColor + ';border:1px solid ' + btnColor + ';border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">Alle Ziele verwalten →</button>';
+  el.innerHTML = html;
 }
+
 
 /* ================================================================
    API ABSTRACTION LAYER — BLKB Avaloq / ACP Integration
