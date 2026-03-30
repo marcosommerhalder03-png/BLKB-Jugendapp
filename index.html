@@ -7,7 +7,7 @@
 <title>BLKB Jugend – Was morgen zählt</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#fd000d">
-<link rel="apple-touch-icon" href="img/icon-512.svg">
+<link rel="apple-touch-icon" href="img/icon-512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BLKB Jugend">
@@ -20,13 +20,11 @@
   --red-h:  #b80009;
   --red-l:  #fff0f0;
   --dark:   #1e2328;
-  --dark2:  #2a373f;
   --slate:  #4a5568;
   --mid:    #6b7280;
   --light:  #9ca3af;
   --border: #e2e8f0;
   --bg:     #f7f8fa;
-  --white:  #ffffff;
   --petrol: #2c5969;
   --olive:  #7c8947;
   --amber:  #e38121;
@@ -36,7 +34,6 @@
 
   --r: 10px;
   --shadow: 0 2px 12px rgba(0,0,0,.08);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
   --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -1911,7 +1908,7 @@ window.addEventListener('load', function(){
           <div class="hdr-sub">Wie soll dein Geld für dich arbeiten?</div>
         </div>
         <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
-          <img src="img/jugend4.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 25%">
+          <img src="img/jugend4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 25%">
         </div>
 
         <!-- Lohn Input -->
@@ -5354,26 +5351,11 @@ function api_getBPAccounts() {
         name: 'Jugendkonto',      type: 'YOUTH',      balance: 1247.50, currency: 'CHF' },
       { accountId: 'SAV-001', iban: 'CH56 0785 1234 5678 9001 0',
         name: 'Sparkonto Jugend', type: 'SAVINGS',     balance: 2500.00, currency: 'CHF' },
-      // 3a auskommentiert = kein 3a-Konto vorhanden (Saldo = 0)
-      // { accountId: '3A-001', iban: '',
-      //   name: 'Säule 3a BLKB', type: 'SAVINGS_3A', balance: 4800.00, currency: 'CHF' },
+
     ];
   });
 }
 
-// Legacy-Stubs bleiben für Rückwärtskompatibilität
-function api_getKontostand() {
-  return api_getBPAccounts().then(function(accs) {
-    var a = accs.find(function(x){ return x.type==='YOUTH'||x.type==='PRIVATE'; });
-    return a || { iban: '—', balance: 0, currency: 'CHF' };
-  });
-}
-
-function api_getSparkonten() {
-  return api_getBPAccounts().then(function(accs) {
-    return accs.filter(function(x){ return x.type==='SAVINGS'; });
-  });
-}
 
 /* ----------------------------------------------------------------
    3. TRANSAKTIONEN (letzte N Buchungen)

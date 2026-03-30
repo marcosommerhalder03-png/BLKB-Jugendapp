@@ -1,34 +1,18 @@
-const CACHE = 'blkb-jugend-v12';
-const FILES = [
-  './',
+const CACHE     = 'blkb-jugend-v13';
+const IMG_CACHE = 'blkb-jugend-img-v1';
+
+// Pre-cache only shell + manifest (small, instant offline)
+const PRECACHE = [
   './index.html',
   './manifest.json',
-  './img/logo.svg',
   './img/logo-white.svg',
-  './img/hero.jpg',
+  './img/logo.svg',
   './img/icon-192.png',
-  './img/icon-512.png',
-  './img/icon-512.svg',
-  './img/jugend1.jpg',
-  './img/jugend2.jpg',
-  './img/jugend3.jpg',
-  './img/jugend4.png',
-  './img/jugend5.jpg',
-  './img/jugend6.jpg',
-  './img/liestal-panorama.jpg',
-  './img/liestal-toerli.jpg',
-  './img/liestal-toerli2.jpg',
-  './img/liestal-turm.jpg',
-  './img/fun-games.jpg',
-  './img/fun-games2.jpg'
+  './img/icon-512.png'
 ];
 
 self.addEventListener('install', function(e) {
-  e.waitUntil(
-    caches.open(CACHE).then(function(cache) {
-      return cache.addAll(FILES);
-    })
-  );
+  e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(PRECACHE); }));
   self.skipWaiting();
 });
 
@@ -36,7 +20,7 @@ self.addEventListener('activate', function(e) {
   e.waitUntil(
     caches.keys().then(function(keys) {
       return Promise.all(
-        keys.filter(function(k) { return k !== CACHE; })
+        keys.filter(function(k) { return k !== CACHE && k !== IMG_CACHE; })
             .map(function(k) { return caches.delete(k); })
       );
     })
@@ -45,9 +29,34 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
+  var url = e.request.url;
+
+  // Images → cache-first (serve instantly, cache on first hit)
+  if (/\.(jpg|jpeg|png|svg|gif|webp)(\?|$)/i.test(url)) {
+    e.respondWith(
+      caches.open(IMG_CACHE).then(function(cache) {
+        return cache.match(e.request).then(function(cached) {
+          if (cached) return cached;
+          return fetch(e.request).then(function(res) {
+            if (res.ok) cache.put(e.request, res.clone());
+            return res;
+          });
+        });
+      })
+    );
+    return;
+  }
+
+  // HTML, JS, CSS, manifest → network-first (always fresh, offline fallback)
   e.respondWith(
-    caches.match(e.request).then(function(cached) {
-      return cached || fetch(e.request);
+    fetch(e.request).then(function(res) {
+      if (res.ok) {
+        var clone = res.clone();
+        caches.open(CACHE).then(function(c) { c.put(e.request, clone); });
+      }
+      return res;
+    }).catch(function() {
+      return caches.match(e.request);
     })
   );
 });
