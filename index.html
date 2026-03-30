@@ -1731,21 +1731,19 @@ window.addEventListener('load', function(){
         <div style="padding:14px 16px 6px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
             <span style="font-size:12px;font-weight:700;color:var(--dark)">Dein Weg · Alter <span id="home-age-label">16</span></span>
-            <span style="font-size:10px;color:var(--light)">12 bis 30</span>
+            <div style="display:flex;align-items:center;gap:6px">
+              <input type="number" id="age-input" min="12" max="30" value="16"
+                style="display:none;width:54px;padding:3px 6px;border:1.5px solid var(--red);border-radius:6px;font-size:13px;font-weight:700;text-align:center;font-family:var(--font)"
+                onchange="setAge(Math.min(30,Math.max(12,parseInt(this.value)||16)));this.style.display='none';document.getElementById('age-edit-btn').style.display='inline-flex'"
+                onblur="this.style.display='none';document.getElementById('age-edit-btn').style.display='inline-flex'">
+              <button id="age-edit-btn" onclick="var i=document.getElementById('age-input');i.value=state.age;i.style.display='inline-block';this.style.display='none';i.focus();i.select()"
+                style="display:inline-flex;align-items:center;gap:3px;padding:3px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--mid);cursor:pointer;font-family:var(--font)">
+                <i class="ti ti-pencil" style="font-size:11px"></i> Ändern
+              </button>
+            </div>
           </div>
           <div class="lifecycle-track">
             <div class="lifecycle-fill" id="home-lifecycle-fill" style="width:22%"></div>
-          </div>
-          <div style="margin-top:10px">
-            <input type="range" id="age-slider" min="12" max="30" step="1" value="16"
-              oninput="setAge(parseInt(this.value))"
-              style="width:100%;accent-color:var(--red)">
-            <div style="display:flex;justify-content:space-between;margin-top:3px">
-              <span style="font-size:10px;color:var(--light)">12</span>
-              <span style="font-size:10px;color:var(--light)">18</span>
-              <span style="font-size:10px;color:var(--light)">24</span>
-              <span style="font-size:10px;color:var(--light)">30</span>
-            </div>
           </div>
         </div>
 
@@ -3522,10 +3520,6 @@ function getStage(age) {
 
 function setAge(age) {
   state.age = age;
-
-  // Sync slider
-  var slider = document.getElementById('age-slider');
-  if (slider && parseInt(slider.value) !== age) slider.value = age;
 
   var pct = ((age - 12) / (30 - 12)) * 100;
   document.getElementById('home-lifecycle-fill').style.width = pct + '%';
@@ -5539,9 +5533,6 @@ function init() {
     }
 
     // Set age slider
-    var slider = document.getElementById('age-slider');
-    if (slider) slider.value = state.age;
-
     // Init spar input
     var sparIn = document.getElementById('goals-spar-input');
     var sparDsp = document.getElementById('goals-spar-display');
