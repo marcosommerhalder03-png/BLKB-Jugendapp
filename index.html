@@ -1128,74 +1128,76 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: var(--r);
   margin: 0 16px 8px;
   box-shadow: var(--shadow);
-  padding: 12px 14px;
+  overflow: hidden;
 }
 
 .budget-cat-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 11px 14px 8px;
 }
 
 .budget-cat-icon { font-size: 18px; flex-shrink: 0; }
 
-.budget-cat-info { flex: 1; }
+.budget-cat-info { flex: 1; min-width: 0; }
 .budget-cat-name { font-size: 13px; font-weight: 600; color: var(--dark); }
 .budget-cat-hint { font-size: 11px; color: var(--light); }
 
-.budget-cat-right {
+.budget-cat-inputs {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  align-items: center;
+  gap: 5px;
   flex-shrink: 0;
 }
 
-.budget-cat-chf { font-size: 13px; font-weight: 700; color: var(--dark); }
-
-/* editable pct input */
-.budget-pct-wrap {
+.budget-field {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 5px;
+  transition: border-color .15s;
+}
+.budget-field:focus-within { border-color: var(--red); background: white; }
+
+.budget-field-lbl {
+  font-size: 10px;
+  color: var(--mid);
+  font-weight: 600;
+  user-select: none;
 }
 
-.budget-pct-input {
-  width: 38px;
-  padding: 2px 4px;
-  border: 1.5px solid var(--border);
-  border-radius: 5px;
+.budget-field input {
+  width: 44px;
+  border: none;
+  background: transparent;
   font-size: 13px;
   font-weight: 700;
   color: var(--dark);
-  background: var(--bg);
   text-align: right;
   font-family: var(--font);
   outline: none;
-  transition: border-color .15s;
+  padding: 0;
 }
+.budget-field.chf-field input { width: 52px; }
 
-.budget-pct-input:focus {
-  border-color: var(--red);
-  background: white;
-}
-
-.budget-pct-symbol {
-  font-size: 12px;
-  color: var(--mid);
+.budget-divider {
+  font-size: 11px;
+  color: var(--border);
+  font-weight: 300;
 }
 
 .budget-cat-bar {
-  height: 4px;
+  height: 5px;
   background: var(--border);
-  border-radius: 2px;
-  margin-top: 8px;
   overflow: hidden;
 }
 
 .budget-cat-fill {
   height: 100%;
-  border-radius: 2px;
   transition: width .4s;
 }
 
@@ -4137,14 +4139,19 @@ function calcBudget() {
           '<div class="budget-cat-name">' + c.name + '</div>' +
           '<div class="budget-cat-hint">' + c.hint + '</div>' +
         '</div>' +
-        '<div class="budget-cat-right">' +
-          '<div class="budget-cat-chf">CHF ' + fmtChf(chf) + '</div>' +
-          '<div class="budget-pct-wrap">' +
-            '<input class="budget-pct-input" type="number" min="0" max="100" value="' + (c.pct || 0) + '"' +
-            ' data-idx="' + i + '"' +
-            ' oninput="onPctChange(this)"' +
-            ' onfocus="this.select()">' +
-            '<span class="budget-pct-symbol">%</span>' +
+        '<div class="budget-cat-inputs">' +
+          '<div class="budget-field chf-field">' +
+            '<span class="budget-field-lbl">CHF</span>' +
+            '<input type="number" min="0" max="' + lohn + '" value="' + chf + '"' +
+            ' data-idx="' + i + '" data-type="chf"' +
+            ' oninput="onBudgetInput(this)" onfocus="this.select()">' +
+          '</div>' +
+          '<span class="budget-divider">|</span>' +
+          '<div class="budget-field">' +
+            '<input type="number" min="0" max="100" value="' + (c.pct || 0) + '"' +
+            ' data-idx="' + i + '" data-type="pct"' +
+            ' oninput="onBudgetInput(this)" onfocus="this.select()">' +
+            '<span class="budget-field-lbl">%</span>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -4158,10 +4165,17 @@ function calcBudget() {
   save();
 }
 
-function onPctChange(input) {
+function onBudgetInput(input) {
   var i = parseInt(input.dataset.idx);
-  var val = Math.max(0, Math.min(100, parseInt(input.value) || 0));
-  budgetCats[i].pct = val;
+  var type = input.dataset.type;
+  var lohn = state.lohn || 3200;
+  if (type === 'pct') {
+    var pct = Math.max(0, Math.min(100, parseInt(input.value) || 0));
+    budgetCats[i].pct = pct;
+  } else {
+    var chf = Math.max(0, Math.min(lohn, parseInt(input.value) || 0));
+    budgetCats[i].pct = lohn > 0 ? Math.round(chf / lohn * 100) : 0;
+  }
   calcBudget();
 }
 
