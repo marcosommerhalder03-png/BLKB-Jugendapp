@@ -17,23 +17,25 @@
 ============================================= */
 :root {
   --red:    #fd000d;
-  --red-h:  #b80009;
-  --red-l:  #fff0f0;
-  --dark:   #1e2328;
-  --slate:  #4a5568;
-  --mid:    #6b7280;
-  --light:  #9ca3af;
-  --border: #e2e8f0;
-  --bg:     #f7f8fa;
-  --petrol: #2c5969;
-  --olive:  #7c8947;
-  --amber:  #e38121;
+  --red-h:  #c5000a;
+  --red-l:  #fff0f1;
+  --dark:   #0f1923;
+  --slate:  #3d4a5c;
+  --mid:    #64748b;
+  --light:  #94a3b8;
+  --border: #e8ecf4;
+  --bg:     #f1f4f9;
+  --petrol: #0d4f6b;
+  --olive:  #4d6820;
+  --amber:  #d97706;
   --ok:     #16a34a;
-  --ok-l:   #f0fdf4;
-  --warn-l: #fffbeb;
+  --ok-l:   #ecfdf5;
+  --warn-l: #fefce8;
 
-  --r: 10px;
-  --shadow: 0 2px 12px rgba(0,0,0,.08);
+  --r:      16px;
+  --r-sm:   10px;
+  --shadow: 0 4px 24px rgba(15,25,35,.10);
+  --shadow-sm: 0 2px 8px rgba(15,25,35,.06);
   --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -125,45 +127,46 @@ body {
 }
 
 .hdr.red-bg {
-  background: linear-gradient(160deg, var(--red) 0%, #a80009 100%);
+  background: linear-gradient(150deg, #ff0012 0%, #d4000f 55%, #9e000b 100%);
 }
 
 .hdr.dark-bg {
-  background: linear-gradient(160deg, var(--dark) 0%, #2a373f 100%);
+  background: linear-gradient(150deg, #1a2535 0%, #0f1923 100%);
 }
 
 .hdr.petrol-bg {
-  background: linear-gradient(160deg, var(--petrol) 0%, #1a3540 100%);
+  background: linear-gradient(150deg, #0f6384 0%, #083d55 60%, #051e2a 100%);
 }
 
 .hdr.olive-bg {
-  background: linear-gradient(160deg, var(--olive) 0%, #4f5c2a 100%);
+  background: linear-gradient(150deg, #5e8026 0%, #3a5016 100%);
 }
 
 .hdr.amber-bg {
-  background: linear-gradient(160deg, var(--amber) 0%, #b5640d 100%);
+  background: linear-gradient(150deg, #f59e0b 0%, #b45309 100%);
 }
 
 .hdr-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .6px;
-  opacity: .7;
+  letter-spacing: 1px;
+  opacity: .65;
   color: #fff;
 }
 
 .hdr-title {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   color: #fff;
   line-height: 1.1;
+  letter-spacing: -.3px;
 }
 
 .hdr-sub {
   font-size: 13px;
-  color: rgba(255,255,255,.72);
-  margin-top: 2px;
+  color: rgba(255,255,255,.65);
+  margin-top: 3px;
 }
 
 /* =============================================
@@ -172,13 +175,14 @@ body {
 .bottom-nav {
   flex-shrink: 0;
   width: 100%;
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0,0,0,.06);
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
-  padding-top: 10px;
+  padding-top: 8px;
   padding-bottom: max(env(safe-area-inset-bottom), 8px);
   z-index: 200;
 }
@@ -193,40 +197,59 @@ body {
   cursor: pointer;
   padding: 0;
   font-family: var(--font);
-  transition: transform .1s;
+  transition: transform .15s;
   flex: 1;
+  gap: 3px;
 }
 
-.nav-btn:active { transform: scale(.92); }
+.nav-btn:active { transform: scale(.88); }
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 28px;
+  border-radius: 14px;
+  transition: background .2s;
+}
 
 .nav-icon {
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1;
-  filter: grayscale(1);
-  opacity: .35;
-  transition: all .15s;
+  color: var(--light);
+  transition: all .2s;
 }
 
 .nav-label {
-  display: none;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--light);
+  transition: color .2s;
+  display: block;
+}
+
+.nav-btn.active .nav-pill {
+  background: var(--red-l);
 }
 
 .nav-btn.active .nav-icon {
-  filter: none;
-  opacity: 1;
+  color: var(--red);
 }
 
 .nav-btn.active .nav-label {
   color: var(--red);
+  font-weight: 700;
 }
 
 /* =============================================
    CARDS
 ============================================= */
 .card {
-  background: var(--white);
+  background: #fff;
   border-radius: var(--r);
   box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,.04);
   margin: 0 16px 12px;
   overflow: hidden;
 }
@@ -237,50 +260,53 @@ body {
 
 .section-title {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: .6px;
+  letter-spacing: .9px;
   color: var(--mid);
-  padding: 16px 16px 6px;
+  padding: 18px 16px 8px;
 }
 
 /* =============================================
    HOME SCREEN
 ============================================= */
 .balance-card {
-  background: linear-gradient(135deg, var(--dark) 0%, #2a373f 100%);
+  background: linear-gradient(150deg, #1a2535 0%, #0f1923 100%);
   margin: -1px 0 0;
-  padding: 20px;
+  padding: 22px 20px 20px;
   color: white;
 }
 
-.bal-label { font-size: 12px; opacity: .6; margin-bottom: 4px; }
-.bal-amount { font-size: 38px; font-weight: 700; letter-spacing: -.5px; }
-.bal-account { font-size: 12px; opacity: .55; margin-top: 4px; }
+.bal-label { font-size: 11px; font-weight: 600; opacity: .5; margin-bottom: 3px; text-transform: uppercase; letter-spacing: .5px; }
+.bal-amount { font-size: 40px; font-weight: 800; letter-spacing: -1px; }
+.bal-account { font-size: 12px; opacity: .45; margin-top: 3px; }
 
 .bal-row {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   margin-top: 16px;
 }
 
 .bal-stat {
   flex: 1;
-  background: rgba(255,255,255,.08);
-  border-radius: 8px;
+  background: rgba(255,255,255,.07);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
   padding: 10px 12px;
 }
 
 .bal-stat-val {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   color: #fff;
+  letter-spacing: -.3px;
 }
 
 .bal-stat-lbl {
   font-size: 10px;
-  color: rgba(255,255,255,.5);
-  margin-top: 1px;
+  color: rgba(255,255,255,.4);
+  margin-top: 2px;
+  font-weight: 600;
 }
 
 /* Age Lifecycle */
@@ -369,21 +395,31 @@ body {
 .quick-card {
   background: white;
   border-radius: var(--r);
-  padding: 14px;
+  padding: 16px 14px;
   cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: transform .1s;
-  border: 1.5px solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s, box-shadow .15s;
+  border: 1px solid rgba(0,0,0,.05);
 }
 
-.quick-card:active { transform: scale(.97); }
+.quick-card:active { transform: scale(.95); box-shadow: none; }
 
-.quick-card.red { border-color: var(--red-l); }
-.quick-card.petrol { border-color: #e0eef2; }
+.quick-card.red { background: linear-gradient(145deg, #fff5f5 0%, #fff 60%); border-color: rgba(253,0,13,.1); }
+.quick-card.petrol { background: linear-gradient(145deg, #f0f7fa 0%, #fff 60%); border-color: rgba(13,79,107,.1); }
 
-.quick-icon { font-size: 22px; margin-bottom: 6px; }
+.quick-icon {
+  font-size: 26px;
+  margin-bottom: 8px;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  background: var(--bg);
+}
+.quick-card.red .quick-icon { background: var(--red-l); }
+.quick-card.petrol .quick-icon { background: #e8f4f8; }
+
 .quick-title { font-size: 13px; font-weight: 700; color: var(--dark); }
-.quick-sub { font-size: 11px; color: var(--light); margin-top: 1px; }
+.quick-sub { font-size: 11px; color: var(--light); margin-top: 2px; }
 
 /* Tip card */
 .tip-card {
@@ -500,17 +536,18 @@ body {
   border-radius: 0;
 }
 .gam-hdr-youth {
-  background: linear-gradient(135deg, #1e2328 0%, #b80009 60%, #fd000d 100%);
+  background: linear-gradient(135deg, #1a0a0b 0%, #8c0008 50%, #fd000d 100%);
 }
 .gam-hdr-adult {
-  background: linear-gradient(135deg, #1e2328 0%, #2a373f 60%, #2c5969 100%);
+  background: linear-gradient(135deg, #0a1520 0%, #083d55 55%, #0d6384 100%);
 }
 .gam-card {
   margin: 12px 16px 0;
   background: white;
   border-radius: var(--r);
-  box-shadow: var(--shadow);
-  padding: 14px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,.04);
+  padding: 16px;
 }
 .gam-section-label {
   font-size: 11px;
@@ -1077,30 +1114,31 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Investment calculator */
 .invest-box {
-  background: linear-gradient(135deg, #1e2328 0%, #2a373f 100%);
+  background: linear-gradient(150deg, #1a2535 0%, #0f1923 100%);
   margin: 0 16px 12px;
   border-radius: var(--r);
-  padding: 16px;
+  padding: 18px;
   color: white;
 }
 
 .invest-title {
-  font-size: 12px;
-  opacity: .6;
+  font-size: 10px;
+  font-weight: 700;
+  opacity: .55;
   text-transform: uppercase;
-  letter-spacing: .5px;
-  margin-bottom: 4px;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
 }
 
 .invest-amount {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -.5px;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -1px;
 }
 
 .invest-sub {
   font-size: 12px;
-  opacity: .55;
+  opacity: .5;
   margin-top: 4px;
   line-height: 1.5;
 }
@@ -1113,14 +1151,15 @@ input[type="range"]::-webkit-slider-thumb {
 
 .invest-stat {
   flex: 1;
-  background: rgba(255,255,255,.08);
-  border-radius: 8px;
-  padding: 8px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 10px;
   text-align: center;
 }
 
-.invest-stat-val { font-size: 14px; font-weight: 700; }
-.invest-stat-lbl { font-size: 10px; opacity: .5; margin-top: 2px; }
+.invest-stat-val { font-size: 15px; font-weight: 800; letter-spacing: -.3px; }
+.invest-stat-lbl { font-size: 10px; font-weight: 600; opacity: .45; margin-top: 3px; }
 
 /* Budget categories */
 .budget-cat {
@@ -1201,12 +1240,12 @@ input[type="range"]::-webkit-slider-thumb {
   transition: width .4s;
 }
 
-.fill-red   { background: var(--red); }
-.fill-petrol { background: var(--petrol); }
-.fill-ok    { background: var(--ok); }
-.fill-amber { background: var(--amber); }
-.fill-olive { background: var(--olive); }
-.fill-slate { background: var(--slate); }
+.fill-red    { background: linear-gradient(90deg, #ff4d4d, #fd000d); }
+.fill-petrol { background: linear-gradient(90deg, #1a8ab0, #0d4f6b); }
+.fill-ok     { background: linear-gradient(90deg, #34d96a, #16a34a); }
+.fill-amber  { background: linear-gradient(90deg, #fbbf24, #d97706); }
+.fill-olive  { background: linear-gradient(90deg, #84cc16, #4d6820); }
+.fill-slate  { background: linear-gradient(90deg, #64748b, #3d4a5c); }
 
 /* Budget sum bar */
 .budget-sum-bar {
@@ -2720,23 +2759,23 @@ window.addEventListener('load', function(){
     <!-- Youth Bottom Nav -->
     <nav class="bottom-nav youth-only" id="youth-nav">
       <button class="nav-btn active" id="ynav0" onclick="switchView('home',0)">
-        <span class="nav-icon"><i class="ti ti-home"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-home"></i></span></span>
         <span class="nav-label">Home</span>
       </button>
       <button class="nav-btn" id="ynav1" onclick="switchYouthView('learn')">
-        <span class="nav-icon"><i class="ti ti-school"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-school"></i></span></span>
         <span class="nav-label">Lernen</span>
       </button>
       <button class="nav-btn" id="ynav2" onclick="switchView('goals',1)">
-        <span class="nav-icon"><i class="ti ti-target"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-target"></i></span></span>
         <span class="nav-label">Ziele</span>
       </button>
       <button class="nav-btn" id="ynav3" onclick="switchView('fun',6)">
-        <span class="nav-icon"><i class="ti ti-trophy"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-trophy"></i></span></span>
         <span class="nav-label">Badges</span>
       </button>
       <button class="nav-btn" id="ynav4" onclick="switchView('haxx',2)">
-        <span class="nav-icon"><i class="ti ti-bolt"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-bolt"></i></span></span>
         <span class="nav-label">Tipps</span>
       </button>
     </nav>
@@ -2744,31 +2783,31 @@ window.addEventListener('load', function(){
     <!-- Bottom Nav -->
     <nav class="bottom-nav adult-only" id="adult-nav">
       <button class="nav-btn active" id="nav0" onclick="switchView('home',0)">
-        <span class="nav-icon"><i class="ti ti-home"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-home"></i></span></span>
         <span class="nav-label">Home</span>
       </button>
       <button class="nav-btn" id="nav1" onclick="switchView('goals',1)">
-        <span class="nav-icon"><i class="ti ti-target"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-target"></i></span></span>
         <span class="nav-label">Ziele</span>
       </button>
       <button class="nav-btn" id="nav2" onclick="switchView('haxx',2)">
-        <span class="nav-icon"><i class="ti ti-bolt"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-bolt"></i></span></span>
         <span class="nav-label">Haxx</span>
       </button>
       <button class="nav-btn" id="nav3" onclick="switchView('budget',3)">
-        <span class="nav-icon"><i class="ti ti-chart-pie"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-chart-pie"></i></span></span>
         <span class="nav-label">Budget</span>
       </button>
       <button class="nav-btn" id="nav4" onclick="switchView('finlit',4)">
-        <span class="nav-icon"><i class="ti ti-building-bank"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-building-bank"></i></span></span>
         <span class="nav-label">Angebote</span>
       </button>
       <button class="nav-btn" id="nav5" onclick="switchView('invest',5)">
-        <span class="nav-icon"><i class="ti ti-trending-up"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-trending-up"></i></span></span>
         <span class="nav-label">Vermehren</span>
       </button>
       <button class="nav-btn" id="nav6" onclick="switchView('fun',6)">
-        <span class="nav-icon"><i class="ti ti-device-gamepad-2"></i></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-device-gamepad-2"></i></span></span>
         <span class="nav-label">Fun</span>
       </button>
     </nav>
