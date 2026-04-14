@@ -1,9 +1,11 @@
-const CACHE     = 'blkb-jugend-v13';
+const CACHE     = 'blkb-jugend-v14';
 const IMG_CACHE = 'blkb-jugend-img-v1';
 
-// Pre-cache only shell + manifest (small, instant offline)
+// Pre-cache shell + assets (now split across 3 files)
 const PRECACHE = [
   './index.html',
+  './style.css',
+  './app.js',
   './manifest.json',
   './img/logo-white.svg',
   './img/logo.svg',
