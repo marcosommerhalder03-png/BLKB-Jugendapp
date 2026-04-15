@@ -1730,60 +1730,216 @@ input[type="range"]::-webkit-slider-thumb {
 /* =============================================
    YOUTH LEARN — CHAPTER PATH
 ============================================= */
+/* ─── Revolut-style Chapter Cards ─────────────────────────── */
 .chapter-card {
-  margin: 0 16px 12px;
-  background: white;
+  margin: 0 16px 10px;
+  background: #fff;
   border-radius: var(--r);
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(0,0,0,.04);
+  border: 1px solid var(--border);
   overflow: hidden;
   cursor: pointer;
-  transition: transform .15s, box-shadow .15s;
+  transition: background .12s;
+  position: relative;
 }
-.chapter-card:active { transform: scale(.98); box-shadow: none; }
-.chapter-card.locked { opacity: .55; cursor: default; }
-.chapter-card.done { border-color: rgba(22,163,74,.25); }
+.chapter-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--border);
+  border-radius: 3px 0 0 3px;
+}
+.chapter-card.inprog::before { background: #E30613; }
+.chapter-card.done::before   { background: #16a34a; }
+.chapter-card.locked         { opacity: .5; cursor: default; }
+.chapter-card:active:not(.locked) { background: var(--bg); }
 
 .chapter-inner {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px;
+  gap: 12px;
+  padding: 14px 14px 14px 18px;
 }
 
 .chapter-icon-wrap {
-  width: 54px; height: 54px;
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
+  font-size: 24px;
   flex-shrink: 0;
-  background: var(--bg);
+  width: 40px;
+  text-align: center;
 }
-.chapter-card.done .chapter-icon-wrap { background: var(--ok-l); }
+
 .chapter-card.locked .chapter-icon-wrap { filter: grayscale(1); }
 
-.chapter-dots {
-  display: flex; gap: 5px; margin-top: 7px;
+/* progress row inside card */
+.chapter-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
 }
-.chapter-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
+.chapter-bar-bg {
+  flex: 1;
+  height: 4px;
   background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
 }
-.chapter-dot.done { background: var(--ok); }
-.chapter-dot.cur  { background: var(--red); }
+.chapter-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: #E30613;
+  transition: width .4s;
+}
+.chapter-card.done .chapter-bar-fill { background: #16a34a; }
+.chapter-bar-label {
+  font-size: 11px;
+  color: var(--light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
+/* Status badge */
 .chapter-tag {
   font-size: 10px;
   font-weight: 700;
   padding: 3px 9px;
-  border-radius: 10px;
+  border-radius: 20px;
   background: var(--bg);
   color: var(--mid);
+  white-space: nowrap;
+  flex-shrink: 0;
   align-self: flex-start;
 }
-.chapter-card.done .chapter-tag { background: var(--ok-l); color: var(--ok); }
-.chapter-card.locked .chapter-tag { color: var(--light); }
+.chapter-card.done   .chapter-tag { background: #ecfdf5; color: #16a34a; }
+.chapter-card.inprog .chapter-tag { background: #fff7ed; color: #ea580c; }
+.chapter-card.locked .chapter-tag { background: var(--bg); color: var(--light); }
+
+/* ─── Revolut-style Haxx Cards ─────────────────────────────── */
+.haxx-item {
+  background: #fff;
+  border-radius: var(--r);
+  margin: 0 16px 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: background .12s;
+}
+.haxx-item.done { border-color: rgba(22,163,74,.3); }
+
+.haxx-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.haxx-num {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--dark);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all .2s;
+}
+.haxx-item.done .haxx-num { background: #ecfdf5; }
+
+.haxx-header-text { flex: 1; min-width: 0; }
+.haxx-h-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A1A;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.haxx-cat-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: var(--red-l);
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.haxx-item.done .haxx-cat-badge { background: #ecfdf5; color: #16a34a; }
+.haxx-h-sub { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+.haxx-done-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  border: 1.5px solid #16a34a;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #16a34a;
+  flex-shrink: 0;
+}
+
+.haxx-chevron {
+  font-size: 11px;
+  color: var(--light);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.haxx-item.open .haxx-chevron { transform: rotate(180deg); }
+
+.haxx-body {
+  display: none;
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+}
+.haxx-item.open .haxx-body { display: block; }
+
+.haxx-body-text {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.65;
+  margin-top: 12px;
+}
+
+.haxx-body-steps {
+  list-style: none;
+  margin-top: 10px;
+}
+.haxx-body-steps li {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.5;
+  padding: 6px 0 6px 22px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.haxx-body-steps li:last-child { border-bottom: none; }
+.haxx-body-steps li::before {
+  content: attr(data-n);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: #E30613;
+  font-size: 11px;
+}
+
+.haxx-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.haxx-video-btn {
+  flex: 1;
+  padding: 10px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
 
 /* =============================================
    YOUTH LEARN — LESSON PANEL

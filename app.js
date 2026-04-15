@@ -326,26 +326,30 @@ function renderLearnChapters() {
   if (lbl) lbl.textContent = totalDone + ' / ' + learnChapters.length + ' Kapitel';
 
   container.innerHTML = learnChapters.map(function(ch, i) {
-    var prog  = learnChapterProgress[i] || 0;
-    var total = ch.cards.length;
+    var prog     = learnChapterProgress[i] || 0;
+    var total    = ch.cards.length;
     var isDone   = prog >= total;
     var isLocked = i > 0 && (learnChapterProgress[i-1] || 0) < learnChapters[i-1].cards.length;
-    var cls  = isDone ? 'done' : (isLocked ? 'locked' : '');
-    var tag  = isDone ? '✓ Fertig' : (isLocked ? '🔒 Gesperrt' : (prog > 0 ? 'Weiter · Karte ' + (prog+1) : 'Starten →'));
-    var dots = ch.cards.map(function(_, di) {
-      var dc = di < prog ? 'done' : (di === prog && !isDone ? 'cur' : '');
-      return '<div class="chapter-dot ' + dc + '"></div>';
-    }).join('');
+    var isInProg = !isDone && !isLocked && prog > 0;
+
+    var cls = isDone ? 'done' : (isLocked ? 'locked' : (isInProg ? 'inprog' : ''));
+    var badgeText  = isDone ? 'Abgeschlossen' : (isLocked ? '🔒 Gesperrt' : (isInProg ? 'In Bearbeitung' : 'Starten'));
+    var pct  = isDone ? 100 : Math.round(prog / total * 100);
+    var onclick = isLocked ? "showToast('🔒 Schliesse zuerst das vorherige Kapitel ab')" : 'openChapter(' + i + ')';
+
     return (
-      '<div class="chapter-card ' + cls + '" onclick="' + (isLocked ? '' : 'openChapter(' + i + ')') + '">' +
+      '<div class="chapter-card ' + cls + '" onclick="' + onclick + '">' +
         '<div class="chapter-inner">' +
           '<div class="chapter-icon-wrap">' + ch.emoji + '</div>' +
           '<div style="flex:1;min-width:0">' +
-            '<div style="font-size:15px;font-weight:800;color:var(--dark);letter-spacing:-.2px">' + ch.title + '</div>' +
-            '<div style="font-size:12px;color:var(--mid);margin-top:2px">' + ch.subtitle + '</div>' +
-            '<div class="chapter-dots" style="margin-top:8px">' + dots + '</div>' +
+            '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mid);margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
+            '<div style="font-size:15px;font-weight:700;color:#1A1A1A;letter-spacing:-.2px">' + ch.title + '</div>' +
+            '<div class="chapter-progress-row">' +
+              '<div class="chapter-bar-bg"><div class="chapter-bar-fill" style="width:' + pct + '%"></div></div>' +
+              '<span class="chapter-bar-label">' + prog + ' / ' + total + '</span>' +
+            '</div>' +
           '</div>' +
-          '<div class="chapter-tag">' + tag + '</div>' +
+          '<div class="chapter-tag">' + badgeText + '</div>' +
         '</div>' +
       '</div>'
     );
@@ -1317,6 +1321,8 @@ var haxxData = [
   {
     slug: 'easy-10',
     num: '1',
+    emoji: '💸',
+    category: 'Sparen',
     title: 'Easy-10 Hack',
     sub: 'Zahle dich zuerst — jeden Monat',
     text: 'Spare zuerst und gib dann aus, was übrig bleibt. Die meisten Leute sparen, was am Schluss vom Monat übrig bleibt. Unser Hack macht genau das Gegenteil.\n\nEs kommt nicht auf den Betrag an, den du monatlich sparst — wichtiger ist die Einstellung und die neue Gewohnheit. Gehe jetzt in dein E-Banking und richte einen Dauerauftrag mit 5–20% deines Monatslohns auf dein Sparkonto ein, am Tag, an dem dein Lohn reinkommt. Du zahlst dich somit selber zuerst.',
@@ -1326,6 +1332,8 @@ var haxxData = [
   {
     slug: 'null-schulden',
     num: '2',
+    emoji: '📋',
+    category: 'Steuern',
     title: 'Null-Schulden Hack',
     sub: 'Keine Steuerüberraschungen mehr',
     text: 'Viele Menschen in der Schweiz haben Steuerschulden. Unser Hack hilft dir, nie wieder in diese Falle zu tappen.',
@@ -1342,6 +1350,8 @@ var haxxData = [
   {
     slug: 'dini-mieti',
     num: '3',
+    emoji: '🏠',
+    category: 'Budget',
     title: 'Dini-Mieti Hack',
     sub: 'Miete max. 25% des Nettolohns',
     text: 'Die Miete ist die grösste Ausgabe in unserem Budget. Je tiefer die Miete, umso mehr Geld bleibt für dein Leben, zum Sparen und Investieren.\n\nCheck gleich: Beträgt deine Miete weniger als 25% deines Nettolohns? Falls nicht, überlege dir:',
@@ -1355,6 +1365,8 @@ var haxxData = [
   {
     slug: 'fifty-fifty',
     num: '4',
+    emoji: '⚖️',
+    category: 'Mindset',
     title: 'Fifty-Fifty Hack',
     sub: 'Lohnerhöhung clever aufteilen',
     text: 'Die meisten Menschen geben aus, was sie verdienen. Bei einer Lohnerhöhung oder einem Bonus geht dieses Geld direkt in Konsum — Ferien, Auto, Kleider.\n\nMit dem Fifty-Fifty Hack kannst du mehr konsumieren und gleichzeitig sparen. Beispiel: +200 CHF Lohn → 100 CHF aufs Sparkonto, 100 CHF für dich. Und: Passe deinen Dauerauftrag sofort an wenn du mehr verdienst.',
@@ -1364,6 +1376,8 @@ var haxxData = [
   {
     slug: 'ego',
     num: '5',
+    emoji: '🎯',
+    category: 'Karriere',
     title: 'Ego-Hack',
     sub: 'Investiere in dich selbst',
     text: 'Investiere in dich selber — das bringt am meisten Rendite. Vorteile:\n\nDu bist attraktiver auf dem Arbeitsmarkt · Du lernst neue Fähigkeiten · Mehr Selbstvertrauen · Spannendere Aufgaben · Neue Leute kennenlernen · Mehr Lohn!\n\nWelche Stärken und Talente hast du? Wie kannst du diese weiter stärken? Wer sich weiterentwickelt, erhöht die Chancen auf eine Lohnerhöhung. Mehr Lohn = mehr sparen = mehr investieren = weniger Stress.',
@@ -1373,6 +1387,8 @@ var haxxData = [
   {
     slug: 'get-rich',
     num: '6',
+    emoji: '📈',
+    category: 'Investieren',
     title: 'Get-Rich Hack',
     sub: 'So wächst dein Geld während du schläfst',
     text: 'Investieren schreckt viele ab. Häufige Fragen: Wie geht das? Ist das riskant? Wo soll ich anfangen?\n\nWichtig: Erst investieren, wenn du mindestens 1–3 Monatslöhne als Notfalltopf gespart hast. Geld das du investierst, soll langfristig für dich arbeiten — so reduziert sich automatisch das Risiko. Auf und Ab gibt es immer. Am einfachsten: Regelmässig einen fixen Betrag investieren (z.B. BLKB Fondssparplan).',
@@ -1404,11 +1420,15 @@ function renderHaxx() {
 
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
       '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
-        '<div class="haxx-num">' + (done ? '✓' : h.num) + '</div>' +
+        '<div class="haxx-num">' + (h.emoji || h.num) + '</div>' +
         '<div class="haxx-header-text">' +
-          '<div class="haxx-h-title">' + escHtml(h.title) + '</div>' +
+          '<div class="haxx-h-title">' +
+            escHtml(h.title) +
+            '<span class="haxx-cat-badge">' + escHtml(h.category || '') + '</span>' +
+          '</div>' +
           '<div class="haxx-h-sub">' + escHtml(h.sub) + '</div>' +
         '</div>' +
+        (done ? '<div class="haxx-done-check">✓</div>' : '') +
         '<div class="haxx-chevron">▼</div>' +
       '</div>' +
       '<div class="haxx-body">' +
@@ -1416,7 +1436,7 @@ function renderHaxx() {
         '<div class="haxx-footer">' +
           '<a href="' + h.url + '" target="_blank" class="haxx-video-btn">▶ Zum Video</a>' +
           '<button class="haxx-check-btn' + (done ? ' done' : '') + '" onclick="toggleHaxxDone(' + i + ')">' +
-            (done ? '✓ Verstanden!' : '☐ Kapiert!') +
+            (done ? '✓ Kapiert!' : 'Kapiert! ✓') +
           '</button>' +
         '</div>' +
       '</div>' +
