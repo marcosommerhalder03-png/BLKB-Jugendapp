@@ -101,59 +101,106 @@ body {
 /* =============================================
    HEADER
 ============================================= */
+/* =============================================
+   APP HEADER — Unified (Revolut / Neon Style)
+============================================= */
 .hdr {
-  padding: 16px 20px 16px;
+  height: 56px;
+  background: #fff;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 2px solid #E30613;
   flex-shrink: 0;
-  z-index: 10;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 200;
   width: 100%;
+  box-sizing: border-box;
 }
 
-.hdr.red-bg {
-  background: linear-gradient(150deg, #ff0012 0%, #d4000f 55%, #9e000b 100%);
-}
+/* All color variants → same white header */
+.hdr.red-bg, .hdr.dark-bg, .hdr.petrol-bg,
+.hdr.olive-bg, .hdr.amber-bg { background: #fff; }
 
-.hdr.dark-bg {
-  background: linear-gradient(150deg, #1a2535 0%, #0f1923 100%);
-}
-
-.hdr.petrol-bg {
-  background: linear-gradient(150deg, #0f6384 0%, #083d55 60%, #051e2a 100%);
-}
-
-.hdr.olive-bg {
-  background: linear-gradient(150deg, #5e8026 0%, #3a5016 100%);
-}
-
-.hdr.amber-bg {
-  background: linear-gradient(150deg, #f59e0b 0%, #b45309 100%);
-}
-
-.hdr-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: .65;
-  color: #fff;
-}
+.hdr-logo { height: 22px; flex-shrink: 0; display: block; }
 
 .hdr-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.1;
-  letter-spacing: -.3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1A1A1A;
+  letter-spacing: -.1px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
-.hdr-sub {
-  font-size: 13px;
-  color: rgba(255,255,255,.65);
-  margin-top: 3px;
+/* Hide old label / subtitle in header */
+.hdr-label { display: none; }
+.hdr-sub   { display: none; }
+
+.hdr-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F4F4F4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #6B6B6B;
+  flex-shrink: 0;
 }
+
+/* =============================================
+   VIEW BANNER — Unified Sub-Banner (no icon)
+============================================= */
+.view-banner {
+  width: 100%;
+  height: 72px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.view-banner::after {
+  content: '';
+  position: absolute;
+  right: -20px; top: -30px;
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  pointer-events: none;
+}
+
+.view-banner-text { position: relative; z-index: 1; }
+
+.view-banner-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.3px;
+  line-height: 1.2;
+}
+
+.view-banner-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.view-banner.red    { background: linear-gradient(135deg,#8c0008 0%,#d4000f 60%,#9e000b 100%); }
+.view-banner.dark   { background: linear-gradient(135deg,#0a1520 0%,#1a2535 60%,#0f1923 100%); }
+.view-banner.petrol { background: linear-gradient(135deg,#051e2a 0%,#0d4f6b 55%,#0f6384 100%); }
+.view-banner.olive  { background: linear-gradient(135deg,#3a5016 0%,#5e8026 60%,#4d6820 100%); }
+.view-banner.amber  { background: linear-gradient(135deg,#92400e 0%,#d97706 60%,#b45309 100%); }
 
 /* =============================================
    BOTTOM NAV
@@ -161,14 +208,12 @@ body {
 .bottom-nav {
   flex-shrink: 0;
   width: 100%;
-  background: rgba(255,255,255,.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(0,0,0,.06);
+  background: #fff;
+  border-top: 1px solid #EBEBEB;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-around;
-  padding-top: 8px;
+  padding-top: 6px;
   padding-bottom: max(env(safe-area-inset-bottom), 8px);
   z-index: 200;
 }
@@ -177,7 +222,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   background: none;
   border: none;
   cursor: pointer;
@@ -185,48 +230,48 @@ body {
   font-family: var(--font);
   transition: transform .15s;
   flex: 1;
-  gap: 3px;
+  gap: 2px;
+  position: relative;
 }
 
 .nav-btn:active { transform: scale(.88); }
+
+/* Active dot above icon */
+.nav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px;
+  background: #E30613;
+  border-radius: 50%;
+}
 
 .nav-pill {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 28px;
-  border-radius: 14px;
-  transition: background .2s;
+  background: transparent !important;
+  transition: none;
 }
 
 .nav-icon {
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
-  color: var(--light);
-  transition: all .2s;
+  color: #BABABA;
+  transition: color .2s;
 }
 
 .nav-label {
   font-size: 10px;
-  font-weight: 600;
-  color: var(--light);
+  font-weight: 500;
+  color: #BABABA;
   transition: color .2s;
   display: block;
 }
 
-.nav-btn.active .nav-pill {
-  background: var(--red-l);
-}
-
-.nav-btn.active .nav-icon {
-  color: var(--red);
-}
-
-.nav-btn.active .nav-label {
-  color: var(--red);
-  font-weight: 700;
-}
+.nav-btn.active .nav-icon  { color: #E30613; }
+.nav-btn.active .nav-label { color: #E30613; font-weight: 700; }
 
 /* =============================================
    CARDS
