@@ -1671,4 +1671,262 @@ input[type="range"]::-webkit-slider-thumb {
 /* Adult mode */
 #app.mode-adult .youth-only { display: none !important; }
 #app.mode-adult .adult-only { display: flex !important; }
+
+/* =============================================
+   YOUTH LEARN — CHAPTER PATH
+============================================= */
+.chapter-card {
+  margin: 0 16px 12px;
+  background: white;
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,.04);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.chapter-card:active { transform: scale(.98); box-shadow: none; }
+.chapter-card.locked { opacity: .55; cursor: default; }
+.chapter-card.done { border-color: rgba(22,163,74,.25); }
+
+.chapter-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+}
+
+.chapter-icon-wrap {
+  width: 54px; height: 54px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+.chapter-card.done .chapter-icon-wrap { background: var(--ok-l); }
+.chapter-card.locked .chapter-icon-wrap { filter: grayscale(1); }
+
+.chapter-dots {
+  display: flex; gap: 5px; margin-top: 7px;
+}
+.chapter-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.chapter-dot.done { background: var(--ok); }
+.chapter-dot.cur  { background: var(--red); }
+
+.chapter-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--mid);
+  align-self: flex-start;
+}
+.chapter-card.done .chapter-tag { background: var(--ok-l); color: var(--ok); }
+.chapter-card.locked .chapter-tag { color: var(--light); }
+
+/* =============================================
+   YOUTH LEARN — LESSON PANEL
+============================================= */
+.lesson-panel {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: 300;
+  flex-direction: column;
+}
+.lesson-panel.open { display: flex; }
+
+.lesson-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 10px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.lesson-back {
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--mid);
+  cursor: pointer;
+  padding: 4px 0;
+  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lesson-progress-dots {
+  display: flex; gap: 6px; align-items: center;
+}
+.lesson-pdot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all .25s;
+}
+.lesson-pdot.done { background: var(--ok); }
+.lesson-pdot.active { background: var(--red); width: 22px; border-radius: 4px; }
+
+.lesson-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 24px 16px;
+  text-align: center;
+  overflow-y: auto;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.lesson-emoji {
+  font-size: 76px;
+  line-height: 1;
+  margin-bottom: 22px;
+  animation: lsnBounce .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes lsnBounce {
+  from { transform: scale(.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.lesson-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--dark);
+  letter-spacing: -.4px;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.lesson-text {
+  font-size: 16px;
+  color: var(--slate);
+  line-height: 1.7;
+  max-width: 340px;
+}
+
+.lesson-counter {
+  font-size: 12px;
+  color: var(--light);
+  font-weight: 600;
+}
+
+.lesson-footer {
+  padding: 16px;
+  flex-shrink: 0;
+}
+
+.lesson-btn {
+  width: 100%;
+  padding: 17px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: var(--r);
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: var(--font);
+  letter-spacing: -.2px;
+  transition: background .15s, transform .1s;
+}
+.lesson-btn:active { transform: scale(.98); background: var(--red-h); }
+.lesson-btn.finish { background: var(--ok); }
+
+/* =============================================
+   YOUTH HOME — MISSION CARD
+============================================= */
+.mission-card {
+  margin: 12px 16px;
+  background: linear-gradient(150deg, #1a2535 0%, #0f1923 100%);
+  border-radius: var(--r);
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: transform .15s;
+}
+.mission-card:active { transform: scale(.98); }
+.mission-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+.mission-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 3px;
+}
+.mission-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -.2px;
+  line-height: 1.25;
+}
+.mission-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  margin-top: 3px;
+}
+.mission-arrow {
+  margin-left: auto;
+  width: 30px; height: 30px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   YOUTH GOALS — SUGGESTION CHIPS
+============================================= */
+.goal-chips-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.goal-chips-row::-webkit-scrollbar { display: none; }
+
+.goal-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 12px 14px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: border-color .15s, transform .1s;
+  min-width: 64px;
+}
+.goal-chip:active { transform: scale(.93); }
+.goal-chip-ico { font-size: 28px; line-height: 1; }
+.goal-chip-lbl { font-size: 10px; font-weight: 700; color: var(--dark); white-space: nowrap; }
 

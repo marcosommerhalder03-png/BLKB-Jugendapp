@@ -65,6 +65,7 @@ function save() {
     monthlyChallengeMonth: state.monthlyChallengeMonth,
     storyDate: state.storyDate,
     storyChoice: state.storyChoice,
+    learnChapterProgress: learnChapterProgress,
   }));
 }
 
@@ -98,6 +99,9 @@ function load() {
       state.monthlyChallengeMonth = d.monthlyChallengeMonth || '';
       state.storyDate = d.storyDate || '';
       state.storyChoice = d.storyChoice !== undefined ? d.storyChoice : -1;
+      if (d.learnChapterProgress && d.learnChapterProgress.length === learnChapters.length) {
+        learnChapterProgress = d.learnChapterProgress;
+      }
     }
   } catch(e) {}
 }
@@ -263,37 +267,199 @@ var learnData = [
 ];
 var learnProgress = [0,0,0,0,0,0,0,0];
 
+/* ── Youth Learn Chapters (5 progressive chapters) ────────────── */
+var learnChapters = [
+  { id:0, emoji:'💰', title:'Was ist Geld?', subtitle:'4 Karten · ca. 3 Min', cards:[
+    { emoji:'🔄', title:'Früher war alles anders', text:'Stell dir vor: Du willst Brot kaufen, hast aber nur Äpfel. Der Bäcker braucht keine Äpfel — Pech! Früher tauschten Menschen Dinge direkt. Das nennt sich Tauschhandel. Praktisch? Nicht wirklich.' },
+    { emoji:'💵', title:'Dann kam das Geld', text:'Geld löste dieses Problem. Statt Äpfel zu tauschen, gibst du dem Bäcker Geld. Er akzeptiert es — weil alle anderen es auch akzeptieren. Geld ist ein gemeinsames «Tausch-Ticket», auf das sich alle geeinigt haben.' },
+    { emoji:'🎁', title:'Woher kommt dein Geld?', text:'Als Jugendlicher kriegst du Geld von:\n👉 Taschengeld von deinen Eltern\n👉 Geschenken zu Geburtstag und Weihnachten\n👉 Später: Job, Babysitting, Lehrstelle\n\nDieses Geld gehört dir — und du entscheidest, was damit passiert!' },
+    { emoji:'⚖️', title:'Die grösste Entscheidung', text:'Jedes Mal, wenn du Geld hast, triffst du eine Wahl:\n\n💸 Sofort ausgeben — für etwas, das du jetzt willst.\n🏦 Sparen — für etwas Grösseres später.\n\nBeide Optionen sind okay. Wichtig ist, dass du bewusst entscheidest.' }
+  ]},
+  { id:1, emoji:'🏦', title:'Mein Konto', subtitle:'5 Karten · ca. 4 Min', cards:[
+    { emoji:'🏦', title:'Was ist eine Bank?', text:'Eine Bank ist wie ein super-sicherer Tresor für dein Geld. Du gibst ihr dein Geld zur Aufbewahrung — und kannst es jederzeit abheben. Anders als Bargeld unter der Matratze: Bankgeld ist bis CHF 100\'000 staatlich versichert.' },
+    { emoji:'📬', title:'Deine IBAN — deine Geld-Adresse', text:'Deine IBAN ist wie deine Postadresse — aber für Geld. Wenn jemand dir Geld überweisen will (z.B. Lehrlohn), braucht er deine IBAN.\n\nSie sieht so aus:\nCH56 0785 1234 5678 9000 0\n\nJede IBAN ist weltweit einmalig — nur du hast genau diese.' },
+    { emoji:'📄', title:'Kontoauszug lesen', text:'Der Kontoauszug zeigt alle Bewegungen auf deinem Konto:\n\n✅ + Zahlen = Geld kommt rein (z.B. Lohn, Geschenk)\n❌ − Zahlen = Geld geht raus (z.B. Einkauf, Abo)\n\nGanz unten siehst du deinen aktuellen Kontostand.' },
+    { emoji:'📱', title:'E-Banking — immer im Blick', text:'Mit der BLKB App siehst du jederzeit:\n👀 Wie viel Geld du hast\n📋 Was du ausgegeben hast\n💸 Wer dir Geld geschickt hat\n\nDu kannst auch selbst Geld überweisen — das dauert meist nur Sekunden.' },
+    { emoji:'🌱', title:'Zinsen: Geld fürs Daliegenlassen', text:'Beim Sparkonto bekommst du Zinsen — das ist Geld, das du einfach dafür bekommst, dass dein Geld dort liegt.\n\nBeispiel: 1% Zins auf CHF 1\'000 = CHF 10 pro Jahr.\n\nKlingt wenig? Je mehr du sparst und je länger, desto mehr wächst es!' }
+  ]},
+  { id:2, emoji:'📱', title:'Clever bezahlen', subtitle:'5 Karten · ca. 4 Min', cards:[
+    { emoji:'💳', title:'Bargeld vs. Karte', text:'Bargeld: Du gibst Scheine und Münzen ab.\nDebitkarte: Die Bank zieht den Betrag automatisch ab.\n\nBeides funktioniert — aber mit der Karte siehst du immer genau, was du wann ausgegeben hast. Das hilft, den Überblick zu behalten.' },
+    { emoji:'📲', title:'TWINT — bezahlen mit dem Handy', text:'TWINT ist eine Schweizer App zum Bezahlen. Du verknüpfst dein Konto und kannst dann:\n👉 Im Laden per QR-Code bezahlen\n👉 Freunden Geld schicken\n👉 Online einkaufen\n\nEinfach, schnell — und 100% schweizerisch.' },
+    { emoji:'⚠️', title:'Die TWINT-Falle', text:'TWINT ist super praktisch — aber Vorsicht!\n\nKleine Beträge summieren sich:\n☕ CHF 2.50 Kaffee\n🍕 CHF 5.00 Snack\n🎮 CHF 3.00 App-Kauf\n= CHF 10.50 weg, ohne es zu merken!\n\nSchau mindestens einmal pro Woche in dein Konto.' },
+    { emoji:'🔒', title:'Sicher online einkaufen', text:'Vor jedem Online-Kauf prüfen:\n\n✅ Schloss-Symbol in der Adresszeile?\n✅ Adresse beginnt mit https://?✅ Shop bekannt und seriös?\n\nWenn du dir nicht sicher bist: Lieber im Laden kaufen oder Eltern fragen.' },
+    { emoji:'🎣', title:'Phishing — was ist das?', text:'Phishing = Betrüger schicken eine E-Mail, die aussieht wie von deiner Bank. Ziel: dein Passwort stehlen.\n\n🚨 Wichtigste Regel:\nEchte Banken fragen NIE per E-Mail oder SMS nach deinem Passwort!\n\nSolche Nachrichten immer sofort löschen.' }
+  ]},
+  { id:3, emoji:'💼', title:'Mein erster Lohn', subtitle:'5 Karten · ca. 4 Min', cards:[
+    { emoji:'🎉', title:'Du verdienst jetzt Geld!', text:'Du hast eine Lehrstelle oder deinen ersten Job — herzlichen Glückwunsch! Ab jetzt kommt jeden Monat Geld auf dein Konto.\n\nDas ist ein riesiger Schritt. Aber mit Lohn kommen auch neue Fragen: Was sind das für Abzüge? Wie plane ich damit?' },
+    { emoji:'💸', title:'Brutto vs. Netto', text:'Auf deinem Lohnzettel stehen zwei wichtige Zahlen:\n\n💰 Bruttolohn = Was dein Chef zahlt\n🏦 Nettolohn = Was auf deinem Konto ankommt\n\nDer Unterschied? Sozialabgaben wie AHV werden direkt abgezogen. Als Lehrling sind diese noch klein.' },
+    { emoji:'🧓', title:'Was ist die AHV?', text:'AHV = Alters- und Hinterlassenenversicherung.\n\nEin kleiner Teil deines Lohns geht in einen gemeinsamen Topf. Wenn du später alt bist (Rentenalter: 65 Jahre), bekommst du daraus eine Rente.\n\nDu sorgst heute schon für dich — ohne es gross zu merken!' },
+    { emoji:'📊', title:'Dein erstes Budget', text:'Budget = Einnahmen minus Ausgaben.\n\nBeispiel Lehrjahr 1 (ca. CHF 700 Netto):\n🏦 Sparen 10%: CHF 70\n📱 Handy-Abo: CHF 30\n🚌 ÖV-Abo: CHF 50\n🎉 Freizeit: CHF 100\n📦 Reserve: Rest\n\nWer früh budgetiert, hat immer genug.' },
+    { emoji:'🏆', title:'Der 10%-Trick', text:'Die goldene Spar-Regel:\n\n👉 Spare 10% deines Lohns BEVOR du irgendwas kaufst.\n\nSo geht\'s: Richte einen Dauerauftrag ein. Am Zahltag wandern automatisch 10% aufs Sparkonto.\n\nNach 1 Lehrjahr = ca. CHF 840 gespart. Ohne nachzudenken!' }
+  ]},
+  { id:4, emoji:'🚀', title:'Grosse Ziele', subtitle:'4 Karten · ca. 3 Min', cards:[
+    { emoji:'🎯', title:'Wofür sparst du?', text:'Grosse Ziele brauchen Zeit — und Planung. Überlege dir: Was willst du dir in 1-2 Jahren gönnen?\n\n🛵 Töff-Führerschein?\n✈️ Ferien mit Freunden?\n💻 Eigener Laptop?\n\nEin klares Ziel macht Sparen viel leichter. Du weisst, wofür!' },
+    { emoji:'📈', title:'Zinseszins — Geld, das Geld verdient', text:'Stell dir vor: Du sparst CHF 50 pro Monat bei 2% Zins.\n\nNach 5 Jahren hast du:\n💰 Eingezahlt: CHF 3\'000\n🎁 Zins extra: CHF 150\n✨ Total: CHF 3\'150\n\nJe früher du anfängst, desto mehr wächst dein Geld. Zeit ist dein grösster Freund.' },
+    { emoji:'🛡️', title:'Notfallreserve', text:'Manchmal passiert etwas Unerwartetes:\n📱 Handy kaputt\n🏥 Arztrechnung\n🚲 Velo braucht Reparatur\n\nWer 1-2 Monatslöhne als Reserve hat, kann solche Situationen ohne Stress meistern. Diese Reserve macht dich unabhängig.' },
+    { emoji:'🌟', title:'Du bist bereit!', text:'Du hast alle 5 Kapitel durchgearbeitet — Respekt!\n\nDu weisst jetzt:\n✅ Was Geld ist und woher es kommt\n✅ Wie dein Konto funktioniert\n✅ Wie du sicher und clever bezahlst\n✅ Was dein Lohn bedeutet\n✅ Wie du grosse Ziele erreichst\n\nDas ist echtes Finanzwissen. Für\'s Leben! 🎓' }
+  ]}
+];
+var learnChapterProgress = [0, 0, 0, 0, 0];
+var currentChapterIdx = -1;
+var currentCardIdx = 0;
+
 function openLearnModule(n) {
-  var mod = learnData[n];
-  var modal = document.getElementById('learn-modal');
-  if (!modal || !mod) return;
+  // Legacy: map old module index to nearest chapter
+  openChapter(Math.min(n, learnChapters.length - 1));
+}
 
-  document.getElementById('learn-modal-title').textContent = mod.emoji + ' ' + mod.title;
-  var body = document.getElementById('learn-modal-body');
-  body.innerHTML = '';
+/* ── Chapter path renderer ──────────────────────────────────────── */
+function renderLearnChapters() {
+  var container = document.getElementById('learn-chapters-container');
+  if (!container) return;
+  var totalDone = 0;
+  for (var i = 0; i < learnChapters.length; i++) {
+    if ((learnChapterProgress[i] || 0) >= learnChapters[i].cards.length) totalDone++;
+  }
+  var bar = document.getElementById('learn-total-bar');
+  var lbl = document.getElementById('learn-total-label');
+  if (bar) bar.style.width = (totalDone / learnChapters.length * 100) + '%';
+  if (lbl) lbl.textContent = totalDone + ' / ' + learnChapters.length + ' Kapitel';
 
-  if (mod.type === 'steps') {
-    renderLearnSteps(body, mod, n);
-  } else if (mod.type === 'calculator') {
-    renderLearnCalculator(body, mod, n);
-  } else if (mod.type === 'pots') {
-    renderLearnPots(body, mod, n);
-  } else if (mod.type === 'quiz') {
-    renderLearnQuiz(body, mod, n);
-  } else if (mod.type === 'twint') {
-    renderLearnTwint(body, mod, n);
-  } else if (mod.type === 'swipe') {
-    renderLearnSwipe(body, mod, n);
-  } else if (mod.type === 'phishing') {
-    renderLearnPhishing(body, mod, n);
-  } else if (mod.type === 'lohn') {
-    renderLearnLohn(body, mod, n);
+  container.innerHTML = learnChapters.map(function(ch, i) {
+    var prog  = learnChapterProgress[i] || 0;
+    var total = ch.cards.length;
+    var isDone   = prog >= total;
+    var isLocked = i > 0 && (learnChapterProgress[i-1] || 0) < learnChapters[i-1].cards.length;
+    var cls  = isDone ? 'done' : (isLocked ? 'locked' : '');
+    var tag  = isDone ? '✓ Fertig' : (isLocked ? '🔒 Gesperrt' : (prog > 0 ? 'Weiter · Karte ' + (prog+1) : 'Starten →'));
+    var dots = ch.cards.map(function(_, di) {
+      var dc = di < prog ? 'done' : (di === prog && !isDone ? 'cur' : '');
+      return '<div class="chapter-dot ' + dc + '"></div>';
+    }).join('');
+    return (
+      '<div class="chapter-card ' + cls + '" onclick="' + (isLocked ? '' : 'openChapter(' + i + ')') + '">' +
+        '<div class="chapter-inner">' +
+          '<div class="chapter-icon-wrap">' + ch.emoji + '</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div style="font-size:15px;font-weight:800;color:var(--dark);letter-spacing:-.2px">' + ch.title + '</div>' +
+            '<div style="font-size:12px;color:var(--mid);margin-top:2px">' + ch.subtitle + '</div>' +
+            '<div class="chapter-dots" style="margin-top:8px">' + dots + '</div>' +
+          '</div>' +
+          '<div class="chapter-tag">' + tag + '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+function openChapter(idx) {
+  currentChapterIdx = idx;
+  currentCardIdx    = learnChapterProgress[idx] || 0;
+  if (currentCardIdx >= learnChapters[idx].cards.length) currentCardIdx = 0;
+  var panel = document.getElementById('lesson-panel');
+  if (panel) panel.classList.add('open');
+  showLessonCard();
+}
+
+function closeLesson() {
+  var panel = document.getElementById('lesson-panel');
+  if (panel) panel.classList.remove('open');
+  renderLearnChapters();
+  updateHomeLearnMission();
+}
+
+function showLessonCard() {
+  var ch    = learnChapters[currentChapterIdx];
+  var card  = ch.cards[currentCardIdx];
+  var total = ch.cards.length;
+  var isLast = (currentCardIdx === total - 1);
+
+  var counter = document.getElementById('lesson-counter');
+  if (counter) counter.textContent = ch.emoji + ' Karte ' + (currentCardIdx + 1) + ' von ' + total;
+
+  var dotsEl = document.getElementById('lesson-pdots');
+  if (dotsEl) {
+    dotsEl.innerHTML = ch.cards.map(function(_, i) {
+      var dc = i < currentCardIdx ? 'done' : (i === currentCardIdx ? 'active' : '');
+      return '<div class="lesson-pdot ' + dc + '"></div>';
+    }).join('');
   }
 
-  modal.style.display = 'flex';
-  document.querySelectorAll('#youth-nav .nav-btn').forEach(function(b){ b.classList.remove('active'); });
-  var yn1 = document.getElementById('ynav1');
-  if (yn1) yn1.classList.add('active');
+  var body = document.getElementById('lesson-body');
+  if (body) {
+    body.innerHTML =
+      '<div class="lesson-emoji">' + card.emoji + '</div>' +
+      '<div class="lesson-title">' + card.title + '</div>' +
+      '<div class="lesson-text">' + card.text.replace(/\n/g, '<br>') + '</div>';
+  }
+
+  var btn = document.getElementById('lesson-btn');
+  if (btn) {
+    btn.textContent = isLast ? 'Kapitel abschliessen ✓' : 'Weiter →';
+    btn.className   = isLast ? 'lesson-btn finish' : 'lesson-btn';
+  }
+}
+
+function advanceLessonCard() {
+  var ch    = learnChapters[currentChapterIdx];
+  var total = ch.cards.length;
+  var isLast = (currentCardIdx === total - 1);
+
+  if (currentCardIdx + 1 > (learnChapterProgress[currentChapterIdx] || 0)) {
+    learnChapterProgress[currentChapterIdx] = currentCardIdx + 1;
+  }
+
+  if (isLast) {
+    learnChapterProgress[currentChapterIdx] = total;
+    state.xp = (state.xp || 0) + 20;
+    save();
+    updateGamification();
+    closeLesson();
+    showToast('🎉 Kapitel abgeschlossen! +20 XP');
+  } else {
+    currentCardIdx++;
+    learnChapterProgress[currentChapterIdx] = Math.max(learnChapterProgress[currentChapterIdx] || 0, currentCardIdx);
+    var body = document.getElementById('lesson-body');
+    if (body) {
+      body.style.opacity = '0';
+      body.style.transform = 'translateX(30px)';
+    }
+    setTimeout(function() {
+      showLessonCard();
+      if (body) { body.style.opacity = '1'; body.style.transform = 'translateX(0)'; }
+    }, 120);
+  }
+}
+
+function updateHomeLearnMission() {
+  var mTitle = document.getElementById('home-mission-title');
+  var mSub   = document.getElementById('home-mission-sub');
+  var mIcon  = document.getElementById('home-mission-icon');
+  if (!mTitle) return;
+  for (var i = 0; i < learnChapters.length; i++) {
+    var prog = learnChapterProgress[i] || 0;
+    if (prog < learnChapters[i].cards.length) {
+      mTitle.textContent = (prog === 0 ? 'Starte: ' : 'Weiter: ') + learnChapters[i].title;
+      mSub.textContent   = 'Karte ' + (prog + 1) + ' von ' + learnChapters[i].cards.length + ' · ' + learnChapters[i].subtitle.split('·')[1].trim();
+      if (mIcon) mIcon.textContent = learnChapters[i].emoji;
+      return;
+    }
+  }
+  mTitle.textContent = 'Alle Kapitel abgeschlossen! 🌟';
+  mSub.textContent   = 'Du bist ein Finanz-Profi';
+  if (mIcon) mIcon.textContent = '🏆';
+}
+
+function goToNextLesson() {
+  for (var i = 0; i < learnChapters.length; i++) {
+    if ((learnChapterProgress[i] || 0) < learnChapters[i].cards.length) {
+      switchYouthView('learn');
+      var idx = i;
+      setTimeout(function() { openChapter(idx); }, 120);
+      return;
+    }
+  }
+  switchYouthView('learn');
 }
 
 /* ── Steps renderer ───────────────────────────────────── */
@@ -797,6 +963,19 @@ function applyGoalPreset(emoji, name) {
   document.querySelectorAll('.goal-preset-btn').forEach(function(b) {
     b.classList.toggle('sel', b.textContent.trim().startsWith(emoji));
   });
+}
+
+function quickAddGoal(emoji, name, ziel) {
+  for (var i = 0; i < state.goals.length; i++) {
+    if (state.goals[i].name === name) {
+      showToast('Ziel «' + name + '» existiert bereits!'); return;
+    }
+  }
+  state.goals.push({ id: Date.now(), emoji: emoji, name: name, ziel: ziel, pct: 0 });
+  save();
+  renderGoals();
+  updateGamification();
+  showToast(emoji + ' «' + name + '» als Ziel hinzugefügt!');
 }
 
 function openGoalModal(idx) {
@@ -2389,6 +2568,8 @@ function updateGamification() {
   checkStreak();
   renderYouthGamification();
   renderAdultGamification();
+  renderLearnChapters();
+  updateHomeLearnMission();
 }
 
 /* ── Story-Szenario (Youth) ─────────────────────────────────────── */

@@ -55,9 +55,25 @@
           <div class="hdr-sub" id="home-lifecycle-tag">Dein persönlicher Finanzbegleiter</div>
         </div>
 
-        <!-- Hero image -->
-        <div style="width:100%;height:140px;overflow:hidden;flex-shrink:0">
-          <img src="img/hero.jpg" alt="BLKB Jugend" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        <!-- Hero banner -->
+        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#8c0008 0%,#fd000d 50%,#ff6b35 100%);display:flex;align-items:center;padding:0 20px;gap:14px;position:relative">
+          <div style="position:absolute;right:-10px;top:-20px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.06)"></div>
+          <div style="font-size:52px;position:relative;z-index:1">🏦</div>
+          <div style="position:relative;z-index:1">
+            <div style="font-size:17px;font-weight:900;color:#fff;letter-spacing:-.3px;line-height:1.15">Dein Finanz-Start<br>bei der BLKB</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:600">Schritt für Schritt · spielerisch</div>
+          </div>
+        </div>
+
+        <!-- Daily mission card -->
+        <div class="mission-card youth-only" id="home-mission-card" onclick="goToNextLesson()">
+          <div class="mission-icon" id="home-mission-icon">🎓</div>
+          <div style="flex:1;min-width:0">
+            <div class="mission-label">Nächste Aufgabe</div>
+            <div class="mission-title" id="home-mission-title">Kapitel 1 starten</div>
+            <div class="mission-sub" id="home-mission-sub">Was ist Geld? · 4 Karten</div>
+          </div>
+          <div class="mission-arrow">→</div>
         </div>
 
         <!-- BP Konten -->
@@ -139,12 +155,17 @@
       <div class="scroll-area">
         <div class="hdr olive-bg">
           <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
-          <div class="hdr-label">Meine Finanzen</div>
-          <div class="hdr-title">Sparziele</div>
-          <div class="hdr-sub">Definiere was du dir wünschst</div>
+          <div class="hdr-label">Meine Sparziele</div>
+          <div class="hdr-title">Ich spare für… 🎯</div>
+          <div class="hdr-sub">Setz dir ein Ziel und spar drauf hin</div>
         </div>
-        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
-          <img src="img/jugend5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+        <div style="width:100%;height:90px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#3a5016 0%,#5e8026 50%,#84b830 100%);display:flex;align-items:center;padding:0 20px;gap:14px;position:relative">
+          <div style="position:absolute;right:-10px;top:-20px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.07)"></div>
+          <div style="font-size:44px;position:relative;z-index:1">🎯</div>
+          <div style="position:relative;z-index:1">
+            <div style="font-size:16px;font-weight:900;color:#fff;letter-spacing:-.3px">Wofür sparst du?</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:2px;font-weight:600">Wähle ein Ziel · tracke deinen Fortschritt</div>
+          </div>
         </div>
 
         <!-- Sparkonto-Guthaben -->
@@ -169,6 +190,35 @@
             <div id="goals-pct-bar" style="height:100%;border-radius:3px;background:var(--ok);transition:width .3s,background .3s;width:0%"></div>
           </div>
           <div style="font-size:11px;color:var(--mid);margin-top:5px" id="goals-pct-hint">Weise jedem Ziel einen %-Anteil zu</div>
+        </div>
+
+        <!-- Youth: Schnellstart-Ziele (horizontal scrollbar) -->
+        <div class="section-title youth-only">Schnellstart — tippe ein Ziel an</div>
+        <div class="goal-chips-row youth-only">
+          <div class="goal-chip" onclick="quickAddGoal('📱','Neues Handy',600)">
+            <span class="goal-chip-ico">📱</span><span class="goal-chip-lbl">Handy</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('🎮','Gaming Setup',400)">
+            <span class="goal-chip-ico">🎮</span><span class="goal-chip-lbl">Gaming</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('👟','Sneakers',200)">
+            <span class="goal-chip-ico">👟</span><span class="goal-chip-lbl">Sneakers</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('🛵','Töff-Führerschein',1200)">
+            <span class="goal-chip-ico">🛵</span><span class="goal-chip-lbl">Führerschein</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('✈️','Ferien',800)">
+            <span class="goal-chip-ico">✈️</span><span class="goal-chip-lbl">Ferien</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('🎸','Instrument',350)">
+            <span class="goal-chip-ico">🎸</span><span class="goal-chip-lbl">Instrument</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('💻','Laptop',1000)">
+            <span class="goal-chip-ico">💻</span><span class="goal-chip-lbl">Laptop</span>
+          </div>
+          <div class="goal-chip" onclick="quickAddGoal('🏕️','Lagerfeuer-Trip',300)">
+            <span class="goal-chip-ico">🏕️</span><span class="goal-chip-lbl">Trip</span>
+          </div>
         </div>
 
         <div id="goals-list"></div>
@@ -217,13 +267,17 @@
       <div class="scroll-area">
         <div class="hdr dark-bg">
           <img src="img/logo-white.svg" alt="BLKB" style="height:18px;margin-bottom:8px;opacity:.9">
-          <div class="hdr-label">In Partnerschaft mit MoneyHaxx × BLKB</div>
-          <div class="hdr-title">Money Haxx ⚡</div>
-          <div class="hdr-sub">6 Hacks für ein Leben ohne Geldstress</div>
+          <div class="hdr-label">Deine Geld-Tricks</div>
+          <div class="hdr-title">Money Hacks ⚡</div>
+          <div class="hdr-sub">6 einfache Tricks, die wirklich funktionieren</div>
         </div>
-        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0;position:relative">
-          <img src="img/jugend2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
-          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(30,35,40,.35),rgba(30,35,40,.0))"></div>
+        <div style="width:100%;height:90px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#0a1520 0%,#1a2535 55%,#2a3a52 100%);display:flex;align-items:center;padding:0 20px;gap:14px;position:relative">
+          <div style="position:absolute;right:-10px;top:-20px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.05)"></div>
+          <div style="font-size:44px;position:relative;z-index:1">⚡</div>
+          <div style="position:relative;z-index:1">
+            <div style="font-size:16px;font-weight:900;color:#fff;letter-spacing:-.3px">6 Geld-Tricks</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;font-weight:600">Einfach · sofort umsetzbar · wirksam</div>
+          </div>
         </div>
 
         <!-- Progress -->
@@ -929,155 +983,44 @@
          LEARN (Youth)
     ================================= -->
     <div class="view" id="view-learn">
-      <div class="scroll-area">
+      <!-- CHAPTER LIST -->
+      <div class="scroll-area" id="learn-chapter-list">
         <div class="hdr red-bg">
-          <img src="img/blkb-logo-claim.svg" style="height:28px;margin-bottom:8px;display:block;filter:brightness(0) invert(1);">
+          <img src="img/blkb-logo-claim.svg" style="height:28px;margin-bottom:10px;display:block;filter:brightness(0) invert(1);">
+          <div class="hdr-label">Dein Lernpfad</div>
           <div class="hdr-title">Finanz-Schule 🎓</div>
-          <div class="hdr-sub">Lerne spielend mit Geld umzugehen</div>
+          <div class="hdr-sub">5 Kapitel · von Taschengeld bis Lohn</div>
         </div>
 
-        <div style="height:12px"></div>
-
-        <!-- Module 0 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(0)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💡</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Was ist Geld?</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Von Muscheln bis Twint</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
+        <!-- Overall progress bar -->
+        <div style="margin:14px 16px 6px;background:white;border-radius:var(--r);box-shadow:var(--shadow-sm);padding:12px 14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+            <span style="font-size:12px;font-weight:700;color:var(--dark)">Dein Gesamtfortschritt</span>
+            <span style="font-size:12px;font-weight:700;color:var(--red)" id="learn-total-label">0 / 5 Kapitel</span>
           </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-0-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+            <div id="learn-total-bar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;transition:width .5s;width:0%"></div>
           </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-0-label">Noch nicht gestartet</div>
         </div>
 
-        <!-- Module 1 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(1)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌱</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Dein Geld wächst</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Der Zinseszins-Effekt</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-1-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-1-label">Noch nicht gestartet</div>
-        </div>
-
-        <!-- Module 2 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(2)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💰</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Umgang mit Geld</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Die 50/30/20-Regel</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-2-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-2-label">Noch nicht gestartet</div>
-        </div>
-
-        <!-- Module 3 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(3)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🏦</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Mein erstes Konto</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Konto, IBAN &amp; Zinsen</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-3-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-3-label">Noch nicht gestartet</div>
-        </div>
-
-        <!-- Module 4 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(4)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📱</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Im Alltag bezahlen</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Karte, Twint &amp; Kontaktlos</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-4-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-4-label">Noch nicht gestartet</div>
-        </div>
-
-        <!-- Module 5 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(5)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🛒</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Bedürfnis vs. Wunsch</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Brauche ich das wirklich?</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-5-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-5-label">Noch nicht gestartet</div>
-        </div>
-
-        <!-- Module 6 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(6)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🔐</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Sicher online</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Phishing erkennen</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-6-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-6-label">Noch nicht gestartet</div>
-        </div>
-
-        <!-- Module 7 -->
-        <div style="margin:0 16px 12px;background:white;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;cursor:pointer" onclick="openLearnModule(7)">
-          <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:44px;border-radius:12px;background:var(--red-l);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💼</div>
-            <div style="flex:1">
-              <div style="font-size:14px;font-weight:700;color:var(--dark)">Erster Job</div>
-              <div style="font-size:12px;color:var(--mid);margin-top:2px">Brutto, Netto &amp; Abzüge</div>
-            </div>
-            <div style="font-size:18px;color:var(--light)">→</div>
-          </div>
-          <div style="margin-top:10px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">
-            <div id="learn-mod-7-bar" style="height:100%;background:var(--red);border-radius:2px;width:0%"></div>
-          </div>
-          <div style="font-size:10px;color:var(--light);margin-top:4px" id="learn-mod-7-label">Noch nicht gestartet</div>
-        </div>
-
+        <div style="height:4px"></div>
+        <div id="learn-chapters-container"></div>
         <div style="height:20px"></div>
       </div>
-    </div>
 
-    <!-- LEARN MODAL -->
-    <div id="learn-modal" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:flex-end;">
-      <div style="background:var(--bg);border-radius:20px 20px 0 0;width:100%;max-height:85%;display:flex;flex-direction:column;overflow:hidden;">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--border);flex-shrink:0;">
-          <div id="learn-modal-title" style="font-size:16px;font-weight:700;color:var(--dark)"></div>
-          <button onclick="closeLearnModal()" style="background:none;border:none;font-size:22px;color:var(--mid);cursor:pointer;padding:0;line-height:1;">×</button>
+      <!-- LESSON PANEL (fullscreen overlay within view) -->
+      <div class="lesson-panel" id="lesson-panel">
+        <div class="lesson-topbar">
+          <button class="lesson-back" onclick="closeLesson()">← Zurück</button>
+          <div class="lesson-counter" id="lesson-counter">Karte 1 von 5</div>
+          <div class="lesson-progress-dots" id="lesson-pdots"></div>
         </div>
-        <div id="learn-modal-body" style="overflow-y:auto;padding:16px;padding-bottom:32px;"></div>
+        <div class="lesson-body" id="lesson-body">
+          <!-- filled by JS -->
+        </div>
+        <div class="lesson-footer">
+          <button class="lesson-btn" id="lesson-btn" onclick="advanceLessonCard()">Weiter →</button>
+        </div>
       </div>
     </div>
 
@@ -1085,23 +1028,23 @@
     <nav class="bottom-nav youth-only" id="youth-nav">
       <button class="nav-btn active" id="ynav0" onclick="switchView('home',0)">
         <span class="nav-pill"><span class="nav-icon"><i class="ti ti-home"></i></span></span>
-        <span class="nav-label">Home</span>
+        <span class="nav-label">Start</span>
       </button>
       <button class="nav-btn" id="ynav1" onclick="switchYouthView('learn')">
-        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-school"></i></span></span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-book"></i></span></span>
         <span class="nav-label">Lernen</span>
       </button>
       <button class="nav-btn" id="ynav2" onclick="switchView('goals',1)">
-        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-target"></i></span></span>
-        <span class="nav-label">Ziele</span>
+        <span class="nav-pill"><span class="nav-icon"><i class="ti ti-piggy-bank"></i></span></span>
+        <span class="nav-label">Sparen</span>
       </button>
       <button class="nav-btn" id="ynav3" onclick="switchView('fun',6)">
         <span class="nav-pill"><span class="nav-icon"><i class="ti ti-trophy"></i></span></span>
-        <span class="nav-label">Badges</span>
+        <span class="nav-label">Hero</span>
       </button>
       <button class="nav-btn" id="ynav4" onclick="switchView('haxx',2)">
         <span class="nav-pill"><span class="nav-icon"><i class="ti ti-bolt"></i></span></span>
-        <span class="nav-label">Tipps</span>
+        <span class="nav-label">Tricks</span>
       </button>
     </nav>
 
