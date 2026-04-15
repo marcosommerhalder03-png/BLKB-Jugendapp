@@ -51,46 +51,47 @@
         <!-- Header with lifecycle phase -->
         <div class="hdr">
           <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
-          <span class="hdr-title">Dein Weg</span>
+          <span class="hdr-title">Start</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
 
-        <!-- Hero banner -->
-        <div class="view-banner red">
-          <div class="view-banner-text">
-            <div class="view-banner-title">Dein Finanz-Start</div>
-            <div class="view-banner-sub">Schritt für Schritt · spielerisch</div>
-          </div>
-        </div>
-
         <!-- Daily mission card -->
+        <div class="section-title youth-only">Nächste Aufgabe</div>
         <div class="mission-card youth-only" id="home-mission-card" onclick="goToNextLesson()">
-          <div class="mission-icon" id="home-mission-icon">🎓</div>
           <div style="flex:1;min-width:0">
-            <div class="mission-label">Nächste Aufgabe</div>
-            <div class="mission-title" id="home-mission-title">Kapitel 1 starten</div>
-            <div class="mission-sub" id="home-mission-sub">Was ist Geld? · 4 Karten</div>
+            <div class="mission-label" id="home-mission-chapter">Kapitel 1</div>
+            <div class="mission-title" id="home-mission-title">Was ist Geld?</div>
+            <div class="mission-sub" id="home-mission-sub">4 Karten · ca. 3 Min</div>
           </div>
-          <div class="mission-arrow">→</div>
+          <div class="mission-arrow"><i class="ti ti-chevron-right"></i></div>
         </div>
 
         <!-- BP Konten -->
-        <div style="background:white;margin:0 0 0;box-shadow:var(--shadow)">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px 8px;border-bottom:1px solid var(--border)">
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)">Meine Konten · BLKB</div>
-            <span id="dash-mock-badge" style="font-size:9px;background:var(--warn-l);color:#92400e;padding:2px 8px;border-radius:10px;font-weight:700">DEMO</span>
+        <div class="accounts-section">
+          <div class="accounts-header">
+            <span class="accounts-label">Meine Konten</span>
+            <span id="dash-mock-badge" class="demo-badge">Demo</span>
           </div>
           <div id="dash-accounts">
-            <!-- wird via apiInit() befüllt -->
-            <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)">
-              <div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px">🏦</div>
-              <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Jugendkonto</div><div style="font-size:10px;color:var(--light)">CH56 0785 1234 5678 9000 0</div></div>
-              <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--petrol)">CHF 1'247.50</div><div style="font-size:10px;color:var(--light)">Jugendkonto</div></div>
+            <div class="account-row border-b">
+              <div class="account-info">
+                <div class="account-name">Jugendkonto</div>
+                <div class="account-iban">CH56 0785 … 9000 0</div>
+              </div>
+              <div class="account-bal">
+                <div class="account-amount">1'247.50</div>
+                <div class="account-type">Jugendkonto</div>
+              </div>
             </div>
-            <div style="padding:12px 14px;display:flex;align-items:center;gap:10px">
-              <div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px">💰</div>
-              <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Sparkonto Jugend</div><div style="font-size:10px;color:var(--light)">CH56 0785 1234 5678 9001 0</div></div>
-              <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--petrol)">CHF 2'500.00</div><div style="font-size:10px;color:var(--light)">Sparkonto</div></div>
+            <div class="account-row">
+              <div class="account-info">
+                <div class="account-name">Sparkonto Jugend</div>
+                <div class="account-iban">CH56 0785 … 9001 0</div>
+              </div>
+              <div class="account-bal">
+                <div class="account-amount">2'500.00</div>
+                <div class="account-type">Sparkonto</div>
+              </div>
             </div>
           </div>
         </div>

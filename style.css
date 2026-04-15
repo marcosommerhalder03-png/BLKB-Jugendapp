@@ -226,12 +226,14 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0 2px;
   font-family: var(--font);
   transition: transform .15s;
   flex: 1;
+  min-width: 0;
   gap: 2px;
   position: relative;
+  overflow: hidden;
 }
 
 .nav-btn:active { transform: scale(.88); }
@@ -268,7 +270,15 @@ body {
   color: #BABABA;
   transition: color .2s;
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
+
+/* Adult nav has 7 items — slightly smaller */
+#adult-nav .nav-icon { font-size: 19px; }
+#adult-nav .nav-label { font-size: 9px; }
 
 .nav-btn.active .nav-icon  { color: #E30613; }
 .nav-btn.active .nav-label { color: #E30613; font-weight: 700; }
@@ -1892,54 +1902,114 @@ input[type="range"]::-webkit-slider-thumb {
 .lesson-btn.finish { background: var(--ok); }
 
 /* =============================================
+   HOME — ACCOUNTS SECTION
+============================================= */
+.accounts-section {
+  background: #fff;
+  margin: 0 16px 12px;
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.accounts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.accounts-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--mid);
+}
+.demo-badge {
+  font-size: 10px;
+  background: var(--warn-l);
+  color: #92400e;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+}
+.account-row.border-b { border-bottom: 1px solid var(--border); }
+.account-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dark);
+}
+.account-iban {
+  font-size: 11px;
+  color: var(--light);
+  margin-top: 2px;
+}
+.account-bal { text-align: right; }
+.account-amount {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--red);
+}
+.account-amount::before { content: 'CHF '; font-size: 11px; font-weight: 600; color: var(--mid); }
+.account-type {
+  font-size: 10px;
+  color: var(--light);
+  margin-top: 2px;
+}
+
+/* =============================================
    YOUTH HOME — MISSION CARD
 ============================================= */
 .mission-card {
-  margin: 12px 16px;
+  margin: 4px 16px 12px;
   background: linear-gradient(150deg, #1a2535 0%, #0f1923 100%);
   border-radius: var(--r);
-  padding: 16px;
+  padding: 18px 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 14px;
-  transition: transform .15s;
+  gap: 0;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 20px rgba(15,25,35,.25);
 }
-.mission-card:active { transform: scale(.98); }
-.mission-icon {
-  font-size: 32px;
-  flex-shrink: 0;
-}
+.mission-card:active { transform: scale(.98); box-shadow: none; }
 .mission-label {
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: rgba(255,255,255,.45);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .mission-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 800;
   color: white;
-  letter-spacing: -.2px;
-  line-height: 1.25;
+  letter-spacing: -.3px;
+  line-height: 1.2;
 }
 .mission-sub {
   font-size: 12px;
-  color: rgba(255,255,255,.55);
-  margin-top: 3px;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
 }
 .mission-arrow {
   margin-left: auto;
-  width: 30px; height: 30px;
+  width: 34px; height: 34px;
   background: var(--red);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
   flex-shrink: 0;
 }
 

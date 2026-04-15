@@ -432,22 +432,23 @@ function advanceLessonCard() {
 }
 
 function updateHomeLearnMission() {
-  var mTitle = document.getElementById('home-mission-title');
-  var mSub   = document.getElementById('home-mission-sub');
-  var mIcon  = document.getElementById('home-mission-icon');
+  var mChapter = document.getElementById('home-mission-chapter');
+  var mTitle   = document.getElementById('home-mission-title');
+  var mSub     = document.getElementById('home-mission-sub');
   if (!mTitle) return;
   for (var i = 0; i < learnChapters.length; i++) {
     var prog = learnChapterProgress[i] || 0;
     if (prog < learnChapters[i].cards.length) {
-      mTitle.textContent = (prog === 0 ? 'Starte: ' : 'Weiter: ') + learnChapters[i].title;
-      mSub.textContent   = 'Karte ' + (prog + 1) + ' von ' + learnChapters[i].cards.length + ' · ' + learnChapters[i].subtitle.split('·')[1].trim();
-      if (mIcon) mIcon.textContent = learnChapters[i].emoji;
+      var ch = learnChapters[i];
+      if (mChapter) mChapter.textContent = 'Kapitel ' + (i + 1) + (prog > 0 ? ' · weitermachen' : '');
+      mTitle.textContent = ch.title;
+      mSub.textContent   = ch.cards.length + ' Karten · ' + ch.subtitle.split('·')[1].trim();
       return;
     }
   }
-  mTitle.textContent = 'Alle Kapitel abgeschlossen! 🌟';
-  mSub.textContent   = 'Du bist ein Finanz-Profi';
-  if (mIcon) mIcon.textContent = '🏆';
+  if (mChapter) mChapter.textContent = 'Abgeschlossen 🎓';
+  mTitle.textContent = 'Alle Kapitel fertig!';
+  mSub.textContent   = 'Du bist ein Finanz-Profi 🌟';
 }
 
 function goToNextLesson() {
@@ -3001,9 +3002,26 @@ function init() {
 init();
 
 /* ================================================
-   SWIPE NAVIGATION
+   SWIPE NAVIGATION  (mode-aware)
 ================================================ */
-var viewOrder = ['home','goals','haxx','budget','finlit','invest','fun'];
+var youthViewOrder = ['home', 'learn', 'goals', 'fun', 'haxx'];
+var adultViewOrder = ['home', 'goals', 'haxx', 'budget', 'finlit', 'invest', 'fun'];
+
+// Adult nav indices (used by switchView)
+var adultNavIdx  = { home:0, goals:1, haxx:2, budget:3, finlit:4, invest:5, fun:6 };
+// Youth switchView nav indices (adult-idx used for adult-nav highlight)
+var youthNavIdx  = { home:0, goals:1, fun:6, haxx:2 };
+
+function navigateToView(name) {
+  if (name === 'learn') {
+    switchYouthView('learn');
+  } else if (state.mode === 'youth') {
+    switchView(name, youthNavIdx[name] !== undefined ? youthNavIdx[name] : 0);
+  } else {
+    switchView(name, adultNavIdx[name] !== undefined ? adultNavIdx[name] : 0);
+  }
+}
+
 var swipeStartX = 0;
 var swipeStartY = 0;
 var swipeLocked = false;
@@ -3025,12 +3043,55 @@ document.addEventListener('touchend', function(e) {
   if (swipeLocked) return;
   var dx = e.changedTouches[0].clientX - swipeStartX;
   var dy = e.changedTouches[0].clientY - swipeStartY;
-  if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
-  var idx = viewOrder.indexOf(currentView);
-  if (dx < 0 && idx < viewOrder.length - 1) {
-    switchView(viewOrder[idx + 1], idx + 1);
+  if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.65) return;
+
+  // Don't swipe when inside a horizontally scrolling container
+  var t = e.target;
+  while (t && t !== document.body) {
+    if (t.scrollWidth > t.clientWidth + 4) return;
+    t = t.parentElement;
+  }
+
+  // Don't swipe when inside the lesson panel
+  if (document.getElementById('lesson-panel') &&
+      document.getElementById('lesson-panel').classList.contains('open')) return;
+
+  var order = (state.mode === 'youth') ? youthViewOrder : adultViewOrder;
+  var idx   = order.indexOf(currentView);
+  if (idx === -1) return;
+
+  if (dx < 0 && idx < order.length - 1) {
+    navigateToView(order[idx + 1]);
   } else if (dx > 0 && idx > 0) {
-    switchView(viewOrder[idx - 1], idx - 1);
+    navigateToView(order[idx - 1]);
+  }
+}, { passive: true });
+
+/* ── Lesson-card swipe (inside lesson panel) ─────────────── */
+var lessonSwipeStartX = 0;
+var lessonSwipeLocked = false;
+
+document.addEventListener('touchstart', function(e) {
+  var panel = document.getElementById('lesson-panel');
+  if (!panel || !panel.classList.contains('open')) return;
+  lessonSwipeStartX = e.touches[0].clientX;
+  lessonSwipeLocked = false;
+}, { passive: true });
+
+document.addEventListener('touchend', function(e) {
+  var panel = document.getElementById('lesson-panel');
+  if (!panel || !panel.classList.contains('open')) return;
+  if (lessonSwipeLocked) return;
+  var dx = e.changedTouches[0].clientX - lessonSwipeStartX;
+  var dy = e.changedTouches[0].clientY - (swipeStartY || 0);
+  if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) * 0.8) return;
+  if (dx < 0) {
+    // Swipe left → next card
+    advanceLessonCard();
+  } else if (dx > 0 && currentCardIdx > 0) {
+    // Swipe right → previous card (no progress loss)
+    currentCardIdx--;
+    showLessonCard();
   }
 }, { passive: true });
 
