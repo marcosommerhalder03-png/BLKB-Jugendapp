@@ -929,7 +929,8 @@ function setAge(age) {
 
   var stage = getStage(age);
   document.getElementById('home-age-label').textContent = age;
-  document.getElementById('home-lifecycle-tag').textContent = stage.tag;
+  var lifecycleTag = document.getElementById('home-lifecycle-tag');
+  if (lifecycleTag) lifecycleTag.textContent = stage.tag;
   
   document.getElementById('home-tip-text').textContent = stage.tip;
 
