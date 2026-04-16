@@ -346,7 +346,12 @@ function renderLearnChapters() {
     return (
       '<div class="chapter-card ' + cls + '" onclick="' + onclick + '">' +
         '<div class="chapter-inner">' +
-          '<div class="chapter-icon-wrap">' + ch.emoji + '</div>' +
+          (function(){
+            var ci = CHAPTER_ICONS[i] || { shape:'coin', theme:'neutral' };
+            var t  = isLocked ? DT_THEMES.neutral : DT_THEMES[ci.theme];
+            var fn = isLocked ? DT_PATHS.lock : DT_PATHS[ci.shape];
+            return '<div class="chapter-icon-wrap" style="background:'+t.bg+'"><svg width="22" height="22" viewBox="0 0 24 24">'+fn(t.ic)+'</svg></div>';
+          })() +
           '<div style="flex:1;min-width:0">' +
             '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
             '<div style="font-size:14px;font-weight:600;color:#1A1A1A;letter-spacing:-.2px">' + ch.title + '</div>' +
@@ -1401,6 +1406,82 @@ var haxxData = [
   },
 ];
 
+/* =============================================
+   DUOTONE ICON SYSTEM
+============================================= */
+var DT_THEMES = {
+  red:    { ic:'#E30613', bg:'#FFF0F0' },
+  blue:   { ic:'#185FA5', bg:'#E6F1FB' },
+  green:  { ic:'#3B6D11', bg:'#EAF3DE' },
+  purple: { ic:'#534AB7', bg:'#EEEDFE' },
+  amber:  { ic:'#854F0B', bg:'#FFF3CD' },
+  teal:   { ic:'#085041', bg:'#E1F5EE' },
+  gray:   { ic:'#444441', bg:'#F1EFE8' },
+  neutral:{ ic:'#999999', bg:'#F4F4F4' }
+};
+
+var DT_PATHS = {
+  coin:    function(c){return '<circle cx="12" cy="12" r="9" fill="'+c+'" opacity=".2"/><circle cx="12" cy="12" r="9" fill="none" stroke="'+c+'" stroke-width="1.5"/><path d="M12 8v.5m0 7v.5m-2-4.5a2 2 0 0 1 2-2h.5a1.5 1.5 0 0 1 0 3h-1a1.5 1.5 0 0 0 0 3H14" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round" fill="none"/>'; },
+  bank:    function(c){return '<path d="M3 10l9-7 9 7H3z" fill="'+c+'" opacity=".2"/><rect x="3" y="10" width="18" height="11" rx="1" fill="'+c+'" opacity=".1"/><path d="M3 10l9-7 9 7H3z" stroke="'+c+'" stroke-width="1.5" stroke-linejoin="round" fill="none"/><rect x="3" y="10" width="18" height="11" rx="1" stroke="'+c+'" stroke-width="1.5" fill="none"/><line x1="7" y1="21" x2="7" y2="14" stroke="'+c+'" stroke-width="1.5"/><line x1="12" y1="21" x2="12" y2="14" stroke="'+c+'" stroke-width="1.5"/><line x1="17" y1="21" x2="17" y2="14" stroke="'+c+'" stroke-width="1.5"/>'; },
+  card:    function(c){return '<rect x="2" y="5" width="20" height="14" rx="3" fill="'+c+'" opacity=".2"/><rect x="2" y="5" width="20" height="14" rx="3" stroke="'+c+'" stroke-width="1.5" fill="none"/><line x1="2" y1="10" x2="22" y2="10" stroke="'+c+'" stroke-width="1.5"/><line x1="6" y1="15" x2="10" y2="15" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/>'; },
+  bag:     function(c){return '<rect x="2" y="7" width="20" height="14" rx="2" fill="'+c+'" opacity=".2"/><rect x="2" y="7" width="20" height="14" rx="2" stroke="'+c+'" stroke-width="1.5" fill="none"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="'+c+'" stroke-width="1.5" fill="none"/><line x1="2" y1="13" x2="22" y2="13" stroke="'+c+'" stroke-width="1.5"/>'; },
+  target:  function(c){return '<circle cx="12" cy="12" r="9" fill="'+c+'" opacity=".15"/><circle cx="12" cy="12" r="9" stroke="'+c+'" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="5" stroke="'+c+'" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="1.5" fill="'+c+'"/>'; },
+  piggy:   function(c){return '<ellipse cx="12" cy="12" rx="7" ry="5.5" fill="'+c+'" opacity=".2"/><path d="M5 12a7 5.5 0 1 0 14 0 7 5.5 0 0 0-14 0z" stroke="'+c+'" stroke-width="1.5" fill="none"/><circle cx="17" cy="10.5" r="1" fill="'+c+'"/><path d="M19 9.5c1.5 0 3 1 3 2.5" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/>'; },
+  doc:     function(c){return '<path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="'+c+'" opacity=".2"/><path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/><line x1="9" y1="13" x2="15" y2="13" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/><line x1="9" y1="16" x2="13" y2="16" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/><path d="M14 2v4h4" stroke="'+c+'" stroke-width="1.5" fill="none"/>'; },
+  chart:   function(c){return '<rect x="3" y="12" width="5" height="9" rx="1" fill="'+c+'" opacity=".2"/><rect x="9.5" y="7" width="5" height="14" rx="1" fill="'+c+'" opacity=".2"/><rect x="16" y="4" width="5" height="17" rx="1" fill="'+c+'" opacity=".2"/><rect x="3" y="12" width="5" height="9" rx="1" stroke="'+c+'" stroke-width="1.5" fill="none"/><rect x="9.5" y="7" width="5" height="14" rx="1" stroke="'+c+'" stroke-width="1.5" fill="none"/><rect x="16" y="4" width="5" height="17" rx="1" stroke="'+c+'" stroke-width="1.5" fill="none"/>'; },
+  bulb:    function(c){return '<path d="M9 21h6m-3-18a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6H9c-1.5-1.5-3-3.5-3-6a6 6 0 0 1 6-6z" fill="'+c+'" opacity=".2"/><path d="M9 21h6m-3-18a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6H9c-1.5-1.5-3-3.5-3-6a6 6 0 0 1 6-6z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="17" x2="14" y2="17" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/>'; },
+  trend:   function(c){return '<polyline points="3,17 9,11 13,15 21,7" fill="none" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="16,7 21,7 21,12" fill="none" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17L9 11l4 4 8-8" fill="'+c+'" opacity=".12"/>'; },
+  plant:   function(c){return '<path d="M12 22V11M12 11C12 6 7 3 3 4S2 11 7 11h5z" fill="'+c+'" opacity=".2"/><path d="M12 15c0-5 5-8 9-7s1 7-4 7h-5z" fill="'+c+'" opacity=".2"/><path d="M12 22V11M12 11C12 6 7 3 3 4S2 11 7 11h5z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M12 15c0-5 5-8 9-7s1 7-4 7h-5z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/>'; },
+  shield:  function(c){return '<path d="M12 3L4 7v5c0 4.5 3.5 8.5 8 10 4.5-1.5 8-5.5 8-10V7L12 3z" fill="'+c+'" opacity=".2"/><path d="M12 3L4 7v5c0 4.5 3.5 8.5 8 10 4.5-1.5 8-5.5 8-10V7L12 3z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/><polyline points="9,12 11,14 15,10" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'; },
+  star:    function(c){return '<polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" fill="'+c+'" opacity=".2"/><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/>'; },
+  diploma: function(c){return '<rect x="2" y="5" width="20" height="14" rx="2" fill="'+c+'" opacity=".2"/><rect x="2" y="5" width="20" height="14" rx="2" stroke="'+c+'" stroke-width="1.5" fill="none"/><circle cx="10" cy="12" r="3" fill="'+c+'" opacity=".3"/><circle cx="10" cy="12" r="3" stroke="'+c+'" stroke-width="1.5" fill="none"/><line x1="15" y1="9" x2="19" y2="9" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="12" x2="19" y2="12" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/>'; },
+  heart:   function(c){return '<path d="M12 21l-9-9a5 5 0 0 1 7.07-7.07L12 6.93l1.93-1.93A5 5 0 0 1 21 12l-9 9z" fill="'+c+'" opacity=".2"/><path d="M12 21l-9-9a5 5 0 0 1 7.07-7.07L12 6.93l1.93-1.93A5 5 0 0 1 21 12l-9 9z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/>'; },
+  trophy:  function(c){return '<path d="M6 2h12v8a6 6 0 0 1-12 0V2z" fill="'+c+'" opacity=".2"/><path d="M6 2h12v8a6 6 0 0 1-12 0V2z" stroke="'+c+'" stroke-width="1.5" fill="none"/><path d="M6 4H2a2 2 0 0 0 2 4h2m10-4h4a2 2 0 0 1-2 4h-2" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="16" x2="12" y2="20" stroke="'+c+'" stroke-width="1.5"/><line x1="8" y1="20" x2="16" y2="20" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round"/>'; },
+  sparkle: function(c){return '<path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z" fill="'+c+'" opacity=".2"/><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/><circle cx="19" cy="4" r="1" fill="'+c+'"/><circle cx="5" cy="18" r="1" fill="'+c+'"/>'; },
+  rocket:  function(c){return '<path d="M12 2c0 0-5 4-5 10l5 5 5-5c0-6-5-10-5-10z" fill="'+c+'" opacity=".2"/><path d="M12 2c0 0-5 4-5 10l5 5 5-5c0-6-5-10-5-10z" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M7 12l-3 3 2 2 3-2m7-3l3 3-2 2-3-2" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="12" cy="9" r="1.5" fill="'+c+'"/>'; },
+  lightning:function(c){return '<polygon points="13,2 4,14 12,14 11,22 20,10 12,10" fill="'+c+'" opacity=".2"/><polygon points="13,2 4,14 12,14 11,22 20,10 12,10" stroke="'+c+'" stroke-width="1.5" fill="none" stroke-linejoin="round"/>'; },
+  growth:  function(c){return '<polyline points="4,20 9,14 13,17 20,8" fill="none" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20L9 14l4 3 7-9" fill="'+c+'" opacity=".15"/>'; },
+  dice:    function(c){return '<rect x="3" y="3" width="18" height="18" rx="4" fill="'+c+'" opacity=".2"/><rect x="3" y="3" width="18" height="18" rx="4" stroke="'+c+'" stroke-width="1.5" fill="none"/><circle cx="8.5" cy="8.5" r="1.5" fill="'+c+'"/><circle cx="15.5" cy="8.5" r="1.5" fill="'+c+'"/><circle cx="12" cy="12" r="1.5" fill="'+c+'"/><circle cx="8.5" cy="15.5" r="1.5" fill="'+c+'"/><circle cx="15.5" cy="15.5" r="1.5" fill="'+c+'"/>'; },
+  lock:    function(c){return '<rect x="5" y="11" width="14" height="10" rx="2" fill="'+c+'" opacity=".2"/><rect x="5" y="11" width="14" height="10" rx="2" stroke="'+c+'" stroke-width="1.5" fill="none"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="'+c+'" stroke-width="1.5" fill="none"/>'; }
+};
+
+function dtIcon(theme, shape) {
+  var t = DT_THEMES[theme] || DT_THEMES.neutral;
+  var fn = DT_PATHS[shape] || DT_PATHS.coin;
+  return '<div style="width:40px;height:40px;background:'+t.bg+';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24">'+fn(t.ic)+'</svg></div>';
+}
+
+// Learn chapter icon mapping (index 0-4)
+var CHAPTER_ICONS = [
+  { shape:'coin',   theme:'red'    },
+  { shape:'bank',   theme:'blue'   },
+  { shape:'card',   theme:'green'  },
+  { shape:'bag',    theme:'purple' },
+  { shape:'target', theme:'amber'  }
+];
+
+// Haxx category icon mapping
+var HAXX_ICONS = {
+  'Sparen':      { shape:'piggy', theme:'amber'  },
+  'Budget':      { shape:'chart', theme:'blue'   },
+  'Mindset':     { shape:'bulb',  theme:'purple' },
+  'Steuern':     { shape:'doc',   theme:'gray'   },
+  'Karriere':    { shape:'trend', theme:'teal'   },
+  'Investieren': { shape:'plant', theme:'green'  }
+};
+
+// Badge icon mapping
+var BADGE_ICONS = {
+  'first_goal':   { shape:'target',     theme:'amber'  },
+  'goal_reached': { shape:'trophy',     theme:'amber'  },
+  'three_goals':  { shape:'sparkle',    theme:'purple' },
+  'big_dream':    { shape:'rocket',     theme:'teal'   },
+  'haxx_master':  { shape:'lightning',  theme:'red'    },
+  'budget_pro':   { shape:'chart',      theme:'blue'   },
+  'invest_start': { shape:'growth',     theme:'green'  },
+  'story_hero':   { shape:'dice',       theme:'purple' }
+};
+
 // Category badge color map for Moneyhaxx
 var HAXX_CAT_COLORS = {
   'Sparen':     { bg: '#EAF3DE', text: '#27500A' },
@@ -1435,9 +1516,10 @@ function renderHaxx() {
     var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', text: '#1A1A1A' };
     var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
 
+    var haxxIco = HAXX_ICONS[h.category] || { shape:'coin', theme:'neutral' };
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
       '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
-        '<div class="haxx-num" style="width:40px;height:40px;border-radius:10px;background:#F4F4F4;font-size:20px">' + (h.emoji || h.num) + '</div>' +
+        dtIcon(haxxIco.theme, haxxIco.shape) +
         '<div class="haxx-header-text">' +
           '<div class="haxx-h-title">' +
             escHtml(h.title) +
@@ -2417,8 +2499,12 @@ function renderYouthGamification() {
     var html = '';
     BADGES.forEach(function(b) {
       var has = b.check();
+      var bdt = BADGE_ICONS[b.id] || { shape:'star', theme:'neutral' };
+      var badgeIcon = has
+        ? dtIcon(bdt.theme, bdt.shape)
+        : '<div style="opacity:.4">' + dtIcon('neutral', bdt.shape) + '</div>';
       html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:8px;border:0.5px solid #E8E8E8">' +
-        '<span style="font-size:22px;' + (has?'':'filter:grayscale(1);opacity:.35') + '">' + b.icon + '</span>' +
+        badgeIcon +
         '<div><div style="font-size:11px;font-weight:700;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
         '<div style="font-size:10px;color:#94a3b8">' + b.desc + '</div></div>' +
       '</div>';
@@ -2932,16 +3018,21 @@ function renderDashboardAccounts(accounts) {
 
   var typeLabel = { YOUTH: 'Jugendkonto', PRIVATE: 'Privatkonto',
                     SAVINGS: 'Sparkonto', SAVINGS_3A: 'Säule 3a' };
-  var typeIcon  = { YOUTH: '🏦', PRIVATE: '🏦', SAVINGS: '💰', SAVINGS_3A: '🛡️' };
+  var typeIconDT = {
+    YOUTH:     dtIcon('blue',  'bank'),
+    PRIVATE:   dtIcon('blue',  'bank'),
+    SAVINGS:   dtIcon('amber', 'piggy'),
+    SAVINGS_3A:dtIcon('teal',  'shield')
+  };
 
   var html = '';
   accounts.forEach(function(acc) {
-    var lbl   = typeLabel[acc.type]  || acc.name;
-    var icon  = typeIcon[acc.type]   || '💳';
-    var bal   = acc.balance.toLocaleString('de-CH', {minimumFractionDigits:2, maximumFractionDigits:2});
+    var lbl     = typeLabel[acc.type] || acc.name;
+    var iconHtml = typeIconDT[acc.type] || dtIcon('neutral', 'card');
+    var bal     = acc.balance.toLocaleString('de-CH', {minimumFractionDigits:2, maximumFractionDigits:2});
 
     html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #E8E8E8">' +
-      '<div style="width:40px;height:40px;border-radius:10px;background:#F4F4F4;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">' + icon + '</div>' +
+      iconHtml +
       '<div style="flex:1">' +
         '<div style="font-size:13px;font-weight:600;color:#1A1A1A">' + (acc.name || lbl) + '</div>' +
         '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + (acc.iban || lbl) + '</div>' +
