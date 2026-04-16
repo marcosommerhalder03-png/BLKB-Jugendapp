@@ -2947,7 +2947,7 @@ function renderDashboardAccounts(accounts) {
         '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + (acc.iban || lbl) + '</div>' +
       '</div>' +
       '<div style="text-align:right">' +
-        '<div style="font-size:14px;font-weight:700;color:#E30613">CHF ' + bal + '</div>' +
+        '<div style="font-size:14px;font-weight:700;color:#1A1A1A">CHF ' + bal + '</div>' +
         '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + lbl + '</div>' +
       '</div>' +
     '</div>';
