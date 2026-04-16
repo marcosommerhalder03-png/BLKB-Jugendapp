@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BLKB Jugend">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
 
@@ -295,10 +295,6 @@
           <span class="hdr-title">Budgetrechner</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
-        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
-          <img src="img/jugend4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 25%">
-        </div>
-
         <!-- Lohn Input -->
         <div class="budget-input-wrap">
           <div style="margin-bottom:8px">
@@ -345,7 +341,7 @@
             <span class="budget-sum-total budget-sum-ok" id="bud-sum-total">100%</span>
           </div>
           <div class="budget-sum-track">
-            <div class="budget-sum-fill" id="bud-sum-fill" style="width:100%;background:var(--ok)"></div>
+            <div class="budget-sum-fill" id="bud-sum-fill" style="width:100%;background:#27500A"></div>
           </div>
           <div class="budget-sum-hint" id="bud-sum-hint">✓ Perfekt — alle 100% sind verteilt</div>
           <button class="budget-reset-btn" onclick="resetBudgetDefaults()">↺ Standardwerte wiederherstellen</button>
@@ -367,14 +363,11 @@
           <span class="hdr-title">BLKB Angebote</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
-        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
-          <img src="img/jugend3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 50%">
-        </div>
-
         <!-- Intro -->
-        <div style="margin:14px 16px 0;background:linear-gradient(135deg,var(--petrol) 0%,#1a3540 100%);border-radius:var(--r);padding:14px 16px;color:white">
-          <div style="font-size:14px;font-weight:700;margin-bottom:4px">🏦 Deine Reise mit der BLKB</div>
-          <div style="font-size:12px;opacity:.75;line-height:1.5">Von deinem ersten Franken bis zum Aufbau deines Vermögens — die BLKB begleitet dich in jeder Phase.</div>
+        <div style="margin:14px 16px 0;background:#F4F4F4;border-radius:12px;padding:14px 16px;border:0.5px solid #E8E8E8">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:#6B6B6B;margin-bottom:4px">BLKB Begleitung</div>
+          <div style="font-size:14px;font-weight:600;color:#1A1A1A;margin-bottom:4px">Deine Reise mit der BLKB</div>
+          <div style="font-size:12px;color:#6B6B6B;line-height:1.5">Von deinem ersten Franken bis zum Aufbau deines Vermögens.</div>
         </div>
 
         <!-- Timeline -->
@@ -392,7 +385,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#fff0f0">🐷</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">🐷</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Umgang mit Geld</div>
                     <div class="fk-topic-sub">Taschengeld sinnvoll einteilen</div>
@@ -409,7 +402,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#e0eef2">🏦</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">🏦</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Erstes Konto</div>
                     <div class="fk-topic-sub">Mein eigenes Konto bei der BLKB</div>
@@ -426,7 +419,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#f0fdf4">📲</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">📲</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Im Alltag bezahlen</div>
                     <div class="fk-topic-sub">Karte, TWINT, kontaktlos</div>
@@ -456,7 +449,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#fffbeb">📊</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">📊</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Budget & Kontostruktur</div>
                     <div class="fk-topic-sub">Digitales Finanzverhalten aufbauen</div>
@@ -474,7 +467,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#fff0f0">📋</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">📋</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Steuern verstehen</div>
                     <div class="fk-topic-sub">Null-Schulden Hack in der Praxis</div>
@@ -491,7 +484,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#f0fdf4">🛡️</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">🛡️</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Vorsorgesystem Schweiz</div>
                     <div class="fk-topic-sub">3 Säulen einfach erklärt</div>
@@ -511,7 +504,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#fff0f0">✈️</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">✈️</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Erste Träume erfüllen</div>
                     <div class="fk-topic-sub">Sparziele mit System erreichen</div>
@@ -528,7 +521,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#e0eef2">🎓</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">🎓</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Ausbildung</div>
                     <div class="fk-topic-sub">Studium, Weiterbildung, Kurs</div>
@@ -546,7 +539,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#fffbeb">💼</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">💼</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Selbstständigkeit planen</div>
                     <div class="fk-topic-sub">Eigenes Business starten</div>
@@ -563,7 +556,7 @@
 
               <div class="fk-topic-card" onclick="this.classList.toggle('open')">
                 <div class="fk-topic-row">
-                  <span class="fk-topic-icon" style="background:#f0fdf4">👨‍👩‍👧</span>
+                  <span class="fk-topic-icon" style="background:#F4F4F4">👨‍👩‍👧</span>
                   <div class="fk-topic-text">
                     <div class="fk-topic-title">Familienplanung</div>
                     <div class="fk-topic-sub">Finanziell vorbereitet sein</div>
@@ -584,9 +577,9 @@
 
         </div>
 
-        <div style="padding:14px 16px 20px">
+        <div style="text-align:center;padding:10px 16px 20px">
           <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank"
-            style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:10px;background:white;border-radius:var(--r);box-shadow:var(--shadow)">
+            style="font-size:12px;color:#6B6B6B;text-decoration:none">
             Alle Angebote auf blkb.ch →
           </a>
         </div>
@@ -604,34 +597,28 @@
           <span class="hdr-title">Geld vermehren</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
-        <div style="width:100%;height:110px;overflow:hidden;flex-shrink:0">
-          <img src="img/jugend6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
-        </div>
-
         <!-- Anlage-Typ Toggle -->
-        <div style="padding:14px 16px 4px">
-          <div style="display:flex;gap:8px">
+        <div style="margin:14px 16px 4px;background:#F4F4F4;border-radius:12px;padding:4px;display:flex;gap:4px">
             <button id="inv-btn-frei" class="inv-type-btn active" onclick="setInvType('frei')">
               💼 Freies Vermögen
             </button>
             <button id="inv-btn-3a" class="inv-type-btn" onclick="setInvType('3a')">
               🛡️ Säule 3a
             </button>
-          </div>
         </div>
 
         <!-- 3a Info Box (nur bei 3a sichtbar) -->
-        <div id="inv-3a-info" style="display:none;margin:8px 16px 0;background:var(--warn-l);border-radius:var(--r);padding:12px 14px;border-left:3px solid var(--amber)">
-          <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Säule 3a · Max. 2026</div>
-          <div style="font-size:15px;font-weight:700;color:var(--dark)">CHF 7'258 / Jahr</div>
-          <div style="font-size:11px;color:#92400e;margin-top:3px">= CHF 604.83 / Monat für Angestellte mit Pensionskasse<br>Steuerlich abzugsfähig · Gebundene Vorsorge bis Rentenalter</div>
+        <div id="inv-3a-info" style="display:none;margin:8px 16px 0;background:#F4F4F4;border-radius:12px;padding:12px 14px;border:0.5px solid #E8E8E8">
+          <div style="font-size:11px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Säule 3a · Max. 2026</div>
+          <div style="font-size:18px;font-weight:700;color:#1A1A1A">CHF 7'258 / Jahr</div>
+          <div style="font-size:11px;color:#6B6B6B;margin-top:3px">= CHF 604.83 / Monat für Angestellte mit Pensionskasse<br>Steuerlich abzugsfähig · Gebundene Vorsorge bis Rentenalter</div>
         </div>
 
         <!-- Aktuelles 3a Guthaben aus ACP (wird via render3aInvest befüllt) -->
-        <div id="inv-3a-saldo-box" style="display:none;margin:8px 16px 0;background:var(--warn-l);border-radius:var(--r);padding:12px 14px;border-left:3px solid var(--amber)"></div>
+        <div id="inv-3a-saldo-box" style="display:none;margin:8px 16px 0;background:#F4F4F4;border-radius:12px;padding:12px 14px;border:0.5px solid #E8E8E8"></div>
 
         <!-- Eingaben -->
-        <div style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:14px">
+        <div style="margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;box-shadow:none;padding:14px 16px">
 
           <!-- Geschlecht → Rentenalter -->
           <div style="margin-bottom:12px">
@@ -674,7 +661,7 @@
                 class="form-input" style="margin:0;flex:1;font-size:18px;font-weight:700"
                 oninput="calcInvest()">
             </div>
-            <div id="inv-3a-maxhint" style="display:none;font-size:11px;color:var(--amber);margin-top:4px;font-weight:600"></div>
+            <div id="inv-3a-maxhint" style="display:none;font-size:11px;color:#E30613;margin-top:4px;font-weight:600"></div>
           </div>
 
           <!-- Rendite -->
@@ -696,24 +683,24 @@
         </div>
 
         <!-- Ergebnis-Box -->
-        <div style="margin:10px 16px 0;background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);border-radius:var(--r);padding:16px;color:white">
-          <div style="font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px" id="inv-result-label">Endwert nach 14 Jahren</div>
+        <div style="margin:10px 16px 0;background:#1A1A1A;border-radius:12px;padding:16px;color:white">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.5);margin-bottom:4px" id="inv-result-label">Endwert nach 14 Jahren</div>
           <div style="font-size:32px;font-weight:700;letter-spacing:-.5px">CHF <span id="inv-endwert">0</span></div>
           <div style="height:1px;background:rgba(255,255,255,.1);margin:12px 0"></div>
           <div style="display:flex;gap:10px">
-            <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:10px;text-align:center">
+            <div style="flex:1;background:rgba(255,255,255,.35);border-radius:8px;padding:10px;text-align:center">
               <div style="font-size:15px;font-weight:700">CHF <span id="inv-einbezahlt">0</span></div>
-              <div style="font-size:10px;opacity:.5;margin-top:2px">Einbezahlt</div>
+              <div style="font-size:10px;opacity:.7;margin-top:2px">Einbezahlt</div>
             </div>
-            <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:10px;text-align:center">
+            <div style="flex:1;background:rgba(110,231,183,.15);border-radius:8px;padding:10px;text-align:center">
               <div style="font-size:15px;font-weight:700;color:#6ee7b7">CHF <span id="inv-rendite">0</span></div>
-              <div style="font-size:10px;opacity:.5;margin-top:2px">Rendite</div>
+              <div style="font-size:10px;opacity:.7;margin-top:2px">Rendite</div>
             </div>
           </div>
           <!-- Balken: Einbezahlt vs Rendite -->
           <div style="margin-top:12px">
             <div style="height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;display:flex">
-              <div id="inv-bar-invested" style="height:100%;background:rgba(255,255,255,.4);transition:width .5s"></div>
+              <div id="inv-bar-invested" style="height:100%;background:rgba(255,255,255,.35);transition:width .5s"></div>
               <div id="inv-bar-return"   style="height:100%;background:#6ee7b7;transition:width .5s"></div>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:4px">
@@ -724,35 +711,35 @@
         </div>
 
         <!-- Vergleich Sparkonto -->
-        <div id="inv-compare-box" style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:14px">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:10px">⚖️ Vergleich: BLKB Sparkonto Jugend (0.5% p.a.)</div>
+        <div id="inv-compare-box" style="margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;box-shadow:none;padding:14px">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:10px">⚖️ Vergleich: BLKB Sparkonto Jugend (0.5% p.a.)</div>
           <div style="display:flex;gap:8px;margin-bottom:10px">
-            <div style="flex:1;background:var(--bg);border-radius:8px;padding:10px;text-align:center">
-              <div style="font-size:13px;font-weight:700;color:var(--mid)">CHF <span id="inv-spar-endwert">0</span></div>
-              <div style="font-size:10px;color:var(--light);margin-top:2px">Sparkonto</div>
+            <div style="flex:1;background:#F4F4F4;border-radius:8px;padding:10px;text-align:center">
+              <div style="font-size:13px;font-weight:700;color:#6B6B6B">CHF <span id="inv-spar-endwert">0</span></div>
+              <div style="font-size:10px;color:#6B6B6B;margin-top:2px">Sparkonto</div>
             </div>
-            <div style="display:flex;align-items:center;font-size:18px;color:var(--light)">vs</div>
-            <div style="flex:1;background:var(--ok-l);border-radius:8px;padding:10px;text-align:center;border:1.5px solid rgba(22,163,74,.15)">
-              <div style="font-size:13px;font-weight:700;color:var(--ok)">CHF <span id="inv-invest-vs">0</span></div>
-              <div style="font-size:10px;color:var(--ok);margin-top:2px" id="inv-invest-vs-label">Investiert</div>
+            <div style="display:flex;align-items:center;font-size:18px;color:#6B6B6B">vs</div>
+            <div style="flex:1;background:#EAF3DE;border-radius:8px;padding:10px;text-align:center;border:0.5px solid #C0DD97">
+              <div style="font-size:13px;font-weight:700;color:#27500A">CHF <span id="inv-invest-vs">0</span></div>
+              <div style="font-size:10px;color:#27500A;margin-top:2px" id="inv-invest-vs-label">Investiert</div>
             </div>
           </div>
-          <div style="background:var(--ok-l);border-radius:8px;padding:10px;border-left:3px solid var(--ok)">
-            <div style="font-size:12px;font-weight:700;color:var(--ok)">+ CHF <span id="inv-mehrertrag">0</span> mehr</div>
-            <div style="font-size:11px;color:#166534;margin-top:2px" id="inv-mehrertrag-label">durch Investieren statt Sparen</div>
+          <div style="background:#EAF3DE;border-radius:8px;padding:10px">
+            <div style="font-size:12px;font-weight:600;color:#27500A">+ CHF <span id="inv-mehrertrag">0</span> mehr</div>
+            <div style="font-size:11px;color:#27500A;margin-top:2px" id="inv-mehrertrag-label">durch Investieren statt Sparen</div>
           </div>
-          <div style="font-size:10px;color:var(--light);margin-top:8px;text-align:center">BLKB Sparkonto Jugend: 0.5% p.a. (Stand 2026, bis CHF 20'000)</div>
+          <div style="font-size:10px;color:#6B6B6B;margin-top:8px;text-align:center">BLKB Sparkonto Jugend: 0.5% p.a. (Stand 2026, bis CHF 20'000)</div>
         </div>
 
         <!-- Jahres-Tabelle -->
-        <div style="margin:10px 16px 0;background:white;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden">
-          <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--dark)">📅 Entwicklung Jahr für Jahr</div>
+        <div style="margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;box-shadow:none;overflow:hidden">
+          <div style="padding:12px 14px;border-bottom:1px solid #E8E8E8;background:#F4F4F4;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:#6B6B6B">Entwicklung Jahr für Jahr</div>
           <div id="inv-table" style="max-height:240px;overflow-y:auto"></div>
         </div>
 
-        <div style="padding:10px 16px 20px">
+        <div style="padding:14px 16px 20px;text-align:center">
           <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank"
-            style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:10px;background:white;border-radius:var(--r);box-shadow:var(--shadow)">
+            style="font-size:12px;color:#6B6B6B;text-decoration:none">
             BLKB Fondssparplan starten →
           </a>
         </div>
@@ -822,12 +809,12 @@
             <div class="gam-section-label">Finanz-Score</div>
             <div style="display:flex;align-items:center;gap:16px">
               <div class="health-ring-wrap">
-                <div id="youth-score-num" class="health-score-num" style="color:var(--amber)">0</div>
+                <div id="youth-score-num" class="health-score-num" style="color:#E30613">0</div>
                 <div style="font-size:11px;color:var(--mid)">von 100</div>
               </div>
               <div style="flex:1">
                 <div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden;margin-bottom:6px">
-                  <div id="youth-score-bar" style="height:100%;border-radius:5px;transition:width .5s;background:var(--amber);width:0%"></div>
+                  <div id="youth-score-bar" style="height:100%;border-radius:5px;transition:width .5s;background:#E30613;width:0%"></div>
                 </div>
                 <div id="youth-score-desc" style="font-size:12px;color:var(--mid)">Setze ein Sparziel, um Punkte zu sammeln!</div>
               </div>
@@ -872,13 +859,13 @@
             <div class="gam-section-label">Finanz-Gesundheitsscore</div>
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
               <div class="health-ring-wrap">
-                <div id="adult-health-num" class="health-score-num" style="color:var(--amber)">0</div>
+                <div id="adult-health-num" class="health-score-num" style="color:#E30613">0</div>
                 <div style="font-size:10px;color:var(--mid)">/ 100</div>
-                <div id="adult-health-badge" style="margin-top:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;background:var(--warn-l);color:var(--amber)">Ausbaufähig</div>
+                <div id="adult-health-badge" style="margin-top:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;background:#F4F4F4;color:#6B6B6B">Ausbaufähig</div>
               </div>
               <div style="flex:1">
                 <div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden">
-                  <div id="adult-health-bar" style="height:100%;border-radius:5px;background:var(--amber);transition:width .5s;width:0%"></div>
+                  <div id="adult-health-bar" style="height:100%;border-radius:5px;background:#E30613;transition:width .5s;width:0%"></div>
                 </div>
                 <div style="font-size:11px;color:var(--mid);margin-top:6px">Basierend auf 5 Finanz-Säulen · je 20 Punkte</div>
               </div>
@@ -892,15 +879,15 @@
           <div class="gam-card">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
               <div class="gam-section-label" style="margin-bottom:0">Diese Woche ✓</div>
-              <div id="adult-habit-progress-label" style="font-size:12px;font-weight:700;color:var(--petrol)">0/5</div>
+              <div id="adult-habit-progress-label" style="font-size:12px;font-weight:700;color:#6B6B6B">0/5</div>
             </div>
             <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px">
-              <div id="adult-habit-bar" style="height:100%;background:linear-gradient(90deg,var(--petrol),var(--ok));border-radius:3px;transition:width .4s;width:0%"></div>
+              <div id="adult-habit-bar" style="height:100%;background:#E30613;border-radius:3px;transition:width .4s;width:0%"></div>
             </div>
             <div id="adult-habits-list">
               <!-- Rendered by JS -->
             </div>
-            <div id="adult-habit-done-msg" style="display:none;margin-top:10px;padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok);text-align:center">🎉 Perfekte Woche! Weiter so!</div>
+            <div id="adult-habit-done-msg" style="display:none;margin-top:10px;padding:10px;background:#EAF3DE;border-radius:8px;font-size:13px;font-weight:700;color:#27500A;text-align:center">🎉 Perfekte Woche! Weiter so!</div>
           </div>
 
           <!-- Monatliche Challenge -->

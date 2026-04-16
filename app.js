@@ -1890,11 +1890,12 @@ function calcInvest() {
     var yRendite = balance - (einbezahlt * (y / years));
     var rowAge   = ageFrom + y;
     var isLast   = y === years;
-    tableHtml += '<div style="display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);' +
-      (isLast ? 'background:var(--ok-l);font-weight:700' : '') + '">' +
-      '<div style="width:36px;font-size:11px;color:var(--mid)">Ø ' + rowAge + '</div>' +
-      '<div style="flex:1;font-size:12px;color:var(--dark)">+CHF ' + fmtChf(yDeposit) + '</div>' +
-      '<div style="font-size:13px;font-weight:700;color:' + (isLast ? 'var(--ok)' : 'var(--dark)') + '">CHF ' + fmtChf(balance) + '</div>' +
+    var rowBg = isLast ? '#EAF3DE' : (y % 2 === 0 ? '#FAFAFA' : 'white');
+    tableHtml += '<div style="display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid #E8E8E8;background:' + rowBg + ';' +
+      (isLast ? 'font-weight:700' : '') + '">' +
+      '<div style="width:36px;font-size:11px;color:#6B6B6B">Ø ' + rowAge + '</div>' +
+      '<div style="flex:1;font-size:12px;color:#1A1A1A">+CHF ' + fmtChf(yDeposit) + '</div>' +
+      '<div style="font-size:13px;font-weight:700;color:#27500A">CHF ' + fmtChf(balance) + '</div>' +
     '</div>';
   }
   if (!years || years < 1) {
