@@ -117,30 +117,30 @@
         </div>
 
         <!-- Level-Bar (Budget-Profi) -->
-        <div style="margin:0 16px 8px;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:12px 14px;cursor:pointer" onclick="switchView('fun',6)">
+        <div style="margin:0 16px 8px;background:white;border-radius:12px;border:0.5px solid #E8E8E8;padding:12px 14px;cursor:pointer" onclick="switchView('fun',6)">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
             <div style="display:flex;align-items:center;gap:8px">
-              <span id="home-level-badge" style="font-size:20px">🌱</span>
+              <div style="width:40px;height:40px;background:#F4F4F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">
+                <span id="home-level-badge">🌱</span>
+              </div>
               <div>
-                <div style="font-size:12px;font-weight:700;color:var(--dark)" id="home-level-title">Finanz-Einsteiger</div>
-                <div style="font-size:10px;color:var(--mid)" id="home-level-sub">Level 1 · 0 Abzeichen</div>
+                <div style="font-size:14px;font-weight:600;color:#1A1A1A" id="home-level-title">Finanz-Einsteiger</div>
+                <div style="font-size:10px;color:#6B6B6B" id="home-level-sub">Level 1 · 0 Abzeichen</div>
               </div>
             </div>
-            <div style="font-size:10px;color:var(--light)">🎮 Fun →</div>
+            <div style="font-size:10px;color:#6B6B6B">Fun →</div>
           </div>
-          <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden">
-            <div id="home-level-bar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;transition:width .5s;width:0%"></div>
+          <div style="height:4px;background:#E8E8E8;border-radius:2px;overflow:hidden">
+            <div id="home-level-bar" style="height:100%;background:#E30613;border-radius:2px;transition:width .5s;width:0%"></div>
           </div>
+          <div id="home-level-xp-label" style="font-size:10px;color:#6B6B6B;margin-top:5px"></div>
           <!-- Earned badges row -->
-          <div style="font-size:10px;color:var(--light);margin-top:6px;line-height:1.4">
-            Nutze die App und sammle Abzeichen — für jedes Sparziel, jeden Hack und jede Funktion die du entdeckst.
-          </div>
-          <div id="home-badges-row" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"></div>
+          <div id="home-badges-row" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;max-width:100%;overflow:hidden"></div>
         </div>
 
         <!-- Contextual tip -->
         <div class="tip-card">
-          <div class="tip-label">💡 Tipp für deine Lebensphase</div>
+          <div class="tip-label">Tipp für deine Lebensphase</div>
           <div class="tip-text" id="home-tip-text">Spare zuerst, gib dann aus. Richte einen Dauerauftrag ein, der am Zahltag automatisch 10% deines Lohns aufs Sparkonto überweist.</div>
         </div>
 
@@ -157,35 +157,30 @@
           <span class="hdr-title">Meine Ziele</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
-        <div class="view-banner olive">
-          <div class="view-banner-text">
-            <div class="view-banner-title">Wofür sparst du?</div>
-            <div class="view-banner-sub">Wähle ein Ziel · tracke deinen Fortschritt</div>
-          </div>
-        </div>
 
         <!-- Sparkonto-Guthaben -->
-        <div style="margin:14px 16px 4px;background:linear-gradient(135deg,var(--olive) 0%,#4f5c2a 100%);border-radius:var(--r);padding:14px 16px;color:white">
-          <div style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Sparkonto-Guthaben · BLKB</div>
+        <div style="margin:14px 16px 4px;background:#E30613;border-radius:12px;padding:14px 16px;color:white">
+          <div style="font-size:10px;opacity:.75;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Sparkonto-Guthaben · BLKB</div>
           <div style="display:flex;align-items:center;gap:10px">
             <div style="font-size:26px;font-weight:700;flex:1">CHF <span id="goals-spar-display">2'500</span></div>
+            <button onclick="document.getElementById('goals-spar-input').focus()" style="background:rgba(255,255,255,.2);border:none;border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:white;flex-shrink:0;font-size:16px">✎</button>
             <input type="number" id="goals-spar-input" value="2500" min="0" max="999999"
-              style="width:100px;padding:6px 10px;border:none;border-radius:6px;font-size:14px;font-weight:700;color:var(--dark);background:rgba(255,255,255,.9);font-family:var(--font);text-align:right"
+              style="width:80px;padding:6px 10px;border:none;border-radius:6px;font-size:14px;font-weight:700;color:#1A1A1A;background:rgba(255,255,255,.9);font-family:var(--font);text-align:right"
               oninput="onSparChange(this.value)">
           </div>
-          <div style="font-size:11px;opacity:.6;margin-top:4px">Simulierter Kontostand (ohne API-Anbindung)</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.65);margin-top:6px">Simulierter Kontostand · ohne API-Anbindung</div>
         </div>
 
         <!-- % Summe -->
-        <div style="margin:8px 16px 4px;background:white;border-radius:var(--r);box-shadow:var(--shadow);padding:10px 14px">
+        <div style="margin:8px 16px 4px;background:white;border-radius:12px;border:0.5px solid #E8E8E8;padding:10px 14px">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:12px;font-weight:600;color:var(--mid)">Gesamtfortschritt</span>
-            <span style="font-size:13px;font-weight:700;color:var(--dark)" id="goals-pct-total">CHF 0</span>
+            <span style="font-size:12px;font-weight:600;color:#6B6B6B">Gesamtfortschritt</span>
+            <span style="font-size:13px;font-weight:700;color:#1A1A1A" id="goals-pct-total">CHF 0</span>
           </div>
-          <div style="height:5px;background:var(--border);border-radius:3px;margin-top:7px;overflow:hidden">
-            <div id="goals-pct-bar" style="height:100%;border-radius:3px;background:var(--ok);transition:width .3s,background .3s;width:0%"></div>
+          <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:7px;overflow:hidden">
+            <div id="goals-pct-bar" style="height:100%;border-radius:2px;background:#E30613;transition:width .3s,background .3s;width:0%"></div>
           </div>
-          <div style="font-size:11px;color:var(--mid);margin-top:5px" id="goals-pct-hint">Weise jedem Ziel einen %-Anteil zu</div>
+          <div style="font-size:11px;color:#6B6B6B;margin-top:5px" id="goals-pct-hint">Weise jedem Ziel einen %-Anteil zu</div>
         </div>
 
         <!-- Youth: Schnellstart-Ziele (horizontal scrollbar) -->
@@ -266,12 +261,7 @@
           <span class="hdr-title">Moneyhaxx</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
-        <div class="view-banner dark">
-          <div class="view-banner-text">
-            <div class="view-banner-title">Moneyhaxx</div>
-            <div class="view-banner-sub">6 Hacks · einfach · sofort umsetzbar</div>
-          </div>
-        </div>
+        <span class="section-label">6 Hacks · sofort umsetzbar</span>
 
         <!-- Progress -->
         <div class="haxx-progress-wrap">
@@ -287,8 +277,8 @@
         <!-- Hack items -->
         <div id="haxx-list"></div>
 
-        <div style="padding:0 16px 16px">
-          <a href="https://www.moneyhaxx.ch" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--mid);text-decoration:none;padding:10px;background:white;border-radius:var(--r);box-shadow:var(--shadow)">
+        <div style="padding:0 16px 16px;text-align:center">
+          <a href="https://www.moneyhaxx.ch" target="_blank" style="font-size:12px;color:#6B6B6B;text-decoration:none">
             Mehr auf moneyhaxx.ch →
           </a>
         </div>
@@ -788,12 +778,6 @@
             <span class="hdr-title">Money Hero</span>
             <div class="hdr-avatar"><i class="ti ti-user"></i></div>
           </div>
-          <div class="view-banner red">
-            <div class="view-banner-text">
-              <div class="view-banner-title">Level up deine Finanzen!</div>
-              <div class="view-banner-sub">Sammle XP · Erreiche Ziele</div>
-            </div>
-          </div>
 
           <!-- Streak + XP Card -->
           <div class="gam-card">
@@ -857,7 +841,7 @@
           </div>
 
           <!-- Entscheide richtig! — tägliches Story-Szenario -->
-          <div class="gam-card daily-challenge-card" style="border-left-color:var(--amber)">
+          <div class="gam-card daily-challenge-card">
             <div class="gam-section-label">🎲 Entscheide richtig!</div>
             <div id="youth-story-content"><!-- Rendered by JS --></div>
           </div>
@@ -881,12 +865,6 @@
             <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
             <span class="hdr-title">Money IQ</span>
             <div class="hdr-avatar"><i class="ti ti-user"></i></div>
-          </div>
-          <div class="view-banner petrol">
-            <div class="view-banner-text">
-              <div class="view-banner-title">Optimiere deine Finanzen!</div>
-              <div class="view-banner-sub">Tracke Gewohnheiten · Wachse</div>
-            </div>
           </div>
 
           <!-- Finanz-Gesundheits-Score -->
@@ -926,7 +904,7 @@
           </div>
 
           <!-- Monatliche Challenge -->
-          <div class="gam-card daily-challenge-card" style="border-left-color:var(--petrol)">
+          <div class="gam-card daily-challenge-card">
             <div class="gam-section-label">Monatliche Challenge</div>
             <div id="adult-monthly-challenge-content">
               <!-- Rendered by JS -->
@@ -974,13 +952,13 @@
         </div>
 
         <!-- Overall progress bar -->
-        <div style="margin:14px 16px 6px;background:white;border-radius:var(--r);box-shadow:var(--shadow-sm);padding:12px 14px">
+        <div style="margin:14px 16px 6px;background:white;border-radius:12px;border:0.5px solid #E8E8E8;padding:12px 14px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-            <span style="font-size:12px;font-weight:700;color:var(--dark)">Dein Gesamtfortschritt</span>
-            <span style="font-size:12px;font-weight:700;color:var(--red)" id="learn-total-label">0 / 5 Kapitel</span>
+            <span style="font-size:12px;font-weight:700;color:#1A1A1A">Dein Gesamtfortschritt</span>
+            <span style="font-size:12px;font-weight:700;color:#E30613" id="learn-total-label">0 / 5 Kapitel</span>
           </div>
-          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
-            <div id="learn-total-bar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;transition:width .5s;width:0%"></div>
+          <div style="height:4px;background:#E8E8E8;border-radius:2px;overflow:hidden">
+            <div id="learn-total-bar" style="height:100%;background:#E30613;border-radius:2px;transition:width .5s;width:0%"></div>
           </div>
         </div>
 

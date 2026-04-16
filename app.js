@@ -333,21 +333,28 @@ function renderLearnChapters() {
     var isInProg = !isDone && !isLocked && prog > 0;
 
     var cls = isDone ? 'done' : (isLocked ? 'locked' : (isInProg ? 'inprog' : ''));
-    var badgeText  = isDone ? 'Abgeschlossen' : (isLocked ? '🔒 Gesperrt' : (isInProg ? 'In Bearbeitung' : 'Starten'));
+    var badgeText  = isDone ? 'Abgeschlossen' : (isLocked ? 'Gesperrt' : (isInProg ? 'In Bearbeitung' : 'Neu'));
     var pct  = isDone ? 100 : Math.round(prog / total * 100);
-    var onclick = isLocked ? "showToast('🔒 Schliesse zuerst das vorherige Kapitel ab')" : 'openChapter(' + i + ')';
+    var onclick = isLocked ? "showToast('Schliesse zuerst das vorherige Kapitel ab')" : 'openChapter(' + i + ')';
+
+    // "Starten →" button only for unlocked, non-done cards
+    var startBtn = '';
+    if (!isLocked && !isDone) {
+      startBtn = '<button onclick="event.stopPropagation();openChapter(' + i + ')" style="margin-top:8px;padding:6px 14px;background:#E30613;color:white;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Starten \u2192</button>';
+    }
 
     return (
       '<div class="chapter-card ' + cls + '" onclick="' + onclick + '">' +
         '<div class="chapter-inner">' +
           '<div class="chapter-icon-wrap">' + ch.emoji + '</div>' +
           '<div style="flex:1;min-width:0">' +
-            '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mid);margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
-            '<div style="font-size:15px;font-weight:700;color:#1A1A1A;letter-spacing:-.2px">' + ch.title + '</div>' +
+            '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
+            '<div style="font-size:14px;font-weight:600;color:#1A1A1A;letter-spacing:-.2px">' + ch.title + '</div>' +
             '<div class="chapter-progress-row">' +
               '<div class="chapter-bar-bg"><div class="chapter-bar-fill" style="width:' + pct + '%"></div></div>' +
               '<span class="chapter-bar-label">' + prog + ' / ' + total + '</span>' +
             '</div>' +
+            startBtn +
           '</div>' +
           '<div class="chapter-tag">' + badgeText + '</div>' +
         '</div>' +
@@ -1138,10 +1145,6 @@ function renderGoals() {
       timeHtml = '<div style="font-size:11px;color:var(--amber);margin-top:3px">💡 Sparrate im <b>Budgetrechner</b> setzen</div>';
     }
 
-    // Prioritäts-Badge — Farbe nach Rang
-    var badgeColors = ['#fd000d','#e38121','#7c8947','#2c5969','#6b7280'];
-    var badgeColor  = badgeColors[Math.min(i, badgeColors.length - 1)];
-
     html +=
       '<div class="goal-item" data-goal-idx="' + i + '" onclick="openGoalModal(' + i + ')">' +
         '<div class="goal-item-header">' +
@@ -1153,25 +1156,25 @@ function renderGoals() {
           '<div class="goal-emoji">' + g.emoji + '</div>' +
           '<div class="goal-info">' +
             '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">' +
-              '<span style="font-size:9px;font-weight:700;color:white;background:' + badgeColor + ';padding:2px 7px;border-radius:10px">P' + (i+1) + '</span>' +
+              '<span style="font-size:9px;font-weight:700;color:#1A1A1A;background:#F4F4F4;padding:2px 7px;border-radius:6px">P' + (i+1) + '</span>' +
               '<span class="goal-name">' + escHtml(g.name) + '</span>' +
             '</div>' +
-            '<div style="font-size:12px;font-weight:700;color:var(--dark)">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:var(--mid)">/ ' + fmtChf(target) + '</span></div>' +
+            '<div style="font-size:12px;font-weight:700;color:#1A1A1A">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:#6B6B6B">/ ' + fmtChf(target) + '</span></div>' +
             (reached
-              ? '<div style="font-size:11px;color:var(--ok);font-weight:700;margin-top:2px">✓ Ziel erreicht!</div>'
-              : '<div style="font-size:11px;color:var(--mid);margin-top:2px">Noch CHF ' + fmtChf(missing) + ' fehlend</div>') +
+              ? '<div style="font-size:11px;color:#27500A;font-weight:700;margin-top:2px">✓ Ziel erreicht!</div>'
+              : '<div style="font-size:11px;color:#6B6B6B;margin-top:2px">Noch CHF ' + fmtChf(missing) + ' fehlend</div>') +
             timeHtml +
           '</div>' +
           '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">' +
             (reached
               ? '<div style="font-size:24px;line-height:1">✅</div>'
-              : '<div style="font-size:15px;font-weight:800;color:var(--red)">' + pct + '%</div>') +
+              : '<div style="font-size:22px;font-weight:700;color:#E30613">' + pct + '%</div>') +
             '<button class="goal-del-btn" onclick="event.stopPropagation();deleteGoal(' + i + ')" style="font-size:14px;padding:2px">🗑</button>' +
           '</div>' +
         '</div>' +
         '<div class="goal-bar-wrap">' +
           '<div class="goal-bar-bg">' +
-            '<div class="goal-bar-fill" style="width:' + pct + '%;background:' + (reached ? 'var(--ok)' : badgeColor) + ';transition:width .5s"></div>' +
+            '<div class="goal-bar-fill" style="width:' + pct + '%;background:' + (reached ? '#27500A' : '#E30613') + ';transition:width .5s"></div>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -1181,8 +1184,8 @@ function renderGoals() {
 
   // Hinweis wenn Sparrate fehlt
   if (mSpar === 0 && state.goals.some(function(g){ return (g.ziel||0) > 0; })) {
-    html += '<div style="margin:4px 16px 8px;padding:12px 14px;background:var(--warn-l);border-radius:var(--r);font-size:12px;color:#92400e;line-height:1.5">' +
-      '💡 <strong>Tipp:</strong> Setze im ' +
+    html += '<div style="margin:4px 16px 8px;padding:12px 14px;background:#EAF3DE;border-radius:12px;border:0.5px solid #E8E8E8;font-size:12px;color:#27500A;line-height:1.5">' +
+      '<strong>Tipp:</strong> Setze im ' +
       '<span onclick="switchView(\'budget\',3)" style="font-weight:700;text-decoration:underline;cursor:pointer">Budgetrechner</span>' +
       ' eine Sparquote, um zu sehen wann du deine Ziele erreichst.' +
       '</div>';
@@ -1398,6 +1401,16 @@ var haxxData = [
   },
 ];
 
+// Category badge color map for Moneyhaxx
+var HAXX_CAT_COLORS = {
+  'Sparen':     { bg: '#EAF3DE', text: '#27500A' },
+  'Budget':     { bg: '#E6F1FB', text: '#0C447C' },
+  'Mindset':    { bg: '#FAEEDA', text: '#633806' },
+  'Karriere':   { bg: '#EEEDFE', text: '#534AB7' },
+  'Investieren':{ bg: '#E6F1FB', text: '#185FA5' },
+  'Steuern':    { bg: '#F1EFE8', text: '#5F5E5A' },
+};
+
 function renderHaxx() {
   var list = document.getElementById('haxx-list');
   var doneCount = state.haxxDone.length;
@@ -1419,13 +1432,16 @@ function renderHaxx() {
       bodyHtml += '</ul>';
     }
 
+    var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', text: '#1A1A1A' };
+    var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
+
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
       '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
-        '<div class="haxx-num">' + (h.emoji || h.num) + '</div>' +
+        '<div class="haxx-num" style="width:40px;height:40px;border-radius:10px;background:#F4F4F4;font-size:20px">' + (h.emoji || h.num) + '</div>' +
         '<div class="haxx-header-text">' +
           '<div class="haxx-h-title">' +
             escHtml(h.title) +
-            '<span class="haxx-cat-badge">' + escHtml(h.category || '') + '</span>' +
+            '<span style="' + catStyle + '">' + escHtml(h.category || '') + '</span>' +
           '</div>' +
           '<div class="haxx-h-sub">' + escHtml(h.sub) + '</div>' +
         '</div>' +
@@ -2313,14 +2329,19 @@ function renderYouthGamification() {
   if (barEl) barEl.style.width = pct + '%';
   if (bdgEl) bdgEl.textContent = lvl.badge;
 
-  // Dashboard Badges-Row
+  // Dashboard Badges-Row + XP label
   var rowEl = document.getElementById('home-badges-row');
+  var xpLblEl = document.getElementById('home-level-xp-label');
+  if (xpLblEl) {
+    var lvlNum = YOUTH_LEVELS.indexOf(lvl) + 1;
+    xpLblEl.textContent = 'Level ' + lvlNum + ' · ' + xp + ' / ' + (nextXp || xp) + ' XP';
+  }
   if (rowEl) {
     if (earned.length === 0) {
-      rowEl.innerHTML = '<span style="font-size:11px;color:var(--light)">Noch keine Abzeichen — leg los! 🚀</span>';
+      rowEl.innerHTML = '<span style="font-size:11px;color:#94a3b8">Noch keine Abzeichen — leg los!</span>';
     } else {
-      rowEl.innerHTML = earned.map(function(b){
-        return '<span title="' + b.title + '" style="font-size:20px;cursor:default">' + b.icon + '</span>';
+      rowEl.innerHTML = earned.slice(0,4).map(function(b){
+        return '<span title="' + b.title + '" style="font-size:20px;cursor:default;background:#F4F4F4;border-radius:20px;padding:3px 8px;display:inline-flex;align-items:center">' + b.icon + '</span>';
       }).join('');
     }
   }
@@ -2340,9 +2361,10 @@ function renderYouthGamification() {
     } else {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
         '<span style="font-size:28px">' + ch.icon + '</span>' +
-        '<div><div style="font-size:14px;font-weight:700;color:var(--dark)">' + ch.title + '</div>' +
-        '<div style="font-size:12px;color:var(--mid)">' + ch.desc + '</div></div></div>' +
-        '<button onclick="claimDailyChallenge()" style="width:100%;padding:11px;background:var(--red);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">+' + ch.xp + ' XP verdienen</button>';
+        '<div style="flex:1"><div style="font-size:14px;font-weight:700;color:#1A1A1A">' + ch.title + '</div>' +
+        '<div style="font-size:12px;color:#6B6B6B">' + ch.desc + '</div></div>' +
+        '<button onclick="claimDailyChallenge()" style="padding:8px 14px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">+' + ch.xp + ' XP</button>' +
+        '</div>';
     }
   }
 
@@ -2394,10 +2416,10 @@ function renderYouthGamification() {
     var html = '';
     BADGES.forEach(function(b) {
       var has = b.check();
-      html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;background:' + (has?'var(--ok-l)':'var(--bg)') + ';border-radius:8px;border:1px solid ' + (has?'rgba(22,163,74,.2)':'var(--border)') + '">' +
+      html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:8px;border:0.5px solid #E8E8E8">' +
         '<span style="font-size:22px;' + (has?'':'filter:grayscale(1);opacity:.35') + '">' + b.icon + '</span>' +
-        '<div><div style="font-size:11px;font-weight:700;color:' + (has?'var(--ok)':'var(--mid)') + '">' + b.title + '</div>' +
-        '<div style="font-size:10px;color:var(--light)">' + b.desc + '</div></div>' +
+        '<div><div style="font-size:11px;font-weight:700;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8">' + b.desc + '</div></div>' +
       '</div>';
     });
     grid.innerHTML = html;
@@ -2480,10 +2502,10 @@ function renderAdultGamification() {
     if (chDone) {
       mchEl.innerHTML = '<div style="padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok)">✓ Challenge angenommen! Viel Erfolg diesen Monat!</div>';
     } else {
-      mchEl.innerHTML = '<div style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:10px">' + monthCh.text + '</div>' +
+      mchEl.innerHTML = '<div style="font-size:15px;font-weight:600;color:#1A1A1A;margin-bottom:10px">' + monthCh.text + '</div>' +
         '<div style="display:flex;gap:8px">' +
-        '<button onclick="acceptMonthlyChallenge()" style="flex:1;padding:10px;background:var(--petrol);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Angenommen!</button>' +
-        '<button onclick="switchView(\'' + monthCh.view + '\',0)" style="flex:1;padding:10px;background:var(--bg);color:var(--petrol);border:1px solid var(--petrol);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">' + monthCh.cta + '</button>' +
+        '<button onclick="acceptMonthlyChallenge()" style="flex:1;padding:10px;background:#E30613;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">Angenommen!</button>' +
+        '<button onclick="switchView(\'' + monthCh.view + '\',0)" style="flex:1;padding:10px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">' + monthCh.cta + '</button>' +
         '</div>';
     }
   }
@@ -2545,11 +2567,11 @@ function renderAdultGamification() {
     scenEl.innerHTML = scenarios.map(function(s) {
       return '<div class="scenario-card">' +
         '<div style="display:flex;align-items:center;gap:8px">' +
-        '<span style="font-size:24px">' + s.icon + '</span>' +
-        '<div style="font-size:13px;font-weight:700;color:var(--dark)">' + s.title + '</div></div>' +
-        '<div style="font-size:12px;color:var(--mid)">' + s.desc + '</div>' +
-        '<div class="scenario-value">' + s.value + '</div>' +
-        '<button onclick="' + s.action + '" style="padding:8px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-start">' + s.cta + '</button>' +
+        '<div style="width:40px;height:40px;background:#F4F4F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">' + s.icon + '</div>' +
+        '<div style="font-size:14px;font-weight:600;color:#1A1A1A">' + s.title + '</div></div>' +
+        '<div style="font-size:12px;color:#6B6B6B">' + s.desc + '</div>' +
+        '<div class="scenario-value" style="color:#27500A">' + s.value + '</div>' +
+        '<button onclick="' + s.action + '" style="padding:8px 14px;background:#E30613;color:white;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-start;font-family:inherit">' + s.cta + '</button>' +
         '</div>';
     }).join('');
   }
@@ -2909,26 +2931,23 @@ function renderDashboardAccounts(accounts) {
 
   var typeLabel = { YOUTH: 'Jugendkonto', PRIVATE: 'Privatkonto',
                     SAVINGS: 'Sparkonto', SAVINGS_3A: 'Säule 3a' };
-  var typeColor = { YOUTH: 'var(--petrol)', PRIVATE: 'var(--petrol)',
-                    SAVINGS: 'var(--petrol)', SAVINGS_3A: 'var(--petrol)' };
   var typeIcon  = { YOUTH: '🏦', PRIVATE: '🏦', SAVINGS: '💰', SAVINGS_3A: '🛡️' };
 
   var html = '';
   accounts.forEach(function(acc) {
     var lbl   = typeLabel[acc.type]  || acc.name;
-    var color = typeColor[acc.type]  || 'var(--slate)';
     var icon  = typeIcon[acc.type]   || '💳';
     var bal   = acc.balance.toLocaleString('de-CH', {minimumFractionDigits:2, maximumFractionDigits:2});
 
-    html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border)">' +
-      '<div style="width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">' + icon + '</div>' +
+    html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #E8E8E8">' +
+      '<div style="width:40px;height:40px;border-radius:10px;background:#F4F4F4;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">' + icon + '</div>' +
       '<div style="flex:1">' +
-        '<div style="font-size:13px;font-weight:600;color:var(--dark)">' + (acc.name || lbl) + '</div>' +
-        '<div style="font-size:10px;color:var(--light);margin-top:1px">' + (acc.iban || lbl) + '</div>' +
+        '<div style="font-size:13px;font-weight:600;color:#1A1A1A">' + (acc.name || lbl) + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + (acc.iban || lbl) + '</div>' +
       '</div>' +
       '<div style="text-align:right">' +
-        '<div style="font-size:14px;font-weight:700;color:' + color + '">CHF ' + bal + '</div>' +
-        '<div style="font-size:10px;color:var(--light);margin-top:1px">' + lbl + '</div>' +
+        '<div style="font-size:14px;font-weight:700;color:#E30613">CHF ' + bal + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + lbl + '</div>' +
       '</div>' +
     '</div>';
   });
