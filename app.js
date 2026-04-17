@@ -347,10 +347,10 @@ function renderLearnChapters() {
       '<div class="chapter-card ' + cls + '" onclick="' + onclick + '">' +
         '<div class="chapter-inner">' +
           (function(){
-            var ci = CHAPTER_ICONS[i] || { shape:'coin', theme:'neutral' };
-            var t  = isLocked ? DT_THEMES.neutral : DT_THEMES[ci.theme];
-            var fn = isLocked ? DT_PATHS.lock : DT_PATHS[ci.shape];
-            return '<div class="chapter-icon-wrap" style="background:'+t.bg+'"><svg width="22" height="22" viewBox="0 0 24 24">'+fn(t.ic)+'</svg></div>';
+            var cc = CHAPTER_COLORS[i] || { bg:'#F4F4F4', c:'#6B6B6B' };
+            var bg = isLocked ? '#F4F4F4' : cc.bg;
+            var extra = isLocked ? 'opacity:.4;' : '';
+            return '<div class="chapter-icon-wrap" style="background:'+bg+';'+extra+'font-size:20px">'+ch.emoji+'</div>';
           })() +
           '<div style="flex:1;min-width:0">' +
             '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
@@ -487,7 +487,7 @@ function renderLearnSteps(body, mod, n) {
     div.style.cssText = 'background:'+(done?'#f0fdf4':'white')+';border:1.5px solid '+(done?'#16a34a':'#e2e8f0')+';border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;';
     div.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">' +
-        '<span style="font-size:24px">' + (step.icon||'📖') + '</span>' +
+        '<div style="width:40px;height:40px;background:#F4F4F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + (step.icon||'📖') + '</div>' +
         '<span style="font-size:13px;font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</span>' +
         (done ? '<span style="margin-left:auto;color:#16a34a;font-weight:700">✓</span>' : '') +
       '</div>' +
@@ -639,7 +639,7 @@ function nextQuizQuestion() {
     var perfect = score === total;
     body.innerHTML =
       '<div style="text-align:center;padding:20px 10px">' +
-        '<div style="font-size:48px;margin-bottom:10px">' + (perfect?'🏆':(score>=1?'⭐':'💪')) + '</div>' +
+        '<div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px">' + (perfect?'🏆':(score>=1?'⭐':'💪')) + '</div>' +
         '<div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:6px">' + score + ' / ' + total + ' richtig</div>' +
         '<div style="font-size:13px;color:var(--mid);margin-bottom:16px">' + (perfect?'Perfekt! Du hast alles verstanden.':'Gut versucht! Schau dir die Erklärungen nochmal an.') + '</div>' +
       '</div>' +
@@ -675,14 +675,14 @@ function twintPay(i) {
   var item = mod.items[i];
   var body = document.getElementById('learn-modal-body');
   if (window._twintBalance < item.price) {
-    body.innerHTML = '<div style="text-align:center;padding:20px"><div style="font-size:40px">😬</div><div style="font-size:16px;font-weight:700;color:var(--red);margin:10px 0">Nicht genug Guthaben!</div><div style="font-size:13px;color:var(--mid)">So fühlt es sich an, wenn das Konto leer ist. Darum ist sparen wichtig!</div></div>' +
+    body.innerHTML = '<div style="text-align:center;padding:20px"><div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px">😬</div><div style="font-size:16px;font-weight:700;color:var(--red);margin:10px 0">Nicht genug Guthaben!</div><div style="font-size:13px;color:var(--mid)">So fühlt es sich an, wenn das Konto leer ist. Darum ist sparen wichtig!</div></div>' +
       '<button onclick="renderTwintScreen()" style="width:100%;margin-top:12px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Zurück ←</button>';
     return;
   }
   window._twintBalance -= item.price;
   body.innerHTML =
     '<div style="text-align:center;padding:20px">' +
-      '<div style="font-size:48px;margin-bottom:10px">✅</div>' +
+      '<div style="width:56px;height:56px;background:#EAF3DE;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px">✅</div>' +
       '<div style="font-size:16px;font-weight:700;color:var(--ok);margin-bottom:6px">Zahlung erfolgreich!</div>' +
       '<div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px">' + item.name + '</div>' +
       '<div style="font-size:14px;color:var(--red);margin-bottom:10px">- CHF ' + item.price.toFixed(2) + '</div>' +
@@ -743,7 +743,7 @@ function renderSwipeResult(body) {
   var correct = total - window._swipeScore.wrong;
   body.innerHTML =
     '<div style="text-align:center;padding:16px">' +
-      '<div style="font-size:48px">' + (correct===total?'🏆':(correct>=total*0.7?'⭐':'💪')) + '</div>' +
+      '<div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">' + (correct===total?'🏆':(correct>=total*0.7?'⭐':'💪')) + '</div>' +
       '<div style="font-size:20px;font-weight:800;color:var(--dark);margin:10px 0">' + correct + ' / ' + total + ' richtig</div>' +
       '<div style="font-size:13px;color:var(--mid)">Du erkennst Bedürfnisse und Wünsche!</div>' +
     '</div>' +
@@ -802,7 +802,7 @@ function renderPhishingResult(body) {
   var total = window._phishMod.emails.length;
   body.innerHTML =
     '<div style="text-align:center;padding:16px">' +
-      '<div style="font-size:48px">' + (window._phishScore===total?'🕵️':'🔍') + '</div>' +
+      '<div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">' + (window._phishScore===total?'🕵️':'🔍') + '</div>' +
       '<div style="font-size:20px;font-weight:800;color:var(--dark);margin:10px 0">' + window._phishScore + ' / ' + total + ' erkannt</div>' +
       '<div style="font-size:13px;color:var(--mid)">Du bist jetzt ein Phishing-Detektor!</div>' +
     '</div>' +
@@ -1077,6 +1077,14 @@ function fmtChf(n) {
   return Math.round(n).toLocaleString('de-CH');
 }
 
+/* ── Invest-Boost Konstanten & Hilfsfunktion ───────────────────── */
+var INVEST_RATE   = 0.05;
+var INVEST_MONTHS = 120;
+function fvCalc(monthly, months, rate) {
+  var r = rate / 12;
+  return r === 0 ? monthly * months : monthly * ((Math.pow(1 + r, months) - 1) / r);
+}
+
 function onSparChange(val) {
   var n = Math.max(0, parseInt(val) || 0);
   state.sparGuthaben = n;
@@ -1158,10 +1166,10 @@ function renderGoals() {
             'ontouchstart="goalDragStart(event,' + i + ')" ' +
             'onclick="event.stopPropagation()" ' +
             'title="Priorität verschieben">⠿</button>' +
-          '<div class="goal-emoji">' + g.emoji + '</div>' +
+          '<div class="goal-emoji" style="width:44px;height:44px;background:' + goalEmojiBg(g.emoji) + ';border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px">' + g.emoji + '</div>' +
           '<div class="goal-info">' +
             '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">' +
-              '<span style="font-size:9px;font-weight:700;color:#1A1A1A;background:#F4F4F4;padding:2px 7px;border-radius:6px">P' + (i+1) + '</span>' +
+              '<span style="font-size:9px;font-weight:600;color:#6B6B6B;background:#F4F4F4;padding:2px 7px;border-radius:5px;margin-right:2px">P' + (i+1) + '</span>' +
               '<span class="goal-name">' + escHtml(g.name) + '</span>' +
             '</div>' +
             '<div style="font-size:12px;font-weight:700;color:#1A1A1A">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:#6B6B6B">/ ' + fmtChf(target) + '</span></div>' +
@@ -1172,7 +1180,7 @@ function renderGoals() {
           '</div>' +
           '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">' +
             (reached
-              ? '<div style="font-size:24px;line-height:1">✅</div>'
+              ? '<span style="font-size:9px;font-weight:600;color:#27500A;background:#EAF3DE;padding:3px 8px;border-radius:6px">✓ Erreicht</span>'
               : '<div style="font-size:22px;font-weight:700;color:#E30613">' + pct + '%</div>') +
             '<button class="goal-del-btn" onclick="event.stopPropagation();deleteGoal(' + i + ')" style="font-size:14px;padding:2px">🗑</button>' +
           '</div>' +
@@ -1420,6 +1428,18 @@ var DT_THEMES = {
   neutral:{ ic:'#999999', bg:'#F4F4F4' }
 };
 
+var GOAL_EMOJI_BG = {
+  '✈️':'#E6F1FB','🌍':'#E6F1FB','🏖️':'#E6F1FB','🗺️':'#E6F1FB','🎓':'#E6F1FB',
+  '🏠':'#E6F1FB','🎮':'#E6F1FB',
+  '🚴':'#EAF3DE','🚲':'#EAF3DE','⚽':'#EAF3DE','🏀':'#EAF3DE','🏃':'#EAF3DE',
+  '💪':'#EAF3DE','🛴':'#EAF3DE','👟':'#EAF3DE','🏕️':'#EAF3DE','👨‍👩‍👧':'#EAF3DE',
+  '📱':'#EEEDFE','🎸':'#EEEDFE','🎧':'#EEEDFE',
+  '💻':'#F1EFE8',
+  '🛡️':'#FFF3CD','🎯':'#FFF3CD','💰':'#FFF3CD','🚗':'#FFF3CD','🐷':'#FFF3CD',
+  '🛵':'#FFF3CD','💼':'#FFF3CD'
+};
+function goalEmojiBg(e){ return GOAL_EMOJI_BG[e]||'#F4F4F4'; }
+
 var DT_PATHS = {
   coin:    function(c){return '<circle cx="12" cy="12" r="9" fill="'+c+'" opacity=".2"/><circle cx="12" cy="12" r="9" fill="none" stroke="'+c+'" stroke-width="1.5"/><path d="M12 8v.5m0 7v.5m-2-4.5a2 2 0 0 1 2-2h.5a1.5 1.5 0 0 1 0 3h-1a1.5 1.5 0 0 0 0 3H14" stroke="'+c+'" stroke-width="1.5" stroke-linecap="round" fill="none"/>'; },
   bank:    function(c){return '<path d="M3 10l9-7 9 7H3z" fill="'+c+'" opacity=".2"/><rect x="3" y="10" width="18" height="11" rx="1" fill="'+c+'" opacity=".1"/><path d="M3 10l9-7 9 7H3z" stroke="'+c+'" stroke-width="1.5" stroke-linejoin="round" fill="none"/><rect x="3" y="10" width="18" height="11" rx="1" stroke="'+c+'" stroke-width="1.5" fill="none"/><line x1="7" y1="21" x2="7" y2="14" stroke="'+c+'" stroke-width="1.5"/><line x1="12" y1="21" x2="12" y2="14" stroke="'+c+'" stroke-width="1.5"/><line x1="17" y1="21" x2="17" y2="14" stroke="'+c+'" stroke-width="1.5"/>'; },
@@ -1451,7 +1471,14 @@ function dtIcon(theme, shape) {
   return '<div style="width:40px;height:40px;background:'+t.bg+';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24">'+fn(t.ic)+'</svg></div>';
 }
 
-// Learn chapter icon mapping (index 0-4)
+// Learn chapter color mapping (index 0-4)
+var CHAPTER_COLORS = [
+  { bg:'#FFF0F0', c:'#E30613' },
+  { bg:'#E6F1FB', c:'#185FA5' },
+  { bg:'#EAF3DE', c:'#3B6D11' },
+  { bg:'#EEEDFE', c:'#534AB7' },
+  { bg:'#FFF3CD', c:'#854F0B' },
+];
 var CHAPTER_ICONS = [
   { shape:'coin',   theme:'red'    },
   { shape:'bank',   theme:'blue'   },
@@ -1482,14 +1509,14 @@ var BADGE_ICONS = {
   'story_hero':   { shape:'dice',       theme:'purple' }
 };
 
-// Category badge color map for Moneyhaxx
+// Icon + category badge colors for Moneyhaxx
 var HAXX_CAT_COLORS = {
-  'Sparen':     { bg: '#EAF3DE', text: '#27500A' },
-  'Budget':     { bg: '#E6F1FB', text: '#0C447C' },
-  'Mindset':    { bg: '#FAEEDA', text: '#633806' },
-  'Karriere':   { bg: '#EEEDFE', text: '#534AB7' },
-  'Investieren':{ bg: '#E6F1FB', text: '#185FA5' },
-  'Steuern':    { bg: '#F1EFE8', text: '#5F5E5A' },
+  'Sparen':     { bg: '#FFF3CD', ic: '#854F0B', text: '#854F0B' },
+  'Budget':     { bg: '#E6F1FB', ic: '#185FA5', text: '#185FA5' },
+  'Mindset':    { bg: '#EEEDFE', ic: '#534AB7', text: '#534AB7' },
+  'Karriere':   { bg: '#E1F5EE', ic: '#085041', text: '#085041' },
+  'Investieren':{ bg: '#EAF3DE', ic: '#3B6D11', text: '#3B6D11' },
+  'Steuern':    { bg: '#F1EFE8', ic: '#444441', text: '#444441' },
 };
 
 function renderHaxx() {
@@ -1513,13 +1540,13 @@ function renderHaxx() {
       bodyHtml += '</ul>';
     }
 
-    var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', text: '#1A1A1A' };
+    var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', ic: '#6B6B6B', text: '#6B6B6B' };
     var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
+    var haxxIcoHtml = '<div style="width:40px;height:40px;background:' + catColor.bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">' + h.emoji + '</div>';
 
-    var haxxIco = HAXX_ICONS[h.category] || { shape:'coin', theme:'neutral' };
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
       '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
-        dtIcon(haxxIco.theme, haxxIco.shape) +
+        haxxIcoHtml +
         '<div class="haxx-header-text">' +
           '<div class="haxx-h-title">' +
             escHtml(h.title) +
@@ -1568,6 +1595,14 @@ function toggleHaxxDone(i) {
 /* ================================================
    BUDGET
 ================================================ */
+var BUD_CAT_THEME = {
+  'fill-ok':     { bg:'#EAF3DE', ic:'#3B6D11' },
+  'fill-red':    { bg:'#FFF0F0', ic:'#E30613' },
+  'fill-petrol': { bg:'#E1F5EE', ic:'#085041' },
+  'fill-amber':  { bg:'#FFF3CD', ic:'#854F0B' },
+  'fill-slate':  { bg:'#F4F4F4', ic:'#6B6B6B' },
+  'fill-olive':  { bg:'#F4F4F4', ic:'#444441' },
+};
 var BUDGET_VERSION = '3';
 var budgetDefaults = [
   // ── MoneyHaxx Standard ──────────────────────────────────────────
@@ -1663,7 +1698,7 @@ function calcBudget() {
     var barW = Math.min(100, (c.pct || 0) * 2);
     html += '<div class="budget-cat">' +
       '<div class="budget-cat-row">' +
-        '<div class="budget-cat-icon">' + c.icon + '</div>' +
+        (function(){ var bt=BUD_CAT_THEME[c.color]||{bg:'#F4F4F4',ic:'#6B6B6B'}; return '<div style="width:36px;height:36px;background:'+bt.bg+';border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+bt.ic+';font-size:17px">'+c.icon+'</div>'; })() +
         '<div class="budget-cat-info">' +
           '<div class="budget-cat-name">' + c.name + '</div>' +
           '<div class="budget-cat-hint">' + c.hint + '</div>' +
@@ -2004,6 +2039,62 @@ function calcInvest() {
     'durch ' + invState.rate + '% Rendite statt 0.5% Sparkonto über ' + years + ' Jahre';
 }
 
+
+/* ── Gewohnheits-Booster Toggle (Jugend Fun) ───────────────────── */
+function toggleHabitBoost(el) {
+  var chk    = el.querySelector('.habit-chk');
+  var active = el.getAttribute('data-active') === '1';
+  if (active) {
+    el.setAttribute('data-active', '0');
+    el.style.background  = '#F4F4F4';
+    el.style.border      = '.5px solid #E8E8E8';
+    chk.style.background  = 'transparent';
+    chk.style.borderColor = '#E8E8E8';
+    chk.innerHTML = '';
+  } else {
+    el.setAttribute('data-active', '1');
+    el.style.background  = '#EAF3DE';
+    el.style.border      = '.5px solid #C0DD97';
+    chk.style.background  = '#27500A';
+    chk.style.borderColor = '#27500A';
+    chk.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12">' +
+      '<polyline points="2,6 5,9 10,3" stroke="white" stroke-width="1.8" ' +
+      'fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+  var total = 0;
+  document.querySelectorAll('.habit-boost-item').forEach(function(h) {
+    if (h.getAttribute('data-active') === '1') total += +h.getAttribute('data-val');
+  });
+  var eExtra = document.getElementById('habit-extra');
+  var e10j   = document.getElementById('habit-10j');
+  var eBar   = document.getElementById('habit-bar');
+  if (eExtra) eExtra.textContent = fmtChf(total);
+  if (e10j)   e10j.textContent   = fmtChf(fvCalc(total, INVEST_MONTHS, INVEST_RATE));
+  if (eBar)   eBar.style.width   = Math.min(100, Math.round(total / 400 * 100)) + '%';
+}
+
+/* ── Invest-Boost Slider (Erwachsene Invest-Screen) ────────────── */
+function calcInvBoost() {
+  var s1 = document.getElementById('inv-boost-s1');
+  var s2 = document.getElementById('inv-boost-s2');
+  var s3 = document.getElementById('inv-boost-s3');
+  if (!s1) return;
+  var v1 = +s1.value, v2 = +s2.value, v3 = +s3.value;
+  document.getElementById('inv-boost-v1').textContent = v1;
+  document.getElementById('inv-boost-v2').textContent = v2;
+  document.getElementById('inv-boost-v3').textContent = v3;
+  var extra     = v1 + v2 + v3;
+  var base      = 200;
+  var total     = base + extra;
+  var fv10base  = fvCalc(base,  INVEST_MONTHS, INVEST_RATE);
+  var fv10total = fvCalc(total, INVEST_MONTHS, INVEST_RATE);
+  document.getElementById('inv-boost-extra').textContent = fmtChf(extra);
+  document.getElementById('inv-boost-total').textContent = fmtChf(fv10total);
+  document.getElementById('inv-boost-diff').textContent  = fmtChf(fv10total - fv10base);
+  var maxFv = fvCalc(base + 600, INVEST_MONTHS, INVEST_RATE);
+  var pct   = Math.min(100, Math.round((fv10total / maxFv) * 100));
+  document.getElementById('inv-boost-bar').style.width = pct + '%';
+}
 
 /* ================================================================
    GAMIFICATION — Badges, Level, Challenges, Games
@@ -2383,7 +2474,8 @@ function renderYouthGamification() {
 
   // Streak badge
   var sBadge = document.getElementById('youth-streak-badge');
-  if (sBadge) sBadge.textContent = '🔥 ' + (state.streak || 0) + ' Tag' + ((state.streak || 0) === 1 ? '' : 'e') + ' in Folge';
+  var sDays = document.getElementById('streak-days');
+  if (sDays) sDays.textContent = (state.streak || 0);
 
   // Level / XP bar
   var fBdg = document.getElementById('fun-level-badge');
@@ -2424,7 +2516,7 @@ function renderYouthGamification() {
       rowEl.innerHTML = '<span style="font-size:11px;color:#94a3b8">Noch keine Abzeichen — leg los!</span>';
     } else {
       rowEl.innerHTML = earned.slice(0,4).map(function(b){
-        return '<span title="' + b.title + '" style="font-size:20px;cursor:default;background:#F4F4F4;border-radius:20px;padding:3px 8px;display:inline-flex;align-items:center">' + b.icon + '</span>';
+        return '<div title="' + b.title + '" style="width:28px;height:28px;background:#F4F4F4;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:default">' + b.icon + '</div>';
       }).join('');
     }
   }
@@ -2438,12 +2530,12 @@ function renderYouthGamification() {
     var done = (state.dailyChallengeDate === today && state.dailyChallengeXpClaimed);
     if (done) {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--ok-l);border-radius:8px">' +
-        '<span style="font-size:28px">' + ch.icon + '</span>' +
+        '<div style="width:40px;height:40px;background:#FFF0F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + ch.icon + '</div>' +
         '<div><div style="font-size:14px;font-weight:700;color:var(--ok)">✓ ' + ch.title + '</div>' +
         '<div style="font-size:12px;color:var(--mid)">Heute abgehakt · +' + ch.xp + ' XP erhalten</div></div></div>';
     } else {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
-        '<span style="font-size:28px">' + ch.icon + '</span>' +
+        '<div style="width:40px;height:40px;background:#FFF0F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + ch.icon + '</div>' +
         '<div style="flex:1"><div style="font-size:14px;font-weight:700;color:#1A1A1A">' + ch.title + '</div>' +
         '<div style="font-size:12px;color:#6B6B6B">' + ch.desc + '</div></div>' +
         '<button onclick="claimDailyChallenge()" style="padding:8px 14px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">+' + ch.xp + ' XP</button>' +
@@ -2499,14 +2591,11 @@ function renderYouthGamification() {
     var html = '';
     BADGES.forEach(function(b) {
       var has = b.check();
-      var bdt = BADGE_ICONS[b.id] || { shape:'star', theme:'neutral' };
-      var badgeIcon = has
-        ? dtIcon(bdt.theme, bdt.shape)
-        : '<div style="opacity:.4">' + dtIcon('neutral', bdt.shape) + '</div>';
-      html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:8px;border:0.5px solid #E8E8E8">' +
-        badgeIcon +
-        '<div><div style="font-size:11px;font-weight:700;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
-        '<div style="font-size:10px;color:#94a3b8">' + b.desc + '</div></div>' +
+      var ico = '<div style="width:36px;height:36px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">' + b.icon + '</div>';
+      html += '<div style="display:flex;align-items:center;gap:8px;padding:10px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:10px;border:' + (has?'0.5px solid #C0DD97':'0.5px solid #E8E8E8') + ';' + (has?'':'opacity:0.5') + '">' +
+        ico +
+        '<div><div style="font-size:11px;font-weight:600;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
+        '<div style="font-size:9px;color:' + (has?'#3B6D11':'#999') + '">' + b.desc + '</div></div>' +
       '</div>';
     });
     grid.innerHTML = html;
@@ -2526,6 +2615,60 @@ function renderYouthGamification() {
 
   // Ziele im Fokus (Youth)
   renderGoalsFocus('youth-goals-focus', false);
+
+  // Gewohnheits-Booster (einmalig aufbauen — Toggle-State bleibt erhalten)
+  var habitContainer = document.getElementById('youth-habit-booster');
+  if (habitContainer && !habitContainer._built) {
+    habitContainer._built = true;
+    var habitData = [
+      { emoji:'☕', bg:'#FFF3CD', label:'Kaffee to-go reduzieren',     sub:'CHF 5/Tag → spart CHF 150/Mt', val:150 },
+      { emoji:'📺', bg:'#E6F1FB', label:'1 Streaming-Abo kündigen',     sub:'Spart CHF 80/Mt',              val:80  },
+      { emoji:'🍔', bg:'#EEEDFE', label:'Weniger auswärts essen',        sub:'2× weniger/Woche → CHF 120/Mt',val:120 },
+      { emoji:'🚗', bg:'#EAF3DE', label:'ÖV statt Auto/Taxi',           sub:'Spart CHF 50/Mt',              val:50  },
+    ];
+    habitContainer.innerHTML =
+      '<div class="gam-card">' +
+        '<div class="gam-section-label">Gewohnheits-Booster</div>' +
+        '<div style="font-size:11px;color:#6B6B6B;margin-bottom:10px">' +
+          'Wähle was du reduzieren möchtest — sieh sofort den Invest-Effekt.' +
+        '</div>' +
+        habitData.map(function(h) {
+          return '<div class="habit-boost-item" data-val="' + h.val + '" ' +
+            'onclick="toggleHabitBoost(this)" ' +
+            'style="background:#F4F4F4;border-radius:10px;padding:10px 12px;' +
+            'display:flex;align-items:center;gap:10px;cursor:pointer;' +
+            'border:.5px solid #E8E8E8;margin-bottom:6px;transition:all .2s">' +
+            '<div class="habit-chk" style="width:20px;height:20px;border-radius:5px;' +
+              'border:2px solid #E8E8E8;display:flex;align-items:center;' +
+              'justify-content:center;flex-shrink:0"></div>' +
+            '<div style="width:32px;height:32px;background:' + h.bg + ';border-radius:8px;' +
+              'display:flex;align-items:center;justify-content:center;' +
+              'font-size:15px;flex-shrink:0">' + h.emoji + '</div>' +
+            '<div style="flex:1">' +
+              '<div style="font-size:12px;font-weight:600;color:#1A1A1A">' + h.label + '</div>' +
+              '<div style="font-size:10px;color:#6B6B6B;margin-top:1px">' + h.sub + '</div>' +
+            '</div>' +
+            '<div style="font-size:12px;font-weight:700;color:#27500A">+' + h.val + '</div>' +
+          '</div>';
+        }).join('') +
+        '<div style="display:flex;gap:8px;margin-top:10px">' +
+          '<div style="flex:1;background:#F4F4F4;border-radius:10px;padding:10px;text-align:center">' +
+            '<div style="font-size:10px;color:#6B6B6B;margin-bottom:3px">Zusätzlich/Mt</div>' +
+            '<div style="font-size:18px;font-weight:700;color:#27500A">+CHF <span id="habit-extra">0</span></div>' +
+          '</div>' +
+          '<div style="flex:1;background:#1A1A2E;border-radius:10px;padding:10px;text-align:center">' +
+            '<div style="font-size:10px;color:rgba(255,255,255,.5);margin-bottom:3px">Nach 10 J. mehr</div>' +
+            '<div style="font-size:18px;font-weight:700;color:#6ee7b7">+CHF <span id="habit-10j">0</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="height:6px;background:#E8E8E8;border-radius:3px;margin-top:8px;overflow:hidden">' +
+          '<div id="habit-bar" style="height:100%;background:#3B6D11;border-radius:3px;transition:width .3s;width:0%"></div>' +
+        '</div>' +
+        '<div style="font-size:10px;color:#6B6B6B;text-align:center;margin-top:4px">' +
+          'Max. Potenzial: CHF 400/Mt → CHF 62\'000 nach 10 Jahren' +
+        '</div>' +
+      '</div>';
+  }
 }
 
 /* ─── Render: Adult ─────────────────────────────────────────── */
@@ -2550,7 +2693,7 @@ function renderAdultGamification() {
         '<div><div style="font-size:13px;font-weight:600;color:var(--dark)">' + p.label + '</div>' +
         '<div style="font-size:11px;color:var(--mid)">' + p.hint + '</div></div>' +
         '<div style="display:flex;align-items:center;gap:6px">' +
-        '<span class="pillar-check">' + (p.ok ? '✅' : '❌') + '</span>' +
+        '<div style="width:28px;height:28px;background:' + (p.ok?'#EAF3DE':'#F4F4F4') + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">' + (p.ok?'✅':'❌') + '</div>' +
         '<span style="font-size:12px;font-weight:700;color:' + (p.ok?'var(--ok)':'var(--light)') + '">' + (p.ok?'+20':'0') + ' Pkt.</span>' +
         '</div></div>';
     }).join('');
@@ -2756,7 +2899,7 @@ function renderGoalsFocus(elId, isAdult) {
   if (goals.length === 0) {
     el.innerHTML =
       '<div style="text-align:center;padding:16px 0;color:var(--mid)">' +
-      '<div style="font-size:28px;margin-bottom:8px">🎯</div>' +
+      '<div style="width:40px;height:40px;background:#FFF3CD;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 8px">🎯</div>' +
       '<div style="font-size:13px">Noch keine Sparziele gesetzt.</div>' +
       '<button onclick="switchView(\'goals\',0)" style="margin-top:10px;padding:8px 16px;background:' + (isAdult?'var(--petrol)':'var(--red)') + ';color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Erstes Ziel anlegen →</button>' +
       '</div>';
@@ -3018,11 +3161,23 @@ function renderDashboardAccounts(accounts) {
 
   var typeLabel = { YOUTH: 'Jugendkonto', PRIVATE: 'Privatkonto',
                     SAVINGS: 'Sparkonto', SAVINGS_3A: 'Säule 3a' };
+  function acctIcon(bg, stroke) {
+    return '<div style="width:40px;height:40px;background:'+bg+';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:10px">' +
+      '<svg width="22" height="22" viewBox="0 0 32 32">' +
+        '<rect x="2" y="8" width="24" height="17" rx="3" fill="'+stroke+'" opacity="0.2"/>' +
+        '<rect x="2" y="8" width="24" height="17" rx="3" stroke="'+stroke+'" stroke-width="1.8" fill="none"/>' +
+        '<line x1="2" y1="12" x2="26" y2="12" stroke="'+stroke+'" stroke-width="1.8"/>' +
+        '<line x1="2" y1="16" x2="26" y2="16" stroke="'+stroke+'" stroke-width="1.8"/>' +
+        '<rect x="18" y="3" width="12" height="8" rx="2" fill="'+stroke+'" opacity="0.5"/>' +
+        '<rect x="18" y="3" width="12" height="8" rx="2" stroke="'+stroke+'" stroke-width="1.8" fill="none"/>' +
+        '<line x1="20" y1="7" x2="28" y2="7" stroke="white" stroke-width="1.2" stroke-linecap="round"/>' +
+      '</svg></div>';
+  }
   var typeIconDT = {
-    YOUTH:     dtIcon('blue',  'bank'),
-    PRIVATE:   dtIcon('blue',  'bank'),
-    SAVINGS:   dtIcon('amber', 'piggy'),
-    SAVINGS_3A:dtIcon('teal',  'shield')
+    YOUTH:     acctIcon('#E6F1FB', '#185FA5'),
+    PRIVATE:   acctIcon('#E6F1FB', '#185FA5'),
+    SAVINGS:   acctIcon('#FFF3CD', '#854F0B'),
+    SAVINGS_3A:acctIcon('#E1F5EE', '#085041')
   };
 
   var html = '';
@@ -3122,6 +3277,7 @@ function init() {
     if (saldoBox) saldoBox.style.display = 'none';
 
     calcInvest();
+    calcInvBoost();
     updateGamification();
   } catch (e) {
     console.warn('init() partial error (nav already applied):', e);

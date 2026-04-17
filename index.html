@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BLKB Jugend">
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=26">
 </head>
 <body>
 
@@ -74,24 +74,26 @@
             <span id="dash-mock-badge" class="demo-badge">Demo</span>
           </div>
           <div id="dash-accounts">
-            <div class="account-row border-b">
-              <div class="account-info">
-                <div class="account-name">Jugendkonto</div>
-                <div class="account-iban">CH56 0785 … 9000 0</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #E8E8E8">
+              <div style="width:40px;height:40px;background:#E6F1FB;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:10px"><svg width="22" height="22" viewBox="0 0 32 32"><rect x="2" y="8" width="24" height="17" rx="3" fill="#185FA5" opacity="0.2"/><rect x="2" y="8" width="24" height="17" rx="3" stroke="#185FA5" stroke-width="1.8" fill="none"/><line x1="2" y1="12" x2="26" y2="12" stroke="#185FA5" stroke-width="1.8"/><line x1="2" y1="16" x2="26" y2="16" stroke="#185FA5" stroke-width="1.8"/><rect x="18" y="3" width="12" height="8" rx="2" fill="#185FA5" opacity="0.5"/><rect x="18" y="3" width="12" height="8" rx="2" stroke="#185FA5" stroke-width="1.8" fill="none"/><line x1="20" y1="7" x2="28" y2="7" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+              <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;color:#1A1A1A">Jugendkonto</div>
+                <div style="font-size:10px;color:#94a3b8;margin-top:1px">CH56 0785 … 9000 0</div>
               </div>
-              <div class="account-bal">
-                <div class="account-amount">1'247.50</div>
-                <div class="account-type">Jugendkonto</div>
+              <div style="text-align:right">
+                <div style="font-size:14px;font-weight:700;color:#1A1A1A">CHF 1'247.50</div>
+                <div style="font-size:10px;color:#94a3b8;margin-top:1px">Jugendkonto</div>
               </div>
             </div>
-            <div class="account-row">
-              <div class="account-info">
-                <div class="account-name">Sparkonto Jugend</div>
-                <div class="account-iban">CH56 0785 … 9001 0</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 14px">
+              <div style="width:40px;height:40px;background:#FFF3CD;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:10px"><svg width="22" height="22" viewBox="0 0 32 32"><rect x="2" y="8" width="24" height="17" rx="3" fill="#854F0B" opacity="0.2"/><rect x="2" y="8" width="24" height="17" rx="3" stroke="#854F0B" stroke-width="1.8" fill="none"/><line x1="2" y1="12" x2="26" y2="12" stroke="#854F0B" stroke-width="1.8"/><line x1="2" y1="16" x2="26" y2="16" stroke="#854F0B" stroke-width="1.8"/><rect x="18" y="3" width="12" height="8" rx="2" fill="#854F0B" opacity="0.5"/><rect x="18" y="3" width="12" height="8" rx="2" stroke="#854F0B" stroke-width="1.8" fill="none"/><line x1="20" y1="7" x2="28" y2="7" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+              <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;color:#1A1A1A">Sparkonto Jugend</div>
+                <div style="font-size:10px;color:#94a3b8;margin-top:1px">CH56 0785 … 9001 0</div>
               </div>
-              <div class="account-bal">
-                <div class="account-amount">2'500.00</div>
-                <div class="account-type">Sparkonto</div>
+              <div style="text-align:right">
+                <div style="font-size:14px;font-weight:700;color:#1A1A1A">CHF 2'500.00</div>
+                <div style="font-size:10px;color:#94a3b8;margin-top:1px">Sparkonto</div>
               </div>
             </div>
           </div>
@@ -313,7 +315,10 @@
 
         <!-- Investment box -->
         <div class="invest-box">
-          <div class="invest-title">💰 Easy-10 Hack — Dein Sparkonto wächst</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <div style="width:36px;height:36px;background:#FFF3CD;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💰</div>
+            <div class="invest-title">Easy-10 Hack — Dein Sparkonto wächst</div>
+          </div>
           <div class="invest-amount">CHF <span id="invest-total">0</span></div>
           <div class="invest-sub" id="invest-sub">Bei 10% gespart und 5% Jahresrendite in 10 Jahren</div>
           <div class="invest-row">
@@ -329,7 +334,7 @@
         </div>
 
         <div class="moneyhaxx-badge">
-          <span style="font-size:20px">💡</span>
+          <div style="width:36px;height:36px;background:#FFF0F0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💡</div>
           <div class="moneyhaxx-badge-text">Die Zahlen basieren auf Schweizer Durchschnittswerten (Bundesstatistik + VSKB). Für eine persönliche Budgetplanung: <strong>blkb.ch</strong></div>
         </div>
 
@@ -600,12 +605,8 @@
         </div>
         <!-- Anlage-Typ Toggle -->
         <div style="margin:14px 16px 4px;background:#F4F4F4;border-radius:12px;padding:4px;display:flex;gap:4px">
-            <button id="inv-btn-frei" class="inv-type-btn active" onclick="setInvType('frei')">
-              💼 Freies Vermögen
-            </button>
-            <button id="inv-btn-3a" class="inv-type-btn" onclick="setInvType('3a')">
-              🛡️ Säule 3a
-            </button>
+            <button id="inv-btn-frei" class="inv-type-btn active" onclick="setInvType('frei')"><span style="font-size:15px">💼</span> Freies Vermögen</button>
+            <button id="inv-btn-3a" class="inv-type-btn" onclick="setInvType('3a')"><span style="font-size:15px">🛡️</span> Säule 3a</button>
         </div>
 
         <!-- 3a Info Box (nur bei 3a sichtbar) -->
@@ -738,6 +739,61 @@
           <div id="inv-table" style="max-height:240px;overflow-y:auto"></div>
         </div>
 
+        <!-- Ausgaben reduzieren — Invest steigern -->
+        <div style="margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;padding:14px 16px">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:12px">Ausgaben reduzieren — Invest steigern</div>
+
+          <!-- Kaffee -->
+          <div style="margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <div style="width:32px;height:32px;background:#FFF3CD;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">☕</div>
+              <span style="font-size:12px;font-weight:500;color:#1A1A1A;flex:1">Kaffee / Takeaway</span>
+              <span style="font-size:12px;font-weight:600;color:#1A1A1A">CHF <span id="inv-boost-v1">80</span>/Mt</span>
+            </div>
+            <input type="range" min="0" max="200" step="10" value="80" id="inv-boost-s1" oninput="calcInvBoost()" style="width:100%">
+          </div>
+
+          <!-- Streaming -->
+          <div style="margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <div style="width:32px;height:32px;background:#E6F1FB;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">📺</div>
+              <span style="font-size:12px;font-weight:500;color:#1A1A1A;flex:1">Streaming / Abos</span>
+              <span style="font-size:12px;font-weight:600;color:#1A1A1A">CHF <span id="inv-boost-v2">45</span>/Mt</span>
+            </div>
+            <input type="range" min="0" max="100" step="5" value="45" id="inv-boost-s2" oninput="calcInvBoost()" style="width:100%">
+          </div>
+
+          <!-- Essen -->
+          <div style="margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <div style="width:32px;height:32px;background:#EEEDFE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">🍔</div>
+              <span style="font-size:12px;font-weight:500;color:#1A1A1A;flex:1">Essen gehen</span>
+              <span style="font-size:12px;font-weight:600;color:#1A1A1A">CHF <span id="inv-boost-v3">120</span>/Mt</span>
+            </div>
+            <input type="range" min="0" max="300" step="10" value="120" id="inv-boost-s3" oninput="calcInvBoost()" style="width:100%">
+          </div>
+
+          <div style="height:.5px;background:#E8E8E8;margin:4px 0 12px"></div>
+
+          <!-- Ergebnis -->
+          <div style="background:#F4F4F4;border-radius:10px;padding:12px 14px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <div>
+                <div style="font-size:11px;color:#6B6B6B">Zusätzlich investierbar</div>
+                <div style="font-size:18px;font-weight:700;color:#27500A">+CHF <span id="inv-boost-extra">245</span>/Mt</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:10px;color:#6B6B6B">Endkapital nach 10 J.</div>
+                <div style="font-size:16px;font-weight:700;color:#1A1A1A">CHF <span id="inv-boost-total">0</span></div>
+              </div>
+            </div>
+            <div style="height:4px;background:#E8E8E8;border-radius:2px;overflow:hidden">
+              <div id="inv-boost-bar" style="height:100%;background:#E30613;border-radius:2px;transition:width .3s;width:0%"></div>
+            </div>
+            <div style="font-size:10px;color:#6B6B6B;margin-top:5px">vs. ohne Anpassung: <span style="color:#27500A;font-weight:600">+CHF <span id="inv-boost-diff">0</span> mehr</span></div>
+          </div>
+        </div>
+
         <div style="padding:14px 16px 20px;text-align:center">
           <a href="https://www.blkb.ch/privatpersonen/konten/jugend.html" target="_blank"
             style="font-size:12px;color:#6B6B6B;text-decoration:none">
@@ -772,12 +828,12 @@
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
               <div>
                 <div class="gam-section-label">Dein Fortschritt</div>
-                <span id="youth-streak-badge" class="streak-badge">🔥 0 Tage in Folge</span>
+                <span id="youth-streak-badge" class="streak-badge" style="display:inline-flex;align-items:center;gap:5px;background:#FFF3CD;color:#854F0B;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600"><i class="ti ti-flame" style="font-size:13px"></i><span id="streak-days">0</span> Tage in Folge</span>
                 <div style="font-size:11px;color:var(--mid);margin-top:4px">Öffne die App täglich, um deinen Streak zu halten!</div>
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:12px">
-              <span id="fun-level-badge" style="font-size:36px">🌱</span>
+              <div style="width:44px;height:44px;background:#EAF3DE;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0"><span id="fun-level-badge">🌱</span></div>
               <div style="flex:1">
                 <div style="font-size:15px;font-weight:700;color:var(--dark)" id="fun-level-title">Geld-Neuling</div>
                 <div style="font-size:12px;color:var(--mid)" id="fun-level-sub">0 XP · Level 1</div>
@@ -830,15 +886,18 @@
 
           <!-- Entscheide richtig! — tägliches Story-Szenario -->
           <div class="gam-card daily-challenge-card">
-            <div class="gam-section-label">🎲 Entscheide richtig!</div>
+            <div class="gam-section-label">Entscheide richtig!</div>
             <div id="youth-story-content"><!-- Rendered by JS --></div>
           </div>
 
           <!-- Deine Ziele im Fokus -->
           <div class="gam-card">
-            <div class="gam-section-label">🎯 Deine Ziele im Fokus</div>
+            <div class="gam-section-label">Deine Ziele im Fokus</div>
             <div id="youth-goals-focus"><!-- Rendered by JS --></div>
           </div>
+
+          <!-- Gewohnheits-Booster (rendered by JS into this container) -->
+          <div id="youth-habit-booster"></div>
 
           <div style="height:24px"></div>
         </div><!-- /gam-youth -->
@@ -909,7 +968,7 @@
 
           <!-- Deine Ziele im Fokus -->
           <div class="gam-card">
-            <div class="gam-section-label">🎯 Deine Ziele im Fokus</div>
+            <div class="gam-section-label">Deine Ziele im Fokus</div>
             <div id="adult-goals-focus"><!-- Rendered by JS --></div>
           </div>
 
@@ -1034,6 +1093,12 @@
 </div><!-- /phone -->
 
 
-<script src="app.js?v=22"></script>
+<script src="app.js?v=29"></script>
+<script>
+  // Dev: force SW update check on every page load (replaces "Update on reload" checkbox)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(function(reg) { reg.update(); });
+  }
+</script>
 </body>
 </html>
