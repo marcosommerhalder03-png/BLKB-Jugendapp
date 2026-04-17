@@ -1608,7 +1608,7 @@ var BUD_CAT_THEME = {
 var BUDGET_VERSION = '3';
 var budgetDefaults = [
   // ── MoneyHaxx Standard ──────────────────────────────────────────
-  { icon: '<i class="ti ti-piggy-bank"></i>', name: 'Sparen (Easy-10)',    hint: 'Zuerst sparen! Mindestens 10% vom Lohn', pct: 10, color: 'fill-ok'     },
+  { icon: '🐷', name: 'Sparen (Easy-10)',    hint: 'Zuerst sparen! Mindestens 10% vom Lohn', pct: 10, color: 'fill-ok'     },
   { icon: '<i class="ti ti-home"></i>',       name: 'Wohnen',              hint: 'Max. 25% (Dini-Mieti Hack)',             pct: 25, color: 'fill-red'    },
   { icon: '<i class="ti ti-shopping-cart"></i>', name: 'Essen & Haushalt', hint: 'Lebensmittel, Restaurants',              pct: 15, color: 'fill-petrol' },
   { icon: '<i class="ti ti-bus"></i>',        name: 'Mobilität',           hint: 'ÖV, Auto, Velo',                        pct: 10, color: 'fill-amber'  },
