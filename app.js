@@ -1665,6 +1665,10 @@ function calcBudget() {
     // Anzeige im Sparziele-Screen aktualisieren
     var msEl = document.getElementById('goals-monthly-budget');
     if (msEl) msEl.textContent = fmtChf(monatSpar);
+    // Invest-Screen synchron halten: Betrag immer gleich Sparwert
+    invState.amount = monatSpar;
+    var invAmtEl = document.getElementById('inv-amount');
+    if (invAmtEl) invAmtEl.value = monatSpar;
   }
 
   // Sum check
