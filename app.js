@@ -2084,7 +2084,7 @@ function calcInvBoost() {
   document.getElementById('inv-boost-v2').textContent = v2;
   document.getElementById('inv-boost-v3').textContent = v3;
   var extra     = v1 + v2 + v3;
-  var base      = 200;
+  var base      = invState.amount || 200;   // spiegelt aktuellen Betrag im Invest-Screen
   var total     = base + extra;
   var fv10base  = fvCalc(base,  INVEST_MONTHS, INVEST_RATE);
   var fv10total = fvCalc(total, INVEST_MONTHS, INVEST_RATE);
@@ -3271,6 +3271,11 @@ function init() {
     // Invest-Screen init
     var ageFromEl = document.getElementById('inv-age-from');
     if (ageFromEl) ageFromEl.textContent = state.age;
+
+    // Sparwert aus Budgetrechner als Invest-Defaultbetrag (bei jedem Start zurücksetzen)
+    var invAmtEl = document.getElementById('inv-amount');
+    invState.amount = state.monatlichesSparbudget || 200;
+    if (invAmtEl) invAmtEl.value = invState.amount;
 
     // 3a-Box initial immer verstecken (nur bei Säule 3a sichtbar)
     var saldoBox = document.getElementById('inv-3a-saldo-box');
