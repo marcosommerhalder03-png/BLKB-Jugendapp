@@ -1090,6 +1090,8 @@ function onSparChange(val) {
   state.sparGuthaben = n;
   document.getElementById('goals-spar-display').textContent = n.toLocaleString('de-CH');
   renderGoals();
+  // Invest-Box «Freies Vermögen» live nachführen
+  if (invState.type === 'frei') setInvType('frei');
   save();
 }
 
@@ -1872,14 +1874,20 @@ function setInvType(type) {
   document.getElementById('inv-btn-frei').classList.toggle('active', type === 'frei');
   document.getElementById('inv-btn-3a').classList.toggle('active', type === '3a');
   document.getElementById('inv-3a-info').style.display = type === '3a' ? 'block' : 'none';
-  // 3a: Betrag auf Max kappen
-  // 3a-Saldo-Box: nur bei Säule 3a einblenden
+  // Saldo-Box: bei freiem Vermögen → Sparkonto, bei 3a → 3a-Guthaben
   var saldoBox = document.getElementById('inv-3a-saldo-box');
   if (saldoBox) {
     if (type === '3a') {
       render3aInvest(state.saldo3a, state.saldo3a > 0);
     } else {
-      saldoBox.style.display = 'none';
+      // Freies Vermögen: Sparkonto-Guthaben aus «Meine Ziele» anzeigen
+      var sparBal = (state.sparGuthaben || 0)
+        .toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      saldoBox.innerHTML =
+        '<div style="font-size:11px;font-weight:700;color:#185FA5;text-transform:uppercase;' +
+        'letter-spacing:.4px;margin-bottom:6px">Dein bisheriges angespartes Kapital · BLKB</div>' +
+        '<div style="font-size:22px;font-weight:700;color:var(--dark)">CHF ' + sparBal + '</div>';
+      saldoBox.style.display = 'block';
     }
   }
 
@@ -1972,8 +1980,10 @@ function calcInvest() {
   var monthRate   = rate / 12;
 
   // Future value of regular payments (annuity)
-  // Startkapital: bei 3a = aktuelles Guthaben aus ACP
-  var startKapital = (invState.type === '3a' && state.saldo3a > 0) ? state.saldo3a : 0;
+  // Startkapital: bei 3a = 3a-Guthaben (ACP), bei frei = Sparkonto-Guthaben
+  var startKapital = invState.type === '3a'
+    ? (state.saldo3a || 0)
+    : (state.sparGuthaben || 0);
 
   var fv, einbezahlt;
   if (monthRate === 0) {
@@ -3281,9 +3291,8 @@ function init() {
     invState.amount = state.monatlichesSparbudget || 200;
     if (invAmtEl) invAmtEl.value = invState.amount;
 
-    // 3a-Box initial immer verstecken (nur bei Säule 3a sichtbar)
-    var saldoBox = document.getElementById('inv-3a-saldo-box');
-    if (saldoBox) saldoBox.style.display = 'none';
+    // Invest-Typ-Box initial rendern (setzt Sparkonto-Guthaben-Box für 'frei')
+    setInvType(invState.type);
 
     calcInvest();
     calcInvBoost();
