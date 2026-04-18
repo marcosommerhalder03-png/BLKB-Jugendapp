@@ -2118,6 +2118,8 @@ function calcInvBoost() {
    GAMIFICATION — Badges, Level, Challenges, Games
    ================================================================ */
 
+var xpHintDismissed = localStorage.getItem('xpHintDismissed') === '1';
+
 // ── Badge-Definitionen ───────────────────────────────────────────
 var BADGES = [
   { id: 'first_goal',    icon: '🎯', title: 'Erster Sparschritt',   desc: 'Erstes Sparziel erstellt',            check: function(){ return state.goals.length >= 1; } },
@@ -2539,6 +2541,158 @@ function renderYouthGamification() {
     }
   }
 
+  // ── XP-Hint · Level-Roadmap · Daily Dashboard ───────────────
+  var newCardsEl = document.getElementById('youth-new-cards');
+  if (newCardsEl) {
+    var todayN         = todayStr();
+    var todayQuizDone  = state.quizDate === todayN;
+    var todayChallenge = (state.dailyChallengeDate === todayN && state.dailyChallengeXpClaimed);
+    var todayStory     = state.storyDate === todayN;
+
+    // XP-Erklärung
+    var xpHintHTML = xpHintDismissed ? '' :
+      '<div id="xp-hint" style="margin:0 0 8px;background:#FFF3CD;' +
+      'border-radius:10px;padding:9px 11px;border:.5px solid #FAC775">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+          '<div style="display:flex;gap:7px;align-items:flex-start;flex:1">' +
+            '<div style="width:28px;height:28px;background:#FFF3CD;border-radius:7px;' +
+              'display:flex;align-items:center;justify-content:center;' +
+              'font-size:14px;flex-shrink:0">💡</div>' +
+            '<div>' +
+              '<div style="font-size:11px;font-weight:700;color:#633806;margin-bottom:3px">' +
+                'Was sind XP?' +
+              '</div>' +
+              '<div style="font-size:10px;color:#854F0B;line-height:1.5">' +
+                'XP = Experience Points. Du sammelst sie für jede Aktion in der App — ' +
+                'Quiz lösen, Challenges abhaken, Lernmodule abschliessen. ' +
+                'Je mehr XP, desto höher dein Level.' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div onclick="dismissXpHint()" ' +
+            'style="width:18px;height:18px;border-radius:4px;background:rgba(133,79,11,.12);' +
+            'display:flex;align-items:center;justify-content:center;flex-shrink:0;' +
+            'margin-left:8px;cursor:pointer">' +
+            '<svg width="8" height="8" viewBox="0 0 10 10" fill="none" ' +
+              'stroke="#854F0B" stroke-width="2" stroke-linecap="round">' +
+              '<line x1="2" y1="2" x2="8" y2="8"/>' +
+              '<line x1="8" y1="2" x2="2" y2="8"/>' +
+            '</svg>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    // Level-Roadmap
+    var roadmapLevels = [
+      { emoji:'🌱', title:'Geld-Neuling',  range:'0 – 49 XP',    min:0,    max:49   },
+      { emoji:'⭐', title:'Spar-Starter',  range:'50 – 149 XP',  min:50,   max:149  },
+      { emoji:'🔥', title:'Money-Macher',  range:'150 – 299 XP', min:150,  max:299  },
+      { emoji:'💎', title:'Finanz-Profi',  range:'300 – 599 XP', min:300,  max:599  },
+      { emoji:'🏆', title:'Money Hero',    range:'600 – 999 XP', min:600,  max:999  },
+      { emoji:'👑', title:'BLKB Legend',   range:'ab 1000 XP',   min:1000, max:9999 },
+    ];
+    var currentXP  = xp;
+    var currentLvl = 0;
+    for (var rli = 0; rli < roadmapLevels.length; rli++) {
+      if (currentXP >= roadmapLevels[rli].min) currentLvl = rli;
+    }
+    var roadmapNext = roadmapLevels[currentLvl + 1];
+    var xpToNext    = roadmapNext ? (roadmapNext.min - currentXP) : 0;
+    var nextAction  = !todayQuizDone  ? 'Tages-Quiz lösen (+15 XP)'   :
+                      !todayChallenge ? 'Challenge abhaken (+20 XP)'   :
+                      !todayStory     ? 'Story entscheiden (+20 XP)'   :
+                                        'Morgen wieder vorbeischauen!';
+
+    var roadmapHTML = '<div class="gam-card">' +
+      '<div class="gam-section-label">Dein Weg zum Money Hero</div>' +
+      roadmapLevels.map(function(rl, i) {
+        var isActive = i === currentLvl;
+        var isDone   = i <  currentLvl;
+        var isNext   = i === currentLvl + 1;
+        var isLast   = i === roadmapLevels.length - 1;
+        var dotBg     = (isDone || isActive) ? '#EAF3DE' : '#F4F4F4';
+        var dotBorder = isDone   ? '#3B6D11' : isActive ? '#E30613' : '#E8E8E8';
+        var lineBg    = (isDone || isActive) ? '#E30613' : '#E8E8E8';
+        var opacity   = (isDone || isActive) ? '1' : isNext ? '0.6' : '0.35';
+        var badge = isActive ?
+          '<span style="font-size:8px;font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 6px;border-radius:4px">Aktiv</span>' :
+          isDone ?
+          '<span style="font-size:8px;font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 6px;border-radius:4px">✓</span>' : '';
+        var hint = (isNext && xpToNext > 0) ?
+          '<div style="font-size:9px;color:#185FA5;margin-top:2px">→ ' + nextAction + '</div>' : '';
+        var progBar = isActive ?
+          '<div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:5px;overflow:hidden">' +
+            '<div style="width:' +
+              Math.round((currentXP - rl.min) / (rl.max - rl.min + 1) * 100) +
+            '%;height:100%;background:#E30613;border-radius:2px"></div>' +
+          '</div>' : '';
+        return '<div style="display:flex;align-items:flex-start;gap:10px;' +
+          'margin-bottom:' + (isLast ? '0' : '8px') + ';opacity:' + opacity + '">' +
+          '<div style="display:flex;flex-direction:column;align-items:center">' +
+            '<div style="width:28px;height:28px;border-radius:50%;background:' + dotBg + ';' +
+              'border:2px solid ' + dotBorder + ';display:flex;align-items:center;' +
+              'justify-content:center;font-size:13px;flex-shrink:0">' + rl.emoji + '</div>' +
+            (!isLast ? '<div style="width:2px;height:16px;background:' + lineBg + ';' +
+              'margin:2px 0;border-radius:1px"></div>' : '') +
+          '</div>' +
+          '<div style="flex:1;padding-top:3px">' +
+            '<div style="display:flex;align-items:center;gap:5px;margin-bottom:1px">' +
+              '<span style="font-size:11px;font-weight:600;color:#1A1A1A">' + rl.title + '</span>' + badge +
+            '</div>' +
+            '<div style="font-size:9px;color:#6B6B6B">' + rl.range + '</div>' +
+            hint + progBar +
+          '</div>' +
+        '</div>';
+      }).join('') +
+    '</div>';
+
+    // Daily Dashboard
+    var todayMax    = 55;
+    var todayEarned = (todayQuizDone ? 15 : 0) + (todayChallenge ? 20 : 0) + (todayStory ? 20 : 0);
+    var todayLeft   = todayMax - todayEarned;
+    var toNextLevel = roadmapNext ? (roadmapNext.min - currentXP) : 0;
+    var canReach    = roadmapNext && todayLeft >= toNextLevel;
+
+    var dailyHTML = '<div class="gam-card">' +
+      '<div class="gam-section-label">Heute sammeln</div>' +
+      '<div style="background:#F4F4F4;border-radius:9px;padding:8px 10px;margin-bottom:10px;' +
+        'display:flex;justify-content:space-between;align-items:center">' +
+        '<div>' +
+          '<div style="font-size:10px;color:#6B6B6B">Heute verdient</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#1A1A1A">' + todayEarned + ' / ' + todayMax + ' XP</div>' +
+        '</div>' +
+        (canReach ?
+          '<div style="font-size:9px;font-weight:700;color:#27500A;background:#EAF3DE;' +
+            'padding:4px 8px;border-radius:6px;text-align:center">Heute Level<br>' +
+            (currentLvl + 2) + ' möglich! 🎉</div>' :
+          '<div style="font-size:9px;color:#6B6B6B;text-align:right">Noch ' + todayLeft + ' XP<br>heute möglich</div>') +
+      '</div>' +
+      [
+        { emoji:'❓', label:'Tages-Quiz lösen',  xp:15, done:todayQuizDone,  bg:'#E6F1FB' },
+        { emoji:'🎯', label:'Daily Challenge',    xp:20, done:todayChallenge, bg:'#FFF3CD' },
+        { emoji:'🎲', label:'Story entscheiden',  xp:20, done:todayStory,     bg:'#EEEDFE' },
+      ].map(function(a) {
+        return '<div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:.5px solid #F4F4F4">' +
+          '<div style="width:32px;height:32px;background:' + a.bg + ';border-radius:8px;' +
+            'display:flex;align-items:center;justify-content:center;font-size:15px;' +
+            'flex-shrink:0' + (a.done ? ';opacity:.45' : '') + '">' + a.emoji + '</div>' +
+          '<div style="flex:1"><div style="font-size:11px;font-weight:600;color:' +
+            (a.done ? '#999' : '#1A1A1A') + ';' + (a.done ? 'text-decoration:line-through' : '') + '">' +
+            a.label + '</div></div>' +
+          (a.done ?
+            '<span style="font-size:10px;font-weight:700;color:#27500A;background:#EAF3DE;' +
+              'padding:2px 7px;border-radius:5px">✓ +' + a.xp + '</span>' :
+            '<span style="font-size:10px;font-weight:700;color:#E30613">+' + a.xp + ' XP</span>') +
+        '</div>';
+      }).join('') +
+      '<div style="padding-top:8px;font-size:9px;color:#6B6B6B;text-align:center">' +
+        'Max. heute: ' + todayMax + ' XP · täglich neue Aufgaben' +
+      '</div>' +
+    '</div>';
+
+    newCardsEl.innerHTML = xpHintHTML + roadmapHTML + dailyHTML;
+  }
+
   // Daily Challenge
   var chEl = document.getElementById('youth-challenge-content');
   if (chEl) {
@@ -2687,6 +2841,13 @@ function renderYouthGamification() {
         '</div>' +
       '</div>';
   }
+}
+
+function dismissXpHint() {
+  localStorage.setItem('xpHintDismissed', '1');
+  xpHintDismissed = true;
+  var el = document.getElementById('xp-hint');
+  if (el) el.remove();
 }
 
 /* ─── Render: Adult ─────────────────────────────────────────── */
