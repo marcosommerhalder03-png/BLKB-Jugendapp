@@ -983,6 +983,9 @@ function applyGoalPreset(emoji, name) {
   });
 }
 
+// Auswahl-State für Goal-Checkboxen (nicht persistiert)
+var goalSelState = {};
+
 function quickAddGoal(emoji, name, ziel) {
   for (var i = 0; i < state.goals.length; i++) {
     if (state.goals[i].name === name) {
@@ -1052,9 +1055,12 @@ function saveGoal() {
   var goal = { emoji: state.selectedEmoji, name: name, ziel: ziel };
 
   if (state.editGoalIdx >= 0) {
+    // Bestehende id erhalten
+    goal.id = state.goals[state.editGoalIdx].id || Date.now();
     state.goals[state.editGoalIdx] = goal;
     showToast('Ziel aktualisiert ✓');
   } else {
+    goal.id = Date.now();
     state.goals.push(goal);
     showToast('Ziel gespeichert! 🎯');
   }
@@ -1168,6 +1174,18 @@ function renderGoals() {
             'ontouchstart="goalDragStart(event,' + i + ')" ' +
             'onclick="event.stopPropagation()" ' +
             'title="Priorität verschieben">⠿</button>' +
+          (function() {
+            var sel = !!(g.id && goalSelState[g.id]);
+            return '<div class="goal-sel-chk" data-idx="' + i + '" ' +
+              'onclick="toggleGoalSel(event,' + i + ')" ' +
+              'style="width:18px;height:18px;border-radius:5px;' +
+              'border:2px solid ' + (sel ? '#185FA5' : '#E8E8E8') + ';' +
+              'background:' + (sel ? '#185FA5' : 'transparent') + ';' +
+              'display:flex;align-items:center;justify-content:center;' +
+              'flex-shrink:0;cursor:pointer;transition:all .15s;margin-right:2px">' +
+              (sel ? '<svg width="10" height="10" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') +
+            '</div>';
+          })() +
           '<div class="goal-emoji" style="width:44px;height:44px;background:' + goalEmojiBg(g.emoji) + ';border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px">' + g.emoji + '</div>' +
           '<div class="goal-info">' +
             '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">' +
@@ -1207,6 +1225,85 @@ function renderGoals() {
   }
 
   list.innerHTML = html;
+}
+
+/* ── Goal-Selektion & Budget-Transfer ──────────────────────────── */
+function toggleGoalSel(event, idx) {
+  event.stopPropagation();
+  var g = state.goals[idx];
+  if (!g) return;
+  if (!g.id) g.id = Date.now(); // Fallback falls id fehlt
+  goalSelState[g.id] = !goalSelState[g.id];
+  // Checkbox visuell aktualisieren
+  var chk = document.querySelector('.goal-sel-chk[data-idx="' + idx + '"]');
+  if (chk) {
+    if (goalSelState[g.id]) {
+      chk.style.background   = '#185FA5';
+      chk.style.borderColor  = '#185FA5';
+      chk.innerHTML = '<svg width="10" height="10" viewBox="0 0 12 12">' +
+        '<polyline points="2,6 5,9 10,3" stroke="white" stroke-width="1.8" ' +
+        'fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    } else {
+      chk.style.background   = 'transparent';
+      chk.style.borderColor  = '#E8E8E8';
+      chk.innerHTML = '';
+    }
+  }
+  updateGoalSelBar();
+}
+
+function updateGoalSelBar() {
+  var lohn     = state.lohn || 3200;
+  var selected = state.goals.filter(function(g) { return g.id && goalSelState[g.id]; });
+  var bar      = document.getElementById('goal-sel-bar');
+  if (!bar) return;
+
+  if (selected.length === 0) { bar.style.display = 'none'; return; }
+  bar.style.display = 'block';
+
+  // CHF/Mt. = Ziel ÷ geschätzte Monate (max. 24), dann summieren
+  var totalChf = selected.reduce(function(sum, g) {
+    var missing = Math.max(0, (g.ziel || 0) - state.sparGuthaben);
+    var months  = Math.max(1, Math.ceil(missing / (state.monatlichesSparbudget || 100)));
+    return sum + Math.round((g.ziel || 0) / Math.min(months, 24));
+  }, 0);
+  totalChf = Math.min(totalChf, lohn);
+
+  var pct = Math.round(totalChf / lohn * 100);
+  document.getElementById('sel-bar-pct').textContent   = pct;
+  document.getElementById('sel-bar-chf').textContent   = totalChf.toLocaleString('de-CH');
+  document.getElementById('sel-bar-label').textContent =
+    selected.length + ' Ziel' + (selected.length === 1 ? '' : 'e') + ' ins Budget übernehmen';
+}
+
+function transferGoalsToBudget() {
+  var selected = state.goals.filter(function(g) { return g.id && goalSelState[g.id]; });
+  if (selected.length === 0) return;
+
+  var lohn    = state.lohn || 3200;
+  var sparCat = budgetCats.find(function(c) { return c.name.indexOf('Sparen') >= 0; });
+  if (!sparCat) return;
+
+  var extraChf = selected.reduce(function(sum, g) {
+    var missing = Math.max(0, (g.ziel || 0) - state.sparGuthaben);
+    var months  = Math.max(1, Math.ceil(missing / (state.monatlichesSparbudget || 100)));
+    return sum + Math.round((g.ziel || 0) / Math.min(months, 24));
+  }, 0);
+
+  var currentChf = Math.round(lohn * sparCat.pct / 100);
+  var newChf     = Math.min(lohn, currentChf + extraChf);
+  sparCat.pct    = Math.round(newChf / lohn * 100);
+
+  save();
+  calcBudget();
+
+  // Auswahl und Bar zurücksetzen
+  goalSelState = {};
+  renderGoals();
+
+  showToast('✓ ' + selected.length + ' Ziel' +
+    (selected.length === 1 ? '' : 'e') + ' ins Budget übernommen!');
+  setTimeout(function() { switchView('budget', 3); }, 800);
 }
 
 function escHtml(s) {
