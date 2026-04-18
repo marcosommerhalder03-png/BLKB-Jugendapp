@@ -217,25 +217,6 @@
 
         <div id="goals-list"></div>
 
-        <!-- Budget-Transfer Action-Bar (erscheint wenn Ziele ausgewählt) -->
-        <div id="goal-sel-bar" style="margin:0 16px 8px;background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:10px 12px;display:none">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div>
-              <div style="font-size:10px;color:#6B6B6B">Ausgewählt</div>
-              <div style="font-size:13px;font-weight:700;color:#1A1A1A">
-                <span id="sel-bar-pct">0</span>% · CHF <span id="sel-bar-chf">0</span>/Mt.
-              </div>
-            </div>
-            <div style="font-size:9px;color:#6B6B6B;text-align:right">Budget-Anteil<br>nach Übernahme</div>
-          </div>
-          <div style="display:flex;justify-content:center">
-            <div onclick="transferGoalsToBudget()" style="display:inline-flex;align-items:center;gap:5px;border:.5px solid #185FA5;border-radius:20px;padding:6px 16px;background:white;cursor:pointer">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-              <span id="sel-bar-label" style="font-size:10px;font-weight:600;color:#185FA5">Ziele ins Budget übernehmen</span>
-            </div>
-          </div>
-        </div>
-
         <button class="add-goal-btn" onclick="openGoalModal()">
           <span style="font-size:18px">＋</span> Neues Sparziel
         </button>
@@ -1112,7 +1093,7 @@
 </div><!-- /phone -->
 
 
-<script src="app.js?v=35"></script>
+<script src="app.js?v=36"></script>
 <script>
   // Dev: force SW update check on every page load (replaces "Update on reload" checkbox)
   if ('serviceWorker' in navigator) {
