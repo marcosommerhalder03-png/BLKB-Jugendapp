@@ -1868,6 +1868,13 @@ var invState = {
   rate:    5,
   ageTo:   30,
   gender:  'm',        // 'm' | 'f'
+  modus:   'betrag',   // 'betrag' | 'ziel'
+};
+
+var invGoalState = {
+  goal:   100000,
+  years:  20,
+  rate:   5
 };
 
 var MAX_3A_YEAR_2026  = 7258;   // CHF — Angestellte mit PK, 2026
@@ -2055,8 +2062,119 @@ function calcInvest() {
   document.getElementById('inv-mehrertrag').textContent    = fmtChf(Math.max(0, mehrertrag));
   document.getElementById('inv-mehrertrag-label').textContent =
     'durch ' + invState.rate + '% Rendite statt 0.5% Sparkonto über ' + years + ' Jahre';
+
+  // Jahrestabelle nur im Betrag-Modus zeigen
+  var tblWrap = document.getElementById('inv-table');
+  if (tblWrap) {
+    var wrap = tblWrap.closest('div[style*="border-radius:12px"]') || tblWrap.parentElement;
+    if (wrap) wrap.style.display = (invState.modus === 'ziel') ? 'none' : '';
+  }
 }
 
+
+/* ── Invest-Modus: Ich zahle ein / Ich will erreichen ─────────── */
+function setInvModus(modus) {
+  invState.modus = modus;
+
+  // Toggle-Buttons
+  var btnB = document.getElementById('inv-tog-betrag');
+  var btnZ = document.getElementById('inv-tog-ziel');
+  if (btnB) {
+    btnB.style.background = modus === 'betrag' ? 'white' : 'transparent';
+    btnB.style.color      = modus === 'betrag' ? '#1A1A1A' : '#6B6B6B';
+    btnB.style.fontWeight = modus === 'betrag' ? '600' : '500';
+  }
+  if (btnZ) {
+    btnZ.style.background = modus === 'ziel' ? 'white' : 'transparent';
+    btnZ.style.color      = modus === 'ziel' ? '#1A1A1A' : '#6B6B6B';
+    btnZ.style.fontWeight = modus === 'ziel' ? '600' : '500';
+  }
+
+  // Panels ein-/ausblenden
+  var pB = document.getElementById('inv-panel-betrag');
+  var pZ = document.getElementById('inv-panel-ziel');
+  var sc = document.getElementById('inv-goal-scenarios');
+  if (pB) pB.style.display = modus === 'betrag' ? '' : 'none';
+  if (pZ) pZ.style.display = modus === 'ziel'   ? '' : 'none';
+  if (sc) sc.style.display = modus === 'ziel'   ? '' : 'none';
+
+  if (modus === 'ziel') calcInvGoal();
+  else calcInvest();
+}
+
+function setInvGoalRate(rate) {
+  invGoalState.rate = rate;
+  document.querySelectorAll('#inv-panel-ziel .inv-rate-btn').forEach(function(b) {
+    b.classList.toggle('active', +b.dataset.rate === rate);
+  });
+  calcInvGoal();
+}
+
+function calcInvGoal() {
+  var goal  = +document.getElementById('inv-goal-slider').value;
+  var years = +document.getElementById('inv-goal-yrs').value;
+  var rate  = invGoalState.rate || 5;
+
+  // Anzeige aktualisieren
+  document.getElementById('inv-goal-display').textContent =
+    Math.round(goal).toLocaleString('de-CH');
+  document.getElementById('inv-goal-yrs-display').textContent = years;
+
+  invGoalState.goal  = goal;
+  invGoalState.years = years;
+
+  var months    = years * 12;
+  var monthRate = rate / 12 / 100;
+
+  // PMT: monatliche Rate für Zielbetrag
+  var monthly = monthRate === 0
+    ? goal / months
+    : goal * monthRate / (Math.pow(1 + monthRate, months) - 1);
+
+  var einbezahlt = monthly * months;
+  var rendite    = goal - einbezahlt;
+  var renditePct = Math.max(0, Math.round(rendite / goal * 100));
+  var kapitalPct = 100 - renditePct;
+
+  // Ergebnis-Box befüllen
+  var rl = document.getElementById('inv-result-label');
+  if (rl) rl.textContent =
+    'Monatliche Rate · Ziel CHF ' +
+    Math.round(goal).toLocaleString('de-CH') + ' in ' + years + ' J.';
+
+  var ew = document.getElementById('inv-endwert');
+  if (ew) ew.textContent = Math.round(monthly).toLocaleString('de-CH');
+
+  var eb = document.getElementById('inv-einbezahlt');
+  if (eb) eb.textContent = Math.round(Math.max(0, einbezahlt)).toLocaleString('de-CH');
+
+  var rd = document.getElementById('inv-rendite');
+  if (rd) rd.textContent = Math.round(Math.max(0, rendite)).toLocaleString('de-CH');
+
+  var rp = document.getElementById('inv-rendite-pct');
+  if (rp) rp.textContent = 'Rendite ' + renditePct + '%';
+
+  var bk = document.getElementById('inv-bar-invested');
+  var br = document.getElementById('inv-bar-return');
+  if (bk) bk.style.width = kapitalPct + '%';
+  if (br) br.style.width = renditePct + '%';
+
+  // Szenarien-Vergleich 3% / 5% / 7%
+  [3, 5, 7].forEach(function(r) {
+    var mr = r / 12 / 100;
+    var m  = mr === 0 ? goal / months
+           : goal * mr / (Math.pow(1 + mr, months) - 1);
+    var el = document.getElementById('inv-sc' + r);
+    if (el) el.textContent = Math.round(m).toLocaleString('de-CH');
+  });
+
+  // Jahrestabelle im Ziel-Modus ausblenden
+  var tbl = document.getElementById('inv-table');
+  if (tbl) {
+    var wrap = tbl.closest('div[style*="border-radius:12px"]') || tbl.parentElement;
+    if (wrap) wrap.style.display = 'none';
+  }
+}
 
 /* ── Gewohnheits-Booster Toggle (Jugend Fun) ───────────────────── */
 function toggleHabitBoost(el) {

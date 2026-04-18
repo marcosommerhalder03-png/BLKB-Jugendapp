@@ -619,8 +619,14 @@
         <!-- Aktuelles 3a Guthaben aus ACP (wird via render3aInvest befüllt) -->
         <div id="inv-3a-saldo-box" style="display:none;margin:8px 16px 0;background:#F4F4F4;border-radius:12px;padding:12px 14px;border:0.5px solid #E8E8E8"></div>
 
-        <!-- Eingaben -->
-        <div style="margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;box-shadow:none;padding:14px 16px">
+        <!-- Modus-Toggle -->
+        <div style="display:flex;gap:4px;background:#F4F4F4;border-radius:12px;padding:4px;margin:10px 16px 0">
+          <button id="inv-tog-betrag" class="inv-modus-btn active" onclick="setInvModus('betrag')" style="flex:1;padding:8px;border-radius:9px;border:none;font-size:13px;cursor:pointer;background:white;color:#1A1A1A;font-weight:600;font-family:var(--font)">Ich zahle ein</button>
+          <button id="inv-tog-ziel" class="inv-modus-btn" onclick="setInvModus('ziel')" style="flex:1;padding:8px;border-radius:9px;border:none;font-size:13px;cursor:pointer;background:transparent;color:#6B6B6B;font-weight:500;font-family:var(--font)">Ich will erreichen</button>
+        </div>
+
+        <!-- Eingaben (Betrag-Modus) -->
+        <div id="inv-panel-betrag" style="margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;box-shadow:none;padding:14px 16px">
 
           <!-- Geschlecht → Rentenalter -->
           <div style="margin-bottom:12px">
@@ -684,6 +690,42 @@
           </div>
         </div>
 
+        <!-- Ziel-Modus Panel -->
+        <div id="inv-panel-ziel" style="display:none;margin:10px 16px 0;background:white;border-radius:12px;border:0.5px solid #E8E8E8;padding:14px 16px">
+
+          <!-- Zielbetrag Slider -->
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B6B6B;margin-bottom:6px">Zielbetrag (CHF)</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <span style="font-size:20px;font-weight:700;color:#1A1A1A">CHF <span id="inv-goal-display">100'000</span></span>
+            </div>
+            <input type="range" id="inv-goal-slider" min="10000" max="500000" step="5000" value="100000" oninput="calcInvGoal()" style="width:100%">
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#6B6B6B;margin-top:3px">
+              <span>CHF 10'000</span><span>CHF 500'000</span>
+            </div>
+          </div>
+
+          <!-- Laufzeit -->
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B6B6B;margin-bottom:6px">Laufzeit</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="range" id="inv-goal-yrs" min="1" max="40" step="1" value="20" oninput="calcInvGoal()" style="flex:1">
+              <span style="font-size:14px;font-weight:700;color:#1A1A1A;min-width:60px;text-align:right"><span id="inv-goal-yrs-display">20</span> Jahre</span>
+            </div>
+          </div>
+
+          <!-- Rendite -->
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B6B6B;margin-bottom:6px">Erwartete Rendite p.a.</div>
+            <div style="display:flex;gap:6px;margin-bottom:8px">
+              <button class="inv-rate-btn" data-rate="3" onclick="setInvGoalRate(3)">3% konservativ</button>
+              <button class="inv-rate-btn active" data-rate="5" onclick="setInvGoalRate(5)">5% ausgewogen</button>
+              <button class="inv-rate-btn" data-rate="7" onclick="setInvGoalRate(7)">7% wachstum</button>
+            </div>
+          </div>
+
+        </div>
+
         <!-- Ergebnis-Box -->
         <div style="margin:10px 16px 0;background:#1A1A1A;border-radius:12px;padding:16px;color:white">
           <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.5);margin-bottom:4px" id="inv-result-label">Endwert nach 14 Jahren</div>
@@ -708,6 +750,28 @@
             <div style="display:flex;justify-content:space-between;margin-top:4px">
               <span style="font-size:10px;opacity:.5">Kapital</span>
               <span style="font-size:10px;color:#6ee7b7" id="inv-rendite-pct">Rendite 0%</span>
+            </div>
+          </div>
+          <!-- Ziel-Modus: Rate-Vergleich -->
+          <div id="inv-goal-scenarios" style="display:none;margin-top:10px">
+            <div style="height:1px;background:rgba(255,255,255,.1);margin:10px 0"></div>
+            <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:8px">Vergleich verschiedener Renditen</div>
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:9px;text-align:center">
+                <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px">3% konservativ</div>
+                <div style="font-size:14px;font-weight:700;color:white">CHF <span id="inv-sc3">—</span></div>
+                <div style="font-size:9px;color:rgba(255,255,255,.3);margin-top:1px">/Mt.</div>
+              </div>
+              <div style="flex:1;background:rgba(227,6,19,.2);border-radius:8px;padding:9px;text-align:center;border:.5px solid rgba(227,6,19,.4)">
+                <div style="font-size:10px;color:rgba(255,100,100,.7);margin-bottom:3px">5% ausgewogen</div>
+                <div style="font-size:14px;font-weight:700;color:#E30613">CHF <span id="inv-sc5">—</span></div>
+                <div style="font-size:9px;color:rgba(255,100,100,.5);margin-top:1px">/Mt.</div>
+              </div>
+              <div style="flex:1;background:rgba(110,231,183,.1);border-radius:8px;padding:9px;text-align:center">
+                <div style="font-size:10px;color:rgba(110,231,183,.6);margin-bottom:3px">7% wachstum</div>
+                <div style="font-size:14px;font-weight:700;color:#6ee7b7">CHF <span id="inv-sc7">—</span></div>
+                <div style="font-size:9px;color:rgba(110,231,183,.4);margin-top:1px">/Mt.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1096,7 +1160,7 @@
 </div><!-- /phone -->
 
 
-<script src="app.js?v=39"></script>
+<script src="app.js?v=40"></script>
 <script>
   // Dev: force SW update check on every page load (replaces "Update on reload" checkbox)
   if ('serviceWorker' in navigator) {
