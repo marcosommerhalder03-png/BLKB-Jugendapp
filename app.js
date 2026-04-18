@@ -985,6 +985,7 @@ function applyGoalPreset(emoji, name) {
 
 // Auswahl-State für Goal-Checkboxen (nicht persistiert)
 var goalSelState = {};
+var goalBudgetHintDismissed = localStorage.getItem('goalBudgetHintDismissed') === '1';
 
 function quickAddGoal(emoji, name, ziel) {
   for (var i = 0; i < state.goals.length; i++) {
@@ -1104,6 +1105,31 @@ function onSparChange(val) {
 function renderGoals() {
   var list  = document.getElementById('goals-list');
   var spar  = state.sparGuthaben;
+
+  // First-use Hinweis (einmalig dismissbar)
+  var hintHTML = goalBudgetHintDismissed ? '' :
+    '<div id="goal-budget-hint" style="margin:0 0 8px;background:#FFF3CD;' +
+    'border-radius:10px;padding:9px 11px;border:.5px solid #FAC775">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+        '<div style="display:flex;gap:7px;align-items:flex-start;flex:1">' +
+          '<div style="width:28px;height:28px;background:#FFF3CD;border-radius:7px;' +
+            'display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">💡</div>' +
+          '<div>' +
+            '<div style="font-size:11px;font-weight:700;color:#633806;margin-bottom:3px">Tipp: Ins Budget einplanen</div>' +
+            '<div style="font-size:10px;color:#854F0B;line-height:1.5">' +
+              'Hake Ziele an und übernimm sie als eigene Positionen in deinen Budgetrechner — so planst du jeden Monat konkret.' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div onclick="dismissGoalBudgetHint()" ' +
+          'style="width:18px;height:18px;border-radius:4px;background:rgba(133,79,11,.12);' +
+          'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:8px;cursor:pointer">' +
+          '<svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="#854F0B" stroke-width="2" stroke-linecap="round">' +
+            '<line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/>' +
+          '</svg>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   var mSpar = state.monatlichesSparbudget;
   var totalZiel = state.goals.reduce(function(s,g){ return s+(g.ziel||0); }, 0);
 
@@ -1127,7 +1153,7 @@ function renderGoals() {
   }
 
   if (state.goals.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:var(--light);font-size:13px">Noch keine Sparziele. Füge dein erstes Ziel hinzu! 🎯</div>';
+    list.innerHTML = hintHTML + '<div style="text-align:center;padding:32px 16px;color:var(--light);font-size:13px">Noch keine Sparziele. Füge dein erstes Ziel hinzu! 🎯</div>';
     return;
   }
 
@@ -1224,7 +1250,14 @@ function renderGoals() {
       '</div>';
   }
 
-  list.innerHTML = html;
+  list.innerHTML = hintHTML + html;
+}
+
+function dismissGoalBudgetHint() {
+  localStorage.setItem('goalBudgetHintDismissed', '1');
+  goalBudgetHintDismissed = true;
+  var el = document.getElementById('goal-budget-hint');
+  if (el) el.remove();
 }
 
 /* ── Goal-Selektion & Budget-Transfer ──────────────────────────── */
@@ -1234,19 +1267,22 @@ function toggleGoalSel(event, idx) {
   if (!g) return;
   if (!g.id) g.id = Date.now(); // Fallback falls id fehlt
   goalSelState[g.id] = !goalSelState[g.id];
-  // Checkbox visuell aktualisieren
+  // Checkbox + Row visuell aktualisieren
   var chk = document.querySelector('.goal-sel-chk[data-idx="' + idx + '"]');
+  var row = chk ? (chk.closest('.goal-item') || chk.parentElement) : null;
   if (chk) {
     if (goalSelState[g.id]) {
       chk.style.background   = '#185FA5';
       chk.style.borderColor  = '#185FA5';
-      chk.innerHTML = '<svg width="10" height="10" viewBox="0 0 12 12">' +
-        '<polyline points="2,6 5,9 10,3" stroke="white" stroke-width="1.8" ' +
+      chk.innerHTML = '<svg width="9" height="9" viewBox="0 0 12 12">' +
+        '<polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" ' +
         'fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      if (row) row.style.background = '#F0F7FF';
     } else {
       chk.style.background   = 'transparent';
       chk.style.borderColor  = '#E8E8E8';
       chk.innerHTML = '';
+      if (row) row.style.background = '';
     }
   }
   updateGoalSelBar();
@@ -1280,29 +1316,41 @@ function transferGoalsToBudget() {
   var selected = state.goals.filter(function(g) { return g.id && goalSelState[g.id]; });
   if (selected.length === 0) return;
 
-  var lohn    = state.lohn || 3200;
-  var sparCat = budgetCats.find(function(c) { return c.name.indexOf('Sparen') >= 0; });
-  if (!sparCat) return;
+  var lohn  = state.lohn || 3200;
+  var mSpar = state.monatlichesSparbudget || 100;
+  var added = 0;
 
-  var extraChf = selected.reduce(function(sum, g) {
+  selected.forEach(function(g) {
+    // Duplikat-Check: gleicher goalId bereits vorhanden?
+    var exists = budgetCats.some(function(c) { return c.fromGoal && c.goalId === g.id; });
+    if (exists) return;
+
     var missing = Math.max(0, (g.ziel || 0) - state.sparGuthaben);
-    var months  = Math.max(1, Math.ceil(missing / (state.monatlichesSparbudget || 100)));
-    return sum + Math.round((g.ziel || 0) / Math.min(months, 24));
-  }, 0);
+    var months  = Math.max(1, Math.min(24, Math.ceil(missing / mSpar)));
+    var chf     = Math.round((g.ziel || 0) / months);
+    var pct     = Math.round(chf / lohn * 100);
 
-  var currentChf = Math.round(lohn * sparCat.pct / 100);
-  var newChf     = Math.min(lohn, currentChf + extraChf);
-  sparCat.pct    = Math.round(newChf / lohn * 100);
+    budgetCats.push({
+      icon:     g.emoji,
+      name:     g.name,
+      hint:     'Sparziel · CHF ' + (g.ziel || 0).toLocaleString('de-CH'),
+      pct:      pct,
+      color:    'fill-petrol',
+      fromGoal: true,
+      goalId:   g.id
+    });
+    added++;
+  });
 
+  goalSelState = {};
   save();
   calcBudget();
-
-  // Auswahl und Bar zurücksetzen
-  goalSelState = {};
   renderGoals();
 
-  showToast('✓ ' + selected.length + ' Ziel' +
-    (selected.length === 1 ? '' : 'e') + ' ins Budget übernommen!');
+  var skipped = selected.length - added;
+  var msg = '✓ ' + added + ' Ziel' + (added === 1 ? '' : 'e') + ' als Budget-Position hinzugefügt!';
+  if (skipped > 0) msg += ' (' + skipped + ' bereits vorhanden)';
+  showToast(msg);
   setTimeout(function() { switchView('budget', 3); }, 800);
 }
 
@@ -1803,7 +1851,9 @@ function calcBudget() {
       '<div class="budget-cat-row">' +
         (function(){ var bt=BUD_CAT_THEME[c.color]||{bg:'#F4F4F4',ic:'#6B6B6B'}; return '<div style="width:36px;height:36px;background:'+bt.bg+';border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+bt.ic+';font-size:17px">'+c.icon+'</div>'; })() +
         '<div class="budget-cat-info">' +
-          '<div class="budget-cat-name">' + c.name + '</div>' +
+          '<div class="budget-cat-name">' + c.name +
+            (c.fromGoal ? '<span style="font-size:8px;font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 5px;border-radius:3px;margin-left:4px">Ziel</span>' : '') +
+          '</div>' +
           '<div class="budget-cat-hint">' + c.hint + '</div>' +
         '</div>' +
         '<div class="budget-cat-inputs">' +
@@ -1820,6 +1870,13 @@ function calcBudget() {
             ' oninput="onBudgetInput(this)" onfocus="this.select()">' +
             '<span class="budget-field-lbl">%</span>' +
           '</div>' +
+          (c.fromGoal
+            ? '<div onclick="removeGoalBudgetCat(' + i + ')" ' +
+              'style="width:16px;height:16px;border-radius:4px;background:#FFF0F0;' +
+              'display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-left:4px">' +
+              '<svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="#E30613" stroke-width="2" stroke-linecap="round">' +
+              '<line x1="2" y1="2" x2="8" y2="8"/><line x1="8" y1="2" x2="2" y2="8"/></svg></div>'
+            : '') +
         '</div>' +
       '</div>' +
       '<div class="budget-cat-bar">' +
@@ -1850,6 +1907,12 @@ function resetBudgetDefaults() {
   budgetCats = budgetDefaults.map(function(c) { return Object.assign({}, c); });
   calcBudget();
   showToast('Standardwerte wiederhergestellt ↺');
+}
+
+function removeGoalBudgetCat(idx) {
+  budgetCats.splice(idx, 1);
+  save();
+  calcBudget();
 }
 
 /* ================================================
