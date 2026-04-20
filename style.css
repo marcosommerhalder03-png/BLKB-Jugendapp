@@ -1706,16 +1706,17 @@ input[type="range"]::-webkit-slider-thumb {
    MODE SWITCHING
 ============================================= */
 /* Default (before JS runs): youth-nav visible so there is always a nav — no flash of empty nav */
-#app .youth-only { display: flex !important; }
+/* display:flex ohne !important → Inline-display:grid (Grids) gewinnt; display:none !important bleibt für Verstecken */
+#app .youth-only { display: flex; }
 #app .adult-only { display: none !important; }
 
 /* Youth mode — explicit (mirrors default) */
-#app.mode-youth .youth-only { display: flex !important; }
+#app.mode-youth .youth-only { display: flex; }
 #app.mode-youth .adult-only { display: none !important; }
 
 /* Adult mode */
 #app.mode-adult .youth-only { display: none !important; }
-#app.mode-adult .adult-only { display: flex !important; }
+#app.mode-adult .adult-only { display: flex; }
 
 /* =============================================
    YOUTH LEARN — CHAPTER PATH
