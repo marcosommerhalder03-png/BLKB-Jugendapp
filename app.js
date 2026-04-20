@@ -353,7 +353,7 @@ function renderLearnChapters() {
             var cc = CHAPTER_COLORS[i] || { bg:'#F4F4F4', c:'#6B6B6B' };
             var bg = isLocked ? '#F4F4F4' : cc.bg;
             var extra = isLocked ? 'opacity:.4;' : '';
-            return '<div class="chapter-icon-wrap" style="background:'+bg+';'+extra+'font-size:20px">'+ch.emoji+'</div>';
+            return '<div class="chapter-icon-wrap" style="background:'+bg+';'+extra+'font-size:14px">'+ch.emoji+'</div>';
           })() +
           '<div style="flex:1;min-width:0">' +
             '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
@@ -1552,7 +1552,7 @@ function renderHaxx() {
 
     var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', ic: '#6B6B6B', text: '#6B6B6B' };
     var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
-    var haxxIcoHtml = '<div style="width:40px;height:40px;background:' + catColor.bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">' + h.emoji + '</div>';
+    var haxxIcoHtml = '<div style="width:28px;height:28px;background:' + catColor.bg + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + h.emoji + '</div>';
 
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
       '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
@@ -1712,7 +1712,7 @@ function calcBudget() {
     var barW = Math.min(100, (c.pct || 0) * 2);
     html += '<div class="budget-cat">' +
       '<div class="budget-cat-row">' +
-        (function(){ var bt=BUD_CAT_THEME[c.color]||{bg:'#F4F4F4',ic:'#6B6B6B'}; return '<div style="width:36px;height:36px;background:'+bt.bg+';border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+bt.ic+';font-size:17px">'+c.icon+'</div>'; })() +
+        (function(){ var bt=BUD_CAT_THEME[c.color]||{bg:'#F4F4F4',ic:'#6B6B6B'}; return '<div style="width:28px;height:28px;background:'+bt.bg+';border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+bt.ic+';font-size:14px">'+c.icon+'</div>'; })() +
         '<div class="budget-cat-info">' +
           '<div class="budget-cat-name">' + c.name + '</div>' +
           '<div class="budget-cat-hint">' + c.hint + '</div>' +
@@ -3074,8 +3074,8 @@ function renderYouthGamification() {
     var html = '';
     BADGES.forEach(function(b) {
       var has = b.check();
-      var ico = '<div style="width:36px;height:36px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">' + b.icon + '</div>';
-      html += '<div style="display:flex;align-items:center;gap:8px;padding:10px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:10px;border:' + (has?'0.5px solid #C0DD97':'0.5px solid #E8E8E8') + ';' + (has?'':'opacity:0.5') + '">' +
+      var ico = '<div style="width:28px;height:28px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + b.icon + '</div>';
+      html += '<div style="display:flex;align-items:center;gap:8px;padding:11px 12px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:11px;border:' + (has?'0.5px solid #C0DD97':'0.5px solid #E8E8E8') + ';' + (has?'':'opacity:0.5') + '">' +
         ico +
         '<div><div style="font-size:11px;font-weight:600;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
         '<div style="font-size:9px;color:' + (has?'#3B6D11':'#999') + '">' + b.desc + '</div></div>' +
@@ -3287,7 +3287,7 @@ function renderAdultGamification() {
     scenEl.innerHTML = scenarios.map(function(s) {
       return '<div class="scenario-card">' +
         '<div style="display:flex;align-items:center;gap:8px">' +
-        '<div style="width:40px;height:40px;background:#F4F4F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">' + s.icon + '</div>' +
+        '<div style="width:28px;height:28px;background:#F4F4F4;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + s.icon + '</div>' +
         '<div style="font-size:14px;font-weight:600;color:#1A1A1A">' + s.title + '</div></div>' +
         '<div style="font-size:12px;color:#6B6B6B">' + s.desc + '</div>' +
         '<div class="scenario-value" style="color:#27500A">' + s.value + '</div>' +

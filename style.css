@@ -28,7 +28,7 @@
   --ok-l:   #EAF3DE;
   --warn-l: #FFF3CD;
 
-  --r:      12px;
+  --r:      11px;
   --r-sm:   10px;
   --shadow: none;
   --shadow-sm: none;
@@ -571,7 +571,7 @@ body {
   border-radius: var(--r);
   box-shadow: none;
   border: 0.5px solid #E8E8E8;
-  padding: 16px;
+  padding: 14px 16px;
 }
 .gam-section-label {
   font-size: 11px;
@@ -681,7 +681,7 @@ body {
 .scenario-card {
   background: #FFFFFF;
   border: 0.5px solid #E8E8E8;
-  border-radius: 12px;
+  border-radius: 11px;
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
@@ -1520,7 +1520,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .fk-topic-card {
   background: white;
-  border-radius: 12px;
+  border-radius: 11px;
   box-shadow: none;
   margin-bottom: 8px;
   overflow: hidden;
@@ -1714,7 +1714,7 @@ input[type="range"]::-webkit-slider-thumb {
 .chapter-card {
   margin: 0 16px 10px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 11px;
   border: 0.5px solid #E8E8E8;
   overflow: hidden;
   cursor: pointer;
@@ -1733,9 +1733,9 @@ input[type="range"]::-webkit-slider-thumb {
 
 .chapter-icon-wrap {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1791,7 +1791,7 @@ input[type="range"]::-webkit-slider-thumb {
 /* ─── Revolut-style Haxx Cards ─────────────────────────────── */
 .haxx-item {
   background: #fff;
-  border-radius: 12px;
+  border-radius: 11px;
   margin: 0 16px 10px;
   border: 0.5px solid #E8E8E8;
   overflow: hidden;
