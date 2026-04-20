@@ -56,6 +56,84 @@
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
 
+        <!-- Saldo-Strip -->
+        <div style="background:#1A1A2E;padding:3px 16px 10px">
+          <div style="font-size:7px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px">Gesamtsaldo</div>
+          <div style="font-size:22px;font-weight:700;color:white" id="home-saldo">CHF 3'747</div>
+        </div>
+
+        <!-- A1 — 2×2 Metric Grid (youth) -->
+        <div class="youth-only" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:6px 16px 4px">
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Sparziel</div>
+            <div style="font-size:11px;font-weight:700;color:#E30613" id="hm-goal-name">—</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-goal-sub">Kein Ziel gesetzt</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:3px;overflow:hidden">
+              <div id="hm-goal-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
+            </div>
+          </div>
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Lernen</div>
+            <div style="font-size:11px;font-weight:700;color:#1A1A1A" id="hm-learn-val">0 / 5</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-learn-sub">Kapitel · 0%</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:3px;overflow:hidden">
+              <div id="hm-learn-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
+            </div>
+          </div>
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Money Hero</div>
+            <div style="font-size:11px;font-weight:700;color:#1A1A1A" id="hm-xp-val">0 XP</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-xp-sub">🌱 Lv.1</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:3px;overflow:hidden">
+              <div id="hm-xp-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
+            </div>
+          </div>
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Streak</div>
+            <div style="font-size:11px;font-weight:700;color:#1A1A1A" id="hm-streak-val">🔥 0 Tage</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-streak-sub">App öffnen</div>
+          </div>
+        </div>
+
+        <!-- B1 — 2×2 KPI Grid (adult) -->
+        <div class="adult-only" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:6px 16px 4px">
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Budget</div>
+            <div style="font-size:11px;font-weight:700;color:#1A1A1A" id="hm-budget-val">—%</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-budget-sub">verteilt</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:3px;overflow:hidden">
+              <div id="hm-budget-bar" style="height:100%;background:#3B6D11;border-radius:2px;width:0%"></div>
+            </div>
+          </div>
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Sparziele</div>
+            <div style="font-size:11px;font-weight:700;color:#1A1A1A" id="hm-goals-val">0 / 0</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-goals-sub">erreicht</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:3px;overflow:hidden">
+              <div id="hm-goals-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
+            </div>
+          </div>
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Invest-Prognose</div>
+            <div style="font-size:10px;font-weight:700;color:#185FA5" id="hm-invest-val">—</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-invest-sub">nach 20 J.</div>
+          </div>
+          <div style="background:white;border-radius:9px;border:.5px solid #E8E8E8;padding:8px 9px">
+            <div style="font-size:8px;color:#6B6B6B">Money IQ</div>
+            <div style="font-size:11px;font-weight:700;color:#1A1A1A" id="hm-iq-val">0 / 100</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-iq-sub">Habits offen</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:3px;overflow:hidden">
+              <div id="hm-iq-bar" style="height:100%;background:#185FA5;border-radius:2px;width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heute zu tun (adult) -->
+        <div class="adult-only" style="margin:0 16px 8px;background:white;border-radius:10px;border:.5px solid #E8E8E8;overflow:hidden">
+          <div style="padding:7px 11px 4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#6B6B6B">Heute zu tun</div>
+          <div id="hm-todos"></div>
+        </div>
+
         <!-- Daily mission card -->
         <div class="section-title youth-only">Nächste Aufgabe</div>
         <div class="mission-card youth-only" id="home-mission-card" onclick="goToNextLesson()">
@@ -1160,7 +1238,7 @@
 </div><!-- /phone -->
 
 
-<script src="app.js?v=41"></script>
+<script src="app.js?v=42"></script>
 <script>
   // Dev: force SW update check on every page load (replaces "Update on reload" checkbox)
   if ('serviceWorker' in navigator) {

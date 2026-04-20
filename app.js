@@ -966,6 +966,7 @@ function setAge(age) {
     if (newMode === 'youth') showToast('🎮 Jugend-Modus aktiviert!');
     else showToast('💼 Erwachsenen-Modus aktiviert!');
   }
+  updateHomeDashboard();
 }
 
 /* ================================================
@@ -1835,6 +1836,192 @@ function updateHomeCounts() {
   var hc = document.getElementById('home-haxx-count');
   if (gc) gc.textContent = state.goals.length;
   if (hc) hc.textContent = state.haxxDone.length + '/6';
+  updateHomeDashboard();
+}
+
+function updateHomeDashboard() {
+  var isYouth = state.age < 18;
+
+  // Gesamtsaldo
+  var saldo = (state.sparGuthaben || 0) +
+    (state.accounts ? state.accounts.reduce(function(s, a) {
+      return s + (a.balance || 0); }, 0) : 1247.5 + 2500);
+  var saldoEl = document.getElementById('home-saldo');
+  if (saldoEl) saldoEl.textContent =
+    'CHF ' + Math.round(saldo).toLocaleString('de-CH');
+
+  if (isYouth) {
+    // A1: Sparziel
+    var topGoal = state.goals && state.goals[0];
+    var gnEl = document.getElementById('hm-goal-name');
+    var gsEl = document.getElementById('hm-goal-sub');
+    var gbEl = document.getElementById('hm-goal-bar');
+    if (gnEl) {
+      if (topGoal) {
+        var pct = Math.min(100, Math.round(
+          (state.sparGuthaben || 0) / (topGoal.ziel || 1) * 100));
+        gnEl.textContent = topGoal.emoji + ' ' + topGoal.name;
+        gsEl.textContent = '~' + Math.max(1, Math.ceil(
+          Math.max(0, (topGoal.ziel || 0) - (state.sparGuthaben || 0)) /
+          (state.monatlichesSparbudget || 100))) + ' Mt. · ' + pct + '%';
+        gbEl.style.width = pct + '%';
+      } else {
+        gnEl.textContent = '—';
+        gsEl.textContent = 'Kein Ziel gesetzt';
+      }
+    }
+
+    // A1: Lernen (basiert auf learnChapterProgress)
+    var chapDone  = 0;
+    var chapTotal = 5;
+    if (typeof learnChapters !== 'undefined') {
+      chapTotal = learnChapters.length;
+      chapDone  = (typeof learnChapterProgress !== 'undefined')
+        ? learnChapterProgress.filter(function(p){ return p >= 1; }).length
+        : 0;
+    }
+    var lpct = chapTotal > 0 ? Math.round(chapDone / chapTotal * 100) : 0;
+    var lvEl = document.getElementById('hm-learn-val');
+    var lsEl = document.getElementById('hm-learn-sub');
+    var lbEl = document.getElementById('hm-learn-bar');
+    if (lvEl) {
+      lvEl.textContent = chapDone + ' / ' + chapTotal;
+      lsEl.textContent = 'Kapitel · ' + lpct + '%';
+      lbEl.style.width = lpct + '%';
+    }
+
+    // A1: XP / Level
+    var xp  = state.xp || 0;
+    var lvlIdx = 0;
+    if (typeof YOUTH_LEVELS !== 'undefined') {
+      for (var i = 0; i < YOUTH_LEVELS.length; i++) {
+        if (xp >= YOUTH_LEVELS[i].min) lvlIdx = i;
+      }
+    }
+    var curLvl  = (typeof YOUTH_LEVELS !== 'undefined') ? YOUTH_LEVELS[lvlIdx]     : null;
+    var nextLvl = (typeof YOUTH_LEVELS !== 'undefined') ? YOUTH_LEVELS[lvlIdx + 1] : null;
+    var xpPct   = (curLvl && nextLvl)
+      ? Math.round((xp - curLvl.min) / (nextLvl.min - curLvl.min) * 100) : 100;
+    var xvEl = document.getElementById('hm-xp-val');
+    var xsEl = document.getElementById('hm-xp-sub');
+    var xbEl = document.getElementById('hm-xp-bar');
+    if (xvEl) {
+      xvEl.textContent = xp + ' XP';
+      xsEl.textContent = (curLvl ? curLvl.badge + ' Lv.' + (lvlIdx + 1) : 'Lv.1') +
+        (nextLvl ? ' · ' + (nextLvl.min - xp) + ' bis Lv.' + (lvlIdx + 2) : ' · Max!');
+      xbEl.style.width = xpPct + '%';
+    }
+
+    // A1: Streak
+    var streak = state.streak || 0;
+    var today0 = todayStr();
+    var todayQuizDone0  = state.quizDate === today0;
+    var todayChalDone0  = (state.dailyChallengeDate === today0 && state.dailyChallengeXpClaimed);
+    var stEl = document.getElementById('hm-streak-val');
+    var ssEl = document.getElementById('hm-streak-sub');
+    if (stEl) {
+      stEl.textContent = '🔥 ' + streak + ' ' + (streak === 1 ? 'Tag' : 'Tage');
+      ssEl.textContent = (!todayQuizDone0 || !todayChalDone0)
+        ? 'Quiz/Challenge offen' : 'Heute erledigt ✓';
+    }
+
+  } else {
+    // B1: Budget %
+    var budgetPct = 0;
+    if (typeof budgetCats !== 'undefined') {
+      budgetPct = Math.min(100,
+        Math.round(budgetCats.reduce(function(s, c) { return s + (c.pct || 0); }, 0)));
+    }
+    var bvEl = document.getElementById('hm-budget-val');
+    var bsEl = document.getElementById('hm-budget-sub');
+    var bbEl = document.getElementById('hm-budget-bar');
+    if (bvEl) {
+      bvEl.textContent = budgetPct + '%';
+      bvEl.style.color = budgetPct === 100 ? '#27500A' : '#1A1A1A';
+      bsEl.textContent = budgetPct === 100 ? 'Perfekt verteilt' : 'noch ' + (100 - budgetPct) + '% offen';
+      bbEl.style.background = budgetPct === 100 ? '#3B6D11' : '#E30613';
+      bbEl.style.width = budgetPct + '%';
+    }
+
+    // B1: Sparziele
+    var goals  = state.goals || [];
+    var gDone  = goals.filter(function(g) {
+      return (state.sparGuthaben || 0) >= (g.ziel || 0); }).length;
+    var gPct   = goals.length ? Math.round(gDone / goals.length * 100) : 0;
+    var gvEl   = document.getElementById('hm-goals-val');
+    var gsEl2  = document.getElementById('hm-goals-sub');
+    var gbEl2  = document.getElementById('hm-goals-bar');
+    if (gvEl) {
+      gvEl.textContent  = gDone + ' / ' + goals.length;
+      gsEl2.textContent = 'erreicht · ' + (goals.length - gDone) + ' offen';
+      gbEl2.style.width = gPct + '%';
+    }
+
+    // B1: Invest-Prognose
+    var ivEl = document.getElementById('hm-invest-val');
+    var isEl = document.getElementById('hm-invest-sub');
+    if (ivEl && typeof fvCalc !== 'undefined') {
+      var base     = invState ? (invState.amount || 200) : 200;
+      var prognose = fvCalc(base, 240, 0.05);
+      ivEl.textContent = 'CHF ' + Math.round(prognose / 1000) + 'k';
+      isEl.textContent = 'nach 20 J. · 5% p.a.';
+    }
+
+    // B1: Money IQ (liest adult-health-num falls bereits gerendert)
+    var iqScore = 0;
+    var iqNumEl = document.getElementById('adult-health-num');
+    if (iqNumEl) iqScore = parseInt(iqNumEl.textContent) || 0;
+    var ivEl2 = document.getElementById('hm-iq-val');
+    var isEl2 = document.getElementById('hm-iq-sub');
+    var ibEl  = document.getElementById('hm-iq-bar');
+    if (ivEl2) {
+      ivEl2.textContent = iqScore + ' / 100';
+      var hList = document.getElementById('adult-habits-list');
+      var habitsOpen = hList ? hList.querySelectorAll('[data-done="0"]').length : 0;
+      isEl2.textContent = habitsOpen > 0 ? habitsOpen + ' Habits offen' : 'Alles erledigt ✓';
+      ibEl.style.width  = iqScore + '%';
+    }
+
+    // Heute zu tun
+    var today1     = todayStr();
+    var chalDone1  = (state.dailyChallengeDate === today1 && state.dailyChallengeXpClaimed);
+    var todos = [];
+    if (budgetPct < 100)
+      todos.push({ dot:'#E30613', title:'Budget vervollständigen',
+        sub:(100 - budgetPct) + '% noch offen' });
+    if (goals.length > gDone) {
+      var nextG = goals.find(function(g) {
+        return (state.sparGuthaben || 0) < (g.ziel || 0); });
+      if (nextG) todos.push({ dot:'#E30613', title:nextG.emoji + ' ' + nextG.name,
+        sub:'CHF ' + Math.round(Math.max(0, (nextG.ziel || 0) -
+          (state.sparGuthaben || 0))).toLocaleString('de-CH') + ' fehlen noch' });
+    }
+    if (!chalDone1)
+      todos.push({ dot:'#E30613', title:'Monatliche Challenge', sub:'Heute offen' });
+    todos.push({ dot:'#EAF3DE', title:'Budget geprüft',
+      sub:'Wöchentlicher Check', done:true });
+
+    var todosEl = document.getElementById('hm-todos');
+    if (todosEl) {
+      todosEl.innerHTML = todos.slice(0, 3).map(function(t) {
+        return '<div style="display:flex;align-items:center;gap:8px;padding:7px 11px;' +
+          'border-bottom:.5px solid #f5f5f5;' + (t.done ? 'opacity:.45' : '') + '">' +
+          '<div style="width:6px;height:6px;border-radius:50%;background:' + t.dot +
+          ';flex-shrink:0;' + (t.done ? 'border:.5px solid #3B6D11' : '') + '"></div>' +
+          '<div style="flex:1">' +
+            '<div style="font-size:10px;font-weight:600;' +
+              (t.done ? 'color:#999;text-decoration:line-through' : 'color:#1A1A1A') + '">' +
+              t.title + '</div>' +
+            '<div style="font-size:9px;color:#6B6B6B">' + t.sub + '</div>' +
+          '</div>' +
+          '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="' +
+            (t.done ? '#27500A' : '#ccc') + '" stroke-width="2.5" stroke-linecap="round">' +
+            (t.done ? '<polyline points="20 6 9 17 4 12"/>' :
+              '<polyline points="9 18 15 12 9 6"/>') +
+          '</svg></div>';
+      }).join('');
+    }
+  }
 }
 
 /* ================================================
@@ -3564,6 +3751,7 @@ function init() {
     calcBudget();
     renderFinlit();
     updateHomeCounts();
+    updateHomeDashboard();
 
     // Invest-Screen init
     var ageFromEl = document.getElementById('inv-age-from');

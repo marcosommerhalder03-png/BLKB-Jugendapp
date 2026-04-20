@@ -1,4 +1,4 @@
-const CACHE     = 'blkb-jugend-v41';
+const CACHE     = 'blkb-jugend-v42';
 const IMG_CACHE = 'blkb-jugend-img-v1';
 
 // Pre-cache shell + assets (now split across 3 files)
