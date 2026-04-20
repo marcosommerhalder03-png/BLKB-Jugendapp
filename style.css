@@ -12,6 +12,17 @@
   --fs-amount: 22px;   /* Kontobeträge in Account-Rows */
   --fs-hero:   26px;   /* Gesamtsaldo, Hauptzahl */
 
+  /* Icon-Grössen-System */
+  --ico-size:        40px;   /* Standard: Konto-, Kapitel-, Kategorie-Icons */
+  --ico-radius:      10px;
+  --ico-font:        20px;
+  --ico-size-sm:     28px;   /* Klein: Metric-Kacheln, Habit-, Szenario-Items */
+  --ico-radius-sm:   7px;
+  --ico-font-sm:     14px;
+  --ico-size-xs:     24px;   /* XS: Label-Icons, Chips, Badges */
+  --ico-radius-xs:   6px;
+  --ico-font-xs:     12px;
+
   /* Duotone Icon Farb-System */
   --icon-red:    #E30613; --icon-red-bg:    #FFF0F0;
   --icon-blue:   #185FA5; --icon-blue-bg:   #E6F1FB;
@@ -43,6 +54,44 @@
   --shadow: none;
   --shadow-sm: none;
   --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* =============================================
+   ICON-KLASSEN
+============================================= */
+.app-icon {
+  width:           var(--ico-size);
+  height:          var(--ico-size);
+  border-radius:   var(--ico-radius);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  font-size:       var(--ico-font);
+}
+.app-icon-sm {
+  width:           var(--ico-size-sm);
+  height:          var(--ico-size-sm);
+  border-radius:   var(--ico-radius-sm);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  font-size:       var(--ico-font-sm);
+}
+.app-icon-xs {
+  width:           var(--ico-size-xs);
+  height:          var(--ico-size-xs);
+  border-radius:   var(--ico-radius-xs);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  font-size:       var(--ico-font-xs);
+}
+.app-icon svg, .app-icon-sm svg, .app-icon-xs svg {
+  width:  55%;
+  height: 55%;
 }
 
 *, *::before, *::after {

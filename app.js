@@ -490,7 +490,7 @@ function renderLearnSteps(body, mod, n) {
     div.style.cssText = 'background:'+(done?'#f0fdf4':'white')+';border:1.5px solid '+(done?'#16a34a':'#e2e8f0')+';border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;';
     div.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">' +
-        '<div style="width:40px;height:40px;background:#F4F4F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + (step.icon||'📖') + '</div>' +
+        '<div class="app-icon" style="background:#F4F4F4">' + (step.icon||'📖') + '</div>' +
         '<span style="font-size:var(--fs-ui);font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</span>' +
         (done ? '<span style="margin-left:auto;color:#16a34a;font-weight:700">✓</span>' : '') +
       '</div>' +
@@ -1176,7 +1176,7 @@ function renderGoals() {
             'ontouchstart="goalDragStart(event,' + i + ')" ' +
             'onclick="event.stopPropagation()" ' +
             'title="Priorität verschieben">⠿</button>' +
-          '<div class="goal-emoji" style="width:44px;height:44px;background:' + goalEmojiBg(g.emoji) + ';border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px">' + g.emoji + '</div>' +
+          '<div class="app-icon goal-emoji" style="background:' + goalEmojiBg(g.emoji) + '">' + g.emoji + '</div>' +
           '<div class="goal-info">' +
             '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">' +
               '<span style="font-size:var(--fs-label);font-weight:600;color:#6B6B6B;background:#F4F4F4;padding:2px 7px;border-radius:5px;margin-right:2px">P' + (i+1) + '</span>' +
@@ -1478,7 +1478,7 @@ var DT_PATHS = {
 function dtIcon(theme, shape) {
   var t = DT_THEMES[theme] || DT_THEMES.neutral;
   var fn = DT_PATHS[shape] || DT_PATHS.coin;
-  return '<div style="width:40px;height:40px;background:'+t.bg+';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="22" height="22" viewBox="0 0 24 24">'+fn(t.ic)+'</svg></div>';
+  return '<div class="app-icon" style="background:'+t.bg+'"><svg width="22" height="22" viewBox="0 0 24 24">'+fn(t.ic)+'</svg></div>';
 }
 
 // Learn chapter color mapping (index 0-4)
@@ -1552,7 +1552,7 @@ function renderHaxx() {
 
     var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', ic: '#6B6B6B', text: '#6B6B6B' };
     var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:var(--fs-label);font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
-    var haxxIcoHtml = '<div style="width:28px;height:28px;background:' + catColor.bg + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + h.emoji + '</div>';
+    var haxxIcoHtml = '<div class="app-icon" style="background:' + catColor.bg + '">' + h.emoji + '</div>';
 
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
       '<div class="haxx-header" onclick="toggleHaxx(' + i + ')">' +
@@ -1712,7 +1712,7 @@ function calcBudget() {
     var barW = Math.min(100, (c.pct || 0) * 2);
     html += '<div class="budget-cat">' +
       '<div class="budget-cat-row">' +
-        (function(){ var bt=BUD_CAT_THEME[c.color]||{bg:'#F4F4F4',ic:'#6B6B6B'}; return '<div style="width:28px;height:28px;background:'+bt.bg+';border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+bt.ic+';font-size:14px">'+c.icon+'</div>'; })() +
+        (function(){ var bt=BUD_CAT_THEME[c.color]||{bg:'#F4F4F4',ic:'#6B6B6B'}; return '<div class="app-icon" style="background:'+bt.bg+';color:'+bt.ic+'">'+c.icon+'</div>'; })() +
         '<div class="budget-cat-info">' +
           '<div class="budget-cat-name">' + c.name + '</div>' +
           '<div class="budget-cat-hint">' + c.hint + '</div>' +
@@ -2847,7 +2847,7 @@ function renderYouthGamification() {
       rowEl.innerHTML = '<span style="font-size:var(--fs-sub);color:#94a3b8">Noch keine Abzeichen — leg los!</span>';
     } else {
       rowEl.innerHTML = earned.slice(0,4).map(function(b){
-        return '<div title="' + b.title + '" style="width:28px;height:28px;background:#F4F4F4;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:default">' + b.icon + '</div>';
+        return '<div title="' + b.title + '" class="app-icon-sm" style="background:#F4F4F4;display:inline-flex;cursor:default">' + b.icon + '</div>';
       }).join('');
     }
   }
@@ -2866,9 +2866,7 @@ function renderYouthGamification() {
       'border-radius:10px;padding:9px 11px;border:.5px solid #FAC775">' +
         '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
           '<div style="display:flex;gap:7px;align-items:flex-start;flex:1">' +
-            '<div style="width:28px;height:28px;background:#FFF3CD;border-radius:7px;' +
-              'display:flex;align-items:center;justify-content:center;' +
-              'font-size:14px;flex-shrink:0">💡</div>' +
+            '<div class="app-icon-sm" style="background:#FFF3CD">💡</div>' +
             '<div>' +
               '<div style="font-size:var(--fs-sub);font-weight:700;color:#633806;margin-bottom:3px">' +
                 'Was sind XP?' +
@@ -2984,9 +2982,7 @@ function renderYouthGamification() {
         { emoji:'🎲', label:'Story entscheiden',  xp:20, done:todayStory,     bg:'#EEEDFE' },
       ].map(function(a) {
         return '<div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:.5px solid #F4F4F4">' +
-          '<div style="width:32px;height:32px;background:' + a.bg + ';border-radius:8px;' +
-            'display:flex;align-items:center;justify-content:center;font-size:var(--fs-value);' +
-            'flex-shrink:0' + (a.done ? ';opacity:.45' : '') + '">' + a.emoji + '</div>' +
+          '<div class="app-icon-sm" style="background:' + a.bg + (a.done ? ';opacity:.45' : '') + '">' + a.emoji + '</div>' +
           '<div style="flex:1"><div style="font-size:var(--fs-sub);font-weight:600;color:' +
             (a.done ? '#999' : '#1A1A1A') + ';' + (a.done ? 'text-decoration:line-through' : '') + '">' +
             a.label + '</div></div>' +
@@ -3013,12 +3009,12 @@ function renderYouthGamification() {
     var done = (state.dailyChallengeDate === today && state.dailyChallengeXpClaimed);
     if (done) {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--ok-l);border-radius:8px">' +
-        '<div style="width:40px;height:40px;background:#FFF0F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + ch.icon + '</div>' +
+        '<div class="app-icon" style="background:#FFF0F0">' + ch.icon + '</div>' +
         '<div><div style="font-size:14px;font-weight:700;color:var(--ok)">✓ ' + ch.title + '</div>' +
         '<div style="font-size:var(--fs-body);color:var(--mid)">Heute abgehakt · +' + ch.xp + ' XP erhalten</div></div></div>';
     } else {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
-        '<div style="width:40px;height:40px;background:#FFF0F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + ch.icon + '</div>' +
+        '<div class="app-icon" style="background:#FFF0F0">' + ch.icon + '</div>' +
         '<div style="flex:1"><div style="font-size:14px;font-weight:700;color:#1A1A1A">' + ch.title + '</div>' +
         '<div style="font-size:var(--fs-body);color:#6B6B6B">' + ch.desc + '</div></div>' +
         '<button onclick="claimDailyChallenge()" style="padding:8px 14px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:8px;font-size:var(--fs-body);font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">+' + ch.xp + ' XP</button>' +
@@ -3074,7 +3070,7 @@ function renderYouthGamification() {
     var html = '';
     BADGES.forEach(function(b) {
       var has = b.check();
-      var ico = '<div style="width:28px;height:28px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + b.icon + '</div>';
+      var ico = '<div class="app-icon" style="background:' + (has?'#EAF3DE':'#F4F4F4') + '">' + b.icon + '</div>';
       html += '<div style="display:flex;align-items:center;gap:8px;padding:11px 12px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:11px;border:' + (has?'0.5px solid #C0DD97':'0.5px solid #E8E8E8') + ';' + (has?'':'opacity:0.5') + '">' +
         ico +
         '<div><div style="font-size:var(--fs-sub);font-weight:600;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
@@ -3124,9 +3120,7 @@ function renderYouthGamification() {
             '<div class="habit-chk" style="width:20px;height:20px;border-radius:5px;' +
               'border:2px solid #E8E8E8;display:flex;align-items:center;' +
               'justify-content:center;flex-shrink:0"></div>' +
-            '<div style="width:32px;height:32px;background:' + h.bg + ';border-radius:8px;' +
-              'display:flex;align-items:center;justify-content:center;' +
-              'font-size:var(--fs-value);flex-shrink:0">' + h.emoji + '</div>' +
+            '<div class="app-icon-sm" style="background:' + h.bg + '">' + h.emoji + '</div>' +
             '<div style="flex:1">' +
               '<div style="font-size:var(--fs-body);font-weight:600;color:#1A1A1A">' + h.label + '</div>' +
               '<div style="font-size:var(--fs-sub);color:#6B6B6B;margin-top:1px">' + h.sub + '</div>' +
@@ -3183,7 +3177,7 @@ function renderAdultGamification() {
         '<div><div style="font-size:var(--fs-ui);font-weight:600;color:var(--dark)">' + p.label + '</div>' +
         '<div style="font-size:var(--fs-sub);color:var(--mid)">' + p.hint + '</div></div>' +
         '<div style="display:flex;align-items:center;gap:6px">' +
-        '<div style="width:28px;height:28px;background:' + (p.ok?'#EAF3DE':'#F4F4F4') + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">' + (p.ok?'✅':'❌') + '</div>' +
+        '<div class="app-icon-sm" style="background:' + (p.ok?'#EAF3DE':'#F4F4F4') + '">' + (p.ok?'✅':'❌') + '</div>' +
         '<span style="font-size:var(--fs-body);font-weight:700;color:' + (p.ok?'var(--ok)':'var(--light)') + '">' + (p.ok?'+20':'0') + ' Pkt.</span>' +
         '</div></div>';
     }).join('');
@@ -3287,7 +3281,7 @@ function renderAdultGamification() {
     scenEl.innerHTML = scenarios.map(function(s) {
       return '<div class="scenario-card">' +
         '<div style="display:flex;align-items:center;gap:8px">' +
-        '<div style="width:28px;height:28px;background:#F4F4F4;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + s.icon + '</div>' +
+        '<div class="app-icon-sm" style="background:#F4F4F4">' + s.icon + '</div>' +
         '<div style="font-size:14px;font-weight:600;color:#1A1A1A">' + s.title + '</div></div>' +
         '<div style="font-size:var(--fs-body);color:#6B6B6B">' + s.desc + '</div>' +
         '<div class="scenario-value" style="color:#27500A">' + s.value + '</div>' +
@@ -3389,7 +3383,7 @@ function renderGoalsFocus(elId, isAdult) {
   if (goals.length === 0) {
     el.innerHTML =
       '<div style="text-align:center;padding:16px 0;color:var(--mid)">' +
-      '<div style="width:40px;height:40px;background:#FFF3CD;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 8px">🎯</div>' +
+      '<div class="app-icon" style="background:#FFF3CD;margin:0 auto 8px">🎯</div>' +
       '<div style="font-size:var(--fs-ui)">Noch keine Sparziele gesetzt.</div>' +
       '<button onclick="switchView(\'goals\',0)" style="margin-top:10px;padding:8px 16px;background:' + (isAdult?'var(--petrol)':'var(--red)') + ';color:white;border:none;border-radius:8px;font-size:var(--fs-ui);font-weight:700;cursor:pointer">Erstes Ziel anlegen →</button>' +
       '</div>';
@@ -3414,7 +3408,7 @@ function renderGoalsFocus(elId, isAdult) {
     var col = colors[i] || 'var(--mid)';
     html +=
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">' +
-      '<div style="width:26px;height:26px;border-radius:50%;background:' + col + ';color:white;display:flex;align-items:center;justify-content:center;font-size:var(--fs-sub);font-weight:800;flex-shrink:0">P' + (i+1) + '</div>' +
+      '<div class="app-icon-xs" style="background:' + col + ';color:white;border-radius:50%;font-weight:800">P' + (i+1) + '</div>' +
       '<div style="flex:1;min-width:0">' +
         '<div style="font-size:var(--fs-body);font-weight:700;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (g.emoji||'🎯') + ' ' + (g.name||'Ziel') + '</div>' +
         '<div style="height:4px;background:var(--border);border-radius:2px;margin:3px 0;overflow:hidden">' +
@@ -3652,7 +3646,7 @@ function renderDashboardAccounts(accounts) {
   var typeLabel = { YOUTH: 'Jugendkonto', PRIVATE: 'Privatkonto',
                     SAVINGS: 'Sparkonto', SAVINGS_3A: 'Säule 3a' };
   function acctIcon(bg, stroke) {
-    return '<div style="width:40px;height:40px;background:'+bg+';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:10px">' +
+    return '<div class="app-icon" style="background:'+bg+';margin-right:10px">' +
       '<svg width="22" height="22" viewBox="0 0 32 32">' +
         '<rect x="2" y="8" width="24" height="17" rx="3" fill="'+stroke+'" opacity="0.2"/>' +
         '<rect x="2" y="8" width="24" height="17" rx="3" stroke="'+stroke+'" stroke-width="1.8" fill="none"/>' +
