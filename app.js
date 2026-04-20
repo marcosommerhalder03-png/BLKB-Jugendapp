@@ -17,7 +17,7 @@ var state = {
   age: 16,
   lohn: 3200,
   sparGuthaben: 2500,
-  saldo3a: 0,
+  saldo3a: 3200,
   monatlichesSparbudget: 320, // 10% von 3200
   goals: [],
   haxxDone: [],
@@ -47,6 +47,7 @@ function save() {
     age: state.age,
     lohn: state.lohn,
     sparGuthaben: state.sparGuthaben,
+    saldo3a: state.saldo3a,
     goals: state.goals,
     haxxDone: state.haxxDone,
     budgetPcts: budgetCats.map(function(c) { return c.pct; }),
@@ -67,6 +68,7 @@ function save() {
     storyChoice: state.storyChoice,
     learnChapterProgress: learnChapterProgress,
   }));
+  if (typeof update3aDisplay === 'function') update3aDisplay();
 }
 
 function load() {
@@ -76,6 +78,7 @@ function load() {
       state.age = d.age || 16;
       state.lohn = d.lohn || 3200;
       state.sparGuthaben = d.sparGuthaben || 2500;
+      state.saldo3a = d.saldo3a !== undefined ? d.saldo3a : 3200;
       var loadedGoals = d.goals || [];
       // Migration: alte pct-Ziele auf ziel-Format umstellen
       var needsMigration = loadedGoals.length > 0 && loadedGoals.every(function(g){ return g.ziel === undefined; });
@@ -1842,13 +1845,16 @@ function updateHomeCounts() {
 function updateHomeDashboard() {
   var isYouth = state.age < 18;
 
-  // Gesamtsaldo
-  var saldo = (state.sparGuthaben || 0) +
-    (state.accounts ? state.accounts.reduce(function(s, a) {
-      return s + (a.balance || 0); }, 0) : 1247.5 + 2500);
+  // Gesamtsaldo — nur Jugendkonto + Sparkonto, 3a wird NICHT eingerechnet
+  var saldo = (state.accounts && state.accounts.length)
+    ? state.accounts
+        .filter(function(a){ return !a.is3a; })
+        .reduce(function(s, a){ return s + (a.balance || 0); }, 0)
+    : (state.sparGuthaben || 2500) + 1247.5;
   var saldoEl = document.getElementById('home-saldo');
   if (saldoEl) saldoEl.textContent =
-    'CHF ' + Math.round(saldo).toLocaleString('de-CH');
+    'CHF ' + saldo.toLocaleString('de-CH',
+      {minimumFractionDigits:0, maximumFractionDigits:0});
 
   if (isYouth) {
     // A1: Sparziel
@@ -3712,6 +3718,14 @@ function render3aInvest(balance, hasAccount) {
 
   // aktuelles Guthaben in Simulation einrechnen wenn 3a aktiv
   state.saldo3a = balance;
+  update3aDisplay();
+}
+
+function update3aDisplay() {
+  var el = document.getElementById('account-3a-display');
+  if (el) el.textContent =
+    (state.saldo3a || 3200).toLocaleString('de-CH',
+      {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 
 function init() {
@@ -3752,6 +3766,7 @@ function init() {
     renderFinlit();
     updateHomeCounts();
     updateHomeDashboard();
+    update3aDisplay();
 
     // Invest-Screen init
     var ageFromEl = document.getElementById('inv-age-from');
