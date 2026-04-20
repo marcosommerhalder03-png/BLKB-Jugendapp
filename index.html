@@ -63,137 +63,129 @@
         </div>
 
         <!-- A1 — 2×2 Metric Grid (youth) -->
-        <div class="youth-only" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px 6px">
+        <div class="youth-only" style="display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:7px 16px 5px">
 
-          <!-- Sparziel -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('goals',1)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#FFF3CD;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">🎯</div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Sparziel</div>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#FFF3CD;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px">🎯</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Sparziel</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#E30613;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-goal-name">—</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-goal-sub">Kein Ziel</div>
-            <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:6px;overflow:hidden">
+            <div style="font-size:13px;font-weight:700;color:#E30613;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-goal-name">—</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-goal-sub">Kein Ziel</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:4px;overflow:hidden">
               <div id="hm-goal-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
             </div>
           </div>
 
-          <!-- Lernen -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchYouthView('learn')"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#E6F1FB;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">📖</div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Lernen</div>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#E6F1FB;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px">📖</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Lernen</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#1A1A1A" id="hm-learn-val">0 / 5</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-learn-sub">Kapitel · 0%</div>
-            <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:6px;overflow:hidden">
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A" id="hm-learn-val">0 / 5</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-learn-sub">Kapitel · 0%</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:4px;overflow:hidden">
               <div id="hm-learn-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
             </div>
           </div>
 
-          <!-- Money Hero -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('fun',6)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#EAF3DE;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px" id="hm-xp-icon">🌱</div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Money Hero</div>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#EAF3DE;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px" id="hm-xp-icon">🌱</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Money Hero</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#1A1A1A" id="hm-xp-val">0 XP</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-xp-sub">Lv.1 · 50 bis Lv.2</div>
-            <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:6px;overflow:hidden">
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A" id="hm-xp-val">0 XP</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-xp-sub">Lv.1 · 50 bis Lv.2</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:4px;overflow:hidden">
               <div id="hm-xp-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
             </div>
           </div>
 
-          <!-- Streak -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('fun',6)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#FFF3CD;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">🔥</div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Streak</div>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#FFF0F0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px">🔥</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Streak</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#1A1A1A" id="hm-streak-val">0 Tage</div>
-            <div style="font-size:9px;color:#999;margin-top:2px" id="hm-streak-sub">App täglich öffnen</div>
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A" id="hm-streak-val">0 Tage</div>
+            <div style="font-size:8px;color:#999;margin-top:1px" id="hm-streak-sub">App täglich öffnen</div>
           </div>
 
         </div>
 
         <!-- B1 — 2×2 KPI Grid (adult) -->
-        <div class="adult-only" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px 6px">
+        <div class="adult-only" style="display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:7px 16px 5px">
 
-          <!-- Budget -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('budget',3)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#EAF3DE;border-radius:7px;display:flex;align-items:center;justify-content:center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#EAF3DE;border-radius:6px;display:flex;align-items:center;justify-content:center">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg>
               </div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Budget</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Budget</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#1A1A1A" id="hm-budget-val">—%</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-budget-sub">verteilt</div>
-            <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:6px;overflow:hidden">
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A" id="hm-budget-val">—%</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-budget-sub">verteilt</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:4px;overflow:hidden">
               <div id="hm-budget-bar" style="height:100%;background:#3B6D11;border-radius:2px;width:0%"></div>
             </div>
           </div>
 
-          <!-- Sparziele -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('goals',1)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#FFF3CD;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">🎯</div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Sparziele</div>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#FFF3CD;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px">🎯</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Sparziele</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#1A1A1A" id="hm-goals-val">0 / 0</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-goals-sub">erreicht</div>
-            <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:6px;overflow:hidden">
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A" id="hm-goals-val">0 / 0</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-goals-sub">erreicht</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:4px;overflow:hidden">
               <div id="hm-goals-bar" style="height:100%;background:#E30613;border-radius:2px;width:0%"></div>
             </div>
           </div>
 
-          <!-- Invest-Prognose -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('invest',5)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#E6F1FB;border-radius:7px;display:flex;align-items:center;justify-content:center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#E6F1FB;border-radius:6px;display:flex;align-items:center;justify-content:center">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
               </div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Invest</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Invest</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#185FA5" id="hm-invest-val">—</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-invest-sub">nach 20 J. · 5% p.a.</div>
+            <div style="font-size:13px;font-weight:700;color:#185FA5" id="hm-invest-val">—</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-invest-sub">nach 20 J. · 5% p.a.</div>
           </div>
 
-          <!-- Money IQ -->
-          <div style="background:white;border-radius:11px;border:.5px solid #E8E8E8;padding:11px 12px;cursor:pointer;min-width:0;overflow:hidden"
+          <div style="background:white;border-radius:10px;border:.5px solid #E8E8E8;padding:10px 11px;cursor:pointer;min-width:0;overflow:hidden"
             onclick="switchView('fun',6)"
             onmouseenter="this.style.background='#F4F4F4'"
             onmouseleave="this.style.background='white'">
-            <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;min-width:0">
-              <div style="width:28px;height:28px;flex-shrink:0;background:#EEEDFE;border-radius:7px;display:flex;align-items:center;justify-content:center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;min-width:0">
+              <div style="width:24px;height:24px;flex-shrink:0;background:#EEEDFE;border-radius:6px;display:flex;align-items:center;justify-content:center">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
               </div>
-              <div style="font-size:9px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.4px">Money IQ</div>
+              <div style="font-size:8px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.3px">Money IQ</div>
             </div>
-            <div style="font-size:15px;font-weight:700;color:#1A1A1A" id="hm-iq-val">0 / 100</div>
-            <div style="font-size:9px;color:#999;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-iq-sub">Habits offen</div>
-            <div style="height:4px;background:#E8E8E8;border-radius:2px;margin-top:6px;overflow:hidden">
+            <div style="font-size:13px;font-weight:700;color:#1A1A1A" id="hm-iq-val">0 / 100</div>
+            <div style="font-size:8px;color:#999;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="hm-iq-sub">Habits offen</div>
+            <div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:4px;overflow:hidden">
               <div id="hm-iq-bar" style="height:100%;background:#534AB7;border-radius:2px;width:0%"></div>
             </div>
           </div>
@@ -1331,7 +1323,7 @@
 </div><!-- /phone -->
 
 
-<script src="app.js?v=47"></script>
+<script src="app.js?v=48"></script>
 <script>
   // Dev: force SW update check on every page load (replaces "Update on reload" checkbox)
   if ('serviceWorker' in navigator) {
