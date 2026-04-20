@@ -343,7 +343,7 @@ function renderLearnChapters() {
     // "Starten →" button only for unlocked, non-done cards
     var startBtn = '';
     if (!isLocked && !isDone) {
-      startBtn = '<button onclick="event.stopPropagation();openChapter(' + i + ')" style="margin-top:8px;padding:6px 14px;background:#E30613;color:white;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Starten \u2192</button>';
+      startBtn = '<button onclick="event.stopPropagation();openChapter(' + i + ')" style="margin-top:8px;padding:6px 14px;background:#E30613;color:white;border:none;border-radius:10px;font-size:var(--fs-body);font-weight:600;cursor:pointer;font-family:inherit">Starten \u2192</button>';
     }
 
     return (
@@ -356,7 +356,7 @@ function renderLearnChapters() {
             return '<div class="chapter-icon-wrap" style="background:'+bg+';'+extra+'font-size:14px">'+ch.emoji+'</div>';
           })() +
           '<div style="flex:1;min-width:0">' +
-            '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
+            '<div style="font-size:var(--fs-sub);font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#6B6B6B;margin-bottom:2px">Kapitel ' + (i+1) + '</div>' +
             '<div style="font-size:14px;font-weight:600;color:#1A1A1A;letter-spacing:-.2px">' + ch.title + '</div>' +
             '<div class="chapter-progress-row">' +
               '<div class="chapter-bar-bg"><div class="chapter-bar-fill" style="width:' + pct + '%"></div></div>' +
@@ -491,12 +491,12 @@ function renderLearnSteps(body, mod, n) {
     div.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">' +
         '<div style="width:40px;height:40px;background:#F4F4F4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + (step.icon||'📖') + '</div>' +
-        '<span style="font-size:13px;font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</span>' +
+        '<span style="font-size:var(--fs-ui);font-weight:700;color:'+(done?'#16a34a':'var(--red)')+'">Schritt '+(i+1)+' / '+mod.steps.length+'</span>' +
         (done ? '<span style="margin-left:auto;color:#16a34a;font-weight:700">✓</span>' : '') +
       '</div>' +
       '<div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px">' + step.q + '</div>' +
-      '<div style="font-size:13px;color:var(--slate);line-height:1.6">' + step.a + '</div>' +
-      (!done ? '<div style="margin-top:10px;padding:8px 14px;background:var(--red);color:white;border-radius:8px;text-align:center;font-size:13px;font-weight:700">Verstanden ✓</div>' : '');
+      '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.6">' + step.a + '</div>' +
+      (!done ? '<div style="margin-top:10px;padding:8px 14px;background:var(--red);color:white;border-radius:8px;text-align:center;font-size:var(--fs-ui);font-weight:700">Verstanden ✓</div>' : '');
     if (!done) {
       div.onclick = function() {
         if (learnProgress[n] <= i) learnProgress[n] = i + 1;
@@ -510,19 +510,19 @@ function renderLearnSteps(body, mod, n) {
 /* ── Calculator renderer (Zinseszins) ─────────────────── */
 function renderLearnCalculator(body, mod, n) {
   body.innerHTML =
-    '<div style="font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:14px">' + mod.intro + '</div>' +
+    '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.6;margin-bottom:14px">' + mod.intro + '</div>' +
     mod.facts.map(function(f){
       return '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;padding:10px 12px;background:white;border-radius:10px;border:1px solid var(--border)">' +
         '<span style="font-size:20px;flex-shrink:0">' + f.icon + '</span>' +
-        '<span style="font-size:13px;color:var(--slate);line-height:1.5">' + f.text + '</span></div>';
+        '<span style="font-size:var(--fs-ui);color:var(--slate);line-height:1.5">' + f.text + '</span></div>';
     }).join('') +
     '<div style="background:white;border-radius:12px;border:1.5px solid var(--border);padding:16px;margin-top:6px">' +
-      '<div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:12px">🧮 Zinseszins-Rechner</div>' +
-      '<label style="font-size:12px;color:var(--mid);font-weight:600">Startbetrag (CHF)</label>' +
-      '<input id="lc-betrag" type="number" value="500" min="10" max="100000" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-weight:700;margin:4px 0 12px;font-family:var(--font)">' +
-      '<label style="font-size:12px;color:var(--mid);font-weight:600">Monatlich sparen (CHF)</label>' +
-      '<input id="lc-monat" type="number" value="50" min="0" max="10000" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:15px;font-weight:700;margin:4px 0 12px;font-family:var(--font)">' +
-      '<label style="font-size:12px;color:var(--mid);font-weight:600">Jahre: <span id="lc-jahre-label">10</span></label>' +
+      '<div style="font-size:var(--fs-ui);font-weight:700;color:var(--dark);margin-bottom:12px">🧮 Zinseszins-Rechner</div>' +
+      '<label style="font-size:var(--fs-body);color:var(--mid);font-weight:600">Startbetrag (CHF)</label>' +
+      '<input id="lc-betrag" type="number" value="500" min="10" max="100000" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:var(--fs-value);font-weight:700;margin:4px 0 12px;font-family:var(--font)">' +
+      '<label style="font-size:var(--fs-body);color:var(--mid);font-weight:600">Monatlich sparen (CHF)</label>' +
+      '<input id="lc-monat" type="number" value="50" min="0" max="10000" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:var(--fs-value);font-weight:700;margin:4px 0 12px;font-family:var(--font)">' +
+      '<label style="font-size:var(--fs-body);color:var(--mid);font-weight:600">Jahre: <span id="lc-jahre-label">10</span></label>' +
       '<input id="lc-jahre" type="range" min="1" max="40" value="10" style="width:100%;accent-color:var(--red);margin:4px 0 14px" oninput="calcZinseszins()">' +
       '<div id="lc-result" style="background:var(--bg);border-radius:10px;padding:12px;text-align:center"></div>' +
     '</div>' +
@@ -544,24 +544,24 @@ function calcZinseszins() {
   var einbezahlt = b + m * months;
   var zinsen = endwert - einbezahlt;
   r.innerHTML =
-    '<div style="font-size:11px;color:var(--mid);margin-bottom:8px">Nach <b>' + j + ' Jahren</b> bei 1.5% Zinsen p.a.</div>' +
+    '<div style="font-size:var(--fs-sub);color:var(--mid);margin-bottom:8px">Nach <b>' + j + ' Jahren</b> bei 1.5% Zinsen p.a.</div>' +
     '<div style="display:flex;justify-content:space-around;margin-bottom:10px">' +
-      '<div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--ok)">CHF ' + Math.round(endwert).toLocaleString('de-CH') + '</div><div style="font-size:10px;color:var(--mid)">Endwert</div></div>' +
-      '<div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--petrol)">CHF ' + Math.round(zinsen).toLocaleString('de-CH') + '</div><div style="font-size:10px;color:var(--mid)">Zinsen 🎁</div></div>' +
+      '<div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--ok)">CHF ' + Math.round(endwert).toLocaleString('de-CH') + '</div><div style="font-size:var(--fs-sub);color:var(--mid)">Endwert</div></div>' +
+      '<div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--petrol)">CHF ' + Math.round(zinsen).toLocaleString('de-CH') + '</div><div style="font-size:var(--fs-sub);color:var(--mid)">Zinsen 🎁</div></div>' +
     '</div>' +
     '<div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden">' +
       '<div style="height:100%;background:linear-gradient(90deg,var(--petrol),var(--ok));border-radius:5px;width:' + Math.min(100,Math.round(zinsen/Math.max(endwert,1)*100)*3) + '%"></div>' +
     '</div>' +
-    '<div style="font-size:11px;color:var(--mid);margin-top:5px">Davon ' + Math.round(zinsen/Math.max(endwert,1)*100) + '% Zinsen — gratis!</div>';
+    '<div style="font-size:var(--fs-sub);color:var(--mid);margin-top:5px">Davon ' + Math.round(zinsen/Math.max(endwert,1)*100) + '% Zinsen — gratis!</div>';
 }
 
 /* ── Pots renderer (Taschengeld) ──────────────────────── */
 function renderLearnPots(body, mod, n) {
   body.innerHTML =
-    '<div style="font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:12px">Gib dein <b>Taschengeld</b> ein und sieh wie es sich auf die 3 Töpfe verteilt:</div>' +
+    '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.6;margin-bottom:12px">Gib dein <b>Taschengeld</b> ein und sieh wie es sich auf die 3 Töpfe verteilt:</div>' +
     '<input id="lp-betrag" type="number" value="100" min="1" max="10000" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:18px;font-weight:700;margin-bottom:14px;font-family:var(--font);text-align:center" oninput="renderPots()">' +
     '<div id="lp-pots"></div>' +
-    '<div style="margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--mid);line-height:1.5">' +
+    '<div style="margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:var(--fs-sub);color:var(--mid);line-height:1.5">' +
       '📚 Quelle: Pro Juventute, Budgetberatung Schweiz, PostFinance & CFPB-Forschung. Schweizer Jugendliche sparen spontan 20–50% ihres Taschengeldes.' +
     '</div>' +
     '<button onclick="markLearnDone(' + n + ')" style="width:100%;margin-top:14px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Verstanden — weiter ✓</button>';
@@ -584,8 +584,8 @@ function renderPots() {
         '<div style="height:100%;background:' + p.color + ';border-radius:6px;width:' + p.pct + '%;transition:width .5s"></div>' +
       '</div>' +
       '<div style="display:flex;justify-content:space-between">' +
-        '<span style="font-size:11px;color:var(--mid)">' + p.desc + '</span>' +
-        '<span style="font-size:11px;font-weight:700;color:' + p.color + '">' + p.pct + '%</span>' +
+        '<span style="font-size:var(--fs-sub);color:var(--mid)">' + p.desc + '</span>' +
+        '<span style="font-size:var(--fs-sub);font-weight:700;color:' + p.color + '">' + p.pct + '%</span>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -605,10 +605,10 @@ function renderQuizQuestion(body, qi) {
   var q = mod.questions[qi];
   var total = mod.questions.length;
   body.innerHTML =
-    '<div style="font-size:11px;font-weight:700;color:var(--mid);margin-bottom:12px">Frage ' + (qi+1) + ' von ' + total + '</div>' +
-    '<div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;line-height:1.4">' + q.q + '</div>' +
+    '<div style="font-size:var(--fs-sub);font-weight:700;color:var(--mid);margin-bottom:12px">Frage ' + (qi+1) + ' von ' + total + '</div>' +
+    '<div style="font-size:var(--fs-value);font-weight:700;color:var(--dark);margin-bottom:14px;line-height:1.4">' + q.q + '</div>' +
     q.options.map(function(opt, i){
-      return '<button onclick="answerQuiz(' + i + ')" style="width:100%;padding:12px 14px;margin-bottom:8px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;color:var(--dark);text-align:left;cursor:pointer;font-family:var(--font)">' +
+      return '<button onclick="answerQuiz(' + i + ')" style="width:100%;padding:12px 14px;margin-bottom:8px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:var(--fs-ui);font-weight:600;color:var(--dark);text-align:left;cursor:pointer;font-family:var(--font)">' +
         ['A','B','C','D'][i] + ') ' + opt + '</button>';
     }).join('');
 }
@@ -623,7 +623,7 @@ function answerQuiz(chosen) {
   body.innerHTML =
     '<div style="padding:14px;background:' + (correct?'#f0fdf4':'#fff0f0') + ';border-radius:12px;margin-bottom:12px;border:1.5px solid ' + (correct?'#16a34a':'var(--red)') + '">' +
       '<div style="font-size:20px;margin-bottom:6px">' + (correct?'✅':'❌') + ' ' + (correct?'Richtig!':'Leider falsch.') + '</div>' +
-      '<div style="font-size:13px;color:var(--slate);line-height:1.5">' + q.explain + '</div>' +
+      '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.5">' + q.explain + '</div>' +
     '</div>' +
     '<button onclick="nextQuizQuestion()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">' +
       (qi+1 < mod.questions.length ? 'Nächste Frage →' : 'Ergebnis sehen →') +
@@ -644,7 +644,7 @@ function nextQuizQuestion() {
       '<div style="text-align:center;padding:20px 10px">' +
         '<div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px">' + (perfect?'🏆':(score>=1?'⭐':'💪')) + '</div>' +
         '<div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:6px">' + score + ' / ' + total + ' richtig</div>' +
-        '<div style="font-size:13px;color:var(--mid);margin-bottom:16px">' + (perfect?'Perfekt! Du hast alles verstanden.':'Gut versucht! Schau dir die Erklärungen nochmal an.') + '</div>' +
+        '<div style="font-size:var(--fs-ui);color:var(--mid);margin-bottom:16px">' + (perfect?'Perfekt! Du hast alles verstanden.':'Gut versucht! Schau dir die Erklärungen nochmal an.') + '</div>' +
       '</div>' +
       '<button onclick="markLearnDone(' + window._quizN + ')" style="width:100%;padding:12px;background:var(--ok);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Modul abschliessen ✓</button>';
   }
@@ -662,15 +662,15 @@ function renderTwintScreen(body) {
   var mod = learnData[window._twintN];
   body.innerHTML =
     '<div style="background:linear-gradient(135deg,#00a0e4,#0070b0);border-radius:14px;padding:16px;color:white;margin-bottom:14px;text-align:center">' +
-      '<div style="font-size:12px;opacity:.8;margin-bottom:4px">Twint-Guthaben</div>' +
+      '<div style="font-size:var(--fs-body);opacity:.8;margin-bottom:4px">Twint-Guthaben</div>' +
       '<div style="font-size:32px;font-weight:800">CHF ' + window._twintBalance.toFixed(2) + '</div>' +
     '</div>' +
-    '<div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:10px">Tippe auf einen Artikel zum Bezahlen:</div>' +
+    '<div style="font-size:var(--fs-ui);font-weight:700;color:var(--dark);margin-bottom:10px">Tippe auf einen Artikel zum Bezahlen:</div>' +
     mod.items.map(function(item, i){
       return '<button onclick="twintPay(' + i + ')" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;margin-bottom:8px;background:white;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--dark)">' +
         '<span>' + item.name + '</span><span style="color:var(--red)">CHF ' + item.price.toFixed(2) + ' zahlen</span></button>';
     }).join('') +
-    '<button onclick="markLearnDone(' + window._twintN + ')" style="width:100%;margin-top:6px;padding:10px;background:var(--bg);color:var(--mid);border:1px solid var(--border);border-radius:10px;font-size:13px;cursor:pointer;font-family:var(--font)">Modul abschliessen ✓</button>';
+    '<button onclick="markLearnDone(' + window._twintN + ')" style="width:100%;margin-top:6px;padding:10px;background:var(--bg);color:var(--mid);border:1px solid var(--border);border-radius:10px;font-size:var(--fs-ui);cursor:pointer;font-family:var(--font)">Modul abschliessen ✓</button>';
 }
 
 function twintPay(i) {
@@ -678,7 +678,7 @@ function twintPay(i) {
   var item = mod.items[i];
   var body = document.getElementById('learn-modal-body');
   if (window._twintBalance < item.price) {
-    body.innerHTML = '<div style="text-align:center;padding:20px"><div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px">😬</div><div style="font-size:16px;font-weight:700;color:var(--red);margin:10px 0">Nicht genug Guthaben!</div><div style="font-size:13px;color:var(--mid)">So fühlt es sich an, wenn das Konto leer ist. Darum ist sparen wichtig!</div></div>' +
+    body.innerHTML = '<div style="text-align:center;padding:20px"><div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px">😬</div><div style="font-size:16px;font-weight:700;color:var(--red);margin:10px 0">Nicht genug Guthaben!</div><div style="font-size:var(--fs-ui);color:var(--mid)">So fühlt es sich an, wenn das Konto leer ist. Darum ist sparen wichtig!</div></div>' +
       '<button onclick="renderTwintScreen()" style="width:100%;margin-top:12px;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Zurück ←</button>';
     return;
   }
@@ -689,7 +689,7 @@ function twintPay(i) {
       '<div style="font-size:16px;font-weight:700;color:var(--ok);margin-bottom:6px">Zahlung erfolgreich!</div>' +
       '<div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:4px">' + item.name + '</div>' +
       '<div style="font-size:14px;color:var(--red);margin-bottom:10px">- CHF ' + item.price.toFixed(2) + '</div>' +
-      '<div style="font-size:13px;color:var(--mid)">Restguthaben: CHF ' + window._twintBalance.toFixed(2) + '</div>' +
+      '<div style="font-size:var(--fs-ui);color:var(--mid)">Restguthaben: CHF ' + window._twintBalance.toFixed(2) + '</div>' +
     '</div>' +
     '<button onclick="renderTwintScreen()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Weiter zahlen →</button>';
 }
@@ -710,7 +710,7 @@ function renderSwipeCard(body) {
   if (idx >= mod.cards.length) { renderSwipeResult(body); return; }
   var card = mod.cards[idx];
   body.innerHTML =
-    '<div style="font-size:11px;font-weight:700;color:var(--mid);text-align:center;margin-bottom:10px">' + (idx+1) + ' / ' + mod.cards.length + '</div>' +
+    '<div style="font-size:var(--fs-sub);font-weight:700;color:var(--mid);text-align:center;margin-bottom:10px">' + (idx+1) + ' / ' + mod.cards.length + '</div>' +
     '<div style="background:white;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.12);padding:30px 20px;text-align:center;margin-bottom:16px;min-height:120px;display:flex;align-items:center;justify-content:center">' +
       '<div style="font-size:20px;font-weight:700;color:var(--dark)">' + card.item + '</div>' +
     '</div>' +
@@ -731,7 +731,7 @@ function swipeAnswer(answer) {
   body.innerHTML =
     '<div style="background:' + (correct?'#f0fdf4':'#fff0f0') + ';border-radius:12px;padding:16px;margin-bottom:12px;border:1.5px solid ' + (correct?'#16a34a':'var(--red)') + '">' +
       '<div style="font-size:20px;margin-bottom:6px">' + (correct?'✅ Richtig!':'❌ Falsch') + '</div>' +
-      '<div style="font-size:13px;color:var(--slate);line-height:1.5">' + card.explain + '</div>' +
+      '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.5">' + card.explain + '</div>' +
     '</div>' +
     '<button onclick="swipeNext()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Weiter →</button>';
 }
@@ -748,7 +748,7 @@ function renderSwipeResult(body) {
     '<div style="text-align:center;padding:16px">' +
       '<div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">' + (correct===total?'🏆':(correct>=total*0.7?'⭐':'💪')) + '</div>' +
       '<div style="font-size:20px;font-weight:800;color:var(--dark);margin:10px 0">' + correct + ' / ' + total + ' richtig</div>' +
-      '<div style="font-size:13px;color:var(--mid)">Du erkennst Bedürfnisse und Wünsche!</div>' +
+      '<div style="font-size:var(--fs-ui);color:var(--mid)">Du erkennst Bedürfnisse und Wünsche!</div>' +
     '</div>' +
     '<button onclick="markLearnDone(' + window._swipeN + ')" style="width:100%;margin-top:10px;padding:12px;background:var(--ok);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Abschliessen ✓</button>';
 }
@@ -769,13 +769,13 @@ function renderPhishingEmail(body) {
   if (idx >= mod.emails.length) { renderPhishingResult(body); return; }
   var email = mod.emails[idx];
   body.innerHTML =
-    '<div style="font-size:11px;font-weight:700;color:var(--mid);margin-bottom:10px">E-Mail ' + (idx+1) + ' von ' + mod.emails.length + ' — Echt oder Fake?</div>' +
+    '<div style="font-size:var(--fs-sub);font-weight:700;color:var(--mid);margin-bottom:10px">E-Mail ' + (idx+1) + ' von ' + mod.emails.length + ' — Echt oder Fake?</div>' +
     '<div style="background:white;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px">' +
       '<div style="padding:10px 12px;background:var(--bg);border-bottom:1px solid var(--border)">' +
-        '<div style="font-size:11px;color:var(--mid)">Von: <b>' + email.from + '</b></div>' +
-        '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-top:2px">' + email.subject + '</div>' +
+        '<div style="font-size:var(--fs-sub);color:var(--mid)">Von: <b>' + email.from + '</b></div>' +
+        '<div style="font-size:var(--fs-body);font-weight:700;color:var(--dark);margin-top:2px">' + email.subject + '</div>' +
       '</div>' +
-      '<div style="padding:12px;font-size:13px;color:var(--slate);line-height:1.6">' + email.body + '</div>' +
+      '<div style="padding:12px;font-size:var(--fs-ui);color:var(--slate);line-height:1.6">' + email.body + '</div>' +
     '</div>' +
     '<div style="display:flex;gap:10px">' +
       '<button onclick="phishingAnswer(true)" style="flex:1;padding:14px;background:#fff0f0;border:2px solid var(--red);border-radius:12px;font-size:14px;font-weight:700;color:var(--red);cursor:pointer;font-family:var(--font)">⚠️ Fake!</button>' +
@@ -791,7 +791,7 @@ function phishingAnswer(guessedFake) {
   body.innerHTML =
     '<div style="background:' + (correct?'#f0fdf4':'#fff0f0') + ';border-radius:12px;padding:16px;margin-bottom:12px;border:1.5px solid ' + (correct?'#16a34a':'var(--red)') + '">' +
       '<div style="font-size:20px;margin-bottom:6px">' + (correct?'✅ Richtig!':'❌ Vorsicht!') + ' Diese E-Mail ist <b>' + (email.isFake?'GEFÄLSCHT':'ECHT') + '</b>.</div>' +
-      '<div style="font-size:13px;color:var(--slate);line-height:1.5">' + email.explain + '</div>' +
+      '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.5">' + email.explain + '</div>' +
     '</div>' +
     '<button onclick="phishingNext()" style="width:100%;padding:12px;background:var(--red);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Weiter →</button>';
 }
@@ -807,7 +807,7 @@ function renderPhishingResult(body) {
     '<div style="text-align:center;padding:16px">' +
       '<div style="width:56px;height:56px;background:#F4F4F4;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">' + (window._phishScore===total?'🕵️':'🔍') + '</div>' +
       '<div style="font-size:20px;font-weight:800;color:var(--dark);margin:10px 0">' + window._phishScore + ' / ' + total + ' erkannt</div>' +
-      '<div style="font-size:13px;color:var(--mid)">Du bist jetzt ein Phishing-Detektor!</div>' +
+      '<div style="font-size:var(--fs-ui);color:var(--mid)">Du bist jetzt ein Phishing-Detektor!</div>' +
     '</div>' +
     '<button onclick="markLearnDone(' + window._phishN + ')" style="width:100%;margin-top:10px;padding:12px;background:var(--ok);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)">Abschliessen ✓</button>';
 }
@@ -816,10 +816,10 @@ function renderPhishingResult(body) {
 function renderLearnLohn(body, mod, n) {
   window._lohnN = n;
   body.innerHTML =
-    '<div style="font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:12px">Stell dir vor du arbeitest als Lehrling. Passe die Stunden an und sieh was auf deinem Konto landet:</div>' +
+    '<div style="font-size:var(--fs-ui);color:var(--slate);line-height:1.6;margin-bottom:12px">Stell dir vor du arbeitest als Lehrling. Passe die Stunden an und sieh was auf deinem Konto landet:</div>' +
     '<div style="background:white;border-radius:12px;border:1.5px solid var(--border);padding:16px">' +
-      '<label style="font-size:12px;color:var(--mid);font-weight:600">Stundenlohn: CHF ' + mod.stundenLohn.toFixed(2) + '</label>' +
-      '<br><label style="font-size:12px;color:var(--mid);font-weight:600;margin-top:10px;display:block">Stunden/Monat: <span id="ll-stunden-label">160</span></label>' +
+      '<label style="font-size:var(--fs-body);color:var(--mid);font-weight:600">Stundenlohn: CHF ' + mod.stundenLohn.toFixed(2) + '</label>' +
+      '<br><label style="font-size:var(--fs-body);color:var(--mid);font-weight:600;margin-top:10px;display:block">Stunden/Monat: <span id="ll-stunden-label">160</span></label>' +
       '<input id="ll-stunden" type="range" min="20" max="200" value="160" style="width:100%;accent-color:var(--red);margin:4px 0 14px" oninput="calcLohn(' + n + ')">' +
       '<div id="ll-result"></div>' +
     '</div>' +
@@ -840,16 +840,16 @@ function calcLohn(n) {
   if (!r) return;
   r.innerHTML =
     '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">' +
-      '<span style="font-size:13px;color:var(--mid)">Bruttolohn</span>' +
+      '<span style="font-size:var(--fs-ui);color:var(--mid)">Bruttolohn</span>' +
       '<span style="font-size:14px;font-weight:700;color:var(--dark)">CHF ' + Math.round(brutto).toLocaleString('de-CH') + '</span>' +
     '</div>' +
     '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">' +
-      '<span style="font-size:13px;color:var(--mid)">- AHV/IV/EO (5.3%)</span>' +
-      '<span style="font-size:13px;color:var(--red)">- CHF ' + Math.round(ahv).toLocaleString('de-CH') + '</span>' +
+      '<span style="font-size:var(--fs-ui);color:var(--mid)">- AHV/IV/EO (5.3%)</span>' +
+      '<span style="font-size:var(--fs-ui);color:var(--red)">- CHF ' + Math.round(ahv).toLocaleString('de-CH') + '</span>' +
     '</div>' +
     '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">' +
-      '<span style="font-size:13px;color:var(--mid)">- ALV (1.1%)</span>' +
-      '<span style="font-size:13px;color:var(--red)">- CHF ' + Math.round(alv).toLocaleString('de-CH') + '</span>' +
+      '<span style="font-size:var(--fs-ui);color:var(--mid)">- ALV (1.1%)</span>' +
+      '<span style="font-size:var(--fs-ui);color:var(--red)">- CHF ' + Math.round(alv).toLocaleString('de-CH') + '</span>' +
     '</div>' +
     '<div style="display:flex;justify-content:space-between;padding:10px 0 0">' +
       '<span style="font-size:14px;font-weight:700;color:var(--dark)">💰 Nettolohn</span>' +
@@ -1129,7 +1129,7 @@ function renderGoals() {
   }
 
   if (state.goals.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:var(--light);font-size:13px">Noch keine Sparziele. Füge dein erstes Ziel hinzu! 🎯</div>';
+    list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:var(--light);font-size:var(--fs-ui)">Noch keine Sparziele. Füge dein erstes Ziel hinzu! 🎯</div>';
     return;
   }
 
@@ -1163,9 +1163,9 @@ function renderGoals() {
         var mths = monthsTotal % 12;
         timeLabel = '~' + yrs + ' J.' + (mths > 0 ? ' ' + mths + ' Mt.' : '');
       }
-      timeHtml = '<div style="font-size:11px;color:var(--mid);margin-top:3px">⏱ in ' + timeLabel + ' erreicht <span style="color:var(--light)">(bei CHF ' + fmtChf(mSpar) + '/Mt.)</span></div>';
+      timeHtml = '<div style="font-size:var(--fs-sub);color:var(--mid);margin-top:3px">⏱ in ' + timeLabel + ' erreicht <span style="color:var(--light)">(bei CHF ' + fmtChf(mSpar) + '/Mt.)</span></div>';
     } else if (!reached && mSpar === 0 && missing > 0) {
-      timeHtml = '<div style="font-size:11px;color:var(--amber);margin-top:3px">💡 Sparrate im <b>Budgetrechner</b> setzen</div>';
+      timeHtml = '<div style="font-size:var(--fs-sub);color:var(--amber);margin-top:3px">💡 Sparrate im <b>Budgetrechner</b> setzen</div>';
     }
 
     html +=
@@ -1179,18 +1179,18 @@ function renderGoals() {
           '<div class="goal-emoji" style="width:44px;height:44px;background:' + goalEmojiBg(g.emoji) + ';border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:22px">' + g.emoji + '</div>' +
           '<div class="goal-info">' +
             '<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">' +
-              '<span style="font-size:9px;font-weight:600;color:#6B6B6B;background:#F4F4F4;padding:2px 7px;border-radius:5px;margin-right:2px">P' + (i+1) + '</span>' +
+              '<span style="font-size:var(--fs-label);font-weight:600;color:#6B6B6B;background:#F4F4F4;padding:2px 7px;border-radius:5px;margin-right:2px">P' + (i+1) + '</span>' +
               '<span class="goal-name">' + escHtml(g.name) + '</span>' +
             '</div>' +
-            '<div style="font-size:12px;font-weight:700;color:#1A1A1A">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:#6B6B6B">/ ' + fmtChf(target) + '</span></div>' +
+            '<div style="font-size:var(--fs-body);font-weight:700;color:#1A1A1A">CHF ' + fmtChf(allocated) + ' <span style="font-weight:400;color:#6B6B6B">/ ' + fmtChf(target) + '</span></div>' +
             (reached
-              ? '<div style="font-size:11px;color:#27500A;font-weight:700;margin-top:2px">✓ Ziel erreicht!</div>'
-              : '<div style="font-size:11px;color:#6B6B6B;margin-top:2px">Noch CHF ' + fmtChf(missing) + ' fehlend</div>') +
+              ? '<div style="font-size:var(--fs-sub);color:#27500A;font-weight:700;margin-top:2px">✓ Ziel erreicht!</div>'
+              : '<div style="font-size:var(--fs-sub);color:#6B6B6B;margin-top:2px">Noch CHF ' + fmtChf(missing) + ' fehlend</div>') +
             timeHtml +
           '</div>' +
           '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">' +
             (reached
-              ? '<span style="font-size:9px;font-weight:600;color:#27500A;background:#EAF3DE;padding:3px 8px;border-radius:6px">✓ Erreicht</span>'
+              ? '<span style="font-size:var(--fs-label);font-weight:600;color:#27500A;background:#EAF3DE;padding:3px 8px;border-radius:6px">✓ Erreicht</span>'
               : '<div style="font-size:22px;font-weight:700;color:#E30613">' + pct + '%</div>') +
             '<button class="goal-del-btn" onclick="event.stopPropagation();deleteGoal(' + i + ')" style="font-size:14px;padding:2px">🗑</button>' +
           '</div>' +
@@ -1207,7 +1207,7 @@ function renderGoals() {
 
   // Hinweis wenn Sparrate fehlt
   if (mSpar === 0 && state.goals.some(function(g){ return (g.ziel||0) > 0; })) {
-    html += '<div style="margin:4px 16px 8px;padding:12px 14px;background:#EAF3DE;border-radius:12px;border:0.5px solid #E8E8E8;font-size:12px;color:#27500A;line-height:1.5">' +
+    html += '<div style="margin:4px 16px 8px;padding:12px 14px;background:#EAF3DE;border-radius:12px;border:0.5px solid #E8E8E8;font-size:var(--fs-body);color:#27500A;line-height:1.5">' +
       '<strong>Tipp:</strong> Setze im ' +
       '<span onclick="switchView(\'budget\',3)" style="font-weight:700;text-decoration:underline;cursor:pointer">Budgetrechner</span>' +
       ' eine Sparquote, um zu sehen wann du deine Ziele erreichst.' +
@@ -1551,7 +1551,7 @@ function renderHaxx() {
     }
 
     var catColor = HAXX_CAT_COLORS[h.category] || { bg: '#F4F4F4', ic: '#6B6B6B', text: '#6B6B6B' };
-    var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
+    var catStyle = 'background:' + catColor.bg + ';color:' + catColor.text + ';font-size:var(--fs-label);font-weight:700;padding:2px 7px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px;';
     var haxxIcoHtml = '<div style="width:28px;height:28px;background:' + catColor.bg + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + h.emoji + '</div>';
 
     html += '<div class="haxx-item' + (done ? ' done' : '') + '" id="haxx-' + i + '">' +
@@ -1694,7 +1694,7 @@ function calcBudget() {
   if (total === 100) {
     sumEl.className = 'budget-sum-total budget-sum-ok';
     fillEl.style.background = 'var(--ok)';
-    hintEl.innerHTML = '✓ Perfekt — alle 100% sind verteilt &nbsp;<button onclick="switchView(\'goals\',1)" style="font-size:10px;font-weight:700;color:var(--ok);background:transparent;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font)">Sparziele ansehen →</button>';
+    hintEl.innerHTML = '✓ Perfekt — alle 100% sind verteilt &nbsp;<button onclick="switchView(\'goals\',1)" style="font-size:var(--fs-sub);font-weight:700;color:var(--ok);background:transparent;border:none;cursor:pointer;text-decoration:underline;font-family:var(--font)">Sparziele ansehen →</button>';
   } else if (total < 100) {
     sumEl.className = 'budget-sum-total budget-sum-warn';
     fillEl.style.background = 'var(--amber)';
@@ -2015,10 +2015,10 @@ function updateHomeDashboard() {
           '<div style="width:6px;height:6px;border-radius:50%;background:' + t.dot +
           ';flex-shrink:0;' + (t.done ? 'border:.5px solid #3B6D11' : '') + '"></div>' +
           '<div style="flex:1">' +
-            '<div style="font-size:10px;font-weight:600;' +
+            '<div style="font-size:var(--fs-sub);font-weight:600;' +
               (t.done ? 'color:#999;text-decoration:line-through' : 'color:#1A1A1A') + '">' +
               t.title + '</div>' +
-            '<div style="font-size:9px;color:#6B6B6B">' + t.sub + '</div>' +
+            '<div style="font-size:var(--fs-label);color:#6B6B6B">' + t.sub + '</div>' +
           '</div>' +
           '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="' +
             (t.done ? '#27500A' : '#ccc') + '" stroke-width="2.5" stroke-linecap="round">' +
@@ -2088,7 +2088,7 @@ function setInvType(type) {
       var sparBal = (state.sparGuthaben || 0)
         .toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       saldoBox.innerHTML =
-        '<div style="font-size:11px;font-weight:700;color:#185FA5;text-transform:uppercase;' +
+        '<div style="font-size:var(--fs-sub);font-weight:700;color:#185FA5;text-transform:uppercase;' +
         'letter-spacing:.4px;margin-bottom:6px">Dein bisheriges angespartes Kapital · BLKB</div>' +
         '<div style="font-size:22px;font-weight:700;color:var(--dark)">CHF ' + sparBal + '</div>';
       saldoBox.style.display = 'block';
@@ -2228,13 +2228,13 @@ function calcInvest() {
     var rowBg = isLast ? '#EAF3DE' : (y % 2 === 0 ? '#FAFAFA' : 'white');
     tableHtml += '<div style="display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid #E8E8E8;background:' + rowBg + ';' +
       (isLast ? 'font-weight:700' : '') + '">' +
-      '<div style="width:36px;font-size:11px;color:#6B6B6B">Ø ' + rowAge + '</div>' +
-      '<div style="flex:1;font-size:12px;color:#1A1A1A">+CHF ' + fmtChf(yDeposit) + '</div>' +
-      '<div style="font-size:13px;font-weight:700;color:#27500A">CHF ' + fmtChf(balance) + '</div>' +
+      '<div style="width:36px;font-size:var(--fs-sub);color:#6B6B6B">Ø ' + rowAge + '</div>' +
+      '<div style="flex:1;font-size:var(--fs-body);color:#1A1A1A">+CHF ' + fmtChf(yDeposit) + '</div>' +
+      '<div style="font-size:var(--fs-ui);font-weight:700;color:#27500A">CHF ' + fmtChf(balance) + '</div>' +
     '</div>';
   }
   if (!years || years < 1) {
-    tableHtml = '<div style="padding:16px;text-align:center;color:var(--light);font-size:12px">Ziel-Alter muss grösser sein als aktuelles Alter</div>';
+    tableHtml = '<div style="padding:16px;text-align:center;color:var(--light);font-size:var(--fs-body)">Ziel-Alter muss grösser sein als aktuelles Alter</div>';
   }
   document.getElementById('inv-table').innerHTML = tableHtml;
 
@@ -2844,7 +2844,7 @@ function renderYouthGamification() {
   }
   if (rowEl) {
     if (earned.length === 0) {
-      rowEl.innerHTML = '<span style="font-size:11px;color:#94a3b8">Noch keine Abzeichen — leg los!</span>';
+      rowEl.innerHTML = '<span style="font-size:var(--fs-sub);color:#94a3b8">Noch keine Abzeichen — leg los!</span>';
     } else {
       rowEl.innerHTML = earned.slice(0,4).map(function(b){
         return '<div title="' + b.title + '" style="width:28px;height:28px;background:#F4F4F4;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:default">' + b.icon + '</div>';
@@ -2870,10 +2870,10 @@ function renderYouthGamification() {
               'display:flex;align-items:center;justify-content:center;' +
               'font-size:14px;flex-shrink:0">💡</div>' +
             '<div>' +
-              '<div style="font-size:11px;font-weight:700;color:#633806;margin-bottom:3px">' +
+              '<div style="font-size:var(--fs-sub);font-weight:700;color:#633806;margin-bottom:3px">' +
                 'Was sind XP?' +
               '</div>' +
-              '<div style="font-size:10px;color:#854F0B;line-height:1.5">' +
+              '<div style="font-size:var(--fs-sub);color:#854F0B;line-height:1.5">' +
                 'XP = Experience Points. Du sammelst sie für jede Aktion in der App — ' +
                 'Quiz lösen, Challenges abhaken, Lernmodule abschliessen. ' +
                 'Je mehr XP, desto höher dein Level.' +
@@ -2926,11 +2926,11 @@ function renderYouthGamification() {
         var lineBg    = (isDone || isActive) ? '#E30613' : '#E8E8E8';
         var opacity   = (isDone || isActive) ? '1' : isNext ? '0.6' : '0.35';
         var badge = isActive ?
-          '<span style="font-size:8px;font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 6px;border-radius:4px">Aktiv</span>' :
+          '<span style="font-size:var(--fs-label);font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 6px;border-radius:4px">Aktiv</span>' :
           isDone ?
-          '<span style="font-size:8px;font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 6px;border-radius:4px">✓</span>' : '';
+          '<span style="font-size:var(--fs-label);font-weight:700;background:#EAF3DE;color:#27500A;padding:1px 6px;border-radius:4px">✓</span>' : '';
         var hint = (isNext && xpToNext > 0) ?
-          '<div style="font-size:9px;color:#185FA5;margin-top:2px">→ ' + nextAction + '</div>' : '';
+          '<div style="font-size:var(--fs-label);color:#185FA5;margin-top:2px">→ ' + nextAction + '</div>' : '';
         var progBar = isActive ?
           '<div style="height:3px;background:#E8E8E8;border-radius:2px;margin-top:5px;overflow:hidden">' +
             '<div style="width:' +
@@ -2942,15 +2942,15 @@ function renderYouthGamification() {
           '<div style="display:flex;flex-direction:column;align-items:center">' +
             '<div style="width:28px;height:28px;border-radius:50%;background:' + dotBg + ';' +
               'border:2px solid ' + dotBorder + ';display:flex;align-items:center;' +
-              'justify-content:center;font-size:13px;flex-shrink:0">' + rl.emoji + '</div>' +
+              'justify-content:center;font-size:var(--fs-ui);flex-shrink:0">' + rl.emoji + '</div>' +
             (!isLast ? '<div style="width:2px;height:16px;background:' + lineBg + ';' +
               'margin:2px 0;border-radius:1px"></div>' : '') +
           '</div>' +
           '<div style="flex:1;padding-top:3px">' +
             '<div style="display:flex;align-items:center;gap:5px;margin-bottom:1px">' +
-              '<span style="font-size:11px;font-weight:600;color:#1A1A1A">' + rl.title + '</span>' + badge +
+              '<span style="font-size:var(--fs-sub);font-weight:600;color:#1A1A1A">' + rl.title + '</span>' + badge +
             '</div>' +
-            '<div style="font-size:9px;color:#6B6B6B">' + rl.range + '</div>' +
+            '<div style="font-size:var(--fs-label);color:#6B6B6B">' + rl.range + '</div>' +
             hint + progBar +
           '</div>' +
         '</div>';
@@ -2969,14 +2969,14 @@ function renderYouthGamification() {
       '<div style="background:#F4F4F4;border-radius:9px;padding:8px 10px;margin-bottom:10px;' +
         'display:flex;justify-content:space-between;align-items:center">' +
         '<div>' +
-          '<div style="font-size:10px;color:#6B6B6B">Heute verdient</div>' +
+          '<div style="font-size:var(--fs-sub);color:#6B6B6B">Heute verdient</div>' +
           '<div style="font-size:16px;font-weight:700;color:#1A1A1A">' + todayEarned + ' / ' + todayMax + ' XP</div>' +
         '</div>' +
         (canReach ?
-          '<div style="font-size:9px;font-weight:700;color:#27500A;background:#EAF3DE;' +
+          '<div style="font-size:var(--fs-label);font-weight:700;color:#27500A;background:#EAF3DE;' +
             'padding:4px 8px;border-radius:6px;text-align:center">Heute Level<br>' +
             (currentLvl + 2) + ' möglich! 🎉</div>' :
-          '<div style="font-size:9px;color:#6B6B6B;text-align:right">Noch ' + todayLeft + ' XP<br>heute möglich</div>') +
+          '<div style="font-size:var(--fs-label);color:#6B6B6B;text-align:right">Noch ' + todayLeft + ' XP<br>heute möglich</div>') +
       '</div>' +
       [
         { emoji:'❓', label:'Tages-Quiz lösen',  xp:15, done:todayQuizDone,  bg:'#E6F1FB' },
@@ -2985,18 +2985,18 @@ function renderYouthGamification() {
       ].map(function(a) {
         return '<div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:.5px solid #F4F4F4">' +
           '<div style="width:32px;height:32px;background:' + a.bg + ';border-radius:8px;' +
-            'display:flex;align-items:center;justify-content:center;font-size:15px;' +
+            'display:flex;align-items:center;justify-content:center;font-size:var(--fs-value);' +
             'flex-shrink:0' + (a.done ? ';opacity:.45' : '') + '">' + a.emoji + '</div>' +
-          '<div style="flex:1"><div style="font-size:11px;font-weight:600;color:' +
+          '<div style="flex:1"><div style="font-size:var(--fs-sub);font-weight:600;color:' +
             (a.done ? '#999' : '#1A1A1A') + ';' + (a.done ? 'text-decoration:line-through' : '') + '">' +
             a.label + '</div></div>' +
           (a.done ?
-            '<span style="font-size:10px;font-weight:700;color:#27500A;background:#EAF3DE;' +
+            '<span style="font-size:var(--fs-sub);font-weight:700;color:#27500A;background:#EAF3DE;' +
               'padding:2px 7px;border-radius:5px">✓ +' + a.xp + '</span>' :
-            '<span style="font-size:10px;font-weight:700;color:#E30613">+' + a.xp + ' XP</span>') +
+            '<span style="font-size:var(--fs-sub);font-weight:700;color:#E30613">+' + a.xp + ' XP</span>') +
         '</div>';
       }).join('') +
-      '<div style="padding-top:8px;font-size:9px;color:#6B6B6B;text-align:center">' +
+      '<div style="padding-top:8px;font-size:var(--fs-label);color:#6B6B6B;text-align:center">' +
         'Max. heute: ' + todayMax + ' XP · täglich neue Aufgaben' +
       '</div>' +
     '</div>';
@@ -3015,13 +3015,13 @@ function renderYouthGamification() {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--ok-l);border-radius:8px">' +
         '<div style="width:40px;height:40px;background:#FFF0F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + ch.icon + '</div>' +
         '<div><div style="font-size:14px;font-weight:700;color:var(--ok)">✓ ' + ch.title + '</div>' +
-        '<div style="font-size:12px;color:var(--mid)">Heute abgehakt · +' + ch.xp + ' XP erhalten</div></div></div>';
+        '<div style="font-size:var(--fs-body);color:var(--mid)">Heute abgehakt · +' + ch.xp + ' XP erhalten</div></div></div>';
     } else {
       chEl.innerHTML = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
         '<div style="width:40px;height:40px;background:#FFF0F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + ch.icon + '</div>' +
         '<div style="flex:1"><div style="font-size:14px;font-weight:700;color:#1A1A1A">' + ch.title + '</div>' +
-        '<div style="font-size:12px;color:#6B6B6B">' + ch.desc + '</div></div>' +
-        '<button onclick="claimDailyChallenge()" style="padding:8px 14px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">+' + ch.xp + ' XP</button>' +
+        '<div style="font-size:var(--fs-body);color:#6B6B6B">' + ch.desc + '</div></div>' +
+        '<button onclick="claimDailyChallenge()" style="padding:8px 14px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:8px;font-size:var(--fs-body);font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">+' + ch.xp + ' XP</button>' +
         '</div>';
     }
   }
@@ -3035,16 +3035,16 @@ function renderYouthGamification() {
     var answered = (state.quizDate === today2);
     if (answered) {
       var feedback = state.quizCorrect
-        ? '<div style="padding:10px;background:var(--ok-l);border-radius:8px;color:var(--ok);font-size:13px;font-weight:700">✓ Richtig! +15 XP erhalten</div>'
-        : '<div style="padding:10px;background:#fff0f0;border-radius:8px;color:var(--red);font-size:13px;font-weight:700">✗ Leider falsch. Richtig wäre: «' + quiz.opts[quiz.correct] + '»</div>';
+        ? '<div style="padding:10px;background:var(--ok-l);border-radius:8px;color:var(--ok);font-size:var(--fs-ui);font-weight:700">✓ Richtig! +15 XP erhalten</div>'
+        : '<div style="padding:10px;background:#fff0f0;border-radius:8px;color:var(--red);font-size:var(--fs-ui);font-weight:700">✗ Leider falsch. Richtig wäre: «' + quiz.opts[quiz.correct] + '»</div>';
       quizEl.innerHTML = '<div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:10px">' + quiz.q + '</div>' + feedback +
-        '<div style="font-size:11px;color:var(--light);margin-top:8px;text-align:center">Nächste Frage morgen!</div>';
+        '<div style="font-size:var(--fs-sub);color:var(--light);margin-top:8px;text-align:center">Nächste Frage morgen!</div>';
     } else {
       var optsHtml = quiz.opts.map(function(opt, oi) {
         return '<button class="quiz-opt" onclick="answerDailyQuiz(' + oi + ')">' + opt + '</button>';
       }).join('');
       quizEl.innerHTML = '<div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:10px">' + quiz.q + '</div>' + optsHtml +
-        '<div style="font-size:11px;color:var(--light);margin-top:4px">Richtige Antwort = +15 XP</div>';
+        '<div style="font-size:var(--fs-sub);color:var(--light);margin-top:4px">Richtige Antwort = +15 XP</div>';
     }
   }
 
@@ -3077,8 +3077,8 @@ function renderYouthGamification() {
       var ico = '<div style="width:28px;height:28px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + b.icon + '</div>';
       html += '<div style="display:flex;align-items:center;gap:8px;padding:11px 12px;background:' + (has?'#EAF3DE':'#F4F4F4') + ';border-radius:11px;border:' + (has?'0.5px solid #C0DD97':'0.5px solid #E8E8E8') + ';' + (has?'':'opacity:0.5') + '">' +
         ico +
-        '<div><div style="font-size:11px;font-weight:600;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
-        '<div style="font-size:9px;color:' + (has?'#3B6D11':'#999') + '">' + b.desc + '</div></div>' +
+        '<div><div style="font-size:var(--fs-sub);font-weight:600;color:' + (has?'#27500A':'#6B6B6B') + '">' + b.title + '</div>' +
+        '<div style="font-size:var(--fs-label);color:' + (has?'#3B6D11':'#999') + '">' + b.desc + '</div></div>' +
       '</div>';
     });
     grid.innerHTML = html;
@@ -3112,7 +3112,7 @@ function renderYouthGamification() {
     habitContainer.innerHTML =
       '<div class="gam-card">' +
         '<div class="gam-section-label">Gewohnheits-Booster</div>' +
-        '<div style="font-size:11px;color:#6B6B6B;margin-bottom:10px">' +
+        '<div style="font-size:var(--fs-sub);color:#6B6B6B;margin-bottom:10px">' +
           'Wähle was du reduzieren möchtest — sieh sofort den Invest-Effekt.' +
         '</div>' +
         habitData.map(function(h) {
@@ -3126,28 +3126,28 @@ function renderYouthGamification() {
               'justify-content:center;flex-shrink:0"></div>' +
             '<div style="width:32px;height:32px;background:' + h.bg + ';border-radius:8px;' +
               'display:flex;align-items:center;justify-content:center;' +
-              'font-size:15px;flex-shrink:0">' + h.emoji + '</div>' +
+              'font-size:var(--fs-value);flex-shrink:0">' + h.emoji + '</div>' +
             '<div style="flex:1">' +
-              '<div style="font-size:12px;font-weight:600;color:#1A1A1A">' + h.label + '</div>' +
-              '<div style="font-size:10px;color:#6B6B6B;margin-top:1px">' + h.sub + '</div>' +
+              '<div style="font-size:var(--fs-body);font-weight:600;color:#1A1A1A">' + h.label + '</div>' +
+              '<div style="font-size:var(--fs-sub);color:#6B6B6B;margin-top:1px">' + h.sub + '</div>' +
             '</div>' +
-            '<div style="font-size:12px;font-weight:700;color:#27500A">+' + h.val + '</div>' +
+            '<div style="font-size:var(--fs-body);font-weight:700;color:#27500A">+' + h.val + '</div>' +
           '</div>';
         }).join('') +
         '<div style="display:flex;gap:8px;margin-top:10px">' +
           '<div style="flex:1;background:#F4F4F4;border-radius:10px;padding:10px;text-align:center">' +
-            '<div style="font-size:10px;color:#6B6B6B;margin-bottom:3px">Zusätzlich/Mt</div>' +
+            '<div style="font-size:var(--fs-sub);color:#6B6B6B;margin-bottom:3px">Zusätzlich/Mt</div>' +
             '<div style="font-size:18px;font-weight:700;color:#27500A">+CHF <span id="habit-extra">0</span></div>' +
           '</div>' +
           '<div style="flex:1;background:#1A1A2E;border-radius:10px;padding:10px;text-align:center">' +
-            '<div style="font-size:10px;color:rgba(255,255,255,.5);margin-bottom:3px">Nach 10 J. mehr</div>' +
+            '<div style="font-size:var(--fs-sub);color:rgba(255,255,255,.5);margin-bottom:3px">Nach 10 J. mehr</div>' +
             '<div style="font-size:18px;font-weight:700;color:#6ee7b7">+CHF <span id="habit-10j">0</span></div>' +
           '</div>' +
         '</div>' +
         '<div style="height:6px;background:#E8E8E8;border-radius:3px;margin-top:8px;overflow:hidden">' +
           '<div id="habit-bar" style="height:100%;background:#3B6D11;border-radius:3px;transition:width .3s;width:0%"></div>' +
         '</div>' +
-        '<div style="font-size:10px;color:#6B6B6B;text-align:center;margin-top:4px">' +
+        '<div style="font-size:var(--fs-sub);color:#6B6B6B;text-align:center;margin-top:4px">' +
           'Max. Potenzial: CHF 400/Mt → CHF 62\'000 nach 10 Jahren' +
         '</div>' +
       '</div>';
@@ -3180,11 +3180,11 @@ function renderAdultGamification() {
   if (pillarsEl) {
     pillarsEl.innerHTML = hs.pillars.map(function(p) {
       return '<div class="pillar-row">' +
-        '<div><div style="font-size:13px;font-weight:600;color:var(--dark)">' + p.label + '</div>' +
-        '<div style="font-size:11px;color:var(--mid)">' + p.hint + '</div></div>' +
+        '<div><div style="font-size:var(--fs-ui);font-weight:600;color:var(--dark)">' + p.label + '</div>' +
+        '<div style="font-size:var(--fs-sub);color:var(--mid)">' + p.hint + '</div></div>' +
         '<div style="display:flex;align-items:center;gap:6px">' +
         '<div style="width:28px;height:28px;background:' + (p.ok?'#EAF3DE':'#F4F4F4') + ';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px">' + (p.ok?'✅':'❌') + '</div>' +
-        '<span style="font-size:12px;font-weight:700;color:' + (p.ok?'var(--ok)':'var(--light)') + '">' + (p.ok?'+20':'0') + ' Pkt.</span>' +
+        '<span style="font-size:var(--fs-body);font-weight:700;color:' + (p.ok?'var(--ok)':'var(--light)') + '">' + (p.ok?'+20':'0') + ' Pkt.</span>' +
         '</div></div>';
     }).join('');
   }
@@ -3220,12 +3220,12 @@ function renderAdultGamification() {
   var mchEl = document.getElementById('adult-monthly-challenge-content');
   if (mchEl) {
     if (chDone) {
-      mchEl.innerHTML = '<div style="padding:10px;background:var(--ok-l);border-radius:8px;font-size:13px;font-weight:700;color:var(--ok)">✓ Challenge angenommen! Viel Erfolg diesen Monat!</div>';
+      mchEl.innerHTML = '<div style="padding:10px;background:var(--ok-l);border-radius:8px;font-size:var(--fs-ui);font-weight:700;color:var(--ok)">✓ Challenge angenommen! Viel Erfolg diesen Monat!</div>';
     } else {
-      mchEl.innerHTML = '<div style="font-size:15px;font-weight:600;color:#1A1A1A;margin-bottom:10px">' + monthCh.text + '</div>' +
+      mchEl.innerHTML = '<div style="font-size:var(--fs-value);font-weight:600;color:#1A1A1A;margin-bottom:10px">' + monthCh.text + '</div>' +
         '<div style="display:flex;gap:8px">' +
-        '<button onclick="acceptMonthlyChallenge()" style="flex:1;padding:10px;background:#E30613;color:white;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">Angenommen!</button>' +
-        '<button onclick="switchView(\'' + monthCh.view + '\',0)" style="flex:1;padding:10px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">' + monthCh.cta + '</button>' +
+        '<button onclick="acceptMonthlyChallenge()" style="flex:1;padding:10px;background:#E30613;color:white;border:none;border-radius:10px;font-size:var(--fs-ui);font-weight:700;cursor:pointer;font-family:inherit">Angenommen!</button>' +
+        '<button onclick="switchView(\'' + monthCh.view + '\',0)" style="flex:1;padding:10px;background:transparent;color:#E30613;border:1.5px solid #E30613;border-radius:10px;font-size:var(--fs-ui);font-weight:600;cursor:pointer;font-family:inherit">' + monthCh.cta + '</button>' +
         '</div>';
     }
   }
@@ -3289,9 +3289,9 @@ function renderAdultGamification() {
         '<div style="display:flex;align-items:center;gap:8px">' +
         '<div style="width:28px;height:28px;background:#F4F4F4;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">' + s.icon + '</div>' +
         '<div style="font-size:14px;font-weight:600;color:#1A1A1A">' + s.title + '</div></div>' +
-        '<div style="font-size:12px;color:#6B6B6B">' + s.desc + '</div>' +
+        '<div style="font-size:var(--fs-body);color:#6B6B6B">' + s.desc + '</div>' +
         '<div class="scenario-value" style="color:#27500A">' + s.value + '</div>' +
-        '<button onclick="' + s.action + '" style="padding:8px 14px;background:#E30613;color:white;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-start;font-family:inherit">' + s.cta + '</button>' +
+        '<button onclick="' + s.action + '" style="padding:8px 14px;background:#E30613;color:white;border:none;border-radius:10px;font-size:var(--fs-body);font-weight:600;cursor:pointer;align-self:flex-start;font-family:inherit">' + s.cta + '</button>' +
         '</div>';
     }).join('');
   }
@@ -3313,17 +3313,17 @@ function renderAdultGamification() {
       : '💡 Der CH-Durchschnitt liegt bei 12.4%. Mit kleinen Anpassungen kannst du mehr sparen.';
 
     benchEl.innerHTML = '<div style="margin-bottom:8px">' +
-      '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mid);margin-bottom:4px">' +
+      '<div style="display:flex;justify-content:space-between;font-size:var(--fs-body);color:var(--mid);margin-bottom:4px">' +
       '<span>Du: <strong style="color:var(--dark)">' + userRate + '%</strong></span>' +
-      '<span>CH-Durchschnitt: <strong style="color:var(--dark)">' + chAvg + '%</strong> <span style="font-size:10px">(BFS 2023)</span></span>' +
+      '<span>CH-Durchschnitt: <strong style="color:var(--dark)">' + chAvg + '%</strong> <span style="font-size:var(--fs-sub)">(BFS 2023)</span></span>' +
       '</div>' +
       '<div style="position:relative;height:12px;background:var(--border);border-radius:6px;overflow:visible">' +
       '<div style="position:absolute;left:0;top:0;height:100%;width:' + userPct + '%;background:' + (isAbove?'var(--ok)':'var(--amber)') + ';border-radius:6px;transition:width .5s"></div>' +
       '<div style="position:absolute;left:' + chPct + '%;top:-4px;width:2px;height:20px;background:var(--dark);border-radius:1px"></div>' +
-      '<div style="position:absolute;left:' + chPct + '%;top:18px;font-size:10px;color:var(--mid);transform:translateX(-50%);white-space:nowrap">Ø CH 12.4%</div>' +
+      '<div style="position:absolute;left:' + chPct + '%;top:18px;font-size:var(--fs-sub);color:var(--mid);transform:translateX(-50%);white-space:nowrap">Ø CH 12.4%</div>' +
       '</div>' +
       '</div>' +
-      '<div style="font-size:12px;color:var(--mid);margin-top:28px">' + msg + '</div>';
+      '<div style="font-size:var(--fs-body);color:var(--mid);margin-top:28px">' + msg + '</div>';
   }
 }
 
@@ -3359,23 +3359,23 @@ function renderYouthStoryScenario(el) {
   if (answered) {
     var ch = story.choices[state.storyChoice];
     el.innerHTML =
-      '<div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">' + story.situation(g) + '</div>' +
-      '<div style="font-size:12px;color:var(--mid);margin-bottom:8px">' + story.question + '</div>' +
+      '<div style="font-size:var(--fs-ui);font-weight:600;color:var(--dark);margin-bottom:6px">' + story.situation(g) + '</div>' +
+      '<div style="font-size:var(--fs-body);color:var(--mid);margin-bottom:8px">' + story.question + '</div>' +
       '<div style="padding:10px;background:' + (ch.best ? 'var(--ok-l)' : 'var(--warn-l)') + ';border-radius:8px;margin-bottom:6px">' +
-        '<div style="font-size:13px;font-weight:700;color:' + (ch.best ? 'var(--ok)' : 'var(--amber)') + '">' + ch.text + '</div>' +
-        '<div style="font-size:12px;color:var(--mid);margin-top:4px">' + ch.result + '</div>' +
-        '<div style="font-size:11px;font-weight:700;color:' + (ch.best ? 'var(--ok)' : 'var(--amber)') + ';margin-top:4px">+' + ch.xp + ' XP erhalten</div>' +
+        '<div style="font-size:var(--fs-ui);font-weight:700;color:' + (ch.best ? 'var(--ok)' : 'var(--amber)') + '">' + ch.text + '</div>' +
+        '<div style="font-size:var(--fs-body);color:var(--mid);margin-top:4px">' + ch.result + '</div>' +
+        '<div style="font-size:var(--fs-sub);font-weight:700;color:' + (ch.best ? 'var(--ok)' : 'var(--amber)') + ';margin-top:4px">+' + ch.xp + ' XP erhalten</div>' +
       '</div>' +
-      '<div style="font-size:11px;color:var(--light);text-align:center">Nächste Entscheidung morgen!</div>';
+      '<div style="font-size:var(--fs-sub);color:var(--light);text-align:center">Nächste Entscheidung morgen!</div>';
   } else {
     var choicesHtml = story.choices.map(function(c, i) {
-      return '<button onclick="answerStoryScenario(' + i + ')" style="display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border-radius:8px;border:1px solid var(--border);background:var(--bg);font-size:13px;color:var(--dark);cursor:pointer;-webkit-tap-highlight-color:transparent">' + c.text + '</button>';
+      return '<button onclick="answerStoryScenario(' + i + ')" style="display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border-radius:8px;border:1px solid var(--border);background:var(--bg);font-size:var(--fs-ui);color:var(--dark);cursor:pointer;-webkit-tap-highlight-color:transparent">' + c.text + '</button>';
     }).join('');
     el.innerHTML =
-      '<div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">' + story.situation(g) + '</div>' +
-      '<div style="font-size:12px;color:var(--mid);margin-bottom:10px">' + story.question + '</div>' +
+      '<div style="font-size:var(--fs-ui);font-weight:600;color:var(--dark);margin-bottom:6px">' + story.situation(g) + '</div>' +
+      '<div style="font-size:var(--fs-body);color:var(--mid);margin-bottom:10px">' + story.question + '</div>' +
       choicesHtml +
-      '<div style="font-size:11px;color:var(--light);margin-top:2px">Jede Entscheidung bringt XP — beste Wahl = 20 XP!</div>';
+      '<div style="font-size:var(--fs-sub);color:var(--light);margin-top:2px">Jede Entscheidung bringt XP — beste Wahl = 20 XP!</div>';
   }
 }
 
@@ -3390,8 +3390,8 @@ function renderGoalsFocus(elId, isAdult) {
     el.innerHTML =
       '<div style="text-align:center;padding:16px 0;color:var(--mid)">' +
       '<div style="width:40px;height:40px;background:#FFF3CD;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 8px">🎯</div>' +
-      '<div style="font-size:13px">Noch keine Sparziele gesetzt.</div>' +
-      '<button onclick="switchView(\'goals\',0)" style="margin-top:10px;padding:8px 16px;background:' + (isAdult?'var(--petrol)':'var(--red)') + ';color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Erstes Ziel anlegen →</button>' +
+      '<div style="font-size:var(--fs-ui)">Noch keine Sparziele gesetzt.</div>' +
+      '<button onclick="switchView(\'goals\',0)" style="margin-top:10px;padding:8px 16px;background:' + (isAdult?'var(--petrol)':'var(--red)') + ';color:white;border:none;border-radius:8px;font-size:var(--fs-ui);font-weight:700;cursor:pointer">Erstes Ziel anlegen →</button>' +
       '</div>';
     return;
   }
@@ -3414,17 +3414,17 @@ function renderGoalsFocus(elId, isAdult) {
     var col = colors[i] || 'var(--mid)';
     html +=
       '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">' +
-      '<div style="width:26px;height:26px;border-radius:50%;background:' + col + ';color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">P' + (i+1) + '</div>' +
+      '<div style="width:26px;height:26px;border-radius:50%;background:' + col + ';color:white;display:flex;align-items:center;justify-content:center;font-size:var(--fs-sub);font-weight:800;flex-shrink:0">P' + (i+1) + '</div>' +
       '<div style="flex:1;min-width:0">' +
-        '<div style="font-size:12px;font-weight:700;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (g.emoji||'🎯') + ' ' + (g.name||'Ziel') + '</div>' +
+        '<div style="font-size:var(--fs-body);font-weight:700;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (g.emoji||'🎯') + ' ' + (g.name||'Ziel') + '</div>' +
         '<div style="height:4px;background:var(--border);border-radius:2px;margin:3px 0;overflow:hidden">' +
           '<div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:2px;transition:width .4s"></div>' +
         '</div>' +
-        '<div style="font-size:10px;color:var(--light)">CHF ' + allocated.toLocaleString('de-CH') + ' / ' + target.toLocaleString('de-CH') + '</div>' +
+        '<div style="font-size:var(--fs-sub);color:var(--light)">CHF ' + allocated.toLocaleString('de-CH') + ' / ' + target.toLocaleString('de-CH') + '</div>' +
       '</div>' +
       '<div style="text-align:right;flex-shrink:0">' +
-        '<div style="font-size:12px;font-weight:700;color:' + col + '">' + timeStr + '</div>' +
-        (!done && fehlend > 0 ? '<div style="font-size:10px;color:var(--light)">CHF ' + fehlend.toLocaleString('de-CH') + ' fehlen</div>' : '') +
+        '<div style="font-size:var(--fs-body);font-weight:700;color:' + col + '">' + timeStr + '</div>' +
+        (!done && fehlend > 0 ? '<div style="font-size:var(--fs-sub);color:var(--light)">CHF ' + fehlend.toLocaleString('de-CH') + ' fehlen</div>' : '') +
       '</div>' +
       '</div>';
     cumulative += target;
@@ -3439,8 +3439,8 @@ function renderGoalsFocus(elId, isAdult) {
     var saved = mnow - mplus;
     if (saved > 0) {
       html += '<div style="margin-top:10px;padding:10px;background:var(--ok-l);border-radius:8px;border:1px solid rgba(22,163,74,.15)">' +
-        '<div style="font-size:12px;font-weight:700;color:var(--ok)">💡 Wenn du CHF 50/Mt. mehr sparst:</div>' +
-        '<div style="font-size:12px;color:var(--ok);margin-top:2px">«' + (g0.name||'Ziel') + '» ' + saved + ' ' + (saved === 1 ? 'Monat' : 'Monate') + ' früher erreicht!</div>' +
+        '<div style="font-size:var(--fs-body);font-weight:700;color:var(--ok)">💡 Wenn du CHF 50/Mt. mehr sparst:</div>' +
+        '<div style="font-size:var(--fs-body);color:var(--ok);margin-top:2px">«' + (g0.name||'Ziel') + '» ' + saved + ' ' + (saved === 1 ? 'Monat' : 'Monate') + ' früher erreicht!</div>' +
         '</div>';
     }
   }
@@ -3452,15 +3452,15 @@ function renderGoalsFocus(elId, isAdult) {
     var r100k = m100k % 12;
     var p100k = y100k > 0 ? y100k + ' J.' + (r100k > 0 ? ' ' + r100k + ' Mt.' : '') : r100k + ' Mt.';
     html += '<div style="margin-top:10px;padding:10px;background:#e8f4f8;border-radius:8px">' +
-      '<div style="font-size:12px;font-weight:700;color:var(--petrol)">🏦 Dein Weg zu CHF 100\'000</div>' +
-      '<div style="font-size:13px;font-weight:800;color:var(--dark);margin-top:2px">Bei CHF ' + mSpar.toLocaleString('de-CH') + '/Mt.: ' + p100k + '</div>' +
-      '<div style="font-size:11px;color:var(--mid);margin-top:2px">Mit ~5% Rendite im Investrechner deutlich schneller.</div>' +
-      '<button onclick="switchView(\'invest\',0)" style="margin-top:8px;padding:7px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">Simulation öffnen →</button>' +
+      '<div style="font-size:var(--fs-body);font-weight:700;color:var(--petrol)">🏦 Dein Weg zu CHF 100\'000</div>' +
+      '<div style="font-size:var(--fs-ui);font-weight:800;color:var(--dark);margin-top:2px">Bei CHF ' + mSpar.toLocaleString('de-CH') + '/Mt.: ' + p100k + '</div>' +
+      '<div style="font-size:var(--fs-sub);color:var(--mid);margin-top:2px">Mit ~5% Rendite im Investrechner deutlich schneller.</div>' +
+      '<button onclick="switchView(\'invest\',0)" style="margin-top:8px;padding:7px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:var(--fs-body);font-weight:600;cursor:pointer">Simulation öffnen →</button>' +
       '</div>';
   }
 
   var btnColor = isAdult ? 'var(--petrol)' : 'var(--red)';
-  html += '<button onclick="switchView(\'goals\',0)" style="width:100%;margin-top:10px;padding:9px;background:transparent;color:' + btnColor + ';border:1px solid ' + btnColor + ';border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">Alle Ziele verwalten →</button>';
+  html += '<button onclick="switchView(\'goals\',0)" style="width:100%;margin-top:10px;padding:9px;background:transparent;color:' + btnColor + ';border:1px solid ' + btnColor + ';border-radius:8px;font-size:var(--fs-body);font-weight:700;cursor:pointer">Alle Ziele verwalten →</button>';
   el.innerHTML = html;
 }
 
@@ -3679,17 +3679,17 @@ function renderDashboardAccounts(accounts) {
     html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #E8E8E8">' +
       iconHtml +
       '<div style="flex:1">' +
-        '<div style="font-size:13px;font-weight:600;color:#1A1A1A">' + (acc.name || lbl) + '</div>' +
-        '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + (acc.iban || lbl) + '</div>' +
+        '<div style="font-size:var(--fs-ui);font-weight:600;color:#1A1A1A">' + (acc.name || lbl) + '</div>' +
+        '<div style="font-size:var(--fs-sub);color:#94a3b8;margin-top:1px">' + (acc.iban || lbl) + '</div>' +
       '</div>' +
       '<div style="text-align:right">' +
         '<div style="font-size:14px;font-weight:700;color:#1A1A1A">CHF ' + bal + '</div>' +
-        '<div style="font-size:10px;color:#94a3b8;margin-top:1px">' + lbl + '</div>' +
+        '<div style="font-size:var(--fs-sub);color:#94a3b8;margin-top:1px">' + lbl + '</div>' +
       '</div>' +
     '</div>';
   });
 
-  if (!html) html = '<div style="padding:16px;text-align:center;color:var(--light);font-size:12px">Keine Konten gefunden</div>';
+  if (!html) html = '<div style="padding:16px;text-align:center;color:var(--light);font-size:var(--fs-body)">Keine Konten gefunden</div>';
   container.innerHTML = html;
 }
 
@@ -3704,15 +3704,15 @@ function render3aInvest(balance, hasAccount) {
 
   if (hasAccount) {
     box.innerHTML =
-      '<div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Dein bisheriges Säule 3a Guthaben · BLKB</div>' +
+      '<div style="font-size:var(--fs-sub);font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Dein bisheriges Säule 3a Guthaben · BLKB</div>' +
       '<div style="font-size:22px;font-weight:700;color:var(--dark)">CHF ' + bal + '</div>' +
-      '<div style="font-size:11px;color:#92400e;margin-top:3px">Dieses Guthaben wächst mit deinen weiteren Einzahlungen</div>';
+      '<div style="font-size:var(--fs-sub);color:#92400e;margin-top:3px">Dieses Guthaben wächst mit deinen weiteren Einzahlungen</div>';
     box.style.display = 'block';
   } else {
     box.innerHTML =
-      '<div style="font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Dein bisheriges Säule 3a Guthaben</div>' +
+      '<div style="font-size:var(--fs-sub);font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Dein bisheriges Säule 3a Guthaben</div>' +
       '<div style="font-size:22px;font-weight:700;color:var(--light)">CHF 0.00</div>' +
-      '<div style="font-size:11px;color:var(--mid);margin-top:3px">Du hast noch keine Säule 3a — jetzt starten und Steuern sparen!</div>';
+      '<div style="font-size:var(--fs-sub);color:var(--mid);margin-top:3px">Du hast noch keine Säule 3a — jetzt starten und Steuern sparen!</div>';
     box.style.display = 'block';
   }
 

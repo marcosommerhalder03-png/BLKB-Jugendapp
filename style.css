@@ -2,6 +2,16 @@
    BLKB CI VARIABLES
 ============================================= */
 :root {
+  /* Typografie-System */
+  --fs-label:   9px;   /* Labels, Badges, Kategorien UPPERCASE */
+  --fs-sub:    10px;   /* Subtext, IBAN, Hinweise, Metadaten */
+  --fs-body:   12px;   /* Fliesstext, Beschreibungen, Akkordeon */
+  --fs-ui:     13px;   /* UI-Elemente: Konto-Namen, Card-Titel, Nav-Labels */
+  --fs-value:  15px;   /* Werte in Kacheln, Beträge klein */
+  --fs-title:  17px;   /* Screen-Titel im Header, Section-Titel */
+  --fs-amount: 22px;   /* Kontobeträge in Account-Rows */
+  --fs-hero:   26px;   /* Gesamtsaldo, Hauptzahl */
+
   /* Duotone Icon Farb-System */
   --icon-red:    #E30613; --icon-red-bg:    #FFF0F0;
   --icon-blue:   #185FA5; --icon-blue-bg:   #E6F1FB;
@@ -138,7 +148,7 @@ body {
 .hdr-logo { height: 22px; flex-shrink: 0; display: block; }
 
 .hdr-title {
-  font-size: 15px;
+  font-size: var(--fs-title);
   font-weight: 600;
   color: #1A1A1A;
   letter-spacing: -.1px;
@@ -235,7 +245,7 @@ body {
 }
 
 .nav-label {
-  font-size: 10px;
+  font-size: var(--fs-label);
   font-weight: 500;
   color: #BABABA;
   transition: color .2s;
@@ -248,7 +258,7 @@ body {
 
 /* Adult nav has 7 items — slightly smaller */
 #adult-nav .nav-icon { font-size: 19px; }
-#adult-nav .nav-label { font-size: 9px; }
+#adult-nav .nav-label { font-size: var(--fs-label); }
 
 .nav-btn.active .nav-icon  { color: #E30613; }
 .nav-btn.active .nav-label { color: #E30613; font-weight: 700; }
@@ -270,7 +280,7 @@ body {
 }
 
 .section-title {
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -280,7 +290,7 @@ body {
 
 /* Section label (replaces view-banner) */
 .section-label {
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -452,8 +462,8 @@ body {
   border-left: 2px solid #639922;
 }
 
-.tip-label { font-size: 10px; font-weight: 700; color: #27500A; text-transform: uppercase; letter-spacing: .5px; }
-.tip-text { font-size: 13px; color: var(--dark); margin-top: 4px; line-height: 1.5; }
+.tip-label { font-size: var(--fs-label); font-weight: 700; color: #27500A; text-transform: uppercase; letter-spacing: .5px; }
+.tip-text { font-size: var(--fs-body); color: var(--dark); margin-top: 4px; line-height: 1.5; }
 
 /* =============================================
    GOALS SCREEN
@@ -574,7 +584,7 @@ body {
   padding: 14px 16px;
 }
 .gam-section-label {
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .5px;
@@ -601,7 +611,7 @@ body {
   background: #FFF3CD;
   border-radius: 20px;
   padding: 4px 12px;
-  font-size: 14px;
+  font-size: var(--fs-sub);
   font-weight: 700;
   color: #7A5C00;
 }
@@ -808,14 +818,14 @@ body {
 }
 
 .modal-title {
-  font-size: 17px;
+  font-size: var(--fs-title);
   font-weight: 700;
   color: var(--dark);
   margin-bottom: 16px;
 }
 
 .form-label {
-  font-size: 11px;
+  font-size: var(--fs-sub);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .5px;
@@ -829,7 +839,7 @@ body {
   padding: 12px 14px;
   border: 1.5px solid var(--border);
   border-radius: 8px;
-  font-size: 15px;
+  font-size: var(--fs-ui);
   font-family: var(--font);
   color: var(--dark);
   background: var(--bg);
@@ -893,7 +903,7 @@ body {
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: var(--fs-ui);
   font-weight: 700;
   cursor: pointer;
   font-family: var(--font);
@@ -1104,7 +1114,7 @@ body {
 }
 
 .budget-lohn-val {
-  font-size: 18px;
+  font-size: var(--fs-title);
   font-weight: 700;
   color: var(--dark);
   min-width: 90px;
@@ -1141,7 +1151,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .invest-title {
-  font-size: 10px;
+  font-size: var(--fs-label);
   font-weight: 700;
   opacity: .55;
   text-transform: uppercase;
@@ -1284,10 +1294,10 @@ input[type="range"]::-webkit-slider-thumb {
   margin-bottom: 8px;
 }
 
-.budget-sum-label { font-size: 12px; font-weight: 600; color: var(--mid); }
+.budget-sum-label { font-size: var(--fs-body); font-weight: 600; color: var(--mid); }
 
 .budget-sum-total {
-  font-size: 16px;
+  font-size: var(--fs-value);
   font-weight: 700;
   transition: color .2s;
 }
@@ -1296,7 +1306,7 @@ input[type="range"]::-webkit-slider-thumb {
 .budget-sum-warn { color: var(--red); }
 
 .budget-sum-hint {
-  font-size: 11px;
+  font-size: var(--fs-label);
   color: var(--mid);
   margin-top: 4px;
   min-height: 16px;
@@ -1548,8 +1558,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .fk-topic-text { flex: 1; }
-.fk-topic-title { font-size: 13px; font-weight: 700; color: var(--dark); }
-.fk-topic-sub   { font-size: 11px; color: var(--mid); margin-top: 1px; }
+.fk-topic-title { font-size: var(--fs-ui); font-weight: 700; color: var(--dark); }
+.fk-topic-sub   { font-size: var(--fs-sub); color: var(--mid); margin-top: 1px; }
 
 .fk-topic-chev {
   font-size: 11px;
@@ -1570,7 +1580,7 @@ input[type="range"]::-webkit-slider-thumb {
 .fk-topic-card.open .fk-topic-body { display: block; }
 
 .fk-topic-body p {
-  font-size: 12px;
+  font-size: var(--fs-body);
   color: var(--slate);
   line-height: 1.6;
 }
@@ -1583,7 +1593,7 @@ input[type="range"]::-webkit-slider-thumb {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  font-size: 11px;
+  font-size: var(--fs-sub);
   font-weight: 600;
   color: var(--slate);
 }
@@ -1930,7 +1940,7 @@ input[type="range"]::-webkit-slider-thumb {
 .lesson-back {
   background: none;
   border: none;
-  font-size: 15px;
+  font-size: var(--fs-ui);
   font-weight: 700;
   color: var(--mid);
   cursor: pointer;
@@ -1993,7 +2003,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .lesson-counter {
-  font-size: 12px;
+  font-size: var(--fs-sub);
   color: var(--light);
   font-weight: 600;
 }
@@ -2010,7 +2020,7 @@ input[type="range"]::-webkit-slider-thumb {
   color: white;
   border: none;
   border-radius: var(--r);
-  font-size: 17px;
+  font-size: var(--fs-title);
   font-weight: 800;
   cursor: pointer;
   font-family: var(--font);
@@ -2061,24 +2071,24 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .account-row.border-b { border-bottom: 1px solid var(--border); }
 .account-name {
-  font-size: 13px;
+  font-size: var(--fs-ui);
   font-weight: 600;
   color: var(--dark);
 }
 .account-iban {
-  font-size: 11px;
+  font-size: var(--fs-sub);
   color: var(--light);
   margin-top: 2px;
 }
 .account-bal { text-align: right; }
 .account-amount {
-  font-size: 15px;
+  font-size: var(--fs-amount);
   font-weight: 700;
   color: #1A1A1A;
 }
-.account-amount::before { content: 'CHF '; font-size: 11px; font-weight: 600; color: var(--mid); }
+.account-amount::before { content: 'CHF '; font-size: var(--fs-sub); font-weight: 600; color: var(--mid); }
 .account-type {
-  font-size: 10px;
+  font-size: var(--fs-sub);
   color: var(--light);
   margin-top: 2px;
 }
@@ -2100,7 +2110,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .mission-card:active { transform: scale(.98); box-shadow: none; }
 .mission-label {
-  font-size: 10px;
+  font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2108,14 +2118,14 @@ input[type="range"]::-webkit-slider-thumb {
   margin-bottom: 4px;
 }
 .mission-title {
-  font-size: 18px;
+  font-size: var(--fs-title);
   font-weight: 800;
   color: white;
   letter-spacing: -.3px;
   line-height: 1.2;
 }
 .mission-sub {
-  font-size: 12px;
+  font-size: var(--fs-body);
   color: rgba(255,255,255,.5);
   margin-top: 4px;
 }
