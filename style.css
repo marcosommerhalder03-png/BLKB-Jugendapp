@@ -1755,17 +1755,22 @@ input[type="range"]::-webkit-slider-thumb {
    MODE SWITCHING
 ============================================= */
 /* Default (before JS runs): youth-nav visible so there is always a nav — no flash of empty nav */
-/* display:flex ohne !important → Inline-display:grid (Grids) gewinnt; display:none !important bleibt für Verstecken */
-#app .youth-only { display: flex; }
+#app .youth-only { display: flex !important; }
 #app .adult-only { display: none !important; }
 
 /* Youth mode — explicit (mirrors default) */
-#app.mode-youth .youth-only { display: flex; }
+#app.mode-youth .youth-only { display: flex !important; }
 #app.mode-youth .adult-only { display: none !important; }
 
 /* Adult mode */
 #app.mode-adult .youth-only { display: none !important; }
-#app.mode-adult .adult-only { display: flex; }
+#app.mode-adult .adult-only { display: flex !important; }
+
+/* Home Metric Grids: Spezifität (1,3,0) schlägt (1,2,0) der Mode-Regeln
+   → erzwinge display:grid für die 2×2 Kacheln, unabhängig vom Modus */
+#app .youth-only.home-metric-grid,
+#app.mode-youth .youth-only.home-metric-grid { display: grid !important; }
+#app.mode-adult .adult-only.home-metric-grid { display: grid !important; }
 
 /* =============================================
    YOUTH LEARN — CHAPTER PATH
