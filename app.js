@@ -1209,7 +1209,7 @@ function renderGoals() {
   if (mSpar === 0 && state.goals.some(function(g){ return (g.ziel||0) > 0; })) {
     html += '<div style="margin:4px 16px 8px;padding:12px 14px;background:#EAF3DE;border-radius:12px;border:0.5px solid #E8E8E8;font-size:var(--fs-body);color:#27500A;line-height:1.5">' +
       '<strong>Tipp:</strong> Setze im ' +
-      '<span onclick="switchView(\'budget\',3)" style="font-weight:700;text-decoration:underline;cursor:pointer">Budgetrechner</span>' +
+      '<span onclick="switchView(\'budget\',2)" style="font-weight:700;text-decoration:underline;cursor:pointer">Budgetrechner</span>' +
       ' eine Sparquote, um zu sehen wann du deine Ziele erreichst.' +
       '</div>';
   }
@@ -3261,21 +3261,21 @@ function renderAdultGamification() {
         title: '+CHF ' + extra + '/Mt. mehr sparen',
         desc: 'In 10 Jahren bei 5% Rendite' + goalImpact + ':',
         value: 'CHF ' + val50.toLocaleString('de-CH'),
-        cta: 'Investrechner', action: "switchView('invest',0)"
+        cta: 'Investrechner', action: "switchView('invest',4)"
       },
       {
         icon: '☕',
         title: '1 Kaffee/Tag weniger',
         desc: 'CHF 5/Tag = CHF ' + coffeeYear.toLocaleString('de-CH') + '/Jahr' + (coffeePct > 0 ? ' (' + coffeePct + '% deines Jahreseinkommens)' : '') + ':',
         value: 'CHF ' + coffeeYear.toLocaleString('de-CH') + '/Jahr gespart',
-        cta: 'Budget prüfen', action: "switchView('budget',0)"
+        cta: 'Budget prüfen', action: "switchView('budget',2)"
       },
       {
         icon: '🏛️',
         title: 'Säule 3a CHF ' + m3a + '/Mt.',
         desc: yearsLeft + ' Jahre bis Rente (Ø 4% Rendite):',
         value: 'CHF ' + val3a.toLocaleString('de-CH'),
-        cta: '3a-Simulation', action: "switchView('invest',0)"
+        cta: '3a-Simulation', action: "switchView('invest',4)"
       },
     ];
     scenEl.innerHTML = scenarios.map(function(s) {
@@ -3449,7 +3449,7 @@ function renderGoalsFocus(elId, isAdult) {
       '<div style="font-size:var(--fs-body);font-weight:700;color:var(--petrol)">🏦 Dein Weg zu CHF 100\'000</div>' +
       '<div style="font-size:var(--fs-ui);font-weight:800;color:var(--dark);margin-top:2px">Bei CHF ' + mSpar.toLocaleString('de-CH') + '/Mt.: ' + p100k + '</div>' +
       '<div style="font-size:var(--fs-sub);color:var(--mid);margin-top:2px">Mit ~5% Rendite im Investrechner deutlich schneller.</div>' +
-      '<button onclick="switchView(\'invest\',0)" style="margin-top:8px;padding:7px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:var(--fs-body);font-weight:600;cursor:pointer">Simulation öffnen →</button>' +
+      '<button onclick="switchView(\'invest\',4)" style="margin-top:8px;padding:7px 14px;background:var(--petrol);color:white;border:none;border-radius:7px;font-size:var(--fs-body);font-weight:600;cursor:pointer">Simulation öffnen →</button>' +
       '</div>';
   }
 
@@ -3791,12 +3791,13 @@ init();
    SWIPE NAVIGATION  (mode-aware)
 ================================================ */
 var youthViewOrder = ['home', 'learn', 'goals', 'fun', 'haxx'];
-var adultViewOrder = ['home', 'goals', 'haxx', 'budget', 'finlit', 'invest', 'fun'];
+var adultViewOrder = ['home', 'goals', 'budget', 'haxx', 'invest', 'finlit', 'fun'];
 
-// Adult nav indices (used by switchView)
-var adultNavIdx  = { home:0, goals:1, haxx:2, budget:3, finlit:4, invest:5, fun:6 };
+// Adult nav indices — muss 1:1 mit #adult-nav Reihenfolge übereinstimmen
+// nav0=Home, nav1=Ziele, nav2=Budget, nav3=Haxx, nav4=Invest, nav5=Finlit, nav6=Fun
+var adultNavIdx  = { home:0, goals:1, budget:2, haxx:3, invest:4, finlit:5, fun:6 };
 // Youth switchView nav indices (adult-idx used for adult-nav highlight)
-var youthNavIdx  = { home:0, goals:1, fun:6, haxx:2 };
+var youthNavIdx  = { home:0, goals:1, fun:6, haxx:3 };
 
 function navigateToView(name) {
   if (name === 'learn') {
