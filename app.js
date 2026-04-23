@@ -900,7 +900,9 @@ function switchYouthView(name) {
 function applyMode(mode) {
   var app = document.getElementById('app');
   var badge = document.getElementById('mode-badge'); // null after removal, safe
-  if (mode === 'youth') {
+  var isYouth = (mode === 'youth');
+
+  if (isYouth) {
     app.classList.add('mode-youth');
     app.classList.remove('mode-adult');
     if (badge) badge.textContent = 'Unter 18 🎮';
@@ -913,6 +915,19 @@ function applyMode(mode) {
     if (badge) badge.textContent = '18+ 💼';
     if (currentView === 'learn') switchView('home', 0);
   }
+
+  // BUG1: Nav explizit setzen — inline !important übertrumpft CSS !important
+  var youthNav = document.getElementById('youth-nav');
+  var adultNav = document.getElementById('adult-nav');
+  if (youthNav) youthNav.style.setProperty('display', isYouth ? 'flex' : 'none', 'important');
+  if (adultNav) adultNav.style.setProperty('display', isYouth ? 'none' : 'flex', 'important');
+
+  // BUG2: Home-Metric-Grids explizit als grid setzen
+  var youthGrid = document.querySelector('.youth-only.home-metric-grid');
+  var adultGrid = document.querySelector('.adult-only.home-metric-grid');
+  if (youthGrid) youthGrid.style.setProperty('display', isYouth ? 'grid' : 'none', 'important');
+  if (adultGrid) adultGrid.style.setProperty('display', isYouth ? 'none' : 'grid', 'important');
+
   state.mode = mode;
   save();
 }

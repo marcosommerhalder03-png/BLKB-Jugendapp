@@ -60,38 +60,56 @@
    ICON-KLASSEN
 ============================================= */
 .app-icon {
-  width:           var(--ico-size);
-  height:          var(--ico-size);
-  border-radius:   var(--ico-radius);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  flex-shrink:     0;
-  font-size:       var(--ico-font);
+  width:           var(--ico-size)   !important;
+  height:          var(--ico-size)   !important;
+  border-radius:   var(--ico-radius) !important;
+  display:         flex              !important;
+  align-items:     center            !important;
+  justify-content: center            !important;
+  flex-shrink:     0                 !important;
+  font-size:       var(--ico-font)   !important;
 }
 .app-icon-sm {
-  width:           var(--ico-size-sm);
-  height:          var(--ico-size-sm);
-  border-radius:   var(--ico-radius-sm);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  flex-shrink:     0;
-  font-size:       var(--ico-font-sm);
+  width:           var(--ico-size-sm)    !important;
+  height:          var(--ico-size-sm)    !important;
+  border-radius:   var(--ico-radius-sm)  !important;
+  display:         flex                  !important;
+  align-items:     center                !important;
+  justify-content: center                !important;
+  flex-shrink:     0                     !important;
+  font-size:       var(--ico-font-sm)    !important;
 }
 .app-icon-xs {
-  width:           var(--ico-size-xs);
-  height:          var(--ico-size-xs);
-  border-radius:   var(--ico-radius-xs);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  flex-shrink:     0;
-  font-size:       var(--ico-font-xs);
+  width:           var(--ico-size-xs)    !important;
+  height:          var(--ico-size-xs)    !important;
+  border-radius:   var(--ico-radius-xs)  !important;
+  display:         flex                  !important;
+  align-items:     center                !important;
+  justify-content: center                !important;
+  flex-shrink:     0                     !important;
+  font-size:       var(--ico-font-xs)    !important;
 }
 .app-icon svg, .app-icon-sm svg, .app-icon-xs svg {
-  width:  55%;
-  height: 55%;
+  width:  55% !important;
+  height: 55% !important;
+}
+
+/* Named icon aliases → einheitlich 40px (Referenz: Jugendkonto-Icon) */
+.account-icon,
+.fk-topic-icon,
+.haxx-icon,
+.goal-icon,
+.budget-cat-icon,
+.gam-icon,
+.badge-icon {
+  width:           40px  !important;
+  height:          40px  !important;
+  border-radius:   10px  !important;
+  display:         flex  !important;
+  align-items:     center            !important;
+  justify-content: center            !important;
+  flex-shrink:     0                 !important;
+  font-size:       20px  !important;
 }
 
 *, *::before, *::after {
