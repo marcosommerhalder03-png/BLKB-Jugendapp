@@ -1,0 +1,29 @@
+{
+  "name": "BLKB Jugend",
+  "short_name": "BLKB Jugend",
+  "description": "BLKB Jugend-App – Was morgen zählt",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fd000d",
+  "theme_color": "#fd000d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/icon-512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
