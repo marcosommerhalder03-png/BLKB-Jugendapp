@@ -51,7 +51,7 @@
 
         <!-- Header with lifecycle phase -->
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">Start</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -272,7 +272,7 @@
     <div class="view" id="view-goals">
       <div class="scroll-area">
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">Meine Ziele</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -376,7 +376,7 @@
     <div class="view" id="view-haxx">
       <div class="scroll-area">
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">Moneyhaxx</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -410,7 +410,7 @@
     <div class="view" id="view-budget">
       <div class="scroll-area">
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">Budgetrechner</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -481,7 +481,7 @@
     <div class="view" id="view-finlit">
       <div class="scroll-area">
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">BLKB Angebote</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -715,7 +715,7 @@
     <div class="view" id="view-invest">
       <div class="scroll-area">
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">Geld vermehren</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -998,7 +998,7 @@
 
           <!-- Header -->
           <div class="hdr">
-            <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+            <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
             <span class="hdr-title">Money Hero</span>
             <div class="hdr-avatar"><i class="ti ti-user"></i></div>
           </div>
@@ -1092,7 +1092,7 @@
 
           <!-- Header -->
           <div class="hdr">
-            <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+            <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
             <span class="hdr-title">Money IQ</span>
             <div class="hdr-avatar"><i class="ti ti-user"></i></div>
           </div>
@@ -1176,7 +1176,7 @@
       <!-- CHAPTER LIST -->
       <div class="scroll-area" id="learn-chapter-list">
         <div class="hdr">
-          <img src="img/logo.svg" alt="BLKB" class="hdr-logo">
+          <img src="img/logo-white.svg" alt="BLKB" class="hdr-logo">
           <span class="hdr-title">Finanz-Schule</span>
           <div class="hdr-avatar"><i class="ti ti-user"></i></div>
         </div>
@@ -1193,6 +1193,47 @@
         </div>
 
         <div style="height:4px"></div>
+
+        <!-- == BLKB AI COACH == -->
+        <div style="margin:0 16px 12px">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px">
+            <div style="width:7px;height:7px;border-radius:50%;background:#E30613;flex-shrink:0"></div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#6B6B6B">BLKB Finanzcoach</div>
+          </div>
+          <!-- Alter-Toggle -->
+          <div id="blkbAgeToggle" style="display:flex;background:#EBEBEB;border-radius:18px;padding:3px;gap:2px;margin-bottom:10px">
+            <button onclick="blkbSetAge('kind')" data-age="kind" style="flex:1;padding:5px 0;border-radius:15px;font-size:11px;font-weight:600;text-align:center;background:#fff;color:#E30613;border:none;cursor:pointer;font-family:var(--font)">Kind</button>
+            <button onclick="blkbSetAge('teen')" data-age="teen" style="flex:1;padding:5px 0;border-radius:15px;font-size:11px;font-weight:600;text-align:center;background:transparent;color:#888;border:none;cursor:pointer;font-family:var(--font)">Teen</button>
+            <button onclick="blkbSetAge('erwachsen')" data-age="erwachsen" style="flex:1;padding:5px 0;border-radius:15px;font-size:11px;font-weight:600;text-align:center;background:transparent;color:#888;border:none;cursor:pointer;font-family:var(--font)">Erwachsen</button>
+          </div>
+          <!-- Chat -->
+          <div style="background:#fff;border-radius:12px;border:0.5px solid #E8E8E8;overflow:hidden;margin-bottom:8px">
+            <div id="blkbChatMessages" style="padding:12px;display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto">
+              <div style="max-width:88%;padding:9px 11px;border-radius:12px 12px 12px 3px;font-size:12px;line-height:1.5;background:#F5F5F5;color:#1A1A1A;align-self:flex-start">
+                <div style="font-size:9px;font-weight:700;color:#E30613;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">BLKB Coach</div>
+                <span id="blkbWelcome">Hoi! Was möchtest du über Geld wissen? Ich erkläre alles ganz einfach. 😊</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-top:1px solid #F0F0F0">
+              <input id="blkbInput" type="text" placeholder="Stell deine Frage..." style="flex:1;border:none;outline:none;font-size:13px;font-family:var(--font);color:#1A1A1A;background:transparent" onkeydown="if(event.key==='Enter')blkbSend()">
+              <button onclick="blkbSend()" style="width:30px;height:30px;border-radius:50%;background:#E30613;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" aria-label="Senden">
+                <i class="ti ti-send" style="font-size:14px;color:#fff"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Topic Chips -->
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B6B6B;margin-bottom:6px">Oder wähle ein Thema</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px">
+            <button onclick="blkbAskTopic('Sparen')" style="padding:5px 10px;border-radius:14px;border:0.5px solid #E8E8E8;background:#fff;font-size:11px;font-weight:600;color:#1A1A1A;cursor:pointer;font-family:var(--font)">💰 Sparen</button>
+            <button onclick="blkbAskTopic('Anlegen')" style="padding:5px 10px;border-radius:14px;border:0.5px solid #E8E8E8;background:#fff;font-size:11px;font-weight:600;color:#1A1A1A;cursor:pointer;font-family:var(--font)">📈 Anlegen</button>
+            <button onclick="blkbAskTopic('Karten und TWINT')" style="padding:5px 10px;border-radius:14px;border:0.5px solid #E8E8E8;background:#fff;font-size:11px;font-weight:600;color:#1A1A1A;cursor:pointer;font-family:var(--font)">💳 Karten</button>
+            <button onclick="blkbAskTopic('Budget')" style="padding:5px 10px;border-radius:14px;border:0.5px solid #E8E8E8;background:#fff;font-size:11px;font-weight:600;color:#1A1A1A;cursor:pointer;font-family:var(--font)">📊 Budget</button>
+            <button onclick="blkbAskTopic('Säule 3a')" style="padding:5px 10px;border-radius:14px;border:0.5px solid #E8E8E8;background:#fff;font-size:11px;font-weight:600;color:#1A1A1A;cursor:pointer;font-family:var(--font)">🛡️ 3. Säule</button>
+            <button onclick="blkbAskTopic('Hypothek')" style="padding:5px 10px;border-radius:14px;border:0.5px solid #E8E8E8;background:#fff;font-size:11px;font-weight:600;color:#1A1A1A;cursor:pointer;font-family:var(--font)">🏠 Hypothek</button>
+          </div>
+        </div>
+        <div style="height:4px"></div>
+
         <div id="learn-chapters-container"></div>
         <div style="height:20px"></div>
       </div>

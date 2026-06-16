@@ -193,7 +193,7 @@ body {
 ============================================= */
 .hdr {
   height: 56px;
-  background: #fff;
+  background: #1A1A1A;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -208,16 +208,16 @@ body {
   box-sizing: border-box;
 }
 
-/* All color variants → same white header */
+/* B2: alle Varianten → Dark Header */
 .hdr.red-bg, .hdr.dark-bg, .hdr.petrol-bg,
-.hdr.olive-bg, .hdr.amber-bg { background: #fff; }
+.hdr.olive-bg, .hdr.amber-bg { background: #1A1A1A; }
 
 .hdr-logo { height: 22px; flex-shrink: 0; display: block; }
 
 .hdr-title {
   font-size: var(--fs-title);
   font-weight: 600;
-  color: #1A1A1A;
+  color: #FFFFFF;
   letter-spacing: -.1px;
   position: absolute;
   left: 50%;
@@ -233,12 +233,12 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #F4F4F4;
+  background: rgba(255,255,255,.15);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  color: #6B6B6B;
+  color: #FFFFFF;
   flex-shrink: 0;
 }
 
@@ -255,8 +255,8 @@ body {
 .bottom-nav {
   flex-shrink: 0;
   width: 100%;
-  background: #fff;
-  border-top: 1px solid #EBEBEB;
+  background: #111111;
+  border-top: 1px solid #222222;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -307,14 +307,14 @@ body {
 .nav-icon {
   font-size: 22px;
   line-height: 1;
-  color: #BABABA;
+  color: #555555;
   transition: color .2s;
 }
 
 .nav-label {
   font-size: var(--fs-label);
   font-weight: 500;
-  color: #BABABA;
+  color: #555555;
   transition: color .2s;
   display: block;
   white-space: nowrap;

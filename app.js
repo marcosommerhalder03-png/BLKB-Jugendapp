@@ -3899,4 +3899,98 @@ document.addEventListener('touchend', function(e) {
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
-}
+}
+/* ================================================================
+   BLKB AI COACH — Financial Literacy Chat
+   ================================================================ */
+var blkbAge = 'kind';
+var blkbHistory = [];
+
+var BLKB_PROMPTS = {
+  kind:      'Du bist der BLKB Finanzcoach für Kinder (8–12 Jahre). Erkläre Finanzthemen sehr einfach mit Alltagsbeispielen wie Sackgeld oder Sparbüchse. Maximal 2–3 kurze Sätze. Antworte auf Deutsch.',
+  teen:      'Du bist der BLKB Finanzcoach für Teenager (13–17 Jahre). Erkläre Finanzthemen jugendgerecht mit konkreten Beispielen (Lehrlingslohn, erste Karte, Sparziel). Maximal 3–4 Sätze. Antworte auf Deutsch.',
+  erwachsen: 'Du bist der BLKB Finanzcoach für junge Erwachsene (18–30 Jahre). Fokus auf Schweizer Kontext: Vorsorge, Hypothek, Anlegen, Säule 3a. Maximal 4–5 Sätze. Antworte auf Deutsch.'
+};
+var BLKB_WELCOME = {
+  kind:      'Hoi! Was möchtest du über Geld wissen? Ich erkläre alles ganz einfach. 😊',
+  teen:      'Hey! Ich bin dein BLKB Finanzcoach. Frag mich alles über Sparen, Karten oder deinen ersten Lohn! 🚀',
+  erwachsen: 'Hallo! Als Ihr BLKB Finanzcoach beantworte ich gerne Fragen zu Vorsorge, Anlegen und mehr.'
+};
+
+function blkbSetAge(age) {
+  blkbAge = age;
+  blkbHistory = [];
+  document.querySelectorAll('#blkbAgeToggle button').forEach(function(b) {
+    var isActive = b.dataset.age === age;
+    b.style.background = isActive ? '#fff' : 'transparent';
+    b.style.color = isActive ? '#E30613' : '#888';
+  });
+  var msgs = document.getElementById('blkbChatMessages');
+  msgs.innerHTML = '<div style="max-width:88%;padding:9px 11px;border-radius:12px 12px 12px 3px;font-size:12px;line-height:1.5;background:#F5F5F5;color:#1A1A1A;align-self:flex-start"><div style="font-size:9px;font-weight:700;color:#E30613;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">BLKB Coach</div><span>' + BLKB_WELCOME[age] + '</span></div>';
+}
+
+function blkbAskTopic(topic) {
+  var inp = document.getElementById('blkbInput');
+  inp.value = 'Erkläre mir: ' + topic;
+  blkbSend();
+}
+
+function blkbSend() {
+  var inp = document.getElementById('blkbInput');
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  blkbAppend(text, 'user');
+  blkbHistory.push({ role: 'user', content: text });
+  var typingId = blkbTyping();
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 300,
+      system: BLKB_PROMPTS[blkbAge],
+      messages: blkbHistory
+    })
+  }).then(function(r){ return r.json(); })
+    .then(function(d){
+      var reply = d.content && d.content[0] ? d.content[0].text : 'Keine Antwort erhalten.';
+      blkbHistory.push({ role: 'assistant', content: reply });
+      blkbUpdate(typingId, reply);
+    }).catch(function(){
+      blkbUpdate(typingId, 'Verbindungsfehler — bitte nochmals versuchen.');
+    });
+}
+
+function blkbAppend(text, role) {
+  var msgs = document.getElementById('blkbChatMessages');
+  var d = document.createElement('div');
+  if (role === 'user') {
+    d.style.cssText = 'max-width:88%;padding:9px 11px;border-radius:12px 12px 3px 12px;font-size:12px;line-height:1.5;background:#E30613;color:#fff;align-self:flex-end;margin-left:auto';
+    d.textContent = text;
+  } else {
+    d.style.cssText = 'max-width:88%;padding:9px 11px;border-radius:12px 12px 12px 3px;font-size:12px;line-height:1.5;background:#F5F5F5;color:#1A1A1A;align-self:flex-start';
+    d.innerHTML = '<div style="font-size:9px;font-weight:700;color:#E30613;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">BLKB Coach</div><span>' + text + '</span>';
+  }
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  return d;
+}
+
+function blkbTyping() {
+  var id = 'bt_' + Date.now();
+  var msgs = document.getElementById('blkbChatMessages');
+  var d = document.createElement('div');
+  d.id = id;
+  d.style.cssText = 'max-width:88%;padding:9px 11px;border-radius:12px 12px 12px 3px;font-size:12px;background:#F5F5F5;align-self:flex-start';
+  d.innerHTML = '<div style="font-size:9px;font-weight:700;color:#E30613;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">BLKB Coach</div><span style="opacity:.5">···</span>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function blkbUpdate(id, text) {
+  var el = document.getElementById(id);
+  if (el) el.innerHTML = '<div style="font-size:9px;font-weight:700;color:#E30613;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">BLKB Coach</div><span>' + text + '</span>';
+}
+/* ── Ende BLKB AI Coach ────────────────────────── */
