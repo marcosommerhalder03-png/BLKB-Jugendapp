@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:512px; height:512px; overflow:hidden; background:#fd000d; }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+
+  <!-- Red background -->
+  <rect width="512" height="512" fill="#fd000d"/>
+
+  <!-- BLKB white geometric mark, scaled to fit nicely centered -->
+  <!-- Original viewBox 0 0 77.85 77.85, scale to ~280px, center at 256,210 -->
+  <g transform="translate(116, 70) scale(3.6)">
+    <!-- Square frame (white) -->
+    <path fill="white" d="M3.18,3.19H74.67V74.67H3.18ZM0,0V77.85H77.85V0Z"/>
+    <!-- Diamond/arrow polygon (white) -->
+    <polygon fill="white" points="69.18 9.9 40.13 9.9 22.35 38.93 40.13 67.96 69.18 67.96 51.4 38.93 69.18 9.9"/>
+  </g>
+
+  <!-- "Jugend" label, white, bottom center -->
+  <text
+    x="256" y="430"
+    text-anchor="middle"
+    font-family="-apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, sans-serif"
+    font-size="58"
+    font-weight="700"
+    letter-spacing="4"
+    fill="white"
+    opacity="1">JUGEND</text>
+
+  <!-- thin white line above text -->
+  <rect x="156" y="400" width="200" height="2" fill="white" opacity="0.4"/>
+
+</svg>
+</body>
+</html>

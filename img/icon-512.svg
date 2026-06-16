@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Roter Hintergrund mit abgerundeten Ecken -->
+  <rect width="512" height="512" rx="80" fill="#fd000d"/>
+
+  <!-- BLKB Logo-Marke (Quadrat + Diamant), weiss, zentriert oben -->
+  <g transform="translate(156, 100) scale(8.33)">
+    <!-- Quadrat-Rahmen -->
+    <path fill="white" fill-rule="nonzero" d="M24.087 24V0H0v23.97l24.087.03zM.991.986h22.136v22.028H.991V.986z"/>
+    <!-- Diamant innen -->
+    <path fill="white" d="M21.411 2.667L12.278 2.667 6.691 11.651 12.278 20.667 21.411 20.667 15.824 11.651z"/>
+  </g>
+
+  <!-- Trennlinie -->
+  <rect x="120" y="340" width="272" height="2" rx="1" fill="rgba(255,255,255,0.35)"/>
+
+  <!-- "Jugend" Text -->
+  <text
+    x="256"
+    y="420"
+    text-anchor="middle"
+    font-family="-apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, sans-serif"
+    font-size="72"
+    font-weight="700"
+    letter-spacing="6"
+    fill="white">JUGEND</text>
+</svg>

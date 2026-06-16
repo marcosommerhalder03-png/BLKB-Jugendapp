@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"where node & where python & where py & where php & where ruby\")",
+      "Bash(cmd /c \"where node.exe & where npm.exe & where npx.exe & where php.exe & where ruby.exe & where python.exe & where python3.exe & where py.exe\")",
+      "Bash(cmd /c \"dir C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe & dir C:\\\\Windows\\\\System32\\\\wscript.exe & dir C:\\\\Windows\\\\System32\\\\cscript.exe\")",
+      "Bash(powershell.exe -Command \"Get-Command node,npm,npx,python,python3,php -ErrorAction SilentlyContinue | Select-Object Name,Source | Format-Table\")",
+      "mcp__Claude_Preview__preview_start",
+      "WebSearch",
+      "WebFetch(domain:www.projuventute.ch)",
+      "WebFetch(domain:budgetberatung.ch)",
+      "WebFetch(domain:www.postfinance.ch)",
+      "WebFetch(domain:www.truelinkfinancial.com)",
+      "Bash(node -e \":*)",
+      "Bash(powershell -Command \":*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://marcosommerhalder03-png.github.io/BLKB-Jugendapp/sw.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://marcosommerhalder03-png.github.io/BLKB-Jugendapp/manifest.json)",
+      "Bash(grep -c \"^[[:space:]]*//\" \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(python3 -)",
+      "Bash(node -e ':*)",
+      "Bash(grep -n \"^    </div>.*<!-- /view -->\\\\|^    </div>$\" \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^    <div class=\"view active\" id=\"view-home\">/{start=NR} start && /^    <\\\\/div>$/{if\\(NR-start<90\\){print start\"-\"NR; exit}}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^    <div class=\"view\" id=\"view-goals\">/{start=NR} start && /^    <\\\\/div>$/{if\\(NR-start<100\\){print start\"-\"NR; exit}}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^    <div class=\"view\" id=\"view-haxx\">/{start=NR} start && /^    <\\\\/div>$/{if\\(NR-start<150\\){print start\"-\"NR; exit}}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^    <div class=\"view\" id=\"view-fun\">/{start=NR} start && /^    <\\\\/div>$/{if\\(NR-start<200\\){print start\"-\"NR; exit}}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^    <div class=\"view\" id=\"view-learn\">/{start=NR} start && /^    <\\\\/div>$/{if\\(NR-start<200\\){print start\"-\"NR; exit}}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^        <div class=\"gam-youth\">/{start=NR} start && /^        <\\\\/div><!-- \\\\/gam-youth -->/{print start\"-\"NR; exit}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(awk '/^    <nav class=\"bottom-nav.*youth-only\" id=\"youth-nav\">/{start=NR} start && /^    <\\\\/nav>/{print start\"-\"NR; exit}' \"C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/index.html\")",
+      "Bash(node --check app.js)",
+      "Bash(node -e \"try { require\\('fs'\\).readFileSync\\('C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/app.js','utf8'\\); new Function\\(require\\('fs'\\).readFileSync\\('C:/Users/marco/OneDrive/Desktop/Jugendapp/marco/app.js','utf8'\\)\\); console.log\\('OK'\\); } catch\\(e\\) { console.error\\(e.message\\); }\")",
+      "Bash(node --check \"C:\\\\Users\\\\marco\\\\OneDrive\\\\Desktop\\\\Jugendapp\\\\marco\\\\app.js\")"
+    ]
+  }
+}
